@@ -1,0 +1,280 @@
+@import "./config";
+@import "./color";
+@import "~vue2-animate/src/less/vue2-animate";
+
+* {
+  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
+  font-weight: 100;
+  color: @font-color;
+  box-sizing: border-box;
+  margin: 0;
+  text-decoration: none;
+}
+
+*::-webkit-scrollbar {
+  width: 4px;
+  height: 1px;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #BBB;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: #EDEDED;
+}
+
+html, body {
+  background-color: @theme-background-color;
+  font-size: 16px;
+  height: 1vh;
+  min-width: @window-min-width;
+}
+
+img{
+  vertical-align: middle;
+}
+
+.center {
+  text-align: center;
+}
+
+//一共30列
+.row {
+  width: 100%;
+  &:before {
+    display: table;
+    content: "";
+  }
+  &:after {
+    clear: both;
+    display: table;
+    content: "";
+  }
+
+  .col(@number,@width) when (@number <= 30) {
+    .col-@{number} {
+      float: left;
+      width: @number*@width;
+    }
+    @media only screen and (max-width: @grid-xs-width) {
+      .col-xs-@{number} {
+        float: left;
+        width: @number*@width;
+      }
+    }
+    @media (min-width: @grid-sm-width) and (max-width: @grid-md-width) {
+      .col-sm-@{number} {
+        float: left;
+        width: @number*@width;
+      }
+    }
+    @media (min-width: @grid-md-width) and (max-width: @grid-lg-width) {
+      .col-md-@{number} {
+        float: left;
+        width: @number*@width;
+      }
+    }
+    @media only screen and (min-width: @grid-lg-width) {
+      .col-lg-@{number} {
+        float: left;
+        width: @number*@width;
+      }
+    }
+    .col((@number+1), @width)
+  }
+  .col(1, @grid-column-width);
+}
+
+//一共30列
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: row;
+  .col(@number,@width) when (@number <= 30) {
+    .col-@{number} {
+      width: @number*@width;
+    }
+    .col((@number+1), @width)
+  }
+  .col(1, @grid-column-width);
+}
+
+.distance(@number) when (@number <= 100) {
+  .padding-@{number} {
+    padding: @number * 1px;
+  }
+  .margin-@{number} {
+    margin: @number * 1px;
+  }
+  .distance(@number + 5);
+}
+
+.distance(0);
+
+//弹性盒子
+.flex-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+//整屏居中
+.container {
+  height: 100vh;
+  .flex-box();
+}
+
+/*--------------------------------------*/
+.btn {
+  display: inline-block;
+  white-space: nowrap;
+  cursor: pointer;
+  text-align: center;
+  outline: none;
+  margin: 0;
+  transition: .1s;
+  font-weight: 500;
+  padding: .5em 1.5em;
+  font-size: 14px;
+
+  .btn-color(@color) {
+    background-color: @color;
+    border: 1px solid @color;
+    color: @white;
+
+    &.is-plain {
+      background-color: transparent;
+      color: @color;
+    }
+
+    &.is-text {
+      background-color: transparent;
+      border: transparent;
+      color: @color;
+    }
+  }
+
+  &.red {
+    .btn-color(@red);
+  }
+  &.orange {
+    .btn-color(@orange);
+  }
+  &.yellow {
+    .btn-color(@yellow);
+  }
+  &.green {
+    .btn-color(@green);
+  }
+  &.cyan {
+    .btn-color(@cyan);
+  }
+  &.blue {
+    .btn-color(@blue);
+  }
+  &.purple {
+    .btn-color(@purple);
+  }
+}
+
+.input {
+  display: inline-block;
+  margin: 0;
+  transition: 0.1s;
+  padding: 0.5em 1.5em;
+  font-size: 14px;
+  color: @font-color;
+  border: 1px solid @gray;
+  box-shadow: none;
+  outline: none;
+  line-height: 19px;
+
+  .input-color(@color) {
+    &:focus {
+        border: 1px solid @color;
+      }
+
+    &.is-plain {
+      border-left: 1px solid transparent;
+      border-top: 1px solid transparent;
+      border-right: 1px solid transparent;
+      &:focus {
+        border-bottom: 1px solid @color;
+      }
+    }
+  }
+
+  &.red {
+    .input-color(@red);
+  }
+  &.orange {
+    .input-color(@orange);
+  }
+  &.yellow {
+    .input-color(@yellow);
+  }
+  &.green {
+    .input-color(@green);
+  }
+  &.cyan {
+    .input-color(@cyan);
+  }
+  &.blue {
+    .input-color(@blue);
+  }
+  &.purple {
+    .input-color(@purple);
+  }
+}
+
+.mask {
+  background-color: fade(black, 30);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 99;
+  text-align: center;
+  &:after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 0;
+    vertical-align: middle;
+  }
+}
+
+/*--------------------------------------*/
+.card {
+  background-color: @white;
+}
+
+.card-header {
+  border-bottom: 1px solid @border-color;
+}
+
+.card-body {
+
+}
+
+.card-footer {
+  border-top: 1px solid @border-color;
+}
+
+/*--------------------------------------*/
+.duration {
+  animation-duration: @default-animate-time;
+}
+
+
+.cover {
+  background: no-repeat 50%;
+  background-size: cover;
+}

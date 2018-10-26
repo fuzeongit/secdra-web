@@ -1,4 +1,4 @@
-const pkg = require('./package')
+const pkg = require('./package');
 
 module.exports = {
   mode: 'universal',
@@ -26,14 +26,21 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [],
+  css: [
+    {src: '../assets/style/index.less', lang: 'less'},
+    {src: '../assets/style/lib/font-awesome/less/font-awesome.less', lang: 'less'},
+  ],
 
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/mixin'
+    '~/plugins/mixin',
+    '~/plugins/route',
+    '~/plugins/extend'
   ],
+
+
 
   /*
   ** Nuxt.js modules
@@ -68,6 +75,10 @@ module.exports = {
     */
     extend(config, ctx) {
 
-    }
+    },
+    /**
+     * 打包独立css文件
+     */
+    extractCSS: {allChunks: true},
   }
 }
