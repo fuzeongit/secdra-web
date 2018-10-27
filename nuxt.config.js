@@ -14,7 +14,7 @@ module.exports = {
       {hid: 'description', name: 'description', content: pkg.description}
     ],
     link: [
-      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
+      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
     ]
   },
 
@@ -41,7 +41,8 @@ module.exports = {
   plugins: [
     '~/plugins/mixin',
     '~/plugins/route',
-    '~/plugins/extend'
+    '~/plugins/extend',
+    '~/plugins/element'
   ],
 
 

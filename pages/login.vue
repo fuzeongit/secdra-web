@@ -1,5 +1,5 @@
 <template>
-  <div class="container bk cover">
+  <section class="container bk cover">
     <form style="width: 400px" class="card padding-50" @submit.prevent="login">
       <div class="row input-group">
         <label class="col-5">
@@ -22,7 +22,7 @@
       <button type="submit" class="btn-blue is-plain block" :disabled="loginLoading">{{!loginLoading?`登录`:`登录中...`}}
       </button>
     </form>
-  </div>
+  </section>
 </template>
 <script>
   import {mapActions} from "vuex"
@@ -71,6 +71,7 @@
 
   .bk {
     background-image: url("../assets/image/bk/login-bk.jpg");
+    /*background-image: url("http://ph8shpdnq.bkt.clouddn.com/login-bk.jpg");*/
   }
 
   .card {
