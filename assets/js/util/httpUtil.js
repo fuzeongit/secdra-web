@@ -3,11 +3,11 @@
  *
  * @author fjj
  */
-
+import Cookies from 'js-cookie'
 import config from "../config/config"
 import {Result} from "../model/base"
-import axios from 'axios'
-import qs from 'qs'
+import axios from "axios"
+import qs from "qs"
 // import * as NProgress from "nprogress";
 export default {
   /**
@@ -20,9 +20,14 @@ export default {
     // NProgress.start();
     let result = null;
     try {
-      result = await axios.get(config.host + url, {
+      let response = await axios.get(config.host + url, {
         params: params,
+        headers: {
+          "token": this._getCookieToken()
+        },
       });
+      this._handleToken(response);
+      result = response.data;
     } catch (e) {
       result = await new Result(500, e, "服务器错误");
     } finally {
@@ -39,15 +44,16 @@ export default {
    * @returns {Promise<>}
    */
   async post(url, body, params) {
-    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-    axios.defaults.withCredentials=true;
     // NProgress.start();
     let result = null;
     try {
       let response = await axios.post(config.host + url, qs.stringify(body), {
-        params: params
+        params: params,
+        headers: {
+          "token": this._getCookieToken()
+        },
       });
-      console.log(response);
+      this._handleToken(response);
       result = response.data;
     } catch (e) {
       result = await new Result(500, e, "服务器错误");
@@ -55,5 +61,31 @@ export default {
 
     }
     return result;
+  },
+
+  _getCookieToken() {
+    if (window.$nuxt.$store.state.user.token) {
+      return window.$nuxt.$store.state.user.token
+    } else {
+      try {
+        return Cookies.get('token');
+      } catch (e) {
+        return null
+      }
+    }
+  },
+  _handleToken(response = {}) {
+    let headers = response.headers || {};
+    if (headers.token) {
+      Cookies.set("token", headers.token,{ expires: 30 })
+    }
+    if (response.data.status === 401) {
+      Cookies.remove("token");
+      try {
+        window.$nuxt.$router.replace("/login")
+      } catch (e) {
+        window.location.href = "/login";
+      }
+    }
   }
 }

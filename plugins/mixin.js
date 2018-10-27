@@ -15,6 +15,3 @@ Vue.prototype.$filter = filters;
 for(let name in filters){
   Vue.filter(name,filters[name])
 }
-
-import cookieUtil from "../assets/js/util/cookieUtil"
-Vue.prototype.$cookieUtil = cookieUtil;

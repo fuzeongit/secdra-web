@@ -6,7 +6,7 @@
         <p>
           {{message}}
         </p>
-        <button class="btn blue" @click.stop="close">
+        <button class="btn-blue" @click.stop="close">
           {{btnDesc}}
         </button>
       </div>

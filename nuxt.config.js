@@ -21,7 +21,11 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: {color: '#fff'},
+  loading: {
+    name: 'nuxt',
+    color: '#0b99ff',
+    background: '#fff'
+  },
 
   /*
   ** Global CSS
@@ -39,7 +43,6 @@ module.exports = {
     '~/plugins/route',
     '~/plugins/extend'
   ],
-
 
 
   /*

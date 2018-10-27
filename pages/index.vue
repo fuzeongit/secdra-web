@@ -1,42 +1,41 @@
 <template>
   <section class="container">
     <div>
-      <logo/>
-      <h1 class="title">
-        secdra-web
-      </h1>
-      <h2 class="subtitle">
-        My unreal Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          target="_blank"
-          class="button--green">Documentation</a>
-        <a
-
-          target="_blank"
-          class="button--grey">GitHub</a>
-      </div>
+      <button @click="click">测试</button>
+      <button @click="$router.push(`/user/123`)">跳转</button>
+      <button @click="remove">删除</button>
     </div>
   </section>
 </template>
 
 <script>
-  import Logo from '~/components/Logo.vue'
 
+  import {mapActions} from "vuex"
+  import Cookie from 'js-cookie'
   export default {
+    //在这里不能使用httpUtil
+    async asyncData({store, req, redirect, route, $axios}){
+      await $axios.get("/api/user/getInfo")
+    },
     components: {
-      Logo
+
     },
     data() {
       return {
       }
     },
     mounted() {
-      // console.log(1);
-      // console.log(this.$cookieUtil.get(""))
+
     },
-    methods: {}
+    methods: {
+      ...mapActions("user", ["AGetInfo"]),
+      async click(){
+        let result = await this.AGetInfo({phone: "13760029486", password: "123456"});
+      },
+      remove(){
+        Cookie.remove("token");
+      }
+    }
   }
 </script>
 

@@ -13,23 +13,26 @@ const state = {
 const mutations = {
   MSetUserInfo(state, user) {
     state.user = user;
-  }
+  },
 };
 
 const actions = {
   async ALogin(context, params) {
-    let result = await httpUtil.post("/user/login",params);
+    let result = await httpUtil.post("/user/login", params);
     if (result.status === 200) {
       context.commit("MSetUserInfo", result.data)
     }
     return result
   },
   async ARegister(context, params) {
-    let result = await httpUtil.post("/user/register",params);
+    let result = await httpUtil.post("/user/register", params);
     if (result.status === 200) {
       context.commit("MSetUserInfo", result.data)
     }
     return result
+  },
+  async AGetInfo(context, params) {
+    return await httpUtil.get("/user/getInfo", params)
   }
 };
 
