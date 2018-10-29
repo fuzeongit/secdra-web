@@ -1,189 +1,24 @@
 <template>
-  <section  class="bk">
-    <Header></Header>
-    <div class="page">
-      <div class="card">
-        <el-upload
-          :multiple="false"
-          :show-file-list="false"
-          class="avatar-uploader"
-          :action="actionPath"
-          accept="image/jpeg,image/gif,image/png,image/bmp"
-          :data="postData"
-          :before-upload="beforeAvatarUpload"
-          :on-progress="progress"
-          :on-success="handleAvatarSuccess">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-        <button @click="click">测试</button>
-        <button @click="$router.push(`/user/123`)">跳转</button>
-        <button @click="remove">删除</button>
-      </div>
-      <div class="card">
-        <el-upload
-          :multiple="false"
-          :show-file-list="false"
-          class="avatar-uploader"
-          :action="actionPath"
-          accept="image/jpeg,image/gif,image/png,image/bmp"
-          :data="postData"
-          :before-upload="beforeAvatarUpload"
-          :on-progress="progress"
-          :on-success="handleAvatarSuccess">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-        <button @click="click">测试</button>
-        <button @click="$router.push(`/user/123`)">跳转</button>
-        <button @click="remove">删除</button>
-      </div>
-      <div class="card">
-        <el-upload
-          :multiple="false"
-          :show-file-list="false"
-          class="avatar-uploader"
-          :action="actionPath"
-          accept="image/jpeg,image/gif,image/png,image/bmp"
-          :data="postData"
-          :before-upload="beforeAvatarUpload"
-          :on-progress="progress"
-          :on-success="handleAvatarSuccess">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-        <button @click="click">测试</button>
-        <button @click="$router.push(`/user/123`)">跳转</button>
-        <button @click="remove">删除</button>
-      </div>
-      <div class="card">
-        <el-upload
-          :multiple="false"
-          :show-file-list="false"
-          class="avatar-uploader"
-          :action="actionPath"
-          accept="image/jpeg,image/gif,image/png,image/bmp"
-          :data="postData"
-          :before-upload="beforeAvatarUpload"
-          :on-progress="progress"
-          :on-success="handleAvatarSuccess">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-        <button @click="click">测试</button>
-        <button @click="$router.push(`/user/123`)">跳转</button>
-        <button @click="remove">删除</button>
-      </div>
-      <div class="card">
-        <el-upload
-          :multiple="false"
-          :show-file-list="false"
-          class="avatar-uploader"
-          :action="actionPath"
-          accept="image/jpeg,image/gif,image/png,image/bmp"
-          :data="postData"
-          :before-upload="beforeAvatarUpload"
-          :on-progress="progress"
-          :on-success="handleAvatarSuccess">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-        <button @click="click">测试</button>
-        <button @click="$router.push(`/user/123`)">跳转</button>
-        <button @click="remove">删除</button>
-      </div>
-      <div class="card">
-        <el-upload
-          :multiple="false"
-          :show-file-list="false"
-          class="avatar-uploader"
-          :action="actionPath"
-          accept="image/jpeg,image/gif,image/png,image/bmp"
-          :data="postData"
-          :before-upload="beforeAvatarUpload"
-          :on-progress="progress"
-          :on-success="handleAvatarSuccess">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-        <button @click="click">测试</button>
-        <button @click="$router.push(`/user/123`)">跳转</button>
-        <button @click="remove">删除</button>
-      </div>
-      <div class="card">
-        <el-upload
-          :multiple="false"
-          :show-file-list="false"
-          class="avatar-uploader"
-          :action="actionPath"
-          accept="image/jpeg,image/gif,image/png,image/bmp"
-          :data="postData"
-          :before-upload="beforeAvatarUpload"
-          :on-progress="progress"
-          :on-success="handleAvatarSuccess">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-        <button @click="click">测试</button>
-        <button @click="$router.push(`/user/123`)">跳转</button>
-        <button @click="remove">删除</button>
-      </div>
-      <div class="card">
-        <el-upload
-          :multiple="false"
-          :show-file-list="false"
-          class="avatar-uploader"
-          :action="actionPath"
-          accept="image/jpeg,image/gif,image/png,image/bmp"
-          :data="postData"
-          :before-upload="beforeAvatarUpload"
-          :on-progress="progress"
-          :on-success="handleAvatarSuccess">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-        <button @click="click">测试</button>
-        <button @click="$router.push(`/user/123`)">跳转</button>
-        <button @click="remove">删除</button>
-      </div>
+  <div class="page">
+    <div class="card">
+      <button @click="click" class="btn-blue">测试</button>
+      <button @click="$router.push(`/user/123`)" class="btn-blue">跳转</button>
+      <button @click="remove" class="btn-blue">删除</button>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
-
   import {mapActions} from "vuex"
-  import Header from "../components/pages/shared/Header"
-  import Cookie from 'js-cookie'
+
 
   export default {
     //在这里不能使用httpUtil
     async asyncData({store, req, redirect, route, $axios}) {
-      try {
-        let res = await $axios.get("/api/qiniu/getUploadToken");
-        let result = res.data || {};
-        if (result.status === 200) {
-          store.state.user.uploadToken = result.data
-        }
-      } catch (e) {
-
-      }
-    },
-    components: {
-      Header
-    },
-    computed: {
-      postData() {
-        return {
-          token: this.$store.state.user.uploadToken
-        }
-      }
+      store.state.menu.name = "home"
     },
     data() {
-      return {
-        imageUrl: "",
-        actionPath: ""
-      }
+
     },
     mounted() {
 
@@ -196,19 +31,6 @@
       remove() {
         Cookie.remove("token");
       },
-
-      beforeAvatarUpload(file) {
-        console.log(file)
-
-        return true;
-      },
-      progress(event, file, fileList) {
-        this.imageUrl = URL.createObjectURL(file.raw);
-      },
-      handleAvatarSuccess(res, file) {
-        console.log(res)
-        this.imageUrl = URL.createObjectURL(file.raw);
-      },
     }
   }
 </script>
@@ -216,12 +38,8 @@
 <style type="text/less" lang="less" scoped>
   @import "../assets/style/color";
   @import "../assets/style/config";
-  .bk {
-    background-image: url("../assets/image/bk/login-bk.jpg");
-    /*background-image: url("http://ph9jy186h.bkt.clouddn.com/58562464_p0.png");*/
-  }
   .page{
-    padding-top: 100px;
+    padding-top: 30px;
   }
   .card{
     width: @visual-width;

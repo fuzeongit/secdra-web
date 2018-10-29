@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import vuex, {Store} from 'vuex'
+import menu from './menu'
 import user from './user'
 
 /**
@@ -15,6 +16,7 @@ Vue.use(vuex);
  */
 export default () => new Store({
   modules: {
+    menu,
     user
   }
 })

@@ -16,10 +16,12 @@
   </section>
 </template>
 <script>
+  import Cookies from 'js-cookie'
   import {mapActions} from "vuex"
 
   export default {
     name: "login",
+    layout: 'login',
     data() {
       return {
         loginLoading: false,
@@ -35,6 +37,7 @@
         this.loginLoading = true;
         let result = await this.ALogin({phone: "13760029486", password: "123456"});
         if (result.status === 200) {
+          Cookies.set("user",JSON.stringify(result.data),{ expires: 30 });
           this.$router.replace("/");
         } else {
           this.loginLoading = false;
