@@ -31,8 +31,8 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    {src: '../assets/style/index.less', lang: 'less'},
     {src: '../assets/style/lib/font-awesome/less/font-awesome.less', lang: 'less'},
+    {src: '../assets/style/index.less', lang: 'less'},
   ],
 
   /*

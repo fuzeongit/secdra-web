@@ -1,25 +1,16 @@
 <template>
   <section class="container bk cover">
-    <form style="width: 400px" class="card padding-50" @submit.prevent="login">
+    <form class="card padding-50" @submit.prevent="login">
+      <img src="../assets/image/logo/logo.svg" width="250px" >
+      <p class="sub-logo">苟利国家生死以，岂因福祸避趋之</p>
       <div class="row input-group">
-        <label class="col-5">
-          <i class="fa fa-mobile-phone"></i>
-        </label>
-        <div class="col-25">
-          <input type="text" class="input-blue is-plain block" title="手机" v-model="form.phone">
-        </div>
+        <input type="text" class="input-blue block" title="手机" v-model="form.phone" placeholder="手机号码">
       </div>
       <div class="row input-group">
-        <label class="col-5">
-          <i class="fa fa-lock"></i>
-        </label>
-        <div class="col-25">
-          <input type="password" class="input-blue is-plain block" title="密码" v-model="form.password">
-        </div>
+        <input type="password" class="input-blue block" title="密码" v-model="form.password" placeholder="密码">
       </div>
       <br>
-      <br>
-      <button type="submit" class="btn-blue is-plain block" :disabled="loginLoading">{{!loginLoading?`登录`:`登录中...`}}
+      <button type="submit" class="btn-blue block" :disabled="loginLoading">{{!loginLoading?`登录`:`登录中...`}}
       </button>
     </form>
   </section>
@@ -71,26 +62,17 @@
 
   .bk {
     background-image: url("../assets/image/bk/login-bk.jpg");
-    /*background-image: url("http://ph8shpdnq.bkt.clouddn.com/login-bk.jpg");*/
+    /*background-image: url("http://ph9jy186h.bkt.clouddn.com/58562464_p0.png");*/
   }
 
   .card {
-    z-index: 1;
     position: relative;
     background-size: cover;
-    background: transparent center top;
-    box-shadow: 0 0 10px -1px @gray;
-    &:after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(255, 255, 255, 0.1);
-      z-index: -1;
-
-    }
+    background: rgba(255, 255, 255, 0.92) center top;
+  }
+  .sub-logo{
+    margin-bottom: 50px;
+    font-size: @small-font-size
   }
 
   .input-group {
@@ -101,7 +83,7 @@
       }
     }
     input {
-      color: @white
+      color: @font-color
     }
   }
 </style>
