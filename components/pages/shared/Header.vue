@@ -24,12 +24,12 @@
           <input type="search" title="search" class="input-blue is-plain" @search="search" v-model="tag"
                  placeholder="输入标签搜索">
           <i class="fa fa-search"></i>
-          <div class="head-img-box" @mouseover="isShowUserPopover = true">
+          <div class="head-img-box" >
             <nuxt-link :to="`/user/${user.id||''}`">
-              <img src="../../../assets/image/bk/login-bk.jpg" width="40" height="40"
-                   style="border-radius: 50%;margin-left: 30px">
+              <img src="" width="40" height="40" :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`"
+                   style="border-radius: 50%;">
             </nuxt-link>
-            <ul @click.stop="()=>{}" v-show="isShowUserPopover" @mouseleave="isShowUserPopover=false">
+            <ul>
               <li>
                 <a>
                   <i class="fa fa-question-circle-o"></i>
@@ -68,13 +68,10 @@
         scrollTop: 0,
         hid: false,
         tag: "",
-        isShowUserPopover: false,
+
       }
     },
     watch: {
-      $route(newVal) {
-        this.isShowUserPopover = false
-      }
     },
     computed: {
       isShow() {
@@ -93,9 +90,6 @@
       document.addEventListener('scroll', (event) => {
         this.scrollTop = event.target.documentElement.scrollTop
       });
-      document.addEventListener('click', () => {
-        this.isShowUserPopover = false
-      })
     },
     methods: {
       search() {
@@ -149,14 +143,18 @@
         .head-img-box {
           display: inline-block;
           position: relative;
+          padding-left: 30px;
+
           ul {
+            display: none;
             position: absolute;
             background-color: white;
             padding: 0 15px;
             width: 150px;
             right: 0;
             top: 0;
-            margin-top: @herder-height+@herder-border-height+10px;
+            margin-top: @herder-height - @herder-border-height;
+            box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
             &:before {
               position: absolute;
               display: block;
@@ -194,7 +192,9 @@
             }
           }
           &:hover {
-
+            ul{
+              display: block;
+            }
           }
         }
       }
