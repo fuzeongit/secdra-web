@@ -23,22 +23,23 @@
         <div class="right-box">
           <input type="search" title="search" class="input-blue is-plain" @search="search" v-model="tag"
                  placeholder="输入标签搜索">
-          <i class="fa fa-search"></i>
-          <div class="head-img-box" >
+          <i class="s-chaxun icon"></i>
+          <div class="head-img-box">
             <nuxt-link :to="`/user/${user.id||''}`">
-              <img src="" width="40" height="40" :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`"
+              <img src="" width="40" height="40"
+                   :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`"
                    style="border-radius: 50%;">
             </nuxt-link>
             <ul>
               <li>
                 <a>
-                  <i class="fa fa-question-circle-o"></i>
+                  <i class="icon s-question"></i>
                   没有想到
                 </a>
               </li>
               <li>
                 <a @click="logout">
-                  <i class="fa fa-power-off"></i>
+                  <i class="icon s-zhuxiao"></i>
                   退出登录
                 </a>
               </li>
@@ -52,6 +53,7 @@
 
 <script>
   import Cookie from 'js-cookie'
+
   export default {
     props: {
       offset: {
@@ -71,8 +73,7 @@
 
       }
     },
-    watch: {
-    },
+    watch: {},
     computed: {
       isShow() {
         let isShow = this.scrollTop < this.offset;
@@ -96,8 +97,13 @@
 
       },
       logout() {
-        Cookie.remove("token");
-        this.$router.replace("/login")
+        this.$confirm({
+          message:`你确定要退出登录吗？`,
+          okCallback:()=>{
+            Cookie.remove("token");
+            this.$router.replace("/login")
+          }
+        });
       },
     }
   }
@@ -123,7 +129,7 @@
       margin: 0 auto;
       font-size: 0;
       height: @herder-nav-height;
-      line-height:  @herder-nav-height;
+      line-height: @herder-nav-height;
       > a {
         display: inline-block;
         color: @font-color;
@@ -131,11 +137,11 @@
         font-size: @big-font-size;
         &.active {
           color: @theme-color;
-          border-bottom:(@herder-height - @herder-nav-height) solid @theme-color;
+          border-bottom: (@herder-height - @herder-nav-height) solid @theme-color;
         }
       }
-      .fa {
-        font-size: @big-font-size;
+      .icon {
+        font-size: @big-font-size + 4px;
       }
       .right-box {
         line-height: @herder-height;
@@ -155,19 +161,19 @@
             top: 0;
             margin-top: @herder-height - @herder-border-height;
             box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
-            &:before {
-              position: absolute;
-              display: block;
-              width: 0;
-              height: 0;
-              content: "";
-              top: -10px;
-              right: 10px;
-              margin-left: -6px;
-              border: 10px solid transparent;
-              border-top-width: 0;
-              border-bottom-color: #fff;
-            }
+            /*&:before {*/
+            /*position: absolute;*/
+            /*display: block;*/
+            /*width: 0;*/
+            /*height: 0;*/
+            /*content: "";*/
+            /*top: -6px;*/
+            /*right: 6px;*/
+            /*margin-left: -6px;*/
+            /*border: 6px solid transparent;*/
+            /*border-top-width: 0;*/
+            /*border-bottom-color: #fff;*/
+            /*}*/
             li {
               border-bottom: 1px solid @border-color;
               line-height: 45px;
@@ -179,20 +185,21 @@
                 display: inline-block;
                 height: 100%;
                 font-size: @medium-font-size;
-                &.active{
-                  color:@theme-color;
-                  .fa {
+                &.active {
+                  color: @theme-color;
+                  .icon {
                     color: @theme-color;
                   }
                 }
-                .fa {
-                  font-size: @medium-font-size;
+                .icon {
+                  font-size: @big-font-size + 2px;
+                  vertical-align: -1px;
                 }
               }
             }
           }
           &:hover {
-            ul{
+            ul {
               display: block;
             }
           }

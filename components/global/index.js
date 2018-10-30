@@ -7,7 +7,7 @@ const ConfirmConstructor = Vue.extend(ConfirmComponent);
 
 /**
  * 弹窗
- * @param {{message:String},{btnDesc?:String}} alertOption
+ * @param {{title:String},{message:String},{btnDesc?:String}} alertOption
  * @constructor
  */
 export const Alert = function (alertOption = {}) {
@@ -21,7 +21,7 @@ export const Alert = function (alertOption = {}) {
 
 /**
  * 询问
- * @param {{message:String},{btnDesc?:String}} confirmOption
+ * @param {{title:String},{message:String},{okDesc?:String},{noDesc?:String},{okCallback:Function},{noCallback:Function}} confirmOption
  * @constructor
  */
 export const Confirm = function (confirmOption = {}) {

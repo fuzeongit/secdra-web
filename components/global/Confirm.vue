@@ -1,17 +1,21 @@
 <template>
-  <div class="mask" >
+  <div class="mask">
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <div class="card alert" v-show="visible">
-        <h2></h2>
+      <div class="card confirm padding-15" v-show="visible">
+        <h3>
+          {{title}}
+        </h3>
         <p>
           {{message}}
         </p>
-        <button class="btn-blue" @click.stop="close">
-          {{btnDesc}}
-        </button>
-        <button class="btn-blue" @click.stop="close">
-          {{btnDesc}}
-        </button>
+       <div class="confirm-btn-group">
+         <button class="btn-blue is-plain" @click.stop="no">
+           {{noDesc}}
+         </button>
+         <button class="btn-blue" @click.stop="ok">
+           {{okDesc}}
+         </button>
+       </div>
       </div>
     </transition>
   </div>
@@ -33,8 +37,13 @@
       return {
         visible: false,
         closed: false,
-        okDesc:`确定`,
-        noDesc:`取消`,
+        title:"提示",
+        okDesc: `确定`,
+        noDesc: `取消`,
+        okCallback: function () {
+        },
+        noCallback: function () {
+        }
       }
     },
     methods: {
@@ -44,18 +53,39 @@
         this.$destroy(true);
         this.$el.parentNode.removeChild(this.$el);
       },
-      close() {
+      ok() {
         this.closed = true;
+        this.okCallback && this.okCallback()
+      },
+      no() {
+        this.closed = true;
+        this.noCallback && this.noCallback()
       }
     }
   }
 </script>
 
 <style scoped lang="less" type="text/less">
-  .alert{
+  @import "../../assets/style/color.less";
+  @import "../../assets/style/config.less";
+  .confirm {
     width: 450px;
     margin: 0 auto;
     vertical-align: middle;
     display: inline-block;
+    h3 {
+      text-align: left;
+      line-height: 40px;
+    }
+    p {
+      text-align: left;
+      padding: 10px 0;
+      line-height: 25px;
+      color: @gray;
+    }
+    .confirm-btn-group {
+      margin-top: 10px;
+      text-align: right;
+    }
   }
 </style>

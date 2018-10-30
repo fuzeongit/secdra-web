@@ -1,14 +1,16 @@
 <template>
   <div class="mask" >
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <div class="card alert" v-show="visible">
-        <h2></h2>
+      <div class="card alert padding-15" v-show="visible">
+        <h3>{{title}}</h3>
         <p>
           {{message}}
         </p>
-        <button class="btn-blue" @click.stop="close">
-          {{btnDesc}}
-        </button>
+        <div class="alert-btn-group">
+          <button class="btn-blue" @click.stop="close">
+            {{btnDesc}}
+          </button>
+        </div>
       </div>
     </transition>
   </div>
@@ -30,6 +32,7 @@
       return {
         visible: false,
         closed: false,
+        title:"提示",
         btnDesc:`确定`
       }
     },
@@ -48,10 +51,26 @@
 </script>
 
 <style scoped lang="less" type="text/less">
+  @import "../../assets/style/color.less";
+  @import "../../assets/style/config.less";
   .alert{
     width: 450px;
     margin: 0 auto;
     vertical-align: middle;
     display: inline-block;
+    h3 {
+      text-align: left;
+      line-height: 40px;
+    }
+    p {
+      text-align: left;
+      padding: 10px 0;
+      line-height: 25px;
+      color: @gray;
+    }
+    .alert-btn-group {
+      margin-top: 10px;
+      text-align: right;
+    }
   }
 </style>
