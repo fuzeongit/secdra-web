@@ -1,14 +1,17 @@
 <template>
-  <div class="mask" >
+  <div class="mask">
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
       <div class="card padding-15" v-show="visible">
-        <h3>{{title}}</h3>
-        <p>
-          {{message}}
-        </p>
-        <div class="alert-btn-group">
-          <button class="btn-blue" @click.stop="close">
-            {{btnDesc}}
+        <h3>
+          {{title}}
+        </h3>
+        <input type="text" v-model="input" title="input" class="input-blue block" :placeholder="message">
+        <div class="prompt-btn-group">
+          <button class="btn-blue is-plain" @click.stop="no">
+            {{noDesc}}
+          </button>
+          <button class="btn-blue" @click.stop="ok">
+            {{okDesc}}
           </button>
         </div>
       </div>
@@ -18,7 +21,7 @@
 
 <script>
   export default {
-    name: "Alert",
+    name: "Confirm",
     watch: {
       closed(newVal) {
         if (newVal) {
@@ -31,9 +34,16 @@
     data() {
       return {
         visible: false,
+        input:'',
         closed: false,
-        title:"提示",
-        btnDesc:`确定`
+        title: "提示",
+        okDesc: `确定`,
+        noDesc: `取消`,
+        checkList:[],
+        okCallback: function () {
+        },
+        noCallback: function () {
+        }
       }
     },
     methods: {
@@ -43,8 +53,13 @@
         this.$destroy(true);
         this.$el.parentNode.removeChild(this.$el);
       },
-      close() {
+      ok() {
         this.closed = true;
+        this.okCallback && this.okCallback(this.input)
+      },
+      no() {
+        this.closed = true;
+        this.noCallback && this.noCallback()
       }
     }
   }
@@ -53,7 +68,8 @@
 <style scoped lang="less" type="text/less">
   @import "../../assets/style/color.less";
   @import "../../assets/style/config.less";
-  .card{
+
+  .card {
     width: 450px;
     margin: 0 auto;
     vertical-align: middle;
@@ -62,13 +78,10 @@
       text-align: left;
       line-height: 40px;
     }
-    p {
-      text-align: left;
-      padding: 10px 0;
-      line-height: 25px;
-      color: @gray;
+    input{
+      margin: 20px 0;
     }
-    .alert-btn-group {
+    .prompt-btn-group {
       margin-top: 10px;
       text-align: right;
     }

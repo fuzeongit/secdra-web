@@ -1,7 +1,7 @@
 <template>
   <div class="mask">
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <div class="card confirm padding-15" v-show="visible">
+      <div class="card padding-15" v-show="visible">
         <h3>
           {{title}}
         </h3>
@@ -68,7 +68,7 @@
 <style scoped lang="less" type="text/less">
   @import "../../assets/style/color.less";
   @import "../../assets/style/config.less";
-  .confirm {
+  .card {
     width: 450px;
     margin: 0 auto;
     vertical-align: middle;

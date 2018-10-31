@@ -1,16 +1,28 @@
 <template>
   <div class="page">
-    <div class="card">
-      <button @click="click" class="btn-blue">测试</button>
-      <button @click="$router.push(`/user/123`)" class="btn-blue">跳转</button>
-      <button @click="remove" class="btn-blue">删除</button>
+    <div class="content row">
+      <div class="card image-card">
+        <button @click="click" class="btn-blue">测试</button>
+        <button @click="$router.push(`/user/123`)" class="btn-blue">跳转</button>
+        <button @click="remove" class="btn-blue">删除</button>
+      </div>
+      <div class="card user-card">
+        <div class="head-box">
+          <nuxt-link :to="`/user/${user.id||''}`">
+            <img src="" width="100" height="100"
+                 :onerror="`this.src='${require('../assets/image/default/default-head.jpg')}'`"
+                 style="border-radius: 50%;">
+          </nuxt-link>
+        </div>
+        <p class="center">{{user.name||'456'}}</p>
+        <p class="center">{{user.introduction||'456'}}</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
   import {mapActions} from "vuex"
-
 
   export default {
     //在这里不能使用httpUtil
@@ -19,6 +31,11 @@
     },
     data() {
 
+    },
+    computed: {
+      user() {
+        return this.$store.state.user.user || {}
+      }
     },
     mounted() {
 
@@ -38,11 +55,27 @@
 <style type="text/less" lang="less" scoped>
   @import "../assets/style/color";
   @import "../assets/style/config";
-  .page{
+
+  .page {
     padding-top: 30px;
   }
-  .card{
+
+  .content {
     width: @visual-width;
+    margin: 0 auto;
+    .image-card {
+      width: 750px;
+      margin-right: 20px;
+      float: left;
+    }
+    .user-card {
+      width: 250px;
+      float: left;
+      .head-box {
+        text-align: center;
+        padding: 15px 0;
+      }
+    }
   }
 </style>
 <style>

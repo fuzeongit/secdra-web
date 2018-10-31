@@ -14,6 +14,7 @@
         <img v-if="imageUrl" :src="imageUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
+      <button @click="test">测试</button>
     </div>
   </div>
 </template>
@@ -56,6 +57,16 @@
         handleAvatarSuccess(res, file) {
           this.imageUrl = URL.createObjectURL(file.raw);
         },
+        test(){
+          this.$prompt({
+            message:`请输入`,
+            okCallback:input=>{
+              console.log(input)
+            }
+          },
+
+          )
+        }
       }
     }
 </script>

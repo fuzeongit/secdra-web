@@ -1,8 +1,9 @@
 import Vue from 'vue'
 
-import {Alert,Confirm} from '../components/global'
+import {Alert, Confirm, Prompt} from '../components/global'
 Vue.prototype.$alert = Alert;
 Vue.prototype.$confirm = Confirm;
+Vue.prototype.$prompt = Prompt;
 
 import vueSocketIO from 'vue-socket.io'
 import io from 'socket.io-client'

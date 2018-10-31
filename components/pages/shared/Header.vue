@@ -25,17 +25,17 @@
                  placeholder="输入标签搜索">
           <i class="s-chaxun icon"></i>
           <div class="head-img-box">
-            <nuxt-link :to="`/user/${user.id||''}`">
+            <a @click.stop="isShowUserOptions=true">
               <img src="" width="40" height="40"
                    :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`"
                    style="border-radius: 50%;">
-            </nuxt-link>
-            <ul>
+            </a>
+            <ul v-show="isShowUserOptions" @click.stop="()=>{}">
               <li>
-                <a>
+                <nuxt-link :to="`/user/${user.id||''}`" :class="{active:activeName===`user`}">
                   <i class="icon s-question"></i>
-                  没有想到
-                </a>
+                  个人中心
+                </nuxt-link>
               </li>
               <li>
                 <a @click="logout">
@@ -70,10 +70,14 @@
         scrollTop: 0,
         hid: false,
         tag: "",
-
+        isShowUserOptions: false
       }
     },
-    watch: {},
+    watch: {
+      $route() {
+        this.isShowUserOptions = false
+      },
+    },
     computed: {
       isShow() {
         let isShow = this.scrollTop < this.offset;
@@ -91,15 +95,19 @@
       document.addEventListener('scroll', (event) => {
         this.scrollTop = event.target.documentElement.scrollTop
       });
+      document.addEventListener('click', () => {
+        this.isShowUserOptions = false;
+      })
     },
     methods: {
       search() {
 
       },
       logout() {
+        this.isShowUserOptions = false;
         this.$confirm({
-          message:`你确定要退出登录吗？`,
-          okCallback:()=>{
+          message: `你确定要退出登录吗？`,
+          okCallback: () => {
             Cookie.remove("token");
             this.$router.replace("/login")
           }
@@ -134,7 +142,7 @@
         display: inline-block;
         color: @font-color;
         padding: 0 20px;
-        font-size: @big-font-size;
+        font-size: @medium-font-size;
         &.active {
           color: @theme-color;
           border-bottom: (@herder-height - @herder-nav-height) solid @theme-color;
@@ -152,28 +160,30 @@
           padding-left: 30px;
 
           ul {
-            display: none;
             position: absolute;
             background-color: white;
             padding: 0 15px;
-            width: 150px;
+            width: 120px;
             right: 0;
-            top: 0;
+            top: 8px;
+            border: 1px solid @border-color;
             margin-top: @herder-height - @herder-border-height;
-            box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
-            /*&:before {*/
-            /*position: absolute;*/
-            /*display: block;*/
-            /*width: 0;*/
-            /*height: 0;*/
-            /*content: "";*/
-            /*top: -6px;*/
-            /*right: 6px;*/
-            /*margin-left: -6px;*/
-            /*border: 6px solid transparent;*/
-            /*border-top-width: 0;*/
-            /*border-bottom-color: #fff;*/
-            /*}*/
+            box-shadow: 0 0 10px rgba(202, 202, 202, 0.55);
+            text-align: center;
+            &:before {
+              content: "";
+              position: absolute;
+              display: block;
+              width: 10px;
+              height: 10px;
+              transform: rotate(45deg);
+              top: -7px;
+              right: 12px;
+              background: @white;
+              border: 1px solid @border-color;
+              border-bottom: 0;
+              border-right: 0;
+            }
             li {
               border-bottom: 1px solid @border-color;
               line-height: 45px;
@@ -184,7 +194,7 @@
                 color: @font-color;
                 display: inline-block;
                 height: 100%;
-                font-size: @medium-font-size;
+                font-size: @default-font-size;
                 &.active {
                   color: @theme-color;
                   .icon {
@@ -192,15 +202,10 @@
                   }
                 }
                 .icon {
-                  font-size: @big-font-size + 2px;
+                  font-size: @medium-font-size + 2px;
                   vertical-align: -1px;
                 }
               }
-            }
-          }
-          &:hover {
-            ul {
-              display: block;
             }
           }
         }
