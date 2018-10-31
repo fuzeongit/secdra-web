@@ -30,7 +30,6 @@
       store.state.menu.name = "home"
     },
     data() {
-
     },
     computed: {
       user() {
