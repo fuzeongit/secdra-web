@@ -20,12 +20,14 @@
 </template>
 
 <script>
+    import axios from "axios";
+
     export default {
       name: "upload",
-      async asyncData ({store, req, redirect, route, $axios}) {
+      async asyncData ({store, req, redirect, route}) {
         store.state.menu.name = "upload";
         try {
-          let res = await $axios.get("/api/qiniu/getUploadToken");
+          let res = await axios.get("/api/qiniu/getUploadToken");
           let result = res.data || {};
           if (result.status === 200) {
             store.state.user.uploadToken = result.data

@@ -12,9 +12,9 @@
   export default {
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
-    async asyncData ({store, req, redirect, route, $axios}) {
+    async asyncData ({store, req, redirect, route}) {
       store.state.menu.name = "user";
-      let res  = await $axios.get('/api/user/getSelfInfo');
+      let res  = await axios.get('/api/user/getSelfInfo');
       return {res:res.data}
     },
     // data(){

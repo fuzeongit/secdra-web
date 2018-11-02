@@ -26,7 +26,7 @@
 
   export default {
     //在这里不能使用httpUtil
-    async asyncData({store, req, redirect, route, $axios}) {
+    async asyncData({store, req, redirect, route}) {
       store.state.menu.name = "home"
     },
     data() {
