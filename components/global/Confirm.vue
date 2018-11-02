@@ -8,14 +8,14 @@
         <p>
           {{message}}
         </p>
-       <div class="confirm-btn-group">
-         <button class="btn-blue is-plain" @click.stop="no">
-           {{noDesc}}
-         </button>
-         <button class="btn-blue" @click.stop="ok">
-           {{okDesc}}
-         </button>
-       </div>
+        <div class="confirm-btn-group">
+          <button class="btn-blue is-plain" @click.stop="no">
+            {{noDesc}}
+          </button>
+          <button class="btn-blue" @click.stop="ok">
+            {{okDesc}}
+          </button>
+        </div>
       </div>
     </transition>
   </div>
@@ -37,29 +37,35 @@
       return {
         visible: false,
         closed: false,
-        title:"提示",
+        title: "提示",
         okDesc: `确定`,
         noDesc: `取消`,
         okCallback: function () {
         },
         noCallback: function () {
-        }
+        },
+        clickType: null
       }
     },
     methods: {
       destroyElement() {
         this.$el.firstElementChild.removeEventListener('transitionend', this.destroyElement);
         this.$el.firstElementChild.removeEventListener('animationend', this.destroyElement);
+        if (this.clickType === "ok") {
+          this.okCallback && this.okCallback()
+        } else if (this.clickType === "no") {
+          this.noCallback && this.noCallback()
+        }
         this.$destroy(true);
         this.$el.parentNode.removeChild(this.$el);
       },
       ok() {
         this.closed = true;
-        this.okCallback && this.okCallback()
+        this.clickType = "ok";
       },
       no() {
         this.closed = true;
-        this.noCallback && this.noCallback()
+        this.clickType = "no";
       }
     }
   }
@@ -68,6 +74,7 @@
 <style scoped lang="less" type="text/less">
   @import "../../assets/style/color.less";
   @import "../../assets/style/config.less";
+
   .card {
     width: 450px;
     margin: 0 auto;

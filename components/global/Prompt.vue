@@ -43,23 +43,29 @@
         okCallback: function () {
         },
         noCallback: function () {
-        }
+        },
+        clickType: null
       }
     },
     methods: {
       destroyElement() {
         this.$el.firstElementChild.removeEventListener('transitionend', this.destroyElement);
         this.$el.firstElementChild.removeEventListener('animationend', this.destroyElement);
+        if (this.clickType === "ok") {
+          this.okCallback && this.okCallback()
+        } else if (this.clickType === "no") {
+          this.noCallback && this.noCallback()
+        }
         this.$destroy(true);
         this.$el.parentNode.removeChild(this.$el);
       },
       ok() {
         this.closed = true;
-        this.okCallback && this.okCallback(this.input)
+        this.clickType = "ok";
       },
       no() {
         this.closed = true;
-        this.noCallback && this.noCallback()
+        this.clickType = "no";
       }
     }
   }
