@@ -57,7 +57,7 @@ module.exports = {
     [
       '/api',
       {
-        target: 'http://47.107.131.24:8080', // api主机
+        target: 'http://localhost:8080', // api主机
         pathRewrite: {'^/api': '/'}
       }
     ]
