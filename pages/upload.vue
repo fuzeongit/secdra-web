@@ -21,55 +21,56 @@
 
 <script>
 
-  export default {
-      name: "upload",
-      async asyncData ({store, req, redirect, route,$axios}) {
-        store.state.menu.name = "upload";
-        try {
-          let res = await $axios.get("/api/qiniu/getUploadToken");
-          let result = res.data || {};
-          if (result.status === 200) {
-            store.state.user.uploadToken = result.data
-          }
-        } catch (e) {
+  import config from "../assets/js/config/config";
 
+  export default {
+    name: "upload",
+    async asyncData({store, req, redirect, route, $axios}) {
+      store.state.menu.name = "upload";
+      try {
+        let res = await $axios.get(`${config.host}/qiniu/getUploadToken`);
+        let result = res.data || {};
+        if (result.status === 200) {
+          store.state.user.uploadToken = result.data
         }
-      },
-      data(){
+      } catch (e) {
+
+      }
+    },
+    data() {
+      return {
+        imageUrl: "",
+        actionPath: ""
+      }
+    },
+    computed: {
+      postData() {
         return {
-          imageUrl: "",
-          actionPath: ""
+          token: this.$store.state.user.uploadToken
         }
+      }
+    },
+    methods: {
+      beforeAvatarUpload(file) {
+        return true;
       },
-      computed: {
-        postData() {
-          return {
-            token: this.$store.state.user.uploadToken
-          }
-        }
+      progress(event, file, fileList) {
+        this.imageUrl = URL.createObjectURL(file.raw);
       },
-      methods:{
-        beforeAvatarUpload(file) {
-          return true;
-        },
-        progress(event, file, fileList) {
-          this.imageUrl = URL.createObjectURL(file.raw);
-        },
-        handleAvatarSuccess(res, file) {
-          this.imageUrl = URL.createObjectURL(file.raw);
-        },
-        test(){
-          this.$prompt({
-            message:`请输入`,
-            okCallback:input=>{
+      handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      test() {
+        this.$prompt({
+            message: `请输入`,
+            okCallback: input => {
               console.log(input)
             }
           },
-
-          )
-        }
+        )
       }
     }
+  }
 </script>
 
 <style scoped>
