@@ -1,5 +1,4 @@
 import {Result} from "../assets/js/model/base";
-import axios from 'axios'
 
 //快速，通过cookie
 // export default async ({store, req, redirect, route}) => {
@@ -23,15 +22,15 @@ import axios from 'axios'
 
 
 //严谨，通过验证接口
-export default async ({store, req, redirect, route}) => {
+export default async ({store, req, redirect, route,$axios}) => {
   let result = {};
   let user = store.state.user.user || {};
   try {
     let responses = {};
     if (user.id) {
-      responses = await axios.post("/api/user/checkLogin");
+      responses = await $axios.post("/api/user/checkLogin");
     } else {
-      responses = await axios.get("/api/user/getSelfInfo");
+      responses = await $axios.get("/api/user/getSelfInfo");
     }
     result = responses.data;
   } catch (e) {
