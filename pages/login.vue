@@ -4,13 +4,13 @@
       <img src="../assets/image/logo/logo.svg" width="250px" >
       <p class="sub-logo">苟利国家生死以，岂因祸福避趋之</p>
       <div class="row input-group">
-        <input type="text" class="input-blue block" title="手机" v-model="form.phone" placeholder="手机号码">
+        <input type="text" class="input block" title="手机" v-model="form.phone" placeholder="手机号码">
       </div>
       <div class="row input-group">
-        <input type="password" class="input-blue block" title="密码" v-model="form.password" placeholder="密码">
+        <input type="password" class="input block" title="密码" v-model="form.password" placeholder="密码">
       </div>
       <br>
-      <button type="submit" class="btn-blue block" :disabled="loginLoading">{{!loginLoading?`登录`:`登录中...`}}
+      <button type="submit" class="btn block" :disabled="loginLoading">{{!loginLoading?`登录`:`登录中...`}}
       </button>
     </form>
   </section>

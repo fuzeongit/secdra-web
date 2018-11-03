@@ -9,7 +9,7 @@
 
 <script>
 
-  import config from "../../assets/js/config/config";
+  import config from "../../assets/js/config";
 
   export default {
     //在这里不能使用httpUtil

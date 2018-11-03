@@ -4,7 +4,7 @@
  * @author fjj
  */
 import Cookies from 'js-cookie'
-import config from "../config/config"
+import config from "../config"
 import {Result} from "../model/base"
 import axios from "axios"
 import qs from "qs"
@@ -21,10 +21,7 @@ export default {
     let result = null;
     try {
       let response = await axios.get(config.host + url, {
-        params: params,
-        headers: {
-          "token": this._getCookieToken()
-        },
+        params: params
       });
       this._handleToken(response);
       result = response.data;
@@ -48,10 +45,7 @@ export default {
     let result = null;
     try {
       let response = await axios.post(config.host + url, qs.stringify(body), {
-        params: params,
-        headers: {
-          "token": this._getCookieToken()
-        },
+        params: params
       });
       this._handleToken(response);
       result = response.data;

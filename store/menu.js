@@ -1,5 +1,3 @@
-import httpUtil from '../assets/js/util/httpUtil'
-
 /**
  *  有关user的仓库
  *

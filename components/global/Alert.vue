@@ -7,7 +7,7 @@
           {{message}}
         </p>
         <div class="alert-btn-group">
-          <button class="btn-blue" @click.stop="close">
+          <button class="btn" @click.stop="close">
             {{btnDesc}}
           </button>
         </div>

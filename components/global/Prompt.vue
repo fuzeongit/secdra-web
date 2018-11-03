@@ -5,12 +5,12 @@
         <h3>
           {{title}}
         </h3>
-        <input type="text" v-model="input" title="input" class="input-blue block" :placeholder="message">
+        <input type="text" v-model="input" title="input" class="input block" :placeholder="message">
         <div class="prompt-btn-group">
-          <button class="btn-blue is-plain" @click.stop="no">
+          <button class="btn is-plain" @click.stop="no">
             {{noDesc}}
           </button>
-          <button class="btn-blue" @click.stop="ok">
+          <button class="btn" @click.stop="ok">
             {{okDesc}}
           </button>
         </div>

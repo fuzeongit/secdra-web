@@ -21,7 +21,7 @@
       </nuxt-link>
       <template>
         <div class="right-box">
-          <input type="search" title="search" class="input-blue is-plain" @search="search" v-model="tag"
+          <input type="search" title="search" class="input is-plain" @search="search" v-model="tag"
                  placeholder="输入标签搜索">
           <i class="s-chaxun icon"></i>
           <div class="head-img-box">
@@ -213,3 +213,4 @@
     }
   }
 </style>
+

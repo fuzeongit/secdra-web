@@ -2,20 +2,30 @@
   <div class="page">
     <div class="content row">
       <div class="card image-card">
-        <button @click="click" class="btn-blue">测试</button>
-        <button @click="$router.push(`/user/123`)" class="btn-blue">跳转</button>
-        <button @click="remove" class="btn-blue">删除</button>
+        <button @click="click" class="btn">测试</button>
+        <button @click="$router.push(`/user/123`)" class="btn">跳转</button>
+        <button @click="remove" class="btn">删除</button>
       </div>
-      <div class="card user-card">
-        <div class="head-box">
-          <nuxt-link :to="`/user/${user.id||''}`">
-            <img src="" width="100" height="100"
-                 :onerror="`this.src='${require('../assets/image/default/default-head.jpg')}'`"
-                 style="border-radius: 50%;">
+      <!--<div class="card tag-card">-->
+      <!--<div class="tag-first">-->
+      <!--<img :src="$img.get(tagList[0].url,'specifiedWidth300')">-->
+      <!--</div>-->
+      <!--<div class="tag-list row">-->
+      <!--<div class="tag" v-for="(tag,index) in tagList" :key="index" v-if="index !== 0">-->
+      <!--<img :src="$img.get(tag.url,'clipping100')">-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <div class="card tag-card">
+        <h3 class="title">
+          推荐标签
+          <nuxt-link to="/">
+            更多>>
           </nuxt-link>
+        </h3>
+        <div class="tag-list">
+          <button class="btn is-plain" v-for="(tag,index) in tagList" @click="search(tag.name)"> {{tag.name}}</button>
         </div>
-        <p class="center">{{user.name||'456'}}</p>
-        <p class="center">{{user.introduction||'456'}}</p>
       </div>
     </div>
   </div>
@@ -23,11 +33,17 @@
 
 <script>
   import {mapActions} from "vuex"
+  import config from "../assets/js/config";
 
   export default {
     //在这里不能使用httpUtil
-    async asyncData({store, req, redirect, route}) {
-      store.state.menu.name = "home"
+    async asyncData({store, req, redirect, route, $axios}) {
+      store.state.menu.name = "home";
+      let res = await $axios.get(`${config.host}/tag/listTagOrderByLikeAmount`);
+      let result = res.data || {};
+      return {
+        tagList: result.data
+      }
     },
     data() {
     },
@@ -47,6 +63,9 @@
       remove() {
         Cookie.remove("token");
       },
+      search(){
+
+      }
     }
   }
 </script>
@@ -56,7 +75,8 @@
   @import "../assets/style/config";
 
   .page {
-    padding-top: 30px;
+    padding: 30px 0;
+
   }
 
   .content {
@@ -67,42 +87,67 @@
       margin-right: 20px;
       float: left;
     }
-    .user-card {
+    /*  .tag-card {
+        @spacing:10px;
+         width: 250px;
+         float: left;
+         padding: @spacing;
+         .tag-first{
+           padding-bottom:@spacing;
+           width: 100%;
+           img {
+             width: 100%;
+           }
+         }
+         .tag-list {
+           width: 100%;
+           margin-bottom: -@spacing;
+           .tag{
+             float: left;
+             width: calc((100% - @spacing) / 2);
+             padding-bottom: @spacing;
+             &:nth-child(2n-1){
+               margin-right: @spacing;
+             }
+             img {
+               width: 100%;
+             }
+           }
+         }
+    }*/
+
+    .tag-card {
+      @spacing: 10px;
       width: 250px;
       float: left;
-      .head-box {
-        text-align: center;
-        padding: 15px 0;
+      padding: @spacing;
+      .title {
+        font-size: @medium-font-size;
+        padding-left: 10px;
+        line-height: @medium-font-size;
+        border-left: 5px solid @theme-color;
+        a{
+          line-height: 16px;
+          vertical-align: baseline;
+          display: inline-block;
+          float: right;
+          color:@theme-color
+        }
+      }
+      .tag-list {
+        margin-top: @spacing * 2;
+        margin-bottom: -@spacing;
+        .btn {
+          margin-right: @spacing;
+          margin-bottom: @spacing;
+          line-height: 25px;
+          padding: 0 2em;
+        }
       }
     }
   }
 </style>
 <style>
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
 
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
 </style>
 

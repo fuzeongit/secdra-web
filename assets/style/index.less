@@ -73,9 +73,9 @@ a{
 
   .col(@number,@width) when (@number <= 30) {
     .col-@{number} {
-      float: left;
-      width: @number*@width;
-    }
+       float: left;
+       width: @number*@width;
+     }
     @media only screen and (max-width: @grid-xs-width) {
       .col-xs-@{number} {
         float: left;
@@ -164,12 +164,12 @@ a{
   cursor: pointer;
   text-align: center;
   outline: none;
-  margin: 0;
   transition: .1s;
   font-weight: 500;
   padding: 0 1.5em;
   font-size: @default-font-size;
   line-height: @input-line-height;
+  margin: 0;
 
   .btn-color(@realColor) {
     background-color: @realColor;
@@ -179,6 +179,11 @@ a{
     &.is-plain {
       background-color: transparent;
       color: @realColor;
+      &:hover{
+        background-color: @realColor;
+        border: 1px solid @realColor;
+        color: @white;
+      }
     }
 
     &.is-text {
@@ -197,6 +202,10 @@ a{
     width: 100%;
     display: block;
   }
+}
+
+.btn{
+  .btn(@theme-color);
 }
 
 .btn-red {
@@ -264,6 +273,10 @@ a{
     display: block;
     width: 100%;
   }
+}
+
+.input{
+  .input(@theme-color)
 }
 
 .input-red {

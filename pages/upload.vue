@@ -14,27 +14,23 @@
         <img v-if="imageUrl" :src="imageUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
-      <button @click="test">测试</button>
+      <button @click="test" class="btn">测试</button>
     </div>
   </div>
 </template>
 
 <script>
 
-  import config from "../assets/js/config/config";
+  import config from "../assets/js/config";
 
   export default {
     name: "upload",
     async asyncData({store, req, redirect, route, $axios}) {
       store.state.menu.name = "upload";
-      try {
-        let res = await $axios.get(`${config.host}/qiniu/getUploadToken`);
-        let result = res.data || {};
-        if (result.status === 200) {
-          store.state.user.uploadToken = result.data
-        }
-      } catch (e) {
-
+      let res = await $axios.get(`${config.host}/qiniu/getUploadToken`);
+      let result = res.data || {};
+      if (result.status === 200) {
+        store.state.user.uploadToken = result.data
       }
     },
     data() {
