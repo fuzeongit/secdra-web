@@ -67,7 +67,6 @@
     },
     data() {
       return {
-        scrollTop: 0,
         hid: false,
         tag: "",
         isShowUserOptions: false
@@ -75,7 +74,9 @@
     },
     watch: {
       $route() {
-        this.isShowUserOptions = false
+        this.isShowUserOptions = false;
+        this.scrollTop = 0;
+        this.clientWidth = document.documentElement.clientWidth;
       },
     },
     computed: {
@@ -88,18 +89,45 @@
       },
       user() {
         return this.$store.state.user.user || {}
+      },
+      scrollTop: {
+        get() {
+          return this.$store.state.window.scrollTop || 0
+        },
+        set(val) {
+          this.$store.state.window.scrollTop = val || 0
+        }
+      },
+      clientWidth: {
+        get() {
+          return this.$store.state.window.clientWidth
+        },
+        set(val) {
+          this.$store.state.window.clientWidth = val || 0
+        }
       }
     },
     mounted() {
-      this.scrollTop = document.documentElement.scrollTop;
-      document.addEventListener('scroll', (event) => {
-        this.scrollTop = event.target.documentElement.scrollTop
-      });
-      document.addEventListener('click', () => {
-        this.isShowUserOptions = false;
-      })
+      this.clientWidth = document.documentElement.clientWidth;
+      document.addEventListener('scroll', this.documentScroll);
+      document.addEventListener('click', this.documentClick);
+      window.onresize = () => {
+        this.clientWidth = document.documentElement.clientWidth;
+      }
+    },
+    beforeDestroy() {
+      window.onresize = () => {
+      };
+      document.removeEventListener('scroll', this.documentScroll);
+      document.removeEventListener('scroll', this.documentClick);
     },
     methods: {
+      documentScroll(event) {
+        this.scrollTop = event.target.documentElement.scrollTop
+      },
+      documentClick() {
+        this.isShowUserOptions = false;
+      },
       search() {
 
       },

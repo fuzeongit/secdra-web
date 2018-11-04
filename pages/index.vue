@@ -54,16 +54,6 @@
 
     },
     methods: {
-      ...mapActions("user", ["AGetInfo"]),
-      async click() {
-        let result = await this.AGetInfo({phone: "13760029486", password: "123456"});
-      },
-      remove() {
-        Cookie.remove("token");
-      },
-      search(){
-
-      }
     }
   }
 </script>

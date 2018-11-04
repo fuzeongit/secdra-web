@@ -9,7 +9,6 @@
     props: ['error'],
     name: "error",
     mounted(){
-      console.log(111)
     }
   }
 </script>
