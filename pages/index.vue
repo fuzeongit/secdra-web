@@ -2,9 +2,7 @@
   <div class="page">
     <div class="content row">
       <div class="card image-card">
-        <button @click="click" class="btn">测试</button>
-        <button @click="$router.push(`/user/123`)" class="btn">跳转</button>
-        <button @click="remove" class="btn">删除</button>
+
       </div>
       <!--<div class="card tag-card">-->
       <!--<div class="tag-first">-->
@@ -150,4 +148,3 @@
 <style>
 
 </style>
-

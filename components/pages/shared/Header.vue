@@ -26,14 +26,14 @@
           <i class="s-chaxun icon"></i>
           <div class="head-img-box">
             <a @click.stop="isShowUserOptions=true">
-              <img src="" width="40" height="40"
+              <img :src="$img.head(user.head)" width="40" height="40"
                    :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`"
                    style="border-radius: 50%;">
             </a>
             <ul v-show="isShowUserOptions" @click.stop="()=>{}">
               <li>
                 <nuxt-link :to="`/user/${user.id||''}`" :class="{active:activeName===`user`}">
-                  <i class="icon s-question"></i>
+                  <i class="icon s-zhanghaoguanli"></i>
                   个人中心
                 </nuxt-link>
               </li>

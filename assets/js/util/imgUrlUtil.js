@@ -1,7 +1,18 @@
 import config from "../config"
 
 export default {
-  get(url, type) {
-    return `${config.qiniu}/${url}${config.qiniuSeparator}${type}`
+  scedra(url, type) {
+    if(type){
+      return `${config.qiniu}/${url}${config.qiniuSeparator}${type}`
+    }else{
+      return `${config.qiniu}/${url}`
+    }
+  },
+  head(url,type){
+    if(type){
+      return `${config.qiniuHead}/${url}${config.qiniuSeparator}${type}`
+    }else{
+      return `${config.qiniuHead}/${url}`
+    }
   }
 }
