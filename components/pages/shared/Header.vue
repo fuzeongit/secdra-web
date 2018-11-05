@@ -160,6 +160,7 @@
     border-bottom: 1px solid #e2e2e2;
     background-color: @white;
     z-index: 10;
+    min-width: @window-min-width;
     nav {
       width: @visual-width;
       margin: 0 auto;

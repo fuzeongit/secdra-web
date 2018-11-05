@@ -18,8 +18,16 @@ Vue.prototype.$http = Http;
 Vue.prototype.$img = Img;
 
 import filters from "../assets/js/filter"
-
 Vue.prototype.$filter = filters;
 for (let name in filters) {
   Vue.filter(name, filters[name])
 }
+
+import directive from "../assets/js/directive"
+Vue.directive(directive.goTop.name, {
+  bind: directive.goTop
+});
+
+// for (let name in directive) {
+//   Vue.directive(name, directive[name])
+// }
