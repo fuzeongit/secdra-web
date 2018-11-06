@@ -22,7 +22,7 @@
           </nuxt-link>
         </h3>
         <div class="tag-list">
-          <button class="btn is-plain" v-for="(tag,index) in tagList" @click="search(tag.name)"> {{tag.name}}</button>
+          <nuxt-link class="btn is-plain" v-for="(tag,index) in tagList" :to="`/draw/search/${tag.name}`" :key="index"> {{tag.name}}</nuxt-link>
         </div>
       </div>
     </div>
@@ -30,7 +30,6 @@
 </template>
 
 <script>
-  import {mapActions} from "vuex"
   import config from "../assets/js/config";
 
   export default {
@@ -54,6 +53,7 @@
 
     },
     methods: {
+
     }
   }
 </script>
@@ -138,3 +138,15 @@
 <style>
 
 </style>
+
+<!--i*w-->
+<!--i % col * w = left;-->
+<!--(i/col)-->
+<!--0-3:0-->
+<!--4-7:1-->
+
+<!--0-0-->
+<!--1-250-->
+<!--2-500-->
+<!--3-750-->
+<!--4-0-->

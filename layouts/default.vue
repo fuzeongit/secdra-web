@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-      <Header :activeName="activeName"></Header>
+      <Header></Header>
       <nuxt/>
     </section>
   </div>
@@ -12,11 +12,6 @@
     middleware: 'auth',
     components:{
       Header
-    },
-    computed:{
-      activeName(){
-        return this.$store.state.menu.name
-      }
     }
   }
 </script>

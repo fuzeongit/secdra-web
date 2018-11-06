@@ -1,6 +1,5 @@
 const state = {
-  scrollTop: 0,
-  clientWidth: 0
+  scrollTop: 0
 };
 
 const mutations = {};

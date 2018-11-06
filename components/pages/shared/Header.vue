@@ -59,10 +59,6 @@
       offset: {
         type: Number,
         default: 150
-      },
-      activeName: {
-        type: String,
-        required: true
       }
     },
     data() {
@@ -76,7 +72,6 @@
       $route() {
         this.isShowUserOptions = false;
         this.scrollTop = 0;
-        this.clientWidth = document.documentElement.clientWidth;
       },
     },
     computed: {
@@ -90,6 +85,9 @@
       user() {
         return this.$store.state.user.user || {}
       },
+      activeName(){
+        return this.$store.state.menu.name
+      },
       scrollTop: {
         get() {
           return this.$store.state.window.scrollTop || 0
@@ -97,29 +95,15 @@
         set(val) {
           this.$store.state.window.scrollTop = val || 0
         }
-      },
-      clientWidth: {
-        get() {
-          return this.$store.state.window.clientWidth
-        },
-        set(val) {
-          this.$store.state.window.clientWidth = val || 0
-        }
       }
     },
     mounted() {
-      this.clientWidth = document.documentElement.clientWidth;
       document.addEventListener('scroll', this.documentScroll);
       document.addEventListener('click', this.documentClick);
-      window.onresize = () => {
-        this.clientWidth = document.documentElement.clientWidth;
-      }
     },
     beforeDestroy() {
-      window.onresize = () => {
-      };
       document.removeEventListener('scroll', this.documentScroll);
-      document.removeEventListener('scroll', this.documentClick);
+      document.removeEventListener('click', this.documentClick);
     },
     methods: {
       documentScroll(event) {
@@ -129,7 +113,7 @@
         this.isShowUserOptions = false;
       },
       search() {
-
+        this.$router.push(`/draw/search/${this.tag}`)
       },
       logout() {
         this.isShowUserOptions = false;

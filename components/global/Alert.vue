@@ -1,5 +1,5 @@
 <template>
-  <div class="mask" >
+  <div class="mask">
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
       <div class="card padding-15" v-show="visible">
         <h3>{{title}}</h3>
@@ -32,14 +32,17 @@
       return {
         visible: false,
         closed: false,
-        title:"提示",
-        btnDesc:`确定`
+        title: "提示",
+        btnDesc: `确定`,
+        callback: () => {
+        }
       }
     },
     methods: {
       destroyElement() {
         this.$el.firstElementChild.removeEventListener('transitionend', this.destroyElement);
         this.$el.firstElementChild.removeEventListener('animationend', this.destroyElement);
+        this.callback && this.callback();
         this.$destroy(true);
         this.$el.parentNode.removeChild(this.$el);
       },
@@ -53,7 +56,8 @@
 <style scoped lang="less" type="text/less">
   @import "../../assets/style/color.less";
   @import "../../assets/style/config.less";
-  .card{
+
+  .card {
     width: 450px;
     margin: 0 auto;
     vertical-align: middle;
