@@ -3,17 +3,19 @@
     <div class="list-content" :style="{height:`${listHeight}px`}">
       <div class="item"
            :style="{left:`${getOffset(draw).left}px`,top:`${getOffset(draw,true).top}px`,width:listConstant.colWidth+`px`}"
-           v-for="(draw,index) in page.content" >
+           v-for="(draw,index) in list" :key="index">
         <img :src="$img.scedra(draw.url,`specifiedWidth`)" style="width: 100%">
       </div>
     </div>
-    <button class="btn" @click="click">测试</button>
+    <button class="btn is-plain next" @click="paging" :disabled="page.last">换</button>
   </div>
 </template>
 
 <script>
   import config from "../../../assets/js/config/index";
   import {Pageable} from "../../../assets/js/model/base";
+  import {ListConstant} from "../../../assets/js/constant/base";
+  import {mapActions} from "vuex"
 
   export default {
     //在这里不能使用httpUtil
@@ -21,7 +23,7 @@
     async asyncData({store, req, redirect, route, $axios}) {
       store.state.menu.name = "tag";
       let pageable = new Pageable();
-      pageable.size = 40;
+      pageable.size = 20;
       pageable.sort = "likeAmount,desc";
       let {data: result} = await $axios.get(`${config.host}/draw/pagingByTag`, {
         params: Object.assign({
@@ -38,45 +40,22 @@
       }
     },
     data() {
-      let listConstant = {
-        colNumber: 4,
-        colWidth: 250,
-        widthOffset: 24,
-        heightOffset: 24
-      };
-      let colNumberHeight = function(){
-        let t = [];
-        for (let i = 0; i < listConstant.colNumber; i++) {
-          t[i] = listConstant.heightOffset
-        }
-        return t
-      }();
+      let listConstant = new ListConstant();
+      let colNumberHeight = this.initColNumberHeight(listConstant);
       return {
         pageLoading: false,
         listConstant,
         colNumberHeight
       }
     },
-    watch:{
-    },
+    watch: {},
     computed: {
-      listHeight(){
-        let listConstant = {
-          colNumber: 4,
-          colWidth: 250,
-          widthOffset: 24,
-          heightOffset: 24
-        };
-        let colNumberHeight = function(){
-          let t = [];
-          for (let i = 0; i < listConstant.colNumber; i++) {
-            t[i] = listConstant.heightOffset
-          }
-          return t
-        }();
+      //计算盒子高度
+      listHeight() {
+        let colNumberHeight = this.initColNumberHeight(this.listConstant);
         let minIndex = this.colNumberHeight.minIndex();
-        for(let draw of this.list){
-          colNumberHeight[minIndex] += (draw.height / draw.width) * (listConstant.colWidth) + listConstant.heightOffset;
+        for (let draw of this.list) {
+          colNumberHeight[minIndex] += (draw.height / draw.width) * (this.listConstant.colWidth) + this.listConstant.heightOffset;
           minIndex = colNumberHeight.minIndex()
         }
         return colNumberHeight.max()
@@ -85,25 +64,45 @@
     mounted() {
     },
     methods: {
-      getOffset(draw,isGetMin) {
+      ...mapActions("draw", ["APaging"]),
+      //初始化高度数组
+      initColNumberHeight(listConstant){
+        let t = [];
+        for (let i = 0; i < listConstant.colNumber; i++) {
+          t[i] = listConstant.heightOffset
+        }
+        return t
+      },
+      getOffset(draw, isGetMin) {
         let minIndex = this.colNumberHeight.minIndex();
         let left = (1 + minIndex) * this.listConstant.widthOffset + this.listConstant.colWidth * minIndex;
         let offset = {
           left,
           top: this.colNumberHeight[minIndex]
         };
-        if(isGetMin){
+        if (isGetMin) {
           this.colNumberHeight[minIndex] += (draw.height / draw.width) * (this.listConstant.colWidth) + this.listConstant.heightOffset;
         }
         return offset
       },
-      click(){
-        console.log(this.list)
-        console.log(this.list.concat(this.list))
-        this.list = this.list.concat(this.list)
+      async paging() {
+        this.pageable.page++;
+        this.pageLoading = true;
+        let data = await this.APaging(Object.assign({
+            name: this.$route.params.name
+          }, this.pageable)
+        );
+        this.pageLoading = false;
+        let self = this;
+        this.colNumberHeight = this.initColNumberHeight(this.listConstant);
+        this.page = data;
+        this.list = data.content;
       }
     }
   }
+
+
+
 </script>
 
 <style type="text/less" lang="less" scoped>
@@ -120,5 +119,11 @@
       text-align: center;
       transition: 0.5s;
     }
+  }
+
+  .next{
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
   }
 </style>

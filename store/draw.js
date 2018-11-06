@@ -1,20 +1,17 @@
 import httpUtil from "../assets/js/util/httpUtil";
+import {Result} from "../assets/js/model/base";
 
 const state = {
-  name:"home"
 };
 
 const mutations = {
-
 };
 
 const actions = {
   async APaging(context, params) {
-    let result = await httpUtil.get("/draw/paging", params);
-    if (result.status === 200) {
-      context.commit("MSetUserInfo", result.data)
-    }
-    return result
+    let result = await httpUtil.get("/draw/pagingByTag", params);
+
+    return result.data;
   },
 };
 

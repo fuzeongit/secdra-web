@@ -2,6 +2,7 @@ import Vue from 'vue'
 import vuex, {Store} from 'vuex'
 import menu from './menu'
 import user from './user'
+import draw from './draw'
 import window from './window'
 
 /**
@@ -19,6 +20,7 @@ export default () => new Store({
   modules: {
     menu,
     user,
+    draw,
     window
   }
 })
