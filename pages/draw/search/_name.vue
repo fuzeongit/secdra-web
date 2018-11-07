@@ -1,11 +1,12 @@
 <template>
   <div class="page">
     <div class="list-content" :style="{height:`${listHeight}px`}">
-      <div class="item"
-           :style="{left:`${getOffset(draw).left}px`,top:`${getOffset(draw,true).top}px`,width:listConstant.colWidth+`px`}"
+      <a class="item"
+           :style="{left:`${getOffset(draw).left}px`,top:`${getOffset(draw,true).top}px`}"
            v-for="(draw,index) in list" :key="index">
-        <img :src="$img.scedra(draw.url,`specifiedWidth`)" style="width: 100%">
-      </div>
+        <img :src="$img.scedra(draw.url,`specifiedWidth`)"
+             :style="{width:listConstant.colWidth+`px`,height:getHeight(draw)+`px`}">
+      </a>
     </div>
     <button class="btn is-plain next" @click="paging" :disabled="page.last">换</button>
   </div>
@@ -50,6 +51,16 @@
     },
     watch: {},
     computed: {
+      /**
+       * @return {string}
+       */
+      randomColor() {
+        let r, g, b;
+        r = Math.floor(Math.random() * 256);
+        g = Math.floor(Math.random() * 256);
+        b = Math.floor(Math.random() * 256);
+        return "rgb(" + r + ',' + g + ',' + b + ")";
+      },
       //计算盒子高度
       listHeight() {
         let colNumberHeight = this.initColNumberHeight(this.listConstant);
@@ -66,7 +77,7 @@
     methods: {
       ...mapActions("draw", ["APaging"]),
       //初始化高度数组
-      initColNumberHeight(listConstant){
+      initColNumberHeight(listConstant) {
         let t = [];
         for (let i = 0; i < listConstant.colNumber; i++) {
           t[i] = listConstant.heightOffset
@@ -85,22 +96,35 @@
         }
         return offset
       },
+      getHeight(draw) {
+        return (draw.height / draw.width) * (this.listConstant.colWidth)
+      },
+      /**
+       * 获取分页数据
+       * @returns {Promise<void>}
+       */
       async paging() {
+        if (this.pageLoading) {
+          return
+        }
         this.pageable.page++;
         this.pageLoading = true;
-        let data = await this.APaging(Object.assign({
+        let result = await this.APaging(Object.assign({
             name: this.$route.params.name
           }, this.pageable)
         );
         this.pageLoading = false;
-        let self = this;
+        if (result.status !== 200) {
+          this.$alert({message: result.message});
+          return
+        }
+        let data = result.data;
         this.colNumberHeight = this.initColNumberHeight(this.listConstant);
         this.page = data;
         this.list = data.content;
       }
     }
   }
-
 
 
 </script>
@@ -115,13 +139,18 @@
     position: relative;
     height: 999px;
     .item {
+      display: block;
       position: absolute;
       text-align: center;
       transition: 0.5s;
+      img {
+        transition: 0.5s;
+        width: 100%
+      }
     }
   }
 
-  .next{
+  .next {
     position: fixed;
     bottom: 50px;
     right: 50px;

@@ -23,7 +23,9 @@
         <div class="right-box">
           <input type="search" title="search" class="input is-plain" @search="search" v-model="tag"
                  placeholder="输入标签搜索">
-          <i class="s-chaxun icon"></i>
+          <a @click="search">
+            <i class="s-chaxun icon"></i>
+          </a>
           <div class="head-img-box">
             <a @click.stop="isShowUserOptions=true">
               <img :src="$img.head(user.head)" width="40" height="40"
