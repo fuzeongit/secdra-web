@@ -14,5 +14,17 @@ export default {
     }else{
       return `${config.qiniuHead}/${url}`
     }
+  },
+  back(url,type,is){
+    if(type){
+      if(is){
+        return `${config.qiniuBack}/${url}?${type}`
+      }else{
+        return `${config.qiniuBack}/${url}${config.qiniuSeparator}${type}`
+      }
+
+    }else{
+      return `${config.qiniuBack}/${url}`
+    }
   }
 }

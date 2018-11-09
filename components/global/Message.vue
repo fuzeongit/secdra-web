@@ -1,7 +1,7 @@
 <template>
   <transition name="slide" enter-active-class="fadeInDown fadeIn duration" leave-active-class="fadeOutUp duration">
     <div class="card padding-15" v-show="visible">
-      <p>
+      <p class="message">
         {{message}}
       </p>
     </div>
@@ -22,7 +22,7 @@
     data() {
       return {
         closeTimeout: null,
-        closeTime: 5000,
+        waitTime: 5000,
         visible: false,
         closed: false,
         callback: () => {
@@ -30,10 +30,10 @@
       }
     },
     mounted() {
-      if (this.closeTime) {
+      if (this.waitTime) {
         this.closeTimeout = setTimeout(() => {
           this.close()
-        }, this.closeTime)
+        }, this.waitTime)
       }
     },
     methods: {
@@ -66,5 +66,8 @@
     left: 50%;
     margin: 0 auto 0 -(@widht / 2);
     box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
+    .message{
+      font-size: @default-font-size;
+    }
   }
 </style>

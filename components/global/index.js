@@ -52,7 +52,7 @@ export const Prompt = function (promptOption = {}) {
 
 /**
  * 信息
- * @param {{message:String},{closeTime?:Number},{callback?:Function}} messageOption
+ * @param {{message:String},{waitTime?:Number},{callback?:Function}} messageOption
  * @constructor
  */
 export const Message = function (messageOption = {}) {

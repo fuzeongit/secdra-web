@@ -16,7 +16,9 @@
                          style="width: 100%">
               </nuxt-link>
               <p class="user-name center">
-                {{draw.user.name}}
+                <nuxt-link :to="`/user/${draw.user.id}`">
+                  {{draw.user.name}}
+                </nuxt-link>
               </p>
               <p class="introduction">
                 {{draw.introduction}}
@@ -38,7 +40,9 @@
                          style="width: 100%">
               </nuxt-link>
               <p class="user-name center">
-                {{draw.user.name}}
+                <nuxt-link :to="`/user/${draw.user.id}`">
+                  {{draw.user.name}}
+                </nuxt-link>
               </p>
               <p class="introduction">
                 {{draw.introduction}}

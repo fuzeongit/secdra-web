@@ -1,12 +1,16 @@
 <template>
   <div class="page">
     <div class="list-content" :style="{height:`${listHeight}px`}">
-      <a class="item"
-           :style="{left:`${getOffset(draw).left}px`,top:`${getOffset(draw,true).top}px`}"
+      <div class="item" :style="{left:`${getOffset(draw).left}px`,top:`${getOffset(draw,true).top}px`}"
            v-for="(draw,index) in list" :key="index">
-        <img :src="$img.scedra(draw.url,`specifiedWidth`)"
-             :style="{width:listConstant.colWidth+`px`,height:getHeight(draw)+`px`}">
-      </a>
+        <nuxt-link :to="`/draw/${draw.id}`" class="img-box">
+          <img :src="$img.scedra(draw.url,`specifiedWidth`)"
+               :style="{width:listConstant.colWidth+`px`,height:getHeight(draw)+`px`}">
+        </nuxt-link>
+        <div style="height: 100px;padding: 20px 15px;">
+          <img :src="$img.head(draw.user.head)"  style="border-radius: 50%;width: 60px">
+        </div>
+      </div>
     </div>
     <button class="btn is-plain next" @click="paging" :disabled="page.last">换</button>
   </div>
@@ -66,7 +70,7 @@
         let colNumberHeight = this.initColNumberHeight(this.listConstant);
         let minIndex = this.colNumberHeight.minIndex();
         for (let draw of this.list) {
-          colNumberHeight[minIndex] += (draw.height / draw.width) * (this.listConstant.colWidth) + this.listConstant.heightOffset;
+          colNumberHeight[minIndex] += (draw.height / draw.width) * (this.listConstant.colWidth) + this.listConstant.heightOffset + this.listConstant.infoHeight;
           minIndex = colNumberHeight.minIndex()
         }
         return colNumberHeight.max()
@@ -92,7 +96,7 @@
           top: this.colNumberHeight[minIndex]
         };
         if (isGetMin) {
-          this.colNumberHeight[minIndex] += (draw.height / draw.width) * (this.listConstant.colWidth) + this.listConstant.heightOffset;
+          this.colNumberHeight[minIndex] += (draw.height / draw.width) * (this.listConstant.colWidth) + this.listConstant.heightOffset + this.listConstant.infoHeight;
         }
         return offset
       },
@@ -139,13 +143,20 @@
     position: relative;
     height: 999px;
     .item {
-      display: block;
       position: absolute;
       text-align: center;
       transition: 0.5s;
-      img {
-        transition: 0.5s;
-        width: 100%
+      border-radius: @smallest-border-radius;
+      background-color: @white;
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 50px rgba(150, 150, 150, 0.55);
+      }
+      .img-box {
+        img {
+          transition: 0.5s;
+          width: 100%
+        }
       }
     }
   }
