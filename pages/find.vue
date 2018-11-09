@@ -72,6 +72,7 @@
       }
     },
     mounted() {
+      this.$message({message:"你好"})
     },
     methods: {
       ...mapActions("draw", ["APaging"]),

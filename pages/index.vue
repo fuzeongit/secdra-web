@@ -11,11 +11,15 @@
           </h3>
           <div class="row">
             <div v-for="(draw,index) in likeList" class="item" :key="index">
-              <div class="cover img" :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
-                   style="width: 100%">
-              </div>
-              <p>
+              <nuxt-link :to="`/draw/${draw.id}`" class="cover img"
+                         :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
+                         style="width: 100%">
+              </nuxt-link>
+              <p class="user-name center">
                 {{draw.user.name}}
+              </p>
+              <p class="introduction">
+                {{draw.introduction}}
               </p>
             </div>
           </div>
@@ -29,11 +33,15 @@
           </h3>
           <div class="row">
             <div v-for="(draw,index) in newList" class="item" :key="index">
-              <div class="cover img" :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
-                   style="width: 100%">
-              </div>
-              <p>
+              <nuxt-link :to="`/draw/${draw.id}`" class="cover img"
+                         :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
+                         style="width: 100%">
+              </nuxt-link>
+              <p class="user-name center">
                 {{draw.user.name}}
+              </p>
+              <p class="introduction">
+                {{draw.introduction}}
               </p>
             </div>
           </div>
@@ -126,15 +134,34 @@
       }
       .image-card {
         padding: 10px 9px;
-        .row{
-          margin-top: 12px;
+        .row {
+          margin-top: 8px;
           .item {
-            margin: 8px;
+            margin: 12px 8px;
             float: left;
             width: 150px;
             .cover {
+              display: block;
               width: 100%;
               height: 150px;
+            }
+            .user-name {
+              margin-top: 10px;
+              font-size: @default-font-size;
+              font-weight: 600;
+            }
+            .introduction {
+              font-size: @small-font-size;
+              line-height: 20px;
+              color: @gray;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              /*! autoprefixer: off */
+              -webkit-box-orient: vertical;
+              /* autoprefixer: on */
+              max-height: 40px;
             }
           }
         }
@@ -160,7 +187,4 @@
       }
     }
   }
-</style>
-<style>
-
 </style>

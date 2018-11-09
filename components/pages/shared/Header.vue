@@ -183,6 +183,7 @@
             top: 8px;
             border: 1px solid @border-color;
             margin-top: @herder-height - @herder-border-height;
+            border-radius: @smallest-border-radius;
             box-shadow: 0 0 10px rgba(202, 202, 202, 0.55);
             text-align: center;
             &:before {
