@@ -80,7 +80,7 @@
       store.state.menu.name = "home";
       let taskList = [];
       taskList.push($axios.get(`${config.host}/tag/listTagOrderByLikeAmount`));
-      taskList.push($axios.get(`${config.host}/draw/pagingByRecommend`, {params: new Pageable(0, 10, "likeAmount,desc")}));
+      taskList.push($axios.get(`${config.host}/draw/pagingByRecommend`, {params: new Pageable(0, 10)}));
       taskList.push($axios.get(`${config.host}/draw/paging`, {params: new Pageable(0, 10, "createDate,desc")}));
       let resultList = (await Promise.all(taskList)).map(item => item.data);
       return {

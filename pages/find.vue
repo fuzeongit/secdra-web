@@ -1,14 +1,15 @@
 <template>
   <div class="page">
     <div class="list-content" :style="{height:`${listHeight}px`}">
-      <a class="item"
+      <a class="item" @click="listByRecommend(index)"
          :style="{left:`${getOffset(draw).left}px`,top:`${getOffset(draw,true).top}px`}"
          v-for="(draw,index) in list" :key="index">
         <img :src="$img.scedra(draw.url,`specifiedWidth`)"
              :style="{width:listConstant.colWidth+`px`,height:getHeight(draw)+`px`}">
       </a>
     </div>
-    <button class="btn is-plain next" @click="paging" :disabled="page.last">换</button>
+    <!--<button class="btn is-plain next" @click="paging" :disabled="page.last">换</button>-->
+    <button class="btn is-plain next">喜欢</button>
   </div>
 </template>
 
@@ -72,10 +73,10 @@
       }
     },
     mounted() {
-      this.$message({message:"现在暂时先用着最多收藏的列表",waitTime:2000})
+      this.$message({message: "现在暂时先用着最多收藏的列表", waitTime: 2000})
     },
     methods: {
-      ...mapActions("draw", ["APaging"]),
+      ...mapActions("draw", ["APaging", "AListByRecommend"]),
       //初始化高度数组
       initColNumberHeight(listConstant) {
         let t = [];
@@ -122,6 +123,14 @@
         this.colNumberHeight = this.initColNumberHeight(this.listConstant);
         this.page = data;
         this.list = data.content;
+      },
+      async listByRecommend(index) {
+        let result = await this.AListByRecommend();
+        this.colNumberHeight = this.initColNumberHeight(this.listConstant);
+        result.data.reverse();
+        for (let item of  result.data) {
+          this.list.splice(index + 1, 0, item);
+        }
       }
     }
   }
