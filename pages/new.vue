@@ -2,8 +2,8 @@
   <div class="page">
     <div class="list-content" :style="{height:`${listHeight}px`}">
       <a class="item"
-           :style="{left:`${getOffset(draw).left}px`,top:`${getOffset(draw,true).top}px`}"
-           v-for="(draw,index) in list" :key="index">
+         :style="{left:`${getOffset(draw).left}px`,top:`${getOffset(draw,true).top}px`}"
+         v-for="(draw,index) in list" :key="index">
         <img :src="$img.scedra(draw.url,`specifiedWidth`)"
              :style="{width:listConstant.colWidth+`px`,height:getHeight(draw)+`px`}">
       </a>
@@ -13,19 +13,19 @@
 </template>
 
 <script>
-  import config from "../../../assets/js/config/index";
-  import {Pageable} from "../../../assets/js/model/base";
-  import {ListConstant} from "../../../assets/js/constant/base";
+  import config from "../assets/js/config/index";
+  import {Pageable} from "../assets/js/model/base";
+  import {ListConstant} from "../assets/js/constant/base";
   import {mapActions} from "vuex"
 
   export default {
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "tag";
+      store.state.menu.name = "new";
       let pageable = new Pageable();
       pageable.size = 20;
-      pageable.sort = "likeAmount,desc";
+      pageable.sort = "createDate,desc";
       let {data: result} = await $axios.get(`${config.host}/draw/paging`, {
         params: Object.assign({
           name: route.params.name
@@ -125,13 +125,11 @@
       }
     }
   }
-
-
 </script>
 
 <style type="text/less" lang="less" scoped>
-  @import "../../../assets/style/color";
-  @import "../../../assets/style/config";
+  @import "../assets/style/color";
+  @import "../assets/style/config";
 
   .list-content {
     width: @visual-width;

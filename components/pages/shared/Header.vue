@@ -4,7 +4,7 @@
       <nuxt-link to="/">
         <img src="../../../assets/image/logo/logo.svg" height="30px" style="vertical-align: -5px;">
       </nuxt-link>
-      <nuxt-link to="/hot" :class="{active:activeName===`hot`}">
+      <nuxt-link to="/find" :class="{active:activeName===`find`}">
         发现
       </nuxt-link>
       <nuxt-link to="/new" :class="{active:activeName===`new`}">

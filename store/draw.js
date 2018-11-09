@@ -7,7 +7,7 @@ const mutations = {};
 
 const actions = {
   async APaging(context, params) {
-    return await httpUtil.get("/draw/pagingByTag", params);
+    return await httpUtil.get("/draw/paging", params);
   },
 };
 

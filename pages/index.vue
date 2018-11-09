@@ -2,37 +2,43 @@
   <div class="page">
     <div class="content row">
       <div class="left-box">
-        <div class="card image-card row">
-          <div v-for="(draw,index) in likeList" class="item" :key="index">
-            <div class="cover img" :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
-                 style="width: 100%">
+        <div class="card image-card ">
+          <h3 class="title">
+            发现
+            <nuxt-link to="/find">
+              更多>>
+            </nuxt-link>
+          </h3>
+          <div class="row">
+            <div v-for="(draw,index) in likeList" class="item" :key="index">
+              <div class="cover img" :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
+                   style="width: 100%">
+              </div>
+              <p>
+                {{draw.user.name}}
+              </p>
             </div>
-            <p>
-              {{draw.user.name}}
-            </p>
           </div>
         </div>
-        <div class="card image-card row" style="margin-top: 20px;">
-          <div v-for="(draw,index) in newList" class="item" :key="index">
-            <div class="cover img" :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
-                 style="width: 100%">
+        <div class="card image-card " style="margin-top: 20px;">
+          <h3 class="title">
+            最新
+            <nuxt-link to="/new">
+              更多>>
+            </nuxt-link>
+          </h3>
+          <div class="row">
+            <div v-for="(draw,index) in newList" class="item" :key="index">
+              <div class="cover img" :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
+                   style="width: 100%">
+              </div>
+              <p>
+                {{draw.user.name}}
+              </p>
             </div>
-            <p>
-              {{draw.user.name}}
-            </p>
           </div>
         </div>
       </div>
-      <!--<div class="card tag-card">-->
-      <!--<div class="tag-first">-->
-      <!--<img :src="$img.get(tagList[0].url,'specifiedWidth300')">-->
-      <!--</div>-->
-      <!--<div class="tag-list row">-->
-      <!--<div class="tag" v-for="(tag,index) in tagList" :key="index" v-if="index !== 0">-->
-      <!--<img :src="$img.get(tag.url,'clipping100')">-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</div>-->
       <div class="right-box">
         <div class="card tag-card">
           <h3 class="title">
@@ -62,8 +68,8 @@
       store.state.menu.name = "home";
       let taskList = [];
       taskList.push($axios.get(`${config.host}/tag/listTagOrderByLikeAmount`));
-      taskList.push($axios.get(`${config.host}/draw/pagingByTag`, {params:  new Pageable(0,10,"likeAmount,desc")}));
-      taskList.push($axios.get(`${config.host}/draw/pagingByTag`, {params: new Pageable(0,10,"createDate,desc")}));
+      taskList.push($axios.get(`${config.host}/draw/pagingByRecommend`, {params: new Pageable(0, 10, "likeAmount,desc")}));
+      taskList.push($axios.get(`${config.host}/draw/paging`, {params: new Pageable(0, 10, "createDate,desc")}));
       let resultList = (await Promise.all(taskList)).map(item => item.data);
       return {
         tagList: resultList[0].data,
@@ -96,6 +102,22 @@
   .content {
     width: @visual-width;
     margin: 0 auto;
+
+    .card {
+      .title {
+        font-size: @medium-font-size;
+        padding-left: 10px;
+        line-height: @medium-font-size;
+        border-left: 5px solid @theme-color;
+        a {
+          line-height: 16px;
+          vertical-align: baseline;
+          display: inline-block;
+          float: right;
+          color: @theme-color
+        }
+      }
+    }
     .left-box {
       width: 850px;
       float: left;
@@ -103,14 +125,17 @@
 
       }
       .image-card {
-        padding: 16px 9px;
-        .item {
-          margin: 8px;
-          float: left;
-          width: 150px;
-          .cover {
-            width: 100%;
-            height: 150px;
+        padding: 10px 9px;
+        .row{
+          margin-top: 12px;
+          .item {
+            margin: 8px;
+            float: left;
+            width: 150px;
+            .cover {
+              width: 100%;
+              height: 150px;
+            }
           }
         }
       }
@@ -121,19 +146,7 @@
       .tag-card {
         @spacing: 10px;
         padding: @spacing;
-        .title {
-          font-size: @medium-font-size;
-          padding-left: 10px;
-          line-height: @medium-font-size;
-          border-left: 5px solid @theme-color;
-          a {
-            line-height: 16px;
-            vertical-align: baseline;
-            display: inline-block;
-            float: right;
-            color: @theme-color
-          }
-        }
+
         .tag-list {
           margin-top: @spacing * 2;
           margin-bottom: -@spacing;
@@ -146,36 +159,6 @@
         }
       }
     }
-
-    /*  .tag-card {
-        @spacing:10px;
-         width: 250px;
-         float: left;
-         padding: @spacing;
-         .tag-first{
-           padding-bottom:@spacing;
-           width: 100%;
-           img {
-             width: 100%;
-           }
-         }
-         .tag-list {
-           width: 100%;
-           margin-bottom: -@spacing;
-           .tag{
-             float: left;
-             width: calc((100% - @spacing) / 2);
-             padding-bottom: @spacing;
-             &:nth-child(2n-1){
-               margin-right: @spacing;
-             }
-             img {
-               width: 100%;
-             }
-           }
-         }
-    }*/
-
   }
 </style>
 <style>
