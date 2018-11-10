@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page" >
     <div class="content row">
       <div class="left-box">
         <div class="card image-card ">
@@ -15,9 +15,11 @@
                          :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
                          style="width: 100%">
               </nuxt-link>
-              <p class="user-name center">
-                <nuxt-link :to="`/user/${draw.user.id}`">
-                  {{draw.user.name}}
+              <p class="user-name center" >
+                <nuxt-link :to="`/user/${draw.userId}`" >
+                  <span @mouseenter="mouseenter">
+                      {{draw.name}}
+                  </span>
                 </nuxt-link>
               </p>
               <p class="introduction">
@@ -40,8 +42,8 @@
                          style="width: 100%">
               </nuxt-link>
               <p class="user-name center">
-                <nuxt-link :to="`/user/${draw.user.id}`">
-                  {{draw.user.name}}
+                <nuxt-link :to="`/user/${draw.userId}`" @mouseenter="mouseenter">
+                  {{draw.name}}
                 </nuxt-link>
               </p>
               <p class="introduction">
@@ -97,9 +99,13 @@
       }
     },
     mounted() {
-
+      console.log(this.extend)
     },
-    methods: {}
+    methods: {
+      mouseenter($event){
+        console.log($event)
+      }
+    }
   }
 </script>
 

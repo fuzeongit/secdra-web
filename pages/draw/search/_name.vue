@@ -144,7 +144,6 @@
     height: 999px;
     .item {
       position: absolute;
-      text-align: center;
       transition: 0.5s;
       border-radius: @smallest-border-radius;
       background-color: @white;
