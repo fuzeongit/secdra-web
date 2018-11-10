@@ -73,7 +73,7 @@
       }
     },
     mounted() {
-      this.$message({message: "现在暂时先用着最多收藏的列表", waitTime: 2000})
+      this.$message({message: "现在暂时先随机出", waitTime: 2000})
     },
     methods: {
       ...mapActions("draw", ["APaging", "AListByRecommend"]),

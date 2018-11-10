@@ -153,6 +153,9 @@
               margin-top: 10px;
               font-size: @default-font-size;
               font-weight: 600;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
             .introduction {
               font-size: @small-font-size;
