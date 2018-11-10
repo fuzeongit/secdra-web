@@ -1,5 +1,5 @@
 <template>
-  <div class="page" >
+  <div class="page">
     <div class="content row">
       <div class="left-box">
         <div class="card image-card ">
@@ -14,16 +14,15 @@
               <nuxt-link :to="`/draw/${draw.id}`" class="cover img"
                          :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
                          style="width: 100%">
+                <i class="icon s-heart like" style="color:white;"></i>
               </nuxt-link>
-              <p class="user-name center" >
-                <nuxt-link :to="`/user/${draw.userId}`" >
-                  <span @mouseenter="mouseenter">
-                      {{draw.name}}
-                  </span>
+              <p class="draw-name center">
+                <nuxt-link :to="`/user/${draw.userId}`">
+                  {{draw.name}}
                 </nuxt-link>
               </p>
-              <p class="introduction">
-                {{draw.introduction}}
+              <p class="user-name center">
+                {{draw.user.name}}
               </p>
             </div>
           </div>
@@ -41,13 +40,13 @@
                          :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
                          style="width: 100%">
               </nuxt-link>
-              <p class="user-name center">
+              <p class="draw-name center">
                 <nuxt-link :to="`/user/${draw.userId}`" @mouseenter="mouseenter">
                   {{draw.name}}
                 </nuxt-link>
               </p>
-              <p class="introduction">
-                {{draw.introduction}}
+              <p class="user-name center">
+                {{draw.user.name}}
               </p>
             </div>
           </div>
@@ -102,7 +101,7 @@
       console.log(this.extend)
     },
     methods: {
-      mouseenter($event){
+      mouseenter($event) {
         console.log($event)
       }
     }
@@ -154,8 +153,15 @@
               display: block;
               width: 100%;
               height: 150px;
+              position: relative;
+              .like {
+                position: absolute;
+                right: 8px;
+                bottom: 8px;
+                font-size: 20px
+              }
             }
-            .user-name {
+            .draw-name {
               margin-top: 10px;
               font-size: @default-font-size;
               font-weight: 600;
@@ -163,18 +169,13 @@
               text-overflow: ellipsis;
               white-space: nowrap;
             }
-            .introduction {
+            .user-name {
               font-size: @small-font-size;
               line-height: 20px;
               color: @gray;
               overflow: hidden;
               text-overflow: ellipsis;
-              display: -webkit-box;
-              -webkit-line-clamp: 2;
-              /*! autoprefixer: off */
-              -webkit-box-orient: vertical;
-              /* autoprefixer: on */
-              max-height: 40px;
+              white-space: nowrap;
             }
           }
         }
