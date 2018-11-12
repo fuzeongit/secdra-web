@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide" enter-active-class="fadeInDown fadeIn duration" leave-active-class="fadeOutUp duration">
+  <transition name="fade" enter-active-class="fadeInDown duration" leave-active-class="fadeOutUp duration">
     <div class="card padding-15" v-show="visible">
       <p class="message">
         {{message}}

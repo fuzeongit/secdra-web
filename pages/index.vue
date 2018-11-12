@@ -14,7 +14,7 @@
               <nuxt-link :to="`/draw/${draw.id}`" class="cover img"
                          :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
                          style="width: 100%">
-                <i class="icon s-heart like" :style="{color:draw.isFocus?`red`:`white`}"></i>
+                <i class="icon s-heart like" :style="{color:draw.isFocus?`red`:`white`}" @click.stop="focus"></i>
               </nuxt-link>
               <p class="draw-name center">
                 <nuxt-link :to="`/user/${draw.userId}`">
@@ -100,6 +100,9 @@
     mounted() {
     },
     methods: {
+      focus(){
+
+      }
     }
   }
 </script>
