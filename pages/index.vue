@@ -14,7 +14,7 @@
               <nuxt-link :to="`/draw/${draw.id}`" class="cover img"
                          :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
                          style="width: 100%">
-                <i class="icon s-heart like" style="color:white;"></i>
+                <i class="icon s-heart like" :style="{color:draw.isFocus?`red`:`white`}"></i>
               </nuxt-link>
               <p class="draw-name center">
                 <nuxt-link :to="`/user/${draw.userId}`">
@@ -41,7 +41,7 @@
                          style="width: 100%">
               </nuxt-link>
               <p class="draw-name center">
-                <nuxt-link :to="`/user/${draw.userId}`" @mouseenter="mouseenter">
+                <nuxt-link :to="`/user/${draw.userId}`">
                   {{draw.name}}
                 </nuxt-link>
               </p>
@@ -98,12 +98,8 @@
       }
     },
     mounted() {
-      console.log(this.extend)
     },
     methods: {
-      mouseenter($event) {
-        console.log($event)
-      }
     }
   }
 </script>

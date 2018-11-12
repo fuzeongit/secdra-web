@@ -34,8 +34,10 @@
     methods: {
       ...mapActions("user", ["ALogin", "ARegister", "AGetInfo"]),
       async login() {
+        let phone = this.form.phone||"13760029486";
+        let password = this.form.password||"123456";
         this.loginLoading = true;
-        let result = await this.ALogin({phone: "13760029486", password: "123456"});
+        let result = await this.ALogin({phone, password});
         if (result.status === 200) {
           Cookies.set("user",JSON.stringify(result.data),{ expires: 30 });
           this.$router.replace("/");
