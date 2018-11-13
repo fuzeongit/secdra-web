@@ -5,8 +5,10 @@
         <h3>
           {{title}}
         </h3>
-        <input type="text" v-model="input" title="input" class="input block" :placeholder="message">
-        <div class="prompt-btn-group">
+        <p>
+          {{message}}
+        </p>
+        <div class="confirm-btn-group">
           <button class="btn is-plain" @click.stop="no">
             {{noDesc}}
           </button>
@@ -33,12 +35,10 @@
     data() {
       return {
         visible: false,
-        input:'',
         closed: false,
         title: "提示",
         okDesc: `确定`,
         noDesc: `取消`,
-        checkList:[],
         okCallback: function () {
         },
         noCallback: function () {
@@ -71,8 +71,8 @@
 </script>
 
 <style scoped lang="less" type="text/less">
-  @import "../../assets/style/color.less";
-  @import "../../assets/style/config.less";
+  @import "../../../assets/style/color.less";
+  @import "../../../assets/style/config.less";
 
   .card {
     width: 450px;
@@ -83,10 +83,13 @@
       text-align: left;
       line-height: 40px;
     }
-    input{
-      margin: 20px 0;
+    p {
+      text-align: left;
+      padding: 10px 0;
+      line-height: 25px;
+      color: @gray;
     }
-    .prompt-btn-group {
+    .confirm-btn-group {
       margin-top: 10px;
       text-align: right;
     }

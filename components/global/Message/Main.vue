@@ -53,8 +53,8 @@
 </script>
 
 <style scoped lang="less" type="text/less">
-  @import "../../assets/style/color.less";
-  @import "../../assets/style/config.less";
+  @import "../../../assets/style/color.less";
+  @import "../../../assets/style/config.less";
 
   .card {
     @widht: 300px;

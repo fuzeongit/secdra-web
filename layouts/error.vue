@@ -1,6 +1,9 @@
 <template>
   <div class="page flex-box">
     <img src="../assets/image/error/404.jpg" v-if="error.statusCode===404">
+    <div  v-else>
+        {{error}}
+    </div>
   </div>
 </template>
 
