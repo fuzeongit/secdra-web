@@ -1,9 +1,14 @@
 <template>
   <transition name="fade" enter-active-class="fadeInDown duration" leave-active-class="fadeOutUp duration">
     <div class="card padding-15" v-show="visible">
-      <p class="message">
-        {{message}}
-      </p>
+      <div class="flex-box">
+        <p class="message">
+          {{message}}
+        </p>
+        <div>
+          <a class="icon s-close" @click="close"></a>
+        </div>
+      </div>
     </div>
   </transition>
 </template>
@@ -55,6 +60,7 @@
 <style scoped lang="less" type="text/less">
   @import "../../../assets/style/color.less";
   @import "../../../assets/style/config.less";
+  @import "../../../assets/style/mixin.less";
 
   .card {
     @widht: 300px;
@@ -67,6 +73,9 @@
     margin: 0 auto 0 -(@widht / 2);
     box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
     .message{
+      .ellipsis();
+      .left();
+      width: 100%;
       font-size: @default-font-size;
     }
   }

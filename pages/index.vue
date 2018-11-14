@@ -11,11 +11,14 @@
           </h3>
           <div class="row">
             <div v-for="(draw,index) in likeList" class="item" :key="index">
-              <nuxt-link :to="`/draw/${draw.id}`" class="cover img"
-                         :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
-                         style="width: 100%">
-                <i class="icon s-heart like" :style="{color:draw.isFocus?`red`:`white`}" @click.stop="focus"></i>
-              </nuxt-link>
+              <div class="img-box">
+                <nuxt-link :to="`/draw/${draw.id}`" class="cover"
+                           :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
+                           style="width: 100%">
+                </nuxt-link>
+                <a class="icon s-heart like" :style="{color:draw.isFocus?`red`:`white`}"
+                   @click.stop="focus(index,`like`)"></a>
+              </div>
               <p class="draw-name center">
                 <nuxt-link :to="`/user/${draw.userId}`">
                   {{draw.name}}
@@ -36,10 +39,14 @@
           </h3>
           <div class="row">
             <div v-for="(draw,index) in newList" class="item" :key="index">
-              <nuxt-link :to="`/draw/${draw.id}`" class="cover img"
-                         :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
-                         style="width: 100%">
-              </nuxt-link>
+              <div class="img-box">
+                <nuxt-link :to="`/draw/${draw.id}`" class="cover"
+                           :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
+                           style="width: 100%">
+                </nuxt-link>
+                <a class="icon s-heart like" :style="{color:draw.isFocus?`red`:`white`}"
+                   @click.stop="focus(index,`new`)"></a>
+              </div>
               <p class="draw-name center">
                 <nuxt-link :to="`/user/${draw.userId}`">
                   {{draw.name}}
@@ -100,8 +107,14 @@
     mounted() {
     },
     methods: {
-      focus(){
-
+      focus(index, type) {
+        if (type === `like`) {
+          console.log(1);
+          this.likeList[index].isFocus = true;
+          console.log(this.likeList)
+        } else if (type === `new`) {
+          this.newList[index].isFocus = true;
+        }
       }
     }
   }
@@ -113,7 +126,7 @@
   @import "../assets/style/mixin";
 
   .page {
-    padding: 30px 0;
+    padding: 24px 0;
   }
 
   .content {
@@ -138,9 +151,6 @@
     .left-box {
       width: 850px;
       float: left;
-      .activity-card {
-
-      }
       .image-card {
         padding: 10px 9px;
         .row {
@@ -148,12 +158,15 @@
           .item {
             margin: 12px 8px;
             float: left;
-            width: 150px;
-            .cover {
-              display: block;
-              width: 100%;
-              height: 150px;
+            .img-box {
               position: relative;
+              width: 150px;
+              height: 150px;
+              .cover {
+                display: block;
+                width: 100%;
+                height: 100%;
+              }
               .like {
                 position: absolute;
                 right: 8px;

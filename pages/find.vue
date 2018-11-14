@@ -8,8 +8,6 @@
              :style="{width:listConstant.colWidth+`px`,height:getHeight(draw)+`px`}">
       </a>
     </div>
-    <!--<button class="btn is-plain next" @click="paging" :disabled="page.last">换</button>-->
-    <button class="btn is-plain next">喜欢</button>
   </div>
 </template>
 
@@ -73,10 +71,7 @@
       }
     },
     mounted() {
-      this.$notify({
-        message: `现在暂时先随机出`,
-        waitTime: 2000
-      });
+      this.$notify({message: `现在暂时先随机出`, waitTime: 4000});
     },
     methods: {
       ...mapActions("draw", ["APaging", "AListByRecommend"]),

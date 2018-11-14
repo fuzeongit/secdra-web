@@ -80,8 +80,8 @@
     box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
     transition: all @default-animate-time;
     .title{
-      .left();
       .ellipsis();
+      .left();
       width: 100%;
     }
     .message {
