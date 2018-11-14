@@ -16,7 +16,7 @@
                            :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
                            style="width: 100%">
                 </nuxt-link>
-                <a class="icon s-heart like" :style="{color:draw.isFocus?`red`:`white`}"
+                <a class="icon s-heart like" :style="{color:draw.focus?`red`:`white`}"
                    @click.stop="focus(index,`like`)"></a>
               </div>
               <p class="draw-name center">
@@ -44,7 +44,7 @@
                            :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
                            style="width: 100%">
                 </nuxt-link>
-                <a class="icon s-heart like" :style="{color:draw.isFocus?`red`:`white`}"
+                <a class="icon s-heart like" :style="{color:draw.focus?`red`:`white`}"
                    @click.stop="focus(index,`new`)"></a>
               </div>
               <p class="draw-name center">
@@ -109,11 +109,9 @@
     methods: {
       focus(index, type) {
         if (type === `like`) {
-          console.log(1);
-          this.likeList[index].isFocus = true;
-          console.log(this.likeList)
+          this.likeList[index].focus = !this.likeList[index].focus
         } else if (type === `new`) {
-          this.newList[index].isFocus = true;
+          this.newList[index].focus = !this.newList[index].focus
         }
       }
     }
