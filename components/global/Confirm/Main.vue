@@ -1,24 +1,26 @@
 <template>
-  <div class="mask">
-    <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <div class="card padding-15" v-show="visible">
-        <h3>
-          {{title}}
-        </h3>
-        <p>
-          {{message}}
-        </p>
-        <div class="confirm-btn-group">
-          <button class="btn is-plain" @click.stop="no">
-            {{noDesc}}
-          </button>
-          <button class="btn" @click.stop="ok">
-            {{okDesc}}
-          </button>
+  <transition name="fade" enter-active-class="fadeIn mask-duration" leave-active-class="fadeOut mask-duration" >
+    <div class="mask " v-show="visible">
+      <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
+        <div class="card padding-15" v-show="visible">
+          <h3>
+            {{title}}
+          </h3>
+          <p>
+            {{message}}
+          </p>
+          <div class="confirm-btn-group">
+            <button class="btn is-plain" @click.stop="no">
+              {{noDesc}}
+            </button>
+            <button class="btn" @click.stop="ok">
+              {{okDesc}}
+            </button>
+          </div>
         </div>
-      </div>
-    </transition>
-  </div>
+      </transition>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -42,29 +44,23 @@
         okCallback: function () {
         },
         noCallback: function () {
-        },
-        clickType: null
+        }
       }
     },
     methods: {
       destroyElement() {
         this.$el.firstElementChild.removeEventListener('transitionend', this.destroyElement);
         this.$el.firstElementChild.removeEventListener('animationend', this.destroyElement);
-        if (this.clickType === "ok") {
-          this.okCallback && this.okCallback()
-        } else if (this.clickType === "no") {
-          this.noCallback && this.noCallback()
-        }
         this.$destroy(true);
         this.$el.parentNode.removeChild(this.$el);
       },
       ok() {
         this.closed = true;
-        this.clickType = "ok";
+        this.okCallback && this.okCallback(this)
       },
       no() {
         this.closed = true;
-        this.clickType = "no";
+        this.noCallback && this.noCallback(this)
       }
     }
   }

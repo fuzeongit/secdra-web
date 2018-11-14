@@ -110,6 +110,7 @@
 <style type="text/less" lang="less" scoped>
   @import "../assets/style/color";
   @import "../assets/style/config";
+  @import "../assets/style/mixin";
 
   .page {
     padding: 30px 0;
@@ -164,17 +165,13 @@
               margin-top: 10px;
               font-size: @default-font-size;
               font-weight: 600;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
+              .ellipsis()
             }
             .user-name {
               font-size: @small-font-size;
               line-height: 20px;
               color: @gray;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
+              .ellipsis()
             }
           }
         }

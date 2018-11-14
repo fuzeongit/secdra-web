@@ -40,13 +40,13 @@
       destroyElement() {
         this.$el.firstElementChild.removeEventListener('transitionend', this.destroyElement);
         this.$el.firstElementChild.removeEventListener('animationend', this.destroyElement);
-        window.clearTimeout(this.closeTimeout);
-        this.callback && this.callback();
         this.$destroy(true);
         this.$el.parentNode.removeChild(this.$el);
       },
       close() {
         this.closed = true;
+        window.clearTimeout(this.closeTimeout);
+        this.callback && this.callback(this);
       }
     }
   }

@@ -1,5 +1,6 @@
 @import "./config";
 @import "./color";
+@import "./mixin";
 @import "~vue2-animate/src/less/vue2-animate";
 
 * {
@@ -44,18 +45,6 @@ h4,h5,h6{
 
 a{
   cursor: pointer;
-}
-
-.left {
-  text-align: left;
-}
-
-.right {
-  text-align: right;
-}
-
-.center {
-  text-align: center;
 }
 
 //一共30列
@@ -119,18 +108,6 @@ a{
   }
   .col(1, @grid-column-width);
 }
-
-.distance(@number) when (@number <= 100) {
-  .padding-@{number} {
-    padding: @number * 1px;
-  }
-  .margin-@{number} {
-    margin: @number * 1px;
-  }
-  .distance(@number + 5);
-}
-
-.distance(0);
 
 //弹性盒子
 .flex-box {
@@ -343,25 +320,28 @@ a{
   border-radius: @smallest-border-radius;
   background-color: @white;
   margin: 0 auto;
+
+  .card-header {
+    border-bottom: 1px solid @border-color;
+  }
+
+  .card-body {
+
+  }
+
+  .card-footer {
+    border-top: 1px solid @border-color;
+  }
 }
 
-.card-header {
-  border-bottom: 1px solid @border-color;
-}
-
-.card-body {
-
-}
-
-.card-footer {
-  border-top: 1px solid @border-color;
-}
 
 /*--------------------------------------*/
 .duration {
   animation-duration: @default-animate-time;
 }
-
+.mask-duration{
+  animation-duration: @short-animate-time;
+}
 .cover {
   background: no-repeat 50%;
   background-size: cover;

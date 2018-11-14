@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-import {Alert, Confirm, Message, Prompt} from '../components/global'
+import {Alert, Confirm, Message, Prompt,Notification} from '../components/global'
 import Http from '../assets/js/util/httpUtil'
 import Img from '../assets/js/util/imgUrlUtil'
 import filters from "../assets/js/filter"
@@ -10,6 +10,7 @@ Vue.prototype.$alert = Alert;
 Vue.prototype.$confirm = Confirm;
 Vue.prototype.$prompt = Prompt;
 Vue.prototype.$message = Message;
+Vue.prototype.$notify = Notification;
 
 // import vueSocketIO from 'vue-socket.io'
 // import io from 'socket.io-client'

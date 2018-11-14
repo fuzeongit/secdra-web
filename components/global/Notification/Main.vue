@@ -1,38 +1,91 @@
 <template>
-  <transition name="fade" enter-active-class="fadeInRight duration" leave-active-class="fadeOut duration">
-    <div class="card">
-
+  <transition name="fade" enter-active-class="fadeInRight duration" leave-active-class="fadeOutRight duration">
+    <div class="card padding-15" :style="{top:`${verticalOffset}px`}" v-show="visible">
+      <div class="flex-box">
+        <div class="title">
+          {{title}}
+        </div>
+        <div>
+          <a class="icon s-close" @click="close"></a>
+        </div>
+      </div>
+      <div class="message">
+        {{message}}
+      </div>
     </div>
   </transition>
-
 </template>
 
 <script>
-    export default {
-      data(){
-        return {
-          title:"",
-          Message:""
+  export default {
+    watch: {
+      closed(newVal) {
+        if (newVal) {
+          this.visible = false;
+          this.$el.firstElementChild.addEventListener('transitionend', this.destroyElement);
+          this.$el.firstElementChild.addEventListener('animationend', this.destroyElement);
+
         }
       }
+    },
+    data() {
+      return {
+        title: "提示",
+        Message: "",
+        verticalOffset: 0,
+        closeTimeout: null,
+        waitTime: 5000,
+        visible: false,
+        closed: false,
+        callback: () => {
+        }
+      }
+    },
+    mounted() {
+      if (this.waitTime) {
+        window.setTimeout(() => {
+          this.close()
+        }, this.waitTime)
+      }
+    },
+    methods: {
+      destroyElement() {
+        this.$el.firstElementChild.removeEventListener('transitionend', this.destroyElement);
+        this.$el.firstElementChild.removeEventListener('animationend', this.destroyElement);
+        this.$destroy(true);
+        this.$el.parentNode.removeChild(this.$el);
+      },
+      close() {
+        this.closed = true;
+        window.clearTimeout(this.closeTimeout);
+        this.callback && this.callback()
+      }
     }
+  }
 </script>
 
 <style scoped lang="less" type="text/less">
   @import "../../../assets/style/color.less";
   @import "../../../assets/style/config.less";
+  @import "../../../assets/style/mixin.less";
 
   .card {
     @widht: 300px;
     width: @widht;
     position: fixed;
-    z-index: @mask-index - 1;
     display: inline-block;
-    top: 20px;
-    left: 50%;
+    right: 15px;
+    z-index: @mask-index - 1;
     margin: 0 auto 0 -(@widht / 2);
     box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
-    .message{
+    transition: all @default-animate-time;
+    .title{
+      .left();
+      .ellipsis();
+      width: 100%;
+    }
+    .message {
+      margin-top: 8px;
       font-size: @default-font-size;
     }
   }

@@ -73,7 +73,10 @@
       }
     },
     mounted() {
-      this.$message({message: "现在暂时先随机出", waitTime: 2000})
+      this.$notify({
+        message: `现在暂时先随机出`,
+        waitTime: 2000
+      });
     },
     methods: {
       ...mapActions("draw", ["APaging", "AListByRecommend"]),
