@@ -49,6 +49,8 @@
     },
     computed: {
 
+    },
+    mounted(){
     }
   }
 </script>

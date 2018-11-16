@@ -1,5 +1,5 @@
 /**
- *  有关user的仓库
+ *  有关menu的仓库
  *
  *  @author fjj
  */

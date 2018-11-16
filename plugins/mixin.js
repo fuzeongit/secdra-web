@@ -16,7 +16,6 @@ Vue.prototype.$notify = Notification;
 // import io from 'socket.io-client'
 // Vue.use(vueSocketIO,io("http://47.107.131.24:8089"));
 
-
 Vue.prototype.$http = Http;
 
 Vue.prototype.$img = Img;
@@ -26,7 +25,7 @@ for (let name in filters) {
   Vue.filter(name, filters[name])
 }
 
-Vue.directive(directive.goTop.name, {
+Vue.directive("goTop", {
   bind: directive.goTop
 });
 
