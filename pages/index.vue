@@ -24,14 +24,14 @@
                   {{draw.name}}
                 </nuxt-link>
               </p>
-              <Popper placement="top" trigger="hover">
-                <UserCard :user="draw.user"></UserCard>
-                <p class="user-name center" slot="reference">
-                  <nuxt-link :to="`/user/${draw.userId}`">
+              <div class="user-name center">
+                <Popper placement="top" trigger="hover">
+                  <UserCard :user="draw.user"></UserCard>
+                  <nuxt-link :to="`/user/${draw.userId}`" slot="reference">
                     {{draw.user.name}}
                   </nuxt-link>
-                </p>
-              </Popper>
+                </Popper>
+              </div>
             </div>
           </div>
         </div>
@@ -57,14 +57,14 @@
                   {{draw.name}}
                 </nuxt-link>
               </p>
-              <Popper placement="top" trigger="hover">
-                <UserCard :user="draw.user"></UserCard>
-                <p class="user-name center" slot="reference">
-                  <nuxt-link :to="`/user/${draw.userId}`">
+              <div class="user-name center" >
+                <Popper placement="top" trigger="hover">
+                  <UserCard :user="draw.user"></UserCard>
+                  <nuxt-link :to="`/user/${draw.userId}`" slot="reference">
                     {{draw.user.name}}
                   </nuxt-link>
-                </p>
-              </Popper>
+                </Popper>
+              </div>
             </div>
           </div>
         </div>
@@ -198,7 +198,7 @@
               font-size: @small-font-size;
               line-height: 20px;
               color: @gray;
-              .ellipsis()
+              .ellipsis();
             }
           }
         }

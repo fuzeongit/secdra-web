@@ -2,9 +2,9 @@
   <div class="page">
     <SelfHome v-if="isSelf"></SelfHome>
     <OtherHome v-else :user="user"></OtherHome>
-    <template>
-      <button class="btn is-suspend" v-goTop style="position: fixed;right: 50px;bottom: 50px;"><i class="icon s-zhiding"></i></button>
-    </template>
+    <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
+      <button class="btn is-suspend" v-goTop style="position: fixed;right: 50px;bottom: 50px;" v-show="scrollTop>150"><i class="icon s-zhiding"></i></button>
+    </transition>
   </div>
 </template>
 
@@ -17,7 +17,6 @@
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
     async asyncData({store, req, redirect, route, $axios}) {
-
       let res = {};
       if(store.state.user.user.id===route.params.id){
         res = await $axios.get(`${config.host}/user/getSelfInfo`);
@@ -48,7 +47,9 @@
       OtherHome
     },
     computed: {
-
+      scrollTop(){
+        return this.$store.state.window.scrollTop || 0
+      }
     },
     mounted(){
     }

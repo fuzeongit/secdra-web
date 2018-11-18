@@ -7,8 +7,25 @@
           <img :src="$img.scedra(draw.url,`specifiedWidth`)"
                :style="{width:listConstant.colWidth+`px`,height:getHeight(draw)+`px`}">
         </nuxt-link>
-        <div style="height: 100px;padding: 20px 15px;">
-          <img :src="$img.head(draw.user.head)"  style="border-radius: 50%;width: 60px">
+        <div class="info-box">
+          <div class="flex-row">
+            <img :src="$img.head(draw.user.head)" style="border-radius: 50%;width: 50px">
+            <div class="col user-info">
+              <p class="draw-name center">
+                <nuxt-link :to="`/draw/${draw.id}`">
+                  {{draw.name}}
+                </nuxt-link>
+              </p>
+              <p class="user-name center">
+                <nuxt-link :to="`/user/${draw.userId}`">
+                  {{draw.user.name}}
+                </nuxt-link>
+              </p>
+            </div>
+            <div class="col follow-box">
+              <button class="btn is-plain">关注</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -136,6 +153,7 @@
 <style type="text/less" lang="less" scoped>
   @import "../../../assets/style/color";
   @import "../../../assets/style/config";
+  @import "../../../assets/style/mixin";
 
   .list-content {
     width: @visual-width;
@@ -148,13 +166,51 @@
       border-radius: @smallest-border-radius;
       background-color: @white;
       &:hover {
-        transform: translateY(-3px);
+        transform: translateY(-1px);
         box-shadow: 0 0 50px rgba(150, 150, 150, 0.55);
       }
       .img-box {
         img {
           transition: 0.5s;
           width: 100%
+        }
+      }
+      .info-box {
+        @btn-width: 40px;
+        height: 80px;
+        padding: 15px 15px;
+
+        .flex-row {
+          img {
+            width: 50px;
+            border-radius: 50%;
+          }
+
+          .user-info {
+            padding: 0 10px;
+            width: calc(100% - 50px - @btn-width);
+            .draw-name {
+              line-height: 20px;
+              font-size: @default-font-size;
+              font-weight: 600;
+              .ellipsis()
+            }
+            .user-name {
+              font-size: @small-font-size;
+              line-height: 20px;
+              color: @gray;
+              .ellipsis();
+            }
+          }
+          .follow-box {
+
+            width: @btn-width;
+            .btn {
+              padding: 0;
+              width: @btn-width;
+              line-height: 25px;
+            }
+          }
         }
       }
     }
