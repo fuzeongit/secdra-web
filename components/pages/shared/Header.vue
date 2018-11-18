@@ -27,25 +27,28 @@
             <i class="s-chaxun icon"></i>
           </a>
           <div class="head-img-box">
-            <a @click.stop="isShowUserOptions=true">
-              <img :src="$img.head(user.head)" width="40" height="40"
+            <nuxt-link :to="`/user/${user.id||''}`">
+              <img :src="$img.head(user.head)" width="40" height="40" v-popover:popover
                    :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`"
                    style="border-radius: 50%;">
-            </a>
-            <ul v-show="isShowUserOptions" @click.stop="()=>{}">
-              <li>
-                <nuxt-link :to="`/user/${user.id||''}`" :class="{active:activeName===`user`}">
-                  <i class="icon s-zhanghaoguanli"></i>
-                  个人中心
-                </nuxt-link>
-              </li>
-              <li>
-                <a @click="logout">
-                  <i class="icon s-zhuxiao"></i>
-                  退出登录
-                </a>
-              </li>
-            </ul>
+            </nuxt-link>
+            <Popper ref="popover"
+                    trigger="hover">
+              <ul class="head-menu">
+                <li>
+                  <nuxt-link :to="`/user/${user.id||''}`" :class="{active:activeName===`user`}">
+                    <i class="icon s-zhanghaoguanli"></i>
+                    个人中心
+                  </nuxt-link>
+                </li>
+                <li>
+                  <a @click="logout">
+                    <i class="icon s-zhuxiao"></i>
+                    退出登录
+                  </a>
+                </li>
+              </ul>
+            </Popper>
           </div>
         </div>
       </template>
@@ -55,8 +58,12 @@
 
 <script>
   import Cookie from 'js-cookie'
+  import Popper from '../../global/Popper'
 
   export default {
+    components: {
+      Popper
+    },
     props: {
       offset: {
         type: Number,
@@ -67,12 +74,10 @@
       return {
         hid: false,
         tag: "",
-        isShowUserOptions: false
       }
     },
     watch: {
       $route() {
-        this.isShowUserOptions = false;
         this.scrollTop = 0;
         document.documentElement.scrollTop = 0
       },
@@ -88,7 +93,7 @@
       user() {
         return this.$store.state.user.user || {}
       },
-      activeName(){
+      activeName() {
         return this.$store.state.menu.name
       },
       scrollTop: {
@@ -112,14 +117,10 @@
       documentScroll(event) {
         this.scrollTop = event.target.documentElement.scrollTop
       },
-      documentClick() {
-        this.isShowUserOptions = false;
-      },
       search() {
         this.$router.push(`/draw/search/${this.tag}`)
       },
       logout() {
-        this.isShowUserOptions = false;
         this.$confirm({
           message: `你确定要退出登录吗？`,
           okCallback: () => {
@@ -174,57 +175,37 @@
           display: inline-block;
           position: relative;
           padding-left: 30px;
+        }
+      }
+    }
+  }
 
-          ul {
-            position: absolute;
-            background-color: white;
-            padding: 0 15px;
-            width: 120px;
-            right: 0;
-            top: 8px;
-            border: 1px solid @border-color;
-            margin-top: @herder-height - @herder-border-height;
-            border-radius: @smallest-border-radius;
-            box-shadow: 0 0 10px rgba(202, 202, 202, 0.55);
-            text-align: center;
-            &:before {
-              content: "";
-              position: absolute;
-              display: block;
-              width: 10px;
-              height: 10px;
-              transform: rotate(45deg);
-              top: -7px;
-              right: 12px;
-              background: @white;
-              border: 1px solid @border-color;
-              border-bottom: 0;
-              border-right: 0;
-            }
-            li {
-              border-bottom: 1px solid @border-color;
-              line-height: 45px;
-              &:last-child {
-                border-bottom: none;
-              }
-              a {
-                color: @font-color;
-                display: inline-block;
-                height: 100%;
-                font-size: @default-font-size;
-                &.active {
-                  color: @theme-color;
-                  .icon {
-                    color: @theme-color;
-                  }
-                }
-                .icon {
-                  font-size: @medium-font-size + 2px;
-                  vertical-align: -1px;
-                }
-              }
-            }
+  .head-menu {
+    background-color: white;
+    padding: 0 15px;
+    width: 120px;
+    border-radius: @smallest-border-radius;
+    text-align: center;
+    li {
+      border-bottom: 1px solid @border-color;
+      line-height: 45px;
+      &:last-child {
+        border-bottom: none;
+      }
+      a {
+        color: @font-color;
+        display: inline-block;
+        height: 100%;
+        font-size: @default-font-size;
+        &.active {
+          color: @theme-color;
+          .icon {
+            color: @theme-color;
           }
+        }
+        .icon {
+          font-size: @medium-font-size + 2px;
+          vertical-align: -1px;
         }
       }
     }

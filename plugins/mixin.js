@@ -25,10 +25,9 @@ for (let name in filters) {
   Vue.filter(name, filters[name])
 }
 
-Vue.directive("goTop", {
-  bind: directive.goTop
-});
-
+Vue.directive("goTop", directive.goTop);
+Vue.directive("popover", directive.popover);
+//
 // for (let name in directive) {
 //   Vue.directive(name, directive[name])
 // }

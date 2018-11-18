@@ -10,13 +10,52 @@
           <img :src="$img.head(user.head)"
                :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`">
         </a>
-        <div style="margin-top: 3000px"></div>
+        <div style="height: 3000px">
+          <Popper
+            placement="top"
+            width="400"
+            trigger="click">
+            <div>
+              哈哈
+            </div>
+            <a slot="reference">click 激活</a>
+          </Popper>
+          <Popper
+            placement="left"
+            width="400"
+            trigger="click">
+            <div>
+              哈哈
+            </div>
+            <a slot="reference">click 激活</a>
+          </Popper>
+          <Popper
+            placement="bottom"
+            width="400"
+            trigger="click">
+            <div>
+              哈哈
+            </div>
+            <a slot="reference">click 激活</a>
+          </Popper>
+          <Popper
+            ref="popover"
+            placement="right"
+            width="400"
+            trigger="click">
+            <div>
+              哈哈
+            </div>
+          </Popper>
+          <a v-popover:popover>click 激活</a>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import Popper from '../../global/Popper'
   export default {
     computed: {
       user() {
@@ -30,6 +69,17 @@
           this.$store.state.window.scrollTop = val || 0
         }
       }
+    },
+    components:{
+      Popper
+    },
+    methods:{
+      mouseenter(event){
+
+      },
+      mouseleave(event){
+        console.log(event)
+      },
     }
   }
 </script>

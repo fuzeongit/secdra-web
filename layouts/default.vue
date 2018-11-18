@@ -19,6 +19,6 @@
   }
 </script>
 <style type="text/less" lang="less">
-  @import "https://unpkg.com/element-ui@2.4.9/lib/theme-chalk/index.css";
+  /*@import "https://unpkg.com/element-ui@2.4.9/lib/theme-chalk/index.css";*/
   @import "//at.alicdn.com/t/font_896802_jhtv9q1qx6c.css";
 </style>

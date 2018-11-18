@@ -20,13 +20,18 @@
                    @click.stop="focus(index,`like`)"></a>
               </div>
               <p class="draw-name center">
-                <nuxt-link :to="`/user/${draw.userId}`">
+                <nuxt-link :to="`/draw/${draw.id}`">
                   {{draw.name}}
                 </nuxt-link>
               </p>
-              <p class="user-name center">
-                {{draw.user.name}}
-              </p>
+              <Popper placement="top" trigger="hover">
+                <UserCard :user="draw.user"></UserCard>
+                <p class="user-name center" slot="reference">
+                  <nuxt-link :to="`/user/${draw.userId}`">
+                    {{draw.user.name}}
+                  </nuxt-link>
+                </p>
+              </Popper>
             </div>
           </div>
         </div>
@@ -48,13 +53,18 @@
                    @click.stop="focus(index,`new`)"></a>
               </div>
               <p class="draw-name center">
-                <nuxt-link :to="`/user/${draw.userId}`">
+                <nuxt-link :to="`/draw/${draw.id}`">
                   {{draw.name}}
                 </nuxt-link>
               </p>
-              <p class="user-name center">
-                {{draw.user.name}}
-              </p>
+              <Popper placement="top" trigger="hover">
+                <UserCard :user="draw.user"></UserCard>
+                <p class="user-name center" slot="reference">
+                  <nuxt-link :to="`/user/${draw.userId}`">
+                    {{draw.user.name}}
+                  </nuxt-link>
+                </p>
+              </Popper>
             </div>
           </div>
         </div>
@@ -81,6 +91,8 @@
 <script>
   import config from "../assets/js/config";
   import {Pageable} from "../assets/js/model/base";
+  import Popper from "../components/global/Popper";
+  import UserCard from "../components/pages/shared/UserCard";
 
   export default {
     //在这里不能使用httpUtil
@@ -96,6 +108,10 @@
         likeList: resultList[1].data.content,
         newList: resultList[2].data.content,
       }
+    },
+    components: {
+      Popper,
+      UserCard
     },
     data() {
     },
