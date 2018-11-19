@@ -11,12 +11,12 @@
            @click.stop="focus(index)"></a>
         <div class="info-box">
           <div class="flex-row">
-            <nuxt-link :to="`/draw/${draw.id}`">
+            <nuxt-link :to="`/user/${draw.userId}`">
               <img :src="$img.head(draw.user.head)" style="border-radius: 50%;width: 50px">
             </nuxt-link>
             <div class="col user-info">
               <p class="draw-name center">
-                <nuxt-link :to="`/user/${draw.userId}`">
+                <nuxt-link :to="`/draw/${draw.id}`">
                   {{draw.name}}
                 </nuxt-link>
               </p>

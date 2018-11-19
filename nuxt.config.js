@@ -1,5 +1,6 @@
 const pkg = require('./package');
 
+
 module.exports = {
   mode: 'universal',
 
@@ -57,8 +58,8 @@ module.exports = {
     [
       '/api',
       {
-        target:"http://127.0.0.1:8080", // api主机
-        secure:false,
+        target: "http://127.0.0.1:8080", // api主机
+        secure: false,
         changeOrigin: true,
         pathRewrite: {'^/api': '/'}
       }
@@ -81,9 +82,13 @@ module.exports = {
     extend(config, ctx) {
 
     },
+    optimization: {},
+
+    // optimizeCSS: {}//压缩css
+
     /**
      * 打包独立css文件
      */
-    extractCSS: {allChunks: true},
+    extractCSS: true,
   }
 }
