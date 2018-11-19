@@ -7,12 +7,16 @@
           <img :src="$img.scedra(draw.url,`specifiedWidth`)"
                :style="{width:listConstant.colWidth+`px`,height:getHeight(draw)+`px`}">
         </nuxt-link>
+        <a class="icon s-heart like" :style="{color:draw.focus?`red`:`white`}"
+           @click.stop="focus(index)"></a>
         <div class="info-box">
           <div class="flex-row">
-            <img :src="$img.head(draw.user.head)" style="border-radius: 50%;width: 50px">
+            <nuxt-link :to="`/draw/${draw.id}`">
+              <img :src="$img.head(draw.user.head)" style="border-radius: 50%;width: 50px">
+            </nuxt-link>
             <div class="col user-info">
               <p class="draw-name center">
-                <nuxt-link :to="`/draw/${draw.id}`">
+                <nuxt-link :to="`/user/${draw.userId}`">
                   {{draw.name}}
                 </nuxt-link>
               </p>
@@ -30,26 +34,23 @@
       </div>
     </div>
     <div v-popover:popover style="position: fixed;right: 50px;bottom: 50px;">
-      <button class="btn is-suspend" style="color:#888" @click="paging"
-              :disabled="page.last" >
+      <button class="btn is-suspend" style="color:#888" @click="paging()"
+              :disabled="page.last">
         N
       </button>
     </div>
-
     <Popper ref="popover" trigger="hover" placement="left">
       <div class="padding-10">
-        <div class="flex-row">
-          <div class="col-15 center">
-            第:<span style="vertical-align: baseline">{{page.number+1}}</span>页
-          </div>
-          <div class="col-15 center">
-            共:<span style="vertical-align: baseline">{{page.totalPages}}</span>页
-          </div>
-        </div>
-        <br>
-        <form style="font-size: 0"  @submit.prevent="paging(inputPage)">
-          <input type="number" title="" class="input" v-model="inputPage" style="border-bottom-right-radius: 0;border-top-right-radius: 0;border-right: 0">
-          <button class="btn"  style="border-bottom-left-radius: 0;border-top-left-radius: 0;border-left: 0">跳转</button>
+        <p class=" center">
+          第:<strong style="vertical-align: baseline">{{page.number+1}}</strong>页
+        </p>
+        <p class="center">
+          共:<strong style="vertical-align: baseline;">{{page.totalPages}}</strong>页
+        </p>
+        <form style="font-size: 0;margin-top: 8px" @submit.prevent="paging(inputPage)">
+          <input type="text" title="" class="input" v-model="inputPage"
+                 style="border-bottom-right-radius: 0;border-top-right-radius: 0;border-right: 0;width: 60px;padding:0 8px ">
+          <button class="btn" style="border-bottom-left-radius: 0;border-top-left-radius: 0;border-left: 0">跳转</button>
         </form>
       </div>
     </Popper>
@@ -68,7 +69,7 @@
     async asyncData({store, req, redirect, route, $axios}) {
       store.state.menu.name = "tag";
       let pageable = new Pageable();
-      pageable.size = 20;
+      pageable.size = 16;
       pageable.sort = "likeAmount,desc";
       let {data: result} = await $axios.get(`${config.host}/draw/paging`, {
         params: Object.assign({
@@ -86,12 +87,10 @@
     },
     data() {
       let listConstant = new ListConstant();
-      let colNumberHeight = this.initColNumberHeight(listConstant);
       return {
         inputPage: 1,
         pageLoading: false,
-        listConstant,
-        colNumberHeight
+        listConstant
       }
     },
     watch: {},
@@ -99,6 +98,7 @@
       scrollTop() {
         return this.$store.state.window.scrollTop
       },
+      //计算偏移
       offset() {
         let o = [];
         let colNumberHeight = this.initColNumberHeight(this.listConstant);
@@ -122,8 +122,7 @@
         return colNumberHeight.max()
       }
     },
-    mounted() {
-    },
+    mounted() {},
     methods: {
       ...mapActions("draw", ["APaging"]),
       //初始化高度数组
@@ -134,6 +133,7 @@
         }
         return t
       },
+      //获取图片高度
       getHeight(draw) {
         return (draw.height / draw.width) * (this.listConstant.colWidth)
       },
@@ -142,6 +142,9 @@
        * @returns {Promise<void>}
        */
       async paging(triggerPage) {
+        if (triggerPage && isNaN(triggerPage * 1)) {
+          return
+        }
         triggerPage = triggerPage * 1;
         if (this.pageLoading) {
           return
@@ -169,9 +172,11 @@
           this.pageable.page = sourcePage;
           return
         }
-        this.colNumberHeight = this.initColNumberHeight(this.listConstant);
         this.page = data;
         this.list = data.content;
+      },
+      focus(index) {
+        this.list[index].focus = !this.list[index].focus
       }
     }
   }
@@ -188,6 +193,7 @@
     position: relative;
     height: 999px;
     .item {
+      @info-box-height: 80px;
       position: absolute;
       transition: 0.5s;
       border-radius: @smallest-border-radius;
@@ -195,6 +201,11 @@
       &:hover {
         transform: translateY(-1px);
         box-shadow: 0 0 50px rgba(150, 150, 150, 0.55);
+      }
+      .like {
+        position: absolute;
+        bottom: @info-box-height + 5px;
+        right: 5px;
       }
       .img-box {
         img {
@@ -204,7 +215,7 @@
       }
       .info-box {
         @btn-width: 40px;
-        height: 80px;
+        height: @info-box-height;
         padding: 15px 15px;
 
         .flex-row {
@@ -242,7 +253,6 @@
       }
     }
   }
-
   .next {
     position: fixed;
     bottom: 50px;

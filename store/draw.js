@@ -12,6 +12,9 @@ const actions = {
   async AListByRecommend(context, params) {
     return await httpUtil.get("/draw/listByRecommend", params);
   },
+  async APagingByRecommend(context, params) {
+    return await httpUtil.get("/draw/pagingByRecommend", params);
+  },
 };
 
 export default {
