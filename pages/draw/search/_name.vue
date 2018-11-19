@@ -146,7 +146,7 @@
         if (this.pageLoading) {
           return
         }
-        if (triggerPage === this.pageable.page) {
+        if (triggerPage - 1 === this.pageable.page) {
           return
         }
         let sourcePage = this.pageable.page;
