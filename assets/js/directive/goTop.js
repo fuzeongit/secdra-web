@@ -7,12 +7,14 @@ function goTop(el, binding) {
   el.addEventListener("click", () => {
     if (scrollTopInterval || !document.documentElement.scrollTop) return;
     const sUnit = .025;
+    let start = new Date().getTime()
     scrollTopInterval = window.setInterval(() => {
       let thisScrollTop = document.documentElement.scrollTop * (1 - sUnit / waitTime);
       document.body.scrollTop = document.documentElement.scrollTop = thisScrollTop;
       if (thisScrollTop <= 0) {
         window.clearInterval(scrollTopInterval);
         scrollTopInterval = null
+        console.log(new Date().getTime()-start)
       }
     }, sUnit);
   })

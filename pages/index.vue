@@ -91,7 +91,6 @@
 <script>
   import config from "../assets/js/config";
   import {Pageable} from "../assets/js/model/base";
-  import Popper from "../components/global/Popper";
   import UserCard from "../components/pages/shared/UserCard";
 
   export default {
@@ -110,7 +109,6 @@
       }
     },
     components: {
-      Popper,
       UserCard
     },
     data() {

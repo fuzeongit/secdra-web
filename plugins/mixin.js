@@ -1,6 +1,8 @@
 import Vue from 'vue'
 
 import {Alert, Confirm, Message, Prompt,Notification} from '../components/global'
+import Popper from "../components/global/Popper";
+
 import Http from '../assets/js/util/httpUtil'
 import Img from '../assets/js/util/imgUrlUtil'
 import filters from "../assets/js/filter"
@@ -11,7 +13,7 @@ Vue.prototype.$confirm = Confirm;
 Vue.prototype.$prompt = Prompt;
 Vue.prototype.$message = Message;
 Vue.prototype.$notify = Notification;
-
+Vue.component("Popper",Popper)
 // import vueSocketIO from 'vue-socket.io'
 // import io from 'socket.io-client'
 // Vue.use(vueSocketIO,io("http://47.107.131.24:8089"));

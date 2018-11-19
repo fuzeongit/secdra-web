@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="list-content" :style="{height:`${listHeight}px`}">
-      <div class="item" :style="{left:`${getOffset(draw).left}px`,top:`${getOffset(draw,true).top}px`}"
+      <div class="item" :style="{left:`${offset[index].left}px`,top:`${offset[index].top}px`}"
            v-for="(draw,index) in list" :key="index">
         <nuxt-link :to="`/draw/${draw.id}`" class="img-box">
           <img :src="$img.scedra(draw.url,`specifiedWidth`)"
@@ -29,7 +29,30 @@
         </div>
       </div>
     </div>
-    <button class="btn is-plain next" @click="paging" :disabled="page.last">换</button>
+    <div v-popover:popover style="position: fixed;right: 50px;bottom: 50px;">
+      <button class="btn is-suspend" style="color:#888" @click="paging"
+              :disabled="page.last" >
+        N
+      </button>
+    </div>
+
+    <Popper ref="popover" trigger="hover" placement="left">
+      <div class="padding-10">
+        <div class="flex-row">
+          <div class="col-15 center">
+            第:<span style="vertical-align: baseline">{{page.number+1}}</span>页
+          </div>
+          <div class="col-15 center">
+            共:<span style="vertical-align: baseline">{{page.totalPages}}</span>页
+          </div>
+        </div>
+        <br>
+        <form style="font-size: 0"  @submit.prevent="paging(inputPage)">
+          <input type="number" title="" class="input" v-model="inputPage" style="border-bottom-right-radius: 0;border-top-right-radius: 0;border-right: 0">
+          <button class="btn"  style="border-bottom-left-radius: 0;border-top-left-radius: 0;border-left: 0">跳转</button>
+        </form>
+      </div>
+    </Popper>
   </div>
 </template>
 
@@ -65,6 +88,7 @@
       let listConstant = new ListConstant();
       let colNumberHeight = this.initColNumberHeight(listConstant);
       return {
+        inputPage: 1,
         pageLoading: false,
         listConstant,
         colNumberHeight
@@ -72,20 +96,25 @@
     },
     watch: {},
     computed: {
-      /**
-       * @return {string}
-       */
-      randomColor() {
-        let r, g, b;
-        r = Math.floor(Math.random() * 256);
-        g = Math.floor(Math.random() * 256);
-        b = Math.floor(Math.random() * 256);
-        return "rgb(" + r + ',' + g + ',' + b + ")";
+      scrollTop() {
+        return this.$store.state.window.scrollTop
+      },
+      offset() {
+        let o = [];
+        let colNumberHeight = this.initColNumberHeight(this.listConstant);
+        for (let draw of this.list) {
+          let minTopIndex = colNumberHeight.minIndex();
+          let left = (1 + minTopIndex) * this.listConstant.widthOffset + this.listConstant.colWidth * minTopIndex;
+          let top = colNumberHeight[minTopIndex];
+          colNumberHeight[minTopIndex] += (draw.height / draw.width) * (this.listConstant.colWidth) + this.listConstant.heightOffset + this.listConstant.infoHeight;
+          o.push({left, top});
+        }
+        return o
       },
       //计算盒子高度
       listHeight() {
         let colNumberHeight = this.initColNumberHeight(this.listConstant);
-        let minIndex = this.colNumberHeight.minIndex();
+        let minIndex = 0;
         for (let draw of this.list) {
           colNumberHeight[minIndex] += (draw.height / draw.width) * (this.listConstant.colWidth) + this.listConstant.heightOffset + this.listConstant.infoHeight;
           minIndex = colNumberHeight.minIndex()
@@ -105,18 +134,6 @@
         }
         return t
       },
-      getOffset(draw, isGetMin) {
-        let minIndex = this.colNumberHeight.minIndex();
-        let left = (1 + minIndex) * this.listConstant.widthOffset + this.listConstant.colWidth * minIndex;
-        let offset = {
-          left,
-          top: this.colNumberHeight[minIndex]
-        };
-        if (isGetMin) {
-          this.colNumberHeight[minIndex] += (draw.height / draw.width) * (this.listConstant.colWidth) + this.listConstant.heightOffset + this.listConstant.infoHeight;
-        }
-        return offset
-      },
       getHeight(draw) {
         return (draw.height / draw.width) * (this.listConstant.colWidth)
       },
@@ -124,30 +141,40 @@
        * 获取分页数据
        * @returns {Promise<void>}
        */
-      async paging() {
+      async paging(triggerPage) {
+        triggerPage = triggerPage * 1;
         if (this.pageLoading) {
           return
         }
-        this.pageable.page++;
+        if (triggerPage === this.pageable.page) {
+          return
+        }
+        let sourcePage = this.pageable.page;
+
+        this.pageable.page = triggerPage ? triggerPage - 1 : this.pageable.page + 1;
         this.pageLoading = true;
         let result = await this.APaging(Object.assign({
             name: this.$route.params.name
           }, this.pageable)
         );
         this.pageLoading = false;
+        let data = result.data;
         if (result.status !== 200) {
-          this.$alert({message: result.message});
+          this.$notify({message: result.message});
+          this.pageable.page = sourcePage;
           return
         }
-        let data = result.data;
+        if (data.content.isEmpty()) {
+          this.$notify({message: `该页没有数据哦！`});
+          this.pageable.page = sourcePage;
+          return
+        }
         this.colNumberHeight = this.initColNumberHeight(this.listConstant);
         this.page = data;
         this.list = data.content;
       }
     }
   }
-
-
 </script>
 
 <style type="text/less" lang="less" scoped>

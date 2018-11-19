@@ -58,11 +58,10 @@
 
 <script>
   import Cookie from 'js-cookie'
-  import Popper from '../../global/Popper'
 
   export default {
     components: {
-      Popper
+
     },
     props: {
       offset: {
