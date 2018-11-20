@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="list-content" :style="{height:`${listHeight}px`}">
+    <div class="list-content" :style="{height:`${listContentOffset.height}px`}">
       <div class="item" :style="{left:`${offset[index].left}px`,top:`${offset[index].top}px`}"
            v-for="(draw,index) in list" :key="index">
         <nuxt-link :to="`/draw/${draw.id}`" class="img-box">
@@ -32,28 +32,15 @@
           </div>
         </div>
       </div>
-    </div>
-    <div v-popover:popover style="position: fixed;right: 50px;bottom: 50px;">
-      <button class="btn is-suspend" style="color:#888" @click="paging()"
-              :disabled="page.last">
-        N
-      </button>
-    </div>
-    <Popper ref="popover" trigger="hover" placement="left">
-      <div class="padding-10">
-        <p class=" center">
-          第:<strong style="vertical-align: baseline">{{page.number+1}}</strong>页
-        </p>
-        <p class="center">
-          共:<strong style="vertical-align: baseline;">{{page.totalPages}}</strong>页
-        </p>
-        <form style="font-size: 0;margin-top: 8px" @submit.prevent="paging(inputPage)">
-          <input type="text" title="" class="input" v-model="inputPage"
-                 style="border-bottom-right-radius: 0;border-top-right-radius: 0;border-right: 0;width: 60px;padding:0 8px ">
-          <button class="btn" style="border-bottom-left-radius: 0;border-top-left-radius: 0;border-left: 0">跳转</button>
-        </form>
+      <div class="item last-card padding-10px" v-if="page.last"
+           :style="{left:`${listContentOffset.lastCardLeft}px`,top:`${listContentOffset.lastCardTop}px`}">
+        <img src="../assets/image/error/404.jpg">
       </div>
-    </Popper>
+    </div>
+    <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
+      <button class="btn is-suspend" v-goTop style="position: fixed;right: 50px;bottom: 50px;" v-show="showGoTop">
+        <i class="icon s-zhiding"></i></button>
+    </transition>
   </div>
 </template>
 
@@ -86,15 +73,40 @@
       }
     },
     data() {
-      let listConstant = new ListConstant();
       return {
         inputPage: 1,
         pageLoading: false,
-        listConstant
+        listConstant: new ListConstant(),
+        showGoTop: false
       }
     },
-    watch: {},
+    watch: {
+      scrollBottom: function (newVal) {
+        if (this.pageLoading) {
+          return
+        }
+        if (newVal > 300) {
+          return
+        }
+        this.paging()
+      },
+      /**
+       * 如果直接用计算属性计算showGoTop的话，
+       * 可能会导致渲染过度，导致页面卡顿
+       */
+      scrollTop(newVal, oldVal) {
+        let threshold = 150;
+        if (newVal > threshold && oldVal <= threshold) {
+          this.showGoTop = true
+        } else if (newVal <= threshold && oldVal > threshold) {
+          this.showGoTop = false
+        }
+      }
+    },
     computed: {
+      scrollBottom() {
+        return this.$store.state.window.scrollBottom
+      },
       scrollTop() {
         return this.$store.state.window.scrollTop
       },
@@ -111,15 +123,30 @@
         }
         return o
       },
-      //计算盒子高度
-      listHeight() {
+      //计算盒子属性
+      listContentOffset() {
         let colNumberHeight = this.initColNumberHeight(this.listConstant);
         let minIndex = 0;
         for (let draw of this.list) {
           colNumberHeight[minIndex] += (draw.height / draw.width) * (this.listConstant.colWidth) + this.listConstant.heightOffset + this.listConstant.infoHeight;
           minIndex = colNumberHeight.minIndex()
         }
-        return colNumberHeight.max()
+        let offset = {
+          height: colNumberHeight.max()
+        };
+        if (this.page.last) {
+          let lastCardHeight = 300;
+          offset.lastCardLeft = (1 + minIndex) * this.listConstant.widthOffset + this.listConstant.colWidth * minIndex;
+          offset.lastCardTop = colNumberHeight.min();
+          let h = colNumberHeight.min() + lastCardHeight + this.listConstant.heightOffset;
+          if (h > offset.height) {
+            offset.height = h
+          }
+          return offset
+        } else {
+          return offset
+        }
+
       }
     },
     mounted() {
@@ -142,20 +169,11 @@
        * 获取分页数据
        * @returns {Promise<void>}
        */
-      async paging(triggerPage) {
-        if (triggerPage && isNaN(triggerPage * 1)) {
-          return
-        }
-        triggerPage = triggerPage * 1;
+      async paging() {
         if (this.pageLoading) {
           return
         }
-        if (triggerPage - 1 === this.pageable.page) {
-          return
-        }
-        let sourcePage = this.pageable.page;
-
-        this.pageable.page = triggerPage ? triggerPage - 1 : this.pageable.page + 1;
+        let sourcePage = ++this.pageable.page;
         this.pageLoading = true;
         let result = await this.APaging(Object.assign({
             name: this.$route.params.name
@@ -168,13 +186,8 @@
           this.pageable.page = sourcePage;
           return
         }
-        if (data.content.isEmpty()) {
-          this.$notify({message: `该页没有数据哦！`});
-          this.pageable.page = sourcePage;
-          return
-        }
         this.page = data;
-        this.list = data.content;
+        this.list.merge(data.content)
       },
       focus(index) {
         this.list[index].focus = !this.list[index].focus
@@ -253,7 +266,15 @@
         }
       }
     }
+    .last-card{
+      width: 250px;
+      height: 300px;
+      img{
+        width: 100%;
+      }
+    }
   }
+
   .next {
     position: fixed;
     bottom: 50px;

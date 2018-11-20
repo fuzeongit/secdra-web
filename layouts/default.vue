@@ -3,7 +3,7 @@
     <section>
       <Header></Header>
         <transition name="fade" enter-active-class="fadeIn duration" leave-active-class="fadeOut duration">
-          <nuxt keep-alive/>
+          <nuxt />
         </transition>
     </section>
   </div>

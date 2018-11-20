@@ -60,9 +60,7 @@
   import Cookie from 'js-cookie'
 
   export default {
-    components: {
-
-    },
+    components: {},
     props: {
       offset: {
         type: Number,
@@ -106,15 +104,14 @@
     },
     mounted() {
       document.addEventListener('scroll', this.documentScroll);
-      document.addEventListener('click', this.documentClick);
     },
     beforeDestroy() {
       document.removeEventListener('scroll', this.documentScroll);
-      document.removeEventListener('click', this.documentClick);
     },
     methods: {
       documentScroll(event) {
-        this.scrollTop = event.target.documentElement.scrollTop
+        this.scrollTop = event.target.documentElement.scrollTop;
+        this.$store.state.window.scrollBottom = event.target.documentElement.scrollHeight - this.scrollTop - event.target.documentElement.clientHeight
       },
       search() {
         this.$router.push(`/draw/search/${this.tag}`)
