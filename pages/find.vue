@@ -8,7 +8,7 @@
                :style="{width:listConstant.colWidth+`px`,height:getHeight(draw)+`px`}">
         </nuxt-link>
         <a class="icon s-heart like" :style="{color:draw.focus?`red`:`white`}"
-           @click.stop="focus(draw)"></a>
+           @click.stop="focus(draw,index)"></a>
         <div class="info-box">
           <div class="flex-row">
             <nuxt-link :to="`/user/${draw.userId}`">
@@ -152,7 +152,7 @@
       this.$notify({message: `现在暂时先随机出`, waitTime: 4000});
     },
     methods: {
-      ...mapActions("draw", ["APagingByRecommend", "AListByRecommend","AFocus"]),
+      ...mapActions("draw", ["APagingByRecommend", "AListByRecommend", "AFocus"]),
       //初始化高度数组
       initColNumberHeight(listConstant) {
         let t = [];
@@ -195,15 +195,18 @@
           this.list.splice(index + 1, 0, item);
         }
       },
-      async focus(draw){
+      async focus(draw, index) {
         let result = await this.AFocus({
-          drawId:draw.id
+          drawId: draw.id
         });
         if (result.status !== 200) {
           this.$notify({message: result.message});
           return
         }
-        draw.focus = result.data
+        draw.focus = result.data;
+        if (draw.focus) {
+          this.listByRecommend(index)
+        }
       }
     }
   }
@@ -279,10 +282,10 @@
         }
       }
     }
-    .last-card{
+    .last-card {
       width: 250px;
       height: 300px;
-      img{
+      img {
         width: 100%;
       }
     }
