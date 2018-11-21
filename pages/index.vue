@@ -17,7 +17,7 @@
                            style="width: 100%">
                 </nuxt-link>
                 <a class="icon s-heart like" :style="{color:draw.focus?`red`:`white`}"
-                   @click.stop="focus(index,`like`)"></a>
+                   @click.stop="focus(draw)"></a>
               </div>
               <p class="draw-name center">
                 <nuxt-link :to="`/draw/${draw.id}`">
@@ -50,7 +50,7 @@
                            style="width: 100%">
                 </nuxt-link>
                 <a class="icon s-heart like" :style="{color:draw.focus?`red`:`white`}"
-                   @click.stop="focus(index,`new`)"></a>
+                   @click.stop="focus(draw)"></a>
               </div>
               <p class="draw-name center">
                 <nuxt-link :to="`/draw/${draw.id}`">
@@ -92,7 +92,7 @@
   import config from "../assets/js/config";
   import {Pageable} from "../assets/js/model/base";
   import UserCard from "../components/pages/shared/UserCard";
-
+  import {mapActions} from "vuex"
   export default {
     //在这里不能使用httpUtil
     async asyncData({store, req, redirect, route, $axios}) {
@@ -121,12 +121,16 @@
     mounted() {
     },
     methods: {
-      focus(index, type) {
-        if (type === `like`) {
-          this.likeList[index].focus = !this.likeList[index].focus
-        } else if (type === `new`) {
-          this.newList[index].focus = !this.newList[index].focus
+      ...mapActions("draw", ["AFocus"]),
+      async focus(draw){
+        let result = await this.AFocus({
+          drawId:draw.id
+        });
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+          return
         }
+        draw.focus = result.data
       }
     }
   }

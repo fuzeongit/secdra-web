@@ -8,7 +8,7 @@
                :style="{width:listConstant.colWidth+`px`,height:getHeight(draw)+`px`}">
         </nuxt-link>
         <a class="icon s-heart like" :style="{color:draw.focus?`red`:`white`}"
-           @click.stop="focus(index)"></a>
+           @click.stop="focus(draw)"></a>
         <div class="info-box">
           <div class="flex-row">
             <nuxt-link :to="`/user/${draw.userId}`">
@@ -60,7 +60,7 @@
       pageable.sort = "likeAmount,desc";
       let {data: result} = await $axios.get(`${config.host}/draw/paging`, {
         params: Object.assign({
-          name: route.params.name
+          tag: route.params.tag
         }, pageable)
       });
       if (result.status !== 200) {
@@ -152,7 +152,7 @@
     mounted() {
     },
     methods: {
-      ...mapActions("draw", ["APaging"]),
+      ...mapActions("draw", ["APaging","AFocus"]),
       //初始化高度数组
       initColNumberHeight(listConstant) {
         let t = [];
@@ -170,13 +170,13 @@
        * @returns {Promise<void>}
        */
       async paging() {
-        if (this.pageLoading) {
+        if (this.pageLoading || this.page.last) {
           return
         }
         let sourcePage = ++this.pageable.page;
         this.pageLoading = true;
         let result = await this.APaging(Object.assign({
-            name: this.$route.params.name
+          tag: this.$route.params.tag
           }, this.pageable)
         );
         this.pageLoading = false;
@@ -189,8 +189,15 @@
         this.page = data;
         this.list.merge(data.content)
       },
-      focus(index) {
-        this.list[index].focus = !this.list[index].focus
+      async focus(draw){
+        let result = await this.AFocus({
+          drawId:draw.id
+        });
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+          return
+        }
+        draw.focus = result.data
       }
     }
   }
