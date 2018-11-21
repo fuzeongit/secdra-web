@@ -140,7 +140,6 @@
           }
         }
         for(let draw of this.newList){
-          console.log(userId);
           if(draw.user.id === userId){
             draw.user.focus = focus;
           }

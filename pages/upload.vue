@@ -60,7 +60,7 @@
         this.$prompt({
             message: `请输入`,
             okCallback: input => {
-              console.log(input)
+
             }
           },
         )
