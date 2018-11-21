@@ -10,14 +10,8 @@
       <nuxt-link to="/new" :class="{active:activeName===`new`}">
         最新
       </nuxt-link>
-      <nuxt-link to="/upload" :class="{active:activeName===`upload`}">
-        上传
-      </nuxt-link>
       <nuxt-link to="/collection" :class="{active:activeName===`collection`}">
         收藏
-      </nuxt-link>
-      <nuxt-link to="/footprint" :class="{active:activeName===`footprint`}">
-        足迹
       </nuxt-link>
       <template>
         <div class="right-box">
@@ -36,9 +30,21 @@
                     trigger="hover">
               <ul class="head-menu">
                 <li>
-                  <nuxt-link :to="`/user/${user.id||''}`" :class="{active:activeName===`user`}">
+                  <nuxt-link to="/footprint" :class="{active:activeName===`footprint`}">
                     <i class="icon s-zhanghaoguanli"></i>
-                    个人中心
+                    我的足迹
+                  </nuxt-link>
+                </li>
+                <li>
+                  <nuxt-link to="/focusUser" :class="{active:activeName===`focusUser`}">
+                    <i class="icon s-zhanghaoguanli"></i>
+                    关注用户
+                  </nuxt-link>
+                </li>
+                <li>
+                  <nuxt-link to="/upload" :class="{active:activeName===`upload`}">
+                    <i class="icon s-zhanghaoguanli"></i>
+                    我要上传
                   </nuxt-link>
                 </li>
                 <li>

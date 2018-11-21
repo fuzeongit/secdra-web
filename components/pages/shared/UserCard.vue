@@ -9,22 +9,40 @@
       </nuxt-link>
       <div class="user-info-box">
         <p class="nickname">
-          {{user.name}}
+          <nuxt-link :to="`/user/${user.id}`" class="head-box">
+            {{user.name}}
+          </nuxt-link>
         </p>
         <p class="introduction" :title="user.introduction">
           {{user.introduction}}
         </p>
       </div>
     </div>
-    <div class="padding-10" style="margin-top: -10px">
-      <button class="btn block">关注</button>
+    <div class="padding-10" style="margin-top: -10px" v-if="user.focus !== null">
+      <button class="btn block" @click="focus">{{user.focus?`取关`:`关注`}}</button>
     </div>
   </div>
 </template>
 
 <script>
+  import {mapActions} from "vuex"
+
   export default {
-    props: ["user"]
+    props: ["user"],
+    watch:{},
+    methods: {
+      ...mapActions("user", ["AFocusUser"]),
+      async focus() {
+        let result = await this.AFocusUser({
+          focusUserId: this.user.id
+        });
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+          return
+        }
+        this.$emit("focus", {userId: this.user.id, focus: result.data})
+      }
+    }
   }
 </script>
 
@@ -35,9 +53,10 @@
 
   @size: 300px;
   @img-size: 60px;
-  .size{
+  .size {
     width: @size;
   }
+
   .cover {
     height: @size /2;
     width: @size

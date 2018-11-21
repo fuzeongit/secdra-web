@@ -26,8 +26,8 @@
                 </nuxt-link>
               </p>
             </div>
-            <div class="col follow-box">
-              <button class="btn is-plain">关注</button>
+            <div class="col follow-box" v-if="draw.user.focus !== null">
+              <button class="btn is-plain" @click="focusUser(draw.user.id)">{{draw.user.focus?`取关`:`关注`}}</button>
             </div>
           </div>
         </div>
@@ -153,6 +153,7 @@
     },
     methods: {
       ...mapActions("draw", ["APagingByRecommend", "AListByRecommend", "AFocus"]),
+      ...mapActions("user", ["AFocusUser"]),
       //初始化高度数组
       initColNumberHeight(listConstant) {
         let t = [];
@@ -206,6 +207,20 @@
         draw.focus = result.data;
         if (draw.focus) {
           this.listByRecommend(index)
+        }
+      },
+      async focusUser(id) {
+        let result = await this.AFocusUser({
+          focusUserId: id
+        });
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+          return
+        }
+        for(let draw of this.list){
+          if(draw.user.id===id){
+            draw.user.focus = result.data
+          }
         }
       }
     }

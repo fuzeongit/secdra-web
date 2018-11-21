@@ -26,7 +26,7 @@
               </p>
               <div class="user-name center">
                 <Popper placement="top" trigger="hover">
-                  <UserCard :user="draw.user"></UserCard>
+                  <UserCard :user="draw.user" @focus="focusUser"></UserCard>
                   <nuxt-link :to="`/user/${draw.userId}`" slot="reference">
                     {{draw.user.name}}
                   </nuxt-link>
@@ -57,9 +57,9 @@
                   {{draw.name}}
                 </nuxt-link>
               </p>
-              <div class="user-name center" >
+              <div class="user-name center">
                 <Popper placement="top" trigger="hover">
-                  <UserCard :user="draw.user"></UserCard>
+                  <UserCard :user="draw.user" @focus="focusUser"></UserCard>
                   <nuxt-link :to="`/user/${draw.userId}`" slot="reference">
                     {{draw.user.name}}
                   </nuxt-link>
@@ -93,6 +93,7 @@
   import {Pageable} from "../assets/js/model/base";
   import UserCard from "../components/pages/shared/UserCard";
   import {mapActions} from "vuex"
+
   export default {
     //在这里不能使用httpUtil
     async asyncData({store, req, redirect, route, $axios}) {
@@ -122,15 +123,28 @@
     },
     methods: {
       ...mapActions("draw", ["AFocus"]),
-      async focus(draw){
+      async focus(draw) {
         let result = await this.AFocus({
-          drawId:draw.id
+          drawId: draw.id
         });
         if (result.status !== 200) {
           this.$notify({message: result.message});
           return
         }
         draw.focus = result.data
+      },
+      focusUser({userId, focus}) {
+        for(let draw of this.likeList){
+          if(draw.user.id === userId){
+            draw.user.focus = focus;
+          }
+        }
+        for(let draw of this.newList){
+          console.log(userId);
+          if(draw.user.id === userId){
+            draw.user.focus = focus;
+          }
+        }
       }
     }
   }

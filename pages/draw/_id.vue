@@ -17,13 +17,15 @@
               <nuxt-link :to="`/user/${draw.user.id}`" class="head-box center">
                 <img :src="$img.head(draw.user.head)" >
               </nuxt-link>
-              <div style="width: 100%">
+              <div class="user-info-box">
                 <p class="nickname">
-                  {{draw.user.name}}
+                  <nuxt-link :to="`/user/${draw.user.name}`" class="head-box">
+                    {{draw.user.name}}
+                  </nuxt-link>
                 </p>
-                <!--<p>-->
-
-                <!--</p>-->
+                <p class="introduction" :title="draw.user.introduction">
+                  {{draw.user.introduction}}
+                </p>
               </div>
             </div>
             <div style="margin-top: 20px;">
@@ -92,9 +94,9 @@
       .user-bk{
         height:  @width / 2;
       }
+      @head-img-height: 80px;
+      @head-img-border: 2px;
       .head-box {
-        @head-img-height: 80px;
-        @head-img-border: 2px;
         img{
           height: @head-img-height;
           width: @head-img-height;
@@ -102,9 +104,19 @@
           border-radius: 50%;
         }
       }
-      .nickname{
-        .ellipsis()
+      .user-info-box{
+        width: calc(100% - @head-img-height);
+        padding: 0 0 0 10px;
+        .nickname{
+          .ellipsis()
+        }
+        .introduction {
+          font-size: @small-font-size;
+          margin-top: 10px;
+          .ellipsis()
+        }
       }
+
     }
   }
 </style>

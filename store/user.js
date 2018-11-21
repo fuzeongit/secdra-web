@@ -34,6 +34,9 @@ const actions = {
   },
   async AGetInfo(context, params) {
     return await httpUtil.get("/user/getInfo", params)
+  },
+  async AFocusUser(context, params) {
+    return await httpUtil.post("/focusUser/focus", params)
   }
 };
 
