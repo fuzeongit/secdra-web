@@ -1,25 +1,28 @@
 <template>
   <div class="page">
-      <div class="content row">
-        <div class="card " v-for="(follower,index) in list" :key="index">
-          <div class="cover"
-               :style="{backgroundImage: `url(${$img.back(follower.background,`backCard`)})`}">
-          </div>
-          <div class="head-box center">
+    <div class="content row">
+      <div class="card " v-for="(follower,index) in list" :key="index">
+        <div class="cover"
+             :style="{backgroundImage: `url(${$img.back(follower.background,`backCard`)})`}">
+        </div>
+        <div class="head-box center">
+          <nuxt-link :to="`/user/${follower.id}`" class="head-box">
             <img :src="$img.head(follower.head)">
-          </div>
-          <div class="user-info-box center" >
-            <p class="nickname">
-              <nuxt-link :to="`/user/${follower.id}`" class="head-box">
-                {{follower.name}}
-              </nuxt-link>
-            </p>
-            <p class="introduction" :title="follower.introduction">
-              {{follower.introduction}}
-            </p>
-          </div>
+          </nuxt-link>
+        </div>
+        <div class="user-info-box center ">
+          <p class="nickname">
+            {{follower.name}}
+
+          </p>
+          <p class="introduction" :title="follower.introduction">
+            {{follower.introduction}}
+          </p>
         </div>
       </div>
+    </div>
+    <br>
+    <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="goPage"></Pageable>
   </div>
 </template>
 
@@ -27,6 +30,7 @@
   import config from "../../assets/js/config";
   import {mapActions} from "vuex"
   import {Pageable} from "../../assets/js/model/base";
+  import PageableCom from '../../components/global/Pageable'
 
   export default {
     //在这里不能使用httpUtil
@@ -34,7 +38,8 @@
     async asyncData({store, req, redirect, route, $axios}) {
       store.state.menu.name = "follower";
       let pageable = new Pageable();
-      pageable.size = 20;
+      pageable.size = 8;
+      pageable.page = route.query.page * 1 || 0;
       pageable.sort = "createDate,desc";
       let {data: result} = await $axios.get(`${config.host}/follower/paging`, {
         params: Object.assign({
@@ -45,16 +50,16 @@
         throw new Error(result.message)
       }
       return {
-        page:result.data,
-        list:result.data.content
+        pageable,
+        page: result.data,
+        list: result.data.content
       }
     },
+
     data() {
       return {}
     },
-    components: {
-
-    },
+    components: {Pageable: PageableCom},
     computed: {
       scrollTop() {
         return this.$store.state.window.scrollTop || 0
@@ -63,8 +68,11 @@
     mounted() {
 
     },
-    methods:{
+    methods: {
       ...mapActions("user", ["APagingFollower"]),
+      goPage(page){
+        this.$router.push(`/follower/${this.$route.params.id}?page=${page}`)
+      }
     }
   }
 </script>
@@ -77,31 +85,35 @@
   .content {
     width: @visual-width;
     margin: 0 auto;
-    .card{
+    .card {
       float: left;
       margin-top: 24px;
       margin-right: 24px;
-      transition: 0.5s;
-      @size:250px;
-      width:@size;
-      &:nth-child(4n+1){
+      transition: @default-animate-time;
+      overflow: hidden;
+      @size: 250px;
+      width: @size;
+      &:nth-child(4n+1) {
         margin-left: 24px;
       }
       .cover {
         height: @size /2;
-        width: @size
+        width: @size;
+        transition: @default-animate-time;
       }
-      .head-box{
+      .head-box {
         padding: 10px;
-        img{
+        img {
           border-radius: 50%;
           width: 80px;
           border: 2px solid @white;
+          transition: @default-animate-time;
         }
       }
-      .user-info-box{
+      .user-info-box {
         padding: 0 20px 20px 20px;
-        .nickname{
+        transition: @default-animate-time;
+        .nickname {
           .ellipsis()
         }
         .introduction {
@@ -110,7 +122,19 @@
           .ellipsis()
         }
       }
-      &:hover{
+      &:hover {
+        .cover {
+          filter: blur(60px);
+        }
+        .head-box {
+          img {
+            transform: translateY(-25px) scale(2);
+          }
+        }
+        .user-info-box {
+          opacity: 0;
+          transform: translateY(25px);
+        }
         transform: translateY(-1px);
         box-shadow: 0 0 50px rgba(150, 150, 150, 0.55);
       }

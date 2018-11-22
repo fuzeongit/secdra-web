@@ -9,7 +9,7 @@
       </nuxt-link>
       <div class="user-info-box">
         <p class="nickname">
-          <nuxt-link :to="`/user/${user.id}`" class="head-box">
+          <nuxt-link :to="`/user/${user.id}`">
             {{user.name}}
           </nuxt-link>
         </p>
