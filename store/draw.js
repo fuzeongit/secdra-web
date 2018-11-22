@@ -15,8 +15,8 @@ const actions = {
   async APagingByRecommend(context, params) {
     return await httpUtil.get("/draw/pagingByRecommend", params);
   },
-  async AFocus(context,params){
-    return await httpUtil.post("/focusDraw/focus", params);
+  async ACollection(context,params){
+    return await httpUtil.post("/collection/focus", params);
   }
 };
 

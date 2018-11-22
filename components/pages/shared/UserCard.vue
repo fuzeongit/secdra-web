@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="padding-10" style="margin-top: -10px" v-if="user.focus !== null">
-      <button class="btn block" @click="focus">{{user.focus?`取关`:`关注`}}</button>
+      <button class="btn block" @click="follow">{{user.focus?`已关注`:`关注`}}</button>
     </div>
   </div>
 </template>
@@ -29,12 +29,12 @@
 
   export default {
     props: ["user"],
-    watch:{},
+    watch: {},
     methods: {
-      ...mapActions("user", ["AFocusUser"]),
-      async focus() {
-        let result = await this.AFocusUser({
-          focusUserId: this.user.id
+      ...mapActions("user", ["AFollow"]),
+      async follow() {
+        let result = await this.AFollow({
+          followerId: this.user.id
         });
         if (result.status !== 200) {
           this.$notify({message: result.message});

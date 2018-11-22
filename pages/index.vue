@@ -17,7 +17,7 @@
                            style="width: 100%">
                 </nuxt-link>
                 <a class="icon s-heart like" :style="{color:draw.focus?`red`:`white`}"
-                   @click.stop="focus(draw)"></a>
+                   @click.stop="collection(draw)"></a>
               </div>
               <p class="draw-name center">
                 <nuxt-link :to="`/draw/${draw.id}`">
@@ -26,7 +26,7 @@
               </p>
               <div class="user-name center">
                 <Popper placement="top" trigger="hover">
-                  <UserCard :user="draw.user" @focus="focusUser"></UserCard>
+                  <UserCard :user="draw.user" @focus="follow"></UserCard>
                   <nuxt-link :to="`/user/${draw.userId}`" slot="reference">
                     {{draw.user.name}}
                   </nuxt-link>
@@ -50,7 +50,7 @@
                            style="width: 100%">
                 </nuxt-link>
                 <a class="icon s-heart like" :style="{color:draw.focus?`red`:`white`}"
-                   @click.stop="focus(draw)"></a>
+                   @click.stop="collection(draw)"></a>
               </div>
               <p class="draw-name center">
                 <nuxt-link :to="`/draw/${draw.id}`">
@@ -59,7 +59,7 @@
               </p>
               <div class="user-name center">
                 <Popper placement="top" trigger="hover">
-                  <UserCard :user="draw.user" @focus="focusUser"></UserCard>
+                  <UserCard :user="draw.user" @focus="follow"></UserCard>
                   <nuxt-link :to="`/user/${draw.userId}`" slot="reference">
                     {{draw.user.name}}
                   </nuxt-link>
@@ -122,9 +122,9 @@
     mounted() {
     },
     methods: {
-      ...mapActions("draw", ["AFocus"]),
-      async focus(draw) {
-        let result = await this.AFocus({
+      ...mapActions("draw", ["ACollection"]),
+      async collection(draw) {
+        let result = await this.ACollection({
           drawId: draw.id
         });
         if (result.status !== 200) {
@@ -133,7 +133,7 @@
         }
         draw.focus = result.data
       },
-      focusUser({userId, focus}) {
+      follow({userId, focus}) {
         for(let draw of this.likeList){
           if(draw.user.id === userId){
             draw.user.focus = focus;

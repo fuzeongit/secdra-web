@@ -8,7 +8,7 @@
                :style="{width:listConstant.colWidth+`px`,height:getHeight(draw)+`px`}">
         </nuxt-link>
         <a class="icon s-heart like" :style="{color:draw.focus?`red`:`white`}"
-           @click.stop="focus(draw)"></a>
+           @click.stop="collection(draw)"></a>
         <div class="info-box">
           <div class="flex-row">
             <nuxt-link :to="`/user/${draw.userId}`">
@@ -27,7 +27,7 @@
               </p>
             </div>
             <div class="col follow-box" v-if="draw.user.focus !== null">
-              <button class="btn is-plain" @click="focusUser(draw.user.id)">{{draw.user.focus?`取关`:`关注`}}</button>
+              <button class="btn" :class="{'is-plain':!draw.user.focus}" @click="follow(draw.user.id)">{{draw.user.focus?`已关注`:`关注`}}</button>
             </div>
           </div>
         </div>
@@ -152,8 +152,8 @@
     mounted() {
     },
     methods: {
-      ...mapActions("draw", ["APaging","AFocus"]),
-      ...mapActions("user", ["AFocusUser"]),
+      ...mapActions("draw", ["APaging","ACollection"]),
+      ...mapActions("user", ["AFollow"]),
       //初始化高度数组
       initColNumberHeight(listConstant) {
         let t = [];
@@ -190,8 +190,8 @@
         this.page = data;
         this.list.merge(data.content)
       },
-      async focus(draw){
-        let result = await this.AFocus({
+      async collection(draw){
+        let result = await this.ACollection({
           drawId:draw.id
         });
         if (result.status !== 200) {
@@ -200,9 +200,9 @@
         }
         draw.focus = result.data
       },
-      async focusUser(id) {
-        let result = await this.AFocusUser({
-          focusUserId: id
+      async follow(id) {
+        let result = await this.AFollow({
+          followerId: id
         });
         if (result.status !== 200) {
           this.$notify({message: result.message});
@@ -250,7 +250,7 @@
         }
       }
       .info-box {
-        @btn-width: 40px;
+        @btn-width: 50px;
         height: @info-box-height;
         padding: 15px 15px;
 
@@ -277,7 +277,6 @@
             }
           }
           .follow-box {
-
             width: @btn-width;
             .btn {
               padding: 0;
