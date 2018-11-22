@@ -37,6 +37,9 @@ const actions = {
   },
   async AFollow(context, params) {
     return await httpUtil.post("/follower/focus", params)
+  },
+  async APagingFollower(context, params) {
+    return await httpUtil.post("/follower/paging", params)
   }
 };
 

@@ -36,7 +36,7 @@
                   </nuxt-link>
                 </li>
                 <li>
-                  <nuxt-link to="/follower" :class="{active:activeName===`follower`}">
+                  <nuxt-link :to="`/follower/${user.id||''}`" :class="{active:activeName===`follower`}">
                     <i class="icon s-guanzhu1"></i>
                     关注用户
                   </nuxt-link>
