@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="content row">
-      <div class="card " v-for="(follower,index) in list" :key="index">
+      <div class="card" v-for="(follower,index) in list" :key="index">
         <div class="cover"
              :style="{backgroundImage: `url(${$img.back(follower.background,`backCard`)})`}">
         </div>
@@ -13,7 +13,6 @@
         <div class="user-info-box center ">
           <p class="nickname">
             {{follower.name}}
-
           </p>
           <p class="introduction" :title="follower.introduction">
             {{follower.introduction}}
@@ -22,15 +21,15 @@
       </div>
     </div>
     <br>
-    <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="goPage"></Pageable>
+    <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
   </div>
 </template>
 
 <script>
-  import config from "../../assets/js/config";
+  import config from "../../../assets/js/config/index";
   import {mapActions} from "vuex"
-  import {Pageable} from "../../assets/js/model/base";
-  import PageableCom from '../../components/global/Pageable'
+  import {Pageable} from "../../../assets/js/model/base";
+  import PageableCom from '../../../components/global/Pageable/index'
 
   export default {
     //在这里不能使用httpUtil
@@ -39,11 +38,11 @@
       store.state.menu.name = "follower";
       let pageable = new Pageable();
       pageable.size = 8;
-      pageable.page = route.query.page * 1 || 0;
+      pageable.page = route.params.page * 1 || 0;
       pageable.sort = "createDate,desc";
       let {data: result} = await $axios.get(`${config.host}/follower/paging`, {
         params: Object.assign({
-          id: route.params.id
+          id: route.params.userId
         }, pageable)
       });
       if (result.status !== 200) {
@@ -60,6 +59,11 @@
       return {}
     },
     components: {Pageable: PageableCom},
+    watch:{
+      $route(newVal){
+        console.log(newVal);
+      }
+    },
     computed: {
       scrollTop() {
         return this.$store.state.window.scrollTop || 0
@@ -70,17 +74,17 @@
     },
     methods: {
       ...mapActions("user", ["APagingFollower"]),
-      goPage(page){
-        this.$router.push(`/follower/${this.$route.params.id}?page=${page}`)
-      }
+      async paging(page){
+        this.$router.push(`/follower/${this.$route.params.userId}/${page}`);
+      },
     }
   }
 </script>
 
 <style type="text/less" lang="less" scoped>
-  @import "../../assets/style/color";
-  @import "../../assets/style/config";
-  @import "../../assets/style/mixin";
+  @import "../../../assets/style/color";
+  @import "../../../assets/style/config";
+  @import "../../../assets/style/mixin";
 
   .content {
     width: @visual-width;

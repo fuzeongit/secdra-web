@@ -1,14 +1,11 @@
 <template>
   <div class="page">
-    <br>
-    <br>
-
-    <Pageable :totalPage="100" :currPage="currPage" @go="(page)=>{this.currPage = page}"></Pageable>
+    <!--<Pageable :totalPage="100" :currPage="currPage" @go="(page)=>{this.currPage = page}"></Pageable>-->
   </div>
 </template>
 
 <script>
-  import PageableCom from '../components/global/Pageable'
+  import PageableCom from '../../../components/global/Pageable'
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {

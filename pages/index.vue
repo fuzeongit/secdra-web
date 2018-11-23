@@ -73,9 +73,6 @@
         <div class="card tag-card">
           <h3 class="title">
             推荐标签
-            <nuxt-link to="/">
-              更多>>
-            </nuxt-link>
           </h3>
           <div class="tag-list">
             <nuxt-link class="btn is-plain" v-for="(tag,index) in tagList" :to="`/draw/search/${tag.name}`"

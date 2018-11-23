@@ -1,21 +1,21 @@
 <template>
   <div class="page">
-    <div class="card">
-      <el-upload
-        :multiple="false"
-        :show-file-list="false"
-        class="avatar-uploader"
-        :action="actionPath"
-        accept="image/jpeg,image/gif,image/png,image/bmp"
-        :data="postData"
-        :before-upload="beforeAvatarUpload"
-        :on-progress="progress"
-        :on-success="handleAvatarSuccess">
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      </el-upload>
-      <button @click="test" class="btn">测试</button>
-    </div>
+    <!--<div class="card">-->
+      <!--<el-upload-->
+        <!--:multiple="false"-->
+        <!--:show-file-list="false"-->
+        <!--class="avatar-uploader"-->
+        <!--:action="actionPath"-->
+        <!--accept="image/jpeg,image/gif,image/png,image/bmp"-->
+        <!--:data="postData"-->
+        <!--:before-upload="beforeAvatarUpload"-->
+        <!--:on-progress="progress"-->
+        <!--:on-success="handleAvatarSuccess">-->
+        <!--<img v-if="imageUrl" :src="imageUrl" class="avatar">-->
+        <!--<i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
+      <!--</el-upload>-->
+      <!--<button @click="test" class="btn">测试</button>-->
+    <!--</div>-->
   </div>
 </template>
 

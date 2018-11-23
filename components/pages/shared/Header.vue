@@ -10,7 +10,7 @@
       <nuxt-link to="/new" :class="{active:activeName===`new`}">
         最新
       </nuxt-link>
-      <nuxt-link to="/collection" :class="{active:activeName===`collection`}">
+      <nuxt-link :to="`/collection/${user.id||''}`" :class="{active:activeName===`collection`}">
         收藏
       </nuxt-link>
       <template>
