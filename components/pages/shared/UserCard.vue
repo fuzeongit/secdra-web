@@ -18,8 +18,8 @@
         </p>
       </div>
     </div>
-    <div class="padding-10" style="margin-top: -10px" v-if="user.focus !== null">
-      <button class="btn block" @click="follow">{{user.focus?`已关注`:`关注`}}</button>
+    <div class="padding-10" style="margin-top: -10px">
+      <button class="btn block" @click="follow" :disabled="user.focus===null">{{user.focus?`已关注`:`关注`}}</button>
     </div>
   </div>
 </template>
@@ -76,7 +76,7 @@
     padding: 0 30px;
 
     .nickname {
-
+      .ellipsis()
     }
     .introduction {
       font-size: @small-font-size;

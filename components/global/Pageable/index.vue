@@ -1,5 +1,5 @@
 <template>
-  <div class="pageable-content center">
+  <div class="pageable-content center" v-show="!(isFirst&&isLast)">
     <a v-show="!isFirst" @click="go(currPage)">
       上一页
     </a>

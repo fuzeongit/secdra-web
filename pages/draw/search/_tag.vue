@@ -9,31 +9,27 @@
         </nuxt-link>
         <a class="icon s-heart like" :style="{color:draw.focus?`red`:`white`}"
            @click.stop="collection(draw)"></a>
-        <div class="info-box">
-          <div class="flex-row">
-            <nuxt-link :to="`/user/${draw.userId}`">
-              <img :src="$img.head(draw.user.head)" style="border-radius: 50%;width: 50px">
-            </nuxt-link>
-            <div class="col user-info">
-              <p class="draw-name center">
-                <nuxt-link :to="`/draw/${draw.id}`">
-                  {{draw.name}}
-                </nuxt-link>
-              </p>
-              <p class="user-name center">
-                <nuxt-link :to="`/user/${draw.userId}`">
-                  {{draw.user.name}}
-                </nuxt-link>
-              </p>
-            </div>
-            <div class="col follow-box" v-if="draw.user.focus !== null">
-              <button class="btn" :class="{'is-plain':!draw.user.focus}" @click="follow(draw.user.id)">{{draw.user.focus?`已关注`:`关注`}}</button>
-            </div>
+        <div class="flex-box info-box" :style="{width:listConstant.colWidth+`px`,height:listConstant.infoHeight+`px`}">
+          <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
+            <img :src="$img.head(draw.user.head)" :title="draw.user.name">
+          </nuxt-link>
+          <div class="user-info-box" >
+            <p class="nickname">
+              {{draw.user.name}}
+            </p>
+            <p class="introduction" :title="draw.user.introduction">
+              {{draw.user.introduction}}
+            </p>
+          </div>
+          <div class="follow-box flex-box">
+            <button class="btn block" @click="follow(draw.user.id)" :disabled="draw.user.focus===null">
+              {{draw.user.focus?`已关注`:`关注`}}
+            </button>
           </div>
         </div>
       </div>
       <div class="item last-card padding-10px" v-if="page.last"
-           :style="{left:`${listContentOffset.lastCardLeft}px`,top:`${listContentOffset.lastCardTop}px`}">
+           :style="{left:`${listContentOffset.lastCardLeft}px`,top:`${listContentOffset.lastCardTop}px`,width:listConstant.colWidth+`px`}">
         <img src="../../../assets/image/error/404.jpg">
       </div>
     </div>
@@ -152,7 +148,7 @@
     mounted() {
     },
     methods: {
-      ...mapActions("draw", ["APaging","ACollection"]),
+      ...mapActions("draw", ["APaging", "ACollection"]),
       ...mapActions("user", ["AFollow"]),
       //初始化高度数组
       initColNumberHeight(listConstant) {
@@ -177,7 +173,7 @@
         let sourcePage = ++this.pageable.page;
         this.pageLoading = true;
         let result = await this.APaging(Object.assign({
-          tag: this.$route.params.tag
+            tag: this.$route.params.tag
           }, this.pageable)
         );
         this.pageLoading = false;
@@ -190,9 +186,9 @@
         this.page = data;
         this.list.merge(data.content)
       },
-      async collection(draw){
+      async collection(draw) {
         let result = await this.ACollection({
-          drawId:draw.id
+          drawId: draw.id
         });
         if (result.status !== 200) {
           this.$notify({message: result.message});
@@ -208,8 +204,8 @@
           this.$notify({message: result.message});
           return
         }
-        for(let draw of this.list){
-          if(draw.user.id===id){
+        for (let draw of this.list) {
+          if (draw.user.id === id) {
             draw.user.focus = result.data
           }
         }
@@ -237,6 +233,16 @@
       &:hover {
         transform: translateY(-1px);
         box-shadow: 0 0 50px rgba(150, 150, 150, 0.55);
+        .info-box {
+          .user-info-box {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          .follow-box {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
       }
       .like {
         position: absolute;
@@ -250,45 +256,49 @@
         }
       }
       .info-box {
-        @btn-width: 50px;
-        height: @info-box-height;
-        padding: 15px 15px;
-
-        .flex-row {
+        @img-size: 50px;
+        @padding-size: 15px;
+        padding: @padding-size;
+        overflow: hidden;
+        .head-box {
+          display: block;
+          position: relative;
+          transition: @default-animate-time;
           img {
-            width: 50px;
             border-radius: 50%;
-          }
-
-          .user-info {
-            padding: 0 10px;
-            width: calc(100% - 50px - @btn-width);
-            .draw-name {
-              line-height: 20px;
-              font-size: @default-font-size;
-              font-weight: 600;
-              .ellipsis()
-            }
-            .user-name {
-              font-size: @small-font-size;
-              line-height: 20px;
-              color: @gray;
-              .ellipsis();
-            }
-          }
-          .follow-box {
-            width: @btn-width;
-            .btn {
-              padding: 0;
-              width: @btn-width;
-              line-height: 25px;
-            }
+            width: @img-size;
           }
         }
+
+        .user-info-box {
+          width: calc(100% - @img-size);
+          padding: 0 30px;
+          transition: @default-animate-time;
+          .nickname {
+            .ellipsis()
+          }
+          .introduction {
+            font-size: @small-font-size;
+            margin-top: 10px;
+            .ellipsis()
+          }
+        }
+
+        .follow-box {
+          position: absolute;
+          height: @info-box-height;
+          bottom: 0;
+          width: calc(100% - @img-size - @padding-size);
+          right: 0;
+          padding: 15px;
+          transition: @default-animate-time;
+          opacity: 0;
+          transform: translateY(10px);
+        }
+
       }
     }
     .last-card {
-      width: 250px;
       height: 300px;
       img {
         width: 100%;
