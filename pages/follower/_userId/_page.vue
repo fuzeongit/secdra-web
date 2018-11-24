@@ -54,27 +54,15 @@
         list: result.data.content
       }
     },
-
-    data() {
-      return {}
-    },
     components: {Pageable: PageableCom},
     watch:{
       $route(newVal){
         console.log(newVal);
       }
     },
-    computed: {
-      scrollTop() {
-        return this.$store.state.window.scrollTop || 0
-      }
-    },
-    mounted() {
-
-    },
     methods: {
       ...mapActions("user", ["APagingFollower"]),
-      async paging(page){
+      paging(page){
         this.$router.push(`/follower/${this.$route.params.userId}/${page}`);
       },
     }
@@ -90,12 +78,12 @@
     width: @visual-width;
     margin: 0 auto;
     .card {
+      @size: 250px;
       float: left;
       margin-top: 24px;
       margin-right: 24px;
       transition: @default-animate-time;
       overflow: hidden;
-      @size: 250px;
       width: @size;
       &:nth-child(4n+1) {
         margin-left: 24px;
