@@ -37,7 +37,7 @@
     async asyncData({store, req, redirect, route, $axios}) {
       store.state.menu.name = "follower";
       let pageable = new Pageable();
-      pageable.size = 8;
+      pageable.size = 16;
       pageable.page = route.params.page * 1 || 0;
       pageable.sort = "createDate,desc";
       let {data: result} = await $axios.get(`${config.host}/follower/paging`, {

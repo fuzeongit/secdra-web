@@ -9,6 +9,24 @@
         <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
            :style="{color:draw.focus?`red`:`gray`}" title="收藏"
            @click.stop="collection(draw)"></a>
+        <div class="flex-box info-box">
+          <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
+            <img :src="$img.head(draw.user.head)" :title="draw.user.name">
+          </nuxt-link>
+          <div class="user-info-box">
+            <p class="nickname">
+              {{draw.user.name}}
+            </p>
+            <p class="introduction" :title="draw.user.introduction">
+              {{draw.user.introduction}}
+            </p>
+          </div>
+          <div class="follow-box flex-box">
+            <button class="btn block" @click="follow(draw.user.id)" :disabled="draw.user.focus===null">
+              {{draw.user.focus?`已关注`:`关注`}}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     <br>
@@ -26,7 +44,7 @@
     async asyncData({store, req, redirect, route, $axios}) {
       store.state.menu.name = "collection";
       let pageable = new Pageable();
-      pageable.size = 8;
+      pageable.size = 16;
       pageable.page = route.params.page * 1 || 0;
       pageable.sort = "createDate,desc";
       let {data: result} = await $axios.get(`${config.host}/collection/paging`, {
@@ -88,6 +106,7 @@
   @import "../../../assets/style/config";
   @import "../../../assets/style/mixin";
 
+  @info-box-height: 80px;
   .content {
     width: @visual-width;
     margin: 0 auto;
@@ -98,24 +117,74 @@
       margin-right: 24px;
       overflow: hidden;
       transition: @default-animate-time;
-      width: @size;
-      height: @size;
       position: relative;
+      width: @size;
       &:nth-child(4n+1) {
         margin-left: 24px;
       }
       &:hover {
         transform: translateY(-1px);
         box-shadow: 0 0 50px rgba(150, 150, 150, 0.55);
+        .info-box {
+          .user-info-box {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          .follow-box {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
       }
       .img-box {
-        width: 100%;
-        height: 100%;
+        width: @size;
+        height: @size;
       }
       .like {
         position: absolute;
-        bottom: 5px;
+        bottom: @info-box-height + 5px;
         right: 5px;
+      }
+
+      .info-box {
+        @img-size: 50px;
+        @padding-size: 15px;
+        padding: @padding-size;
+        overflow: hidden;
+        .head-box {
+          display: block;
+          position: relative;
+          transition: @default-animate-time;
+          img {
+            border-radius: 50%;
+            width: @img-size;
+          }
+        }
+        .user-info-box {
+          width: calc(100% - @img-size);
+          padding: 0 30px;
+          transition: @default-animate-time;
+
+          .nickname {
+            .ellipsis()
+          }
+          .introduction {
+            font-size: @small-font-size;
+            margin-top: 10px;
+            .ellipsis()
+          }
+        }
+        .follow-box {
+          position: absolute;
+          height: @info-box-height;
+          bottom: 0;
+          width: calc(100% - @img-size - @padding-size);
+          right: 0;
+          padding: 15px;
+          transition: @default-animate-time;
+          opacity: 0;
+          transform: translateY(10px);
+        }
       }
     }
   }

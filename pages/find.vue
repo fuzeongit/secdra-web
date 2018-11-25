@@ -15,13 +15,13 @@
             <img :src="$img.head(draw.user.head)" :title="draw.user.name">
           </nuxt-link>
           <div class="user-info-box">
-            <p class="nickname">
-              {{draw.user.name}}
-            </p>
-            <p class="introduction" :title="draw.user.introduction">
-              {{draw.user.introduction}}
-            </p>
-          </div>
+          <p class="nickname">
+            {{draw.user.name}}
+          </p>
+          <p class="introduction" :title="draw.user.introduction">
+            {{draw.user.introduction}}
+          </p>
+        </div>
           <div class="follow-box flex-box">
             <button class="btn block" @click="follow(draw.user.id)" :disabled="draw.user.focus===null">
               {{draw.user.focus?`已关注`:`关注`}}
