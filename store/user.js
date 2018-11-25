@@ -8,7 +8,7 @@ import httpUtil from '../assets/js/util/httpUtil'
 
 const state = {
   user: null,
-  uploadToken:""
+  uploadToken: ""
 };
 
 const mutations = {

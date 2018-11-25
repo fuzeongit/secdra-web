@@ -1,7 +1,7 @@
 <template>
   <section class="container bk cover">
     <form class="card padding-50" @submit.prevent="login">
-      <img src="../assets/image/logo/logo.svg" width="250px" >
+      <img src="../assets/image/logo/logo.svg" width="250px">
       <p class="sub-logo">苟利国家生死以，岂因祸福避趋之</p>
       <div class="row input-group">
         <input type="text" class="input block" title="手机" v-model="form.phone" placeholder="手机号码">
@@ -17,7 +17,7 @@
 </template>
 <script>
   import Cookies from 'js-cookie'
-  import {mapActions} from "vuex"
+  import {mapActions, mapMutations} from "vuex"
 
   export default {
     name: "login",
@@ -31,32 +31,34 @@
         }
       }
     },
+    mounted() {},
     methods: {
       ...mapActions("user", ["ALogin", "ARegister", "AGetInfo"]),
+      ...mapMutations("user", ["MSetUserInfo"]),
       async login() {
-        let phone = this.form.phone||"13760029486";
-        let password = this.form.password||"123456";
+        let phone = this.form.phone || "13760029486";
+        let password = this.form.password || "123456";
         this.loginLoading = true;
         let result = await this.ALogin({phone, password});
         if (result.status === 200) {
-          Cookies.set("user",JSON.stringify(result.data),{ expires: 30 });
+          Cookies.set("user", JSON.stringify(result.data), {expires: 30});
           this.$router.replace("/");
         } else {
           this.loginLoading = false;
           this.$alert({message: result.message})
         }
       },
-      async register() {
-        let result = await this.ARegister({phone: "13760029486", password: "123456"});
-        if (result.status === 200) {
-          this.$router.replace("/");
-        } else {
-          this.$alert({message: result.message})
-        }
-      },
-      async getInfo() {
-        let result = await this.AGetInfo({phone: "13760029486", password: "123456"});
-      },
+      // async register() {
+      //   let result = await this.ARegister({phone: "13760029486", password: "123456"});
+      //   if (result.status === 200) {
+      //     this.$router.replace("/");
+      //   } else {
+      //     this.$alert({message: result.message})
+      //   }
+      // },
+      // async getInfo() {
+      //   let result = await this.AGetInfo({phone: "13760029486", password: "123456"});
+      // },
     }
   }
 </script>
@@ -75,7 +77,8 @@
     background-size: cover;
     background: rgba(255, 255, 255, 0.92) center top;
   }
-  .sub-logo{
+
+  .sub-logo {
     margin-bottom: 50px;
     font-size: @small-font-size
   }

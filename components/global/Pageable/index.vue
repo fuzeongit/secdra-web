@@ -1,5 +1,5 @@
 <template>
-  <div class="pageable-content center" v-show="!(isFirst&&isLast)">
+  <div class="pageable-content center" v-show="!((isFirst&&isLast)||(totalPage===0))">
     <a v-show="!isFirst" @click="go(currPage)">
       上一页
     </a>
@@ -68,7 +68,7 @@
   .pageable-content {
     margin-bottom: 10px;
     font-weight: 500;
-    a,span {
+    a, span {
       display: inline-block;
       padding: 0 10px;
     }

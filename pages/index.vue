@@ -16,7 +16,7 @@
                            :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
                            style="width: 100%">
                 </nuxt-link>
-                <a class="icon s-heart like" :style="{color:draw.focus?`red`:`white`}"
+                <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}" :style="{color:draw.focus?`red`:`gray`}" title="收藏"
                    @click.stop="collection(draw)"></a>
               </div>
               <p class="draw-name center">
@@ -49,7 +49,7 @@
                            :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}"
                            style="width: 100%">
                 </nuxt-link>
-                <a class="icon s-heart like" :style="{color:draw.focus?`red`:`white`}"
+                <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}" :style="{color:draw.focus?`red`:`gray`}" title="收藏"
                    @click.stop="collection(draw)"></a>
               </div>
               <p class="draw-name center">
@@ -195,9 +195,9 @@
               }
               .like {
                 position: absolute;
-                right: 8px;
-                bottom: 8px;
-                font-size: 20px
+                right: 5px;
+                bottom: 5px;
+                font-size: @medium-font-size
               }
             }
             .draw-name {

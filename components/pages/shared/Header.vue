@@ -115,6 +115,7 @@
       document.removeEventListener('scroll', this.documentScroll);
     },
     methods: {
+
       documentScroll(event) {
         this.scrollTop = event.target.documentElement.scrollTop;
         this.$store.state.window.scrollBottom = event.target.documentElement.scrollHeight - this.scrollTop - event.target.documentElement.clientHeight

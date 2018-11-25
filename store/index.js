@@ -22,5 +22,10 @@ export default () => new Store({
     user,
     draw,
     window
+  },
+  actions: {
+    nuxtServerInit({commit}) {
+      commit("user/MSetUserInfo", null)
+    },
   }
 })

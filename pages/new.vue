@@ -7,13 +7,14 @@
           <img :src="$img.scedra(draw.url,`specifiedWidth`)"
                :style="{width:listConstant.colWidth+`px`,height:getHeight(draw)+`px`}">
         </nuxt-link>
-        <a class="icon s-heart like" :style="{color:draw.focus?`red`:`white`}"
+        <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
+           :style="{color:draw.focus?`red`:`gray`}" title="收藏"
            @click.stop="collection(draw)"></a>
         <div class="flex-box info-box" :style="{width:listConstant.colWidth+`px`,height:listConstant.infoHeight+`px`}">
           <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
             <img :src="$img.head(draw.user.head)" :title="draw.user.name">
           </nuxt-link>
-          <div class="user-info-box" >
+          <div class="user-info-box">
             <p class="nickname">
               {{draw.user.name}}
             </p>
@@ -148,7 +149,7 @@
     mounted() {
     },
     methods: {
-      ...mapActions("draw", ["APaging","ACollection"]),
+      ...mapActions("draw", ["APaging", "ACollection"]),
       ...mapActions("user", ["AFollow"]),
       //初始化高度数组
       initColNumberHeight(listConstant) {
@@ -186,9 +187,9 @@
         this.page = data;
         this.list.merge(data.content)
       },
-      async collection(draw){
+      async collection(draw) {
         let result = await this.ACollection({
-          drawId:draw.id
+          drawId: draw.id
         });
         if (result.status !== 200) {
           this.$notify({message: result.message});
@@ -204,8 +205,8 @@
           this.$notify({message: result.message});
           return
         }
-        for(let draw of this.list){
-          if(draw.user.id===id){
+        for (let draw of this.list) {
+          if (draw.user.id === id) {
             draw.user.focus = result.data
           }
         }
