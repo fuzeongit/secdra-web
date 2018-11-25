@@ -17,6 +17,9 @@ const actions = {
   },
   async ACollection(context,params){
     return await httpUtil.post("/collection/focus", params);
+  },
+  async AGetFirstByTag(context,params){
+    return await httpUtil.get("/draw/getFirstByTag",params);
   }
 };
 

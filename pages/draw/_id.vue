@@ -5,17 +5,27 @@
         <div class="card img-card flex-box">
           <img :src="$img.scedra(draw.url)"
                :style="{height:proportion>1?`100%`:`auto`,width:proportion<1?`100%`:`auto`}">
-      </div>
+        </div>
+        <br>
+        <div class="card tag-card">
+          <Popper trigger="hover" placement="top" @show="showTagPopper(tag.id)" v-for="tag in draw.tagList" :key="tag.id">
+            <TagCard :ref="tag.id" :tag="tag.name"></TagCard>
+            <nuxt-link :to="`/draw/search/${tag.name}`" slot="reference">
+              {{tag.name}}
+            </nuxt-link>
+          </Popper>
+        </div>
       </div>
       <div class="right-box">
         <div class="card user-card ">
-          <div class="user-bk cover" :style="{backgroundImage: `url(${$img.back(draw.user.background,`imageMogr2/thumbnail/1920x/gravity/Center/crop/1920x960/blur/1x0/quality/75|imageslim`,true)})`}">
+          <div class="user-bk cover"
+               :style="{backgroundImage: `url(${$img.back(draw.user.background,`imageMogr2/thumbnail/1920x/gravity/Center/crop/1920x960/blur/1x0/quality/75|imageslim`,true)})`}">
 
           </div>
           <div class="padding-15">
             <div class="flex-box">
               <nuxt-link :to="`/user/${draw.user.id}`" class="head-box center">
-                <img :src="$img.head(draw.user.head)" >
+                <img :src="$img.head(draw.user.head)">
               </nuxt-link>
               <div class="user-info-box">
                 <p class="nickname">
@@ -40,6 +50,7 @@
 
 <script>
   import config from "../../assets/js/config";
+  import TagCard from "../../components/pages/shared/TagCard";
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
@@ -56,15 +67,30 @@
         draw: rusult.data
       }
     },
+    components: {
+      TagCard
+    },
     computed: {
       proportion() {
         return this.draw.height / this.draw.width
       }
     },
     mounted() {
-
     },
-    methods: {}
+    methods: {
+      showTagPopper(refId) {
+        let ref = this.$refs[refId];
+        if (ref === null) {
+          return
+        }
+        if (ref instanceof Array) {
+          ref = ref[0]
+        }
+        if (ref && ref.draw === null) {
+          ref.load();
+        }
+      }
+    }
   }
 </script>
 
@@ -86,28 +112,32 @@
       .img-card {
         height: 800px;
       }
+      .tag-card{
+        padding:10px;
+        font-size: @default-font-size;
+      }
     }
     .right-box {
-      @width:250px;
+      @width: 250px;
       width: @width;
       float: right;
-      .user-bk{
-        height:  @width / 2;
+      .user-bk {
+        height: @width / 2;
       }
       @head-img-height: 80px;
       @head-img-border: 2px;
       .head-box {
-        img{
+        img {
           height: @head-img-height;
           width: @head-img-height;
           border: @head-img-border solid @white;
           border-radius: 50%;
         }
       }
-      .user-info-box{
+      .user-info-box {
         width: calc(100% - @head-img-height);
         padding: 0 0 0 10px;
-        .nickname{
+        .nickname {
           .ellipsis()
         }
         .introduction {
@@ -116,7 +146,6 @@
           .ellipsis()
         }
       }
-
     }
   }
 </style>

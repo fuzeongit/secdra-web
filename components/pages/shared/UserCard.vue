@@ -29,7 +29,6 @@
 
   export default {
     props: ["user"],
-    watch: {},
     methods: {
       ...mapActions("user", ["AFollow"]),
       async follow() {

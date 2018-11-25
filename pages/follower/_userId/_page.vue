@@ -55,11 +55,6 @@
       }
     },
     components: {Pageable: PageableCom},
-    watch:{
-      $route(newVal){
-        console.log(newVal);
-      }
-    },
     methods: {
       ...mapActions("user", ["APagingFollower"]),
       paging(page){
