@@ -11,7 +11,7 @@
                :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`">
         </a>
         <div style="height: 3000px">
-          <button class="btn" @click="click">{{$route.params.id}}</button>
+
         </div>
       </div>
     </div>
