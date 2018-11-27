@@ -6,7 +6,7 @@
       </nuxt-link>
     </div>
     <p class="tag-name">
-      <nuxt-link :to="`/draw/search/${tag}`">{{tag}}</nuxt-link>
+      <nuxt-link :to="`/draw/search/${tag}`">{{tag}}({{amount}})</nuxt-link>
     </p>
   </div>
 </template>
@@ -20,12 +20,13 @@
       return {
         draw: null,
         loading: false,
+        amount:"--"
       }
     },
     mounted() {
     },
     methods: {
-      ...mapActions("draw", ["AGetFirstByTag"]),
+      ...mapActions("draw", ["AGetFirstByTag","ACountByTag"]),
       async load() {
         if (this.loading) {
           return
@@ -37,7 +38,11 @@
           throw new Error(result.message)
         }
         this.draw = result.data;
-        console.log(this.draw);
+
+        result = await this.ACountByTag({tag: this.tag});
+        if (result.status === 200) {
+          this.amount = result.data
+        }
       }
     }
   }

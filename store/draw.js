@@ -20,6 +20,9 @@ const actions = {
   },
   async AGetFirstByTag(context,params){
     return await httpUtil.get("/draw/getFirstByTag",params);
+  },
+  async ACountByTag(context,params){
+    return await httpUtil.get("/draw/countByTag",params);
   }
 };
 
