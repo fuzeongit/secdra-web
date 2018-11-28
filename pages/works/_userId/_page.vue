@@ -31,8 +31,6 @@
     </div>
     <br>
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
-    <button class="btn is-suspend" style="position: fixed;right: 50px;bottom: 50px;" @click="unCollection"><i
-      class="icon s-edit"></i></button>
   </div>
 </template>
 
@@ -44,12 +42,12 @@
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "collection";
+      store.state.menu.name = "works";
       let pageable = new Pageable();
       pageable.size = 16;
       pageable.page = route.params.page * 1 || 0;
       pageable.sort = "createDate,desc";
-      let {data: result} = await $axios.get(`${config.host}/collection/paging`, {
+      let {data: result} = await $axios.get(`${config.host}/draw/pagingByUserId`, {
         params: Object.assign({
           id: route.params.userId
         }, pageable)
@@ -60,23 +58,25 @@
       return {
         pageable,
         page: result.data,
-        list: result.data.content,
-        selectDrawIdList:[],
+        list: result.data.content
       }
     },
     components: {
       Pageable: PageableCom
     },
+    mounted(){
+      this.$notify({message: `说是作品，其实都是从p站下载的，侵删`, waitTime: 4000});
+    },
     methods: {
-      ...mapActions("draw", ["ACollection","AUnCollection"]),
+      ...mapActions("draw", ["ACollection"]),
       ...mapActions("user", ["AFollow"]),
       getProportion(draw) {
         return draw.height / draw.width
       },
       paging(page) {
-        this.$router.push(`/collection/${this.$route.params.userId}/${page}`);
+        this.$router.push(`/works/${this.$route.params.userId}/${page}`);
       },
-      async collection(draw) {
+      async collection(draw, index) {
         let result = await this.ACollection({
           drawId: draw.id
         });
@@ -85,11 +85,6 @@
           return
         }
         draw.focus = result.data;
-      },
-      async unCollection(){
-        let result = await this.AUnCollection({
-          drawIdList: [""]
-        });
       },
       async follow(id) {
         let result = await this.AFollow({
@@ -197,3 +192,4 @@
     }
   }
 </style>
+

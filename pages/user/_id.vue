@@ -3,7 +3,8 @@
     <SelfHome v-if="isSelf"></SelfHome>
     <OtherHome v-else :user="user"></OtherHome>
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <button class="btn is-suspend" v-goTop style="position: fixed;right: 50px;bottom: 50px;" v-show="scrollTop>150"><i class="icon s-zhiding"></i></button>
+      <button class="btn is-suspend" v-goTop style="position: fixed;right: 50px;bottom: 50px;" v-show="scrollTop>150"><i
+        class="icon s-zhiding"></i></button>
     </transition>
   </div>
 </template>
@@ -18,40 +19,41 @@
     //并且嵌套层数超过不知道多少会报错-->坑死我了
     async asyncData({store, req, redirect, route, $axios}) {
       let res = {};
-      if(store.state.user.user.id===route.params.id){
+
+      if (store.state.user.user.id === route.params.id) {
         res = await $axios.get(`${config.host}/user/getSelfInfo`);
-      }else{
-        res = await $axios.get(`${config.host}/user/getInfo`,{
-          params:{
-            userId:route.params.id
+      } else {
+        res = await $axios.get(`${config.host}/user/getInfo`, {
+          params: {
+            userId: route.params.id
           }
         });
       }
       let rusult = res.data;
       let user = rusult.data;
       let isSelf = false;
-      if(store.state.user.user.id === user.id){
+      if (store.state.user.user.id === user.id) {
         store.state.menu.name = "user";
         store.state.user.user = user;
         isSelf = true;
-      }else{
+      } else {
         store.state.menu.name = "";
       }
-      return {user,isSelf}
+      return {user, isSelf}
     },
     data() {
       return {}
     },
-    components:{
+    components: {
       SelfHome,
       OtherHome
     },
     computed: {
-      scrollTop(){
+      scrollTop() {
         return this.$store.state.window.scrollTop || 0
       }
     },
-    mounted(){
+    mounted() {
     }
   }
 </script>

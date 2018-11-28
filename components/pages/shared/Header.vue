@@ -13,6 +13,9 @@
       <nuxt-link :to="`/collection/${user.id||''}`" :class="{active:activeName===`collection`}">
         收藏
       </nuxt-link>
+      <nuxt-link :to="`/works/${user.id||''}`" :class="{active:activeName===`works`}">
+        作品
+      </nuxt-link>
       <template>
         <div class="right-box">
           <input type="search" title="search" class="input is-plain" @search="search" v-model="tag"

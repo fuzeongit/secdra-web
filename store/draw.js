@@ -18,11 +18,17 @@ const actions = {
   async ACollection(context,params){
     return await httpUtil.post("/collection/focus", params);
   },
+  async AUnCollection(context,params){
+    return await httpUtil.post("/collection/unFocus", params);
+  },
   async AGetFirstByTag(context,params){
     return await httpUtil.get("/draw/getFirstByTag",params);
   },
   async ACountByTag(context,params){
     return await httpUtil.get("/draw/countByTag",params);
+  },
+  async APagingByUserId(context,params){
+    return await httpUtil.get("/draw/pagingByUserId",params);
   }
 };
 

@@ -9,6 +9,7 @@ import {Result} from "../model/base"
 import axios from "axios"
 import qs from "qs"
 // import * as NProgress from "nprogress";
+
 export default {
   /**
    * get 请求
@@ -44,7 +45,7 @@ export default {
     // NProgress.start();
     let result = null;
     try {
-      let response = await axios.post(config.host + url, qs.stringify(body), {
+      let response = await axios.post(config.host + url, qs.stringify(body ,{ indices: false }), {
         params: params
       });
       this._handleToken(response);

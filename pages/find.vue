@@ -9,19 +9,19 @@
         </nuxt-link>
         <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
            :style="{color:draw.focus?`red`:`gray`}" title="收藏"
-           @click.stop="collection(draw)"></a>
+           @click.stop="collection(draw,index)"></a>
         <div class="flex-box info-box" :style="{width:listConstant.colWidth+`px`,height:listConstant.infoHeight+`px`}">
           <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
             <img :src="$img.head(draw.user.head)" :title="draw.user.name">
           </nuxt-link>
           <div class="user-info-box">
-          <p class="nickname">
-            {{draw.user.name}}
-          </p>
-          <p class="introduction" :title="draw.user.introduction">
-            {{draw.user.introduction}}
-          </p>
-        </div>
+            <p class="nickname">
+              {{draw.user.name}}
+            </p>
+            <p class="introduction" :title="draw.user.introduction">
+              {{draw.user.introduction}}
+            </p>
+          </div>
           <div class="follow-box flex-box">
             <button class="btn block" @click="follow(draw.user.id)" :disabled="draw.user.focus===null">
               {{draw.user.focus?`已关注`:`关注`}}
