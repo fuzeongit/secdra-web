@@ -11,7 +11,12 @@
                :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`">
         </a>
         <div style="height: 3000px">
-
+          <input type="text" class="input" title="" v-model="url" placeholder="url">
+          <input type="text" class="input" title="" v-model="name" placeholder="name">
+          <input type="text" class="input" title="" v-model="desc" placeholder="desc">
+          <button class="btn" @click="add">增加</button>
+          <input type="text" class="input" title="" v-model="tag.name" :key="index" placeholder="tag"  v-for="(tag,index)  in tagList">
+          <button class="btn" @click="click">发送</button>
         </div>
       </div>
     </div>
@@ -20,8 +25,17 @@
 
 <script>
   import Popper from '../../global/Popper'
-
+  import {mapActions} from "vuex"
   export default {
+    data(){
+      return {
+        url:"",
+        desc:'',
+        name:'',
+        isPrivate:false,
+        tagList:[]
+      }
+    },
     computed: {
       user() {
         return this.$store.state.user.user || {}
@@ -39,7 +53,26 @@
       Popper
     },
     methods: {
-      click() {
+      ...mapActions("draw", ["ASave"]),
+      add(){
+        this.tagList.push({name:""});
+      },
+      async click() {
+        console.log({
+          url:this.url,
+          desc:this.desc,
+          name:this.name,
+          isPrivate:this.isPrivate,
+          tagList:this.tagList.map(item=>item.name),
+        });
+        let result = await this.ASave({
+          url:this.url,
+          desc:this.desc,
+          name:this.name,
+          isPrivate:this.isPrivate,
+          tagList:this.tagList.map(item=>item.name),
+        });
+        console.log(result);
       }
     }
   }

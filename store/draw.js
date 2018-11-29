@@ -29,6 +29,9 @@ const actions = {
   },
   async APagingByUserId(context,params){
     return await httpUtil.get("/draw/pagingByUserId",params);
+  },
+  async ASave(context,params){
+    return await httpUtil.post("/draw/save",params);
   }
 };
 
