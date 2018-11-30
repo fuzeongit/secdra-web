@@ -15,7 +15,7 @@
           <div class="user-bk cover"
                :style="{backgroundImage: `url(${$img.back(draw.user.background,`imageMogr2/thumbnail/1920x/gravity/Center/crop/1920x960/blur/1x0/quality/75|imageslim`,true)})`}">
           </div>
-          <div class="padding-15">
+          <div style="padding: 15px">
             <div class="flex-box">
               <nuxt-link :to="`/user/${draw.user.id}`" class="head-box center">
                 <img :src="$img.head(draw.user.head)">

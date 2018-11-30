@@ -3,7 +3,7 @@
     <div class="cover"
          :style="{backgroundImage: `url(${$img.back(user.background,`backCard`)})`}">
     </div>
-    <div class="flex-box padding-10">
+    <div class="flex-box" style="padding:10px">
       <nuxt-link :to="`/user/${user.id}`" class="head-box">
         <img :src="$img.head(user.head)">
       </nuxt-link>
@@ -18,7 +18,7 @@
         </p>
       </div>
     </div>
-    <div class="padding-10" style="margin-top: -10px">
+    <div style="margin-top: -10px;padding: 10px;">
       <button class="btn block" @click="follow" :disabled="user.focus===null">{{user.focus?`已关注`:`关注`}}</button>
     </div>
   </div>

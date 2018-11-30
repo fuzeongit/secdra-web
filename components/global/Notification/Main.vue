@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" enter-active-class="fadeInRight duration" leave-active-class="fadeOutRight duration">
-    <div class="card padding-15" :style="{top:`${verticalOffset}px`}" v-show="visible">
+    <div class="card" :style="{top:`${verticalOffset}px`}" v-show="visible">
       <div class="flex-box">
         <div class="title">
           {{title}}
@@ -70,16 +70,17 @@
   @import "../../../assets/style/mixin.less";
 
   .card {
-    @widht: 300px;
-    width: @widht;
+    @size: 300px;
+    width: @size;
     position: fixed;
     display: inline-block;
     right: 15px;
     z-index: @mask-index - 1;
-    margin: 0 auto 0 -(@widht / 2);
+    margin: 0 auto 0 -(@size / 2);
     box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
     transition: all @default-animate-time;
-    .title{
+    padding: 15px;
+    .title {
       .ellipsis();
       .left();
       width: 100%;

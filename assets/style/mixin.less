@@ -9,20 +9,8 @@
 .center {
   text-align: center;
 }
-.ellipsis{
+.ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-.distance(@number) when (@number <= 100) {
-  .padding-@{number} {
-    padding: @number * 1px;
-  }
-  .margin-@{number} {
-    margin: @number * 1px;
-  }
-  .distance(@number + 5);
-}
-
-.distance(0);

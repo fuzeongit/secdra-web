@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" enter-active-class="fadeInDown duration" leave-active-class="fadeOutUp duration">
-    <div class="card padding-15" v-show="visible">
+    <div class="card" v-show="visible">
       <div class="flex-box">
         <p class="message">
           {{message}}
@@ -63,15 +63,16 @@
   @import "../../../assets/style/mixin.less";
 
   .card {
-    @widht: 300px;
-    width: @widht;
+    @size: 300px;
+    width: @size;
     position: fixed;
     z-index: @mask-index - 1;
     display: inline-block;
     top: 20px;
     left: 50%;
-    margin: 0 auto 0 -(@widht / 2);
+    margin: 0 auto 0 -(@size / 2);
     box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
+    padding: 15px;
     .message{
       .ellipsis();
       .left();

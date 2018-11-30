@@ -2,7 +2,7 @@
   <transition name="fade" enter-active-class="fadeIn mask-duration" leave-active-class="fadeOut mask-duration">
     <div class="mask" v-show="visible">
       <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-        <div class="card padding-15" v-show="visible">
+        <div class="card" v-show="visible">
           <h3>{{title}}</h3>
           <p>
             {{message}}
@@ -63,6 +63,7 @@
     margin: 0 auto;
     vertical-align: middle;
     display: inline-block;
+    padding:15px;
     h3 {
       text-align: left;
       line-height: 40px;

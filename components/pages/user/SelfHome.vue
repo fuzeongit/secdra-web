@@ -17,6 +17,7 @@
           <button class="btn" @click="add">增加</button>
           <input type="text" class="input" title="" v-model="tag.name" :key="index" placeholder="tag"  v-for="(tag,index)  in tagList">
           <button class="btn" @click="click">发送</button>
+          <button class="btn" @click="isShow = true">测试</button>
         </div>
       </div>
     </div>
@@ -33,8 +34,12 @@
         desc:'',
         name:'',
         isPrivate:false,
-        tagList:[]
+        tagList:[],
+        isShow:false
       }
+    },
+    mounted(){
+
     },
     computed: {
       user() {
@@ -114,7 +119,6 @@
       height: @window-min-width / 2;
     }
   }
-
   .content {
     width: @visual-width;
     margin: 0 auto;

@@ -1,6 +1,6 @@
 <template>
   <section class="container bk cover">
-    <form class="card padding-50" @submit.prevent="login">
+    <form class="card" @submit.prevent="login">
       <img src="../assets/image/logo/logo.svg" width="250px">
       <p class="sub-logo">苟利国家生死以，岂因祸福避趋之</p>
       <div class="row input-group">
@@ -73,6 +73,7 @@
   }
 
   .card {
+    padding: 50px;
     position: relative;
     background-size: cover;
     background: rgba(255, 255, 255, 0.92) center top;

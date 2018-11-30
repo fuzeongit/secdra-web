@@ -1,22 +1,17 @@
 <template>
   <transition name="fade" enter-active-class="fadeIn mask-duration" leave-active-class="fadeOut mask-duration">
-    <div class="mask " v-show="visible">
-      <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-        <div class="card padding-15" v-show="visible">
-          <h3>
-            {{title}}
-          </h3>
-          <p>
-            {{message}}
-          </p>
-          <div class="confirm-btn-group">
-            <button class="btn is-plain" @click.stop="no">
-              {{noDesc}}
-            </button>
-            <button class="btn" @click.stop="ok">
-              {{okDesc}}
-            </button>
+    <div class="mask" v-show="visible">
+      <transition name="fade" enter-active-class="fadeInUp duration" leave-active-class="fadeOutDown duration">
+        <div class="card" v-show="visible">
+          <div class="flex-box">
+            <div class="title">
+              {{title}}
+            </div>
+            <div>
+              <a class="icon s-close" @click="close"></a>
+            </div>
           </div>
+          <slot></slot>
         </div>
       </transition>
     </div>
@@ -24,9 +19,67 @@
 </template>
 
 <script>
-  export default {}
+  export default {
+    props: {
+      isShow: {
+        type: Boolean,
+        default: false
+      },
+      title: {
+        type: String|Number,
+        default: ""
+      }
+    },
+    model: {
+      prop: 'isShow',
+      event: 'change'
+    },
+    watch: {
+      isShow(newVal){
+        this.visible = newVal
+      },
+      closed(newVal) {
+        if (newVal) {
+          this.visible = false;
+          this.$emit("change",false);
+          this.$el.firstElementChild.addEventListener('transitionend', this.destroyElement);
+          this.$el.firstElementChild.addEventListener('animationend', this.destroyElement);
+        }
+      }
+    },
+    data() {
+      return {
+        visible: false,
+        closed: false,
+      }
+    },
+    methods: {
+      destroyElement() {
+        this.$el.firstElementChild.removeEventListener('transitionend', this.destroyElement);
+        this.$el.firstElementChild.removeEventListener('animationend', this.destroyElement);
+        this.closed = false;
+      },
+      close() {
+        this.closed = true;
+      }
+    }
+  }
 </script>
 
-<style  scoped lang="less" type="text/less">
+<style scoped lang="less" type="text/less">
+  @import "../../../assets/style/color.less";
+  @import "../../../assets/style/config.less";
+  @import "../../../assets/style/mixin.less";
 
+  .card {
+    margin: 0 auto;
+    vertical-align: middle;
+    display: inline-block;
+    padding: 15px;
+    .title {
+      .ellipsis();
+      .left();
+      width: 100%;
+    }
+  }
 </style>

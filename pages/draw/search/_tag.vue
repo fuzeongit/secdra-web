@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-      <div class="item last-card padding-10px" v-if="page.last"
+      <div class="item last-card" v-if="page.last"
            :style="{left:`${listContentOffset.lastCardLeft}px`,top:`${listContentOffset.lastCardTop}px`,width:listConstant.colWidth+`px`}">
         <img src="../../../assets/image/error/404.jpg">
       </div>
