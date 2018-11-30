@@ -17,7 +17,6 @@
           <button class="btn" @click="add">增加</button>
           <input type="text" class="input" title="" v-model="tag.name" :key="index" placeholder="tag"  v-for="(tag,index)  in tagList">
           <button class="btn" @click="click">发送</button>
-          <button class="btn" @click="isShow = true">测试</button>
         </div>
       </div>
     </div>
@@ -35,7 +34,6 @@
         name:'',
         isPrivate:false,
         tagList:[],
-        isShow:false
       }
     },
     mounted(){
@@ -77,7 +75,6 @@
           isPrivate:this.isPrivate,
           tagList:this.tagList.map(item=>item.name),
         });
-        console.log(result);
       }
     }
   }
@@ -119,6 +116,7 @@
       height: @window-min-width / 2;
     }
   }
+
   .content {
     width: @visual-width;
     margin: 0 auto;
