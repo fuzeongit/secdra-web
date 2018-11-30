@@ -3,6 +3,8 @@ import Vue from 'vue'
 import {Alert, Confirm, Message, Prompt,Notification} from '../components/global'
 import Popper from "../components/global/Popper";
 import Dialog from "../components/global/Dialog";
+import CheckboxGroup from "../components/form/CheckboxGroup";
+import Checkbox from "../components/form/Checkbox";
 
 import Http from '../assets/js/util/httpUtil'
 import Img from '../assets/js/util/imgUrlUtil'
@@ -14,8 +16,10 @@ Vue.prototype.$confirm = Confirm;
 Vue.prototype.$prompt = Prompt;
 Vue.prototype.$message = Message;
 Vue.prototype.$notify = Notification;
-Vue.component("Popper",Popper)
-Vue.component("Dialog",Dialog)
+Vue.component("Popper",Popper);
+Vue.component("Dialog",Dialog);
+Vue.component("CheckboxGroup",CheckboxGroup);
+Vue.component("Checkbox",Checkbox);
 // import vueSocketIO from 'vue-socket.io'
 // import io from 'socket.io-client'
 // Vue.use(vueSocketIO,io("http://47.107.131.24:8089"));

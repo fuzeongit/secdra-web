@@ -15,6 +15,7 @@
 
 <script>
   export default {
+    componentName: "Message",
     watch: {
       closed(newVal) {
         if (newVal) {
@@ -73,7 +74,7 @@
     margin: 0 auto 0 -(@size / 2);
     box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
     padding: 15px;
-    .message{
+    .message {
       .ellipsis();
       .left();
       width: 100%;

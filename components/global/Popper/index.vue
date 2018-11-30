@@ -22,6 +22,7 @@
   import {on, off, addClass, removeClass} from '../../../assets/js/util/domUtil';
 
   export default {
+    componentName: "Popper",
     mixins: [Popper],
 
     props: {

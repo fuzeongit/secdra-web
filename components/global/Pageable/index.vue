@@ -15,6 +15,7 @@
 
 <script>
   export default {
+    componentName: "Pageable",
     props: {
       totalPage: {
         type: Number,

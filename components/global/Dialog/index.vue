@@ -22,6 +22,7 @@
 
 <script>
   export default {
+    componentName: "Dialog",
     props: {
       isShow: {
         type: Boolean,
@@ -88,7 +89,7 @@
       .left();
       width: 100%;
     }
-    .dialog-body{
+    .dialog-body {
       text-align: left;
     }
   }

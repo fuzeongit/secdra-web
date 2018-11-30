@@ -25,6 +25,7 @@
 
 <script>
   export default {
+    componentName:"Confirm",
     watch: {
       closed(newVal) {
         if (newVal) {

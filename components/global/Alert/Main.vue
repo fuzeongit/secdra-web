@@ -20,6 +20,7 @@
 
 <script>
   export default {
+    componentName: "Alert",
     watch: {
       closed(newVal) {
         if (newVal) {

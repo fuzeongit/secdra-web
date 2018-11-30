@@ -15,6 +15,7 @@
   import {mapActions} from "vuex"
 
   export default {
+    componentName: "TagCard",
     props: ["tag"],
     data() {
       return {

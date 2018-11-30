@@ -18,6 +18,7 @@
 
 <script>
   export default {
+    componentName: "Notification",
     watch: {
       closed(newVal) {
         if (newVal) {

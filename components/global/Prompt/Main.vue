@@ -23,6 +23,7 @@
 
 <script>
   export default {
+    componentName: "Prompt",
     watch: {
       closed(newVal) {
         if (newVal) {

@@ -15,8 +15,10 @@
           <input type="text" class="input" title="" v-model="name" placeholder="name">
           <input type="text" class="input" title="" v-model="desc" placeholder="desc">
           <button class="btn" @click="add">增加</button>
-          <input type="text" class="input" title="" v-model="tag.name" :key="index" placeholder="tag"  v-for="(tag,index)  in tagList">
+          <input type="text" class="input" title="" v-model="tag.name" :key="index" placeholder="tag"
+                 v-for="(tag,index)  in tagList">
           <button class="btn" @click="click">发送</button>
+          <Checkbox v-model="isPrivate"></Checkbox>
         </div>
       </div>
     </div>
@@ -26,18 +28,16 @@
 <script>
   import Popper from '../../global/Popper'
   import {mapActions} from "vuex"
-  export default {
-    data(){
-      return {
-        url:"",
-        desc:'',
-        name:'',
-        isPrivate:false,
-        tagList:[],
-      }
-    },
-    mounted(){
 
+  export default {
+    data() {
+      return {
+        url: "",
+        desc: '',
+        name: '',
+        isPrivate: false,
+        tagList: [],
+      }
     },
     computed: {
       user() {
@@ -57,23 +57,26 @@
     },
     methods: {
       ...mapActions("draw", ["ASave"]),
-      add(){
-        this.tagList.push({name:""});
+      test(...a) {
+        console.log(a);
+      },
+      add() {
+        this.tagList.push({name: ""});
       },
       async click() {
         console.log({
-          url:this.url,
-          desc:this.desc,
-          name:this.name,
-          isPrivate:this.isPrivate,
-          tagList:this.tagList.map(item=>item.name),
+          url: this.url,
+          desc: this.desc,
+          name: this.name,
+          isPrivate: this.isPrivate,
+          tagList: this.tagList.map(item => item.name),
         });
         let result = await this.ASave({
-          url:this.url,
-          desc:this.desc,
-          name:this.name,
-          isPrivate:this.isPrivate,
-          tagList:this.tagList.map(item=>item.name),
+          url: this.url,
+          desc: this.desc,
+          name: this.name,
+          isPrivate: this.isPrivate,
+          tagList: this.tagList.map(item => item.name),
         });
       }
     }

@@ -69,7 +69,7 @@
   import Cookie from 'js-cookie'
 
   export default {
-    components: {},
+    componentName: "Header",
     props: {
       offset: {
         type: Number,

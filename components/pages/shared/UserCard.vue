@@ -28,6 +28,7 @@
   import {mapActions} from "vuex"
 
   export default {
+    componentName: "UserCard",
     props: ["user"],
     methods: {
       ...mapActions("user", ["AFollow"]),
