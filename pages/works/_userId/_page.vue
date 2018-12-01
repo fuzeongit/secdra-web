@@ -1,14 +1,17 @@
 <template>
   <div class="page">
-    <div class="content row">
+    <CheckboxGroup class="content row" v-model="selectList">
       <div class="card " v-for="(draw,index) in list" :key="index">
         <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box">
           <img :src="$img.scedra(draw.url,`specifiedWidth`)"
                :style="{height:getProportion(draw)>1?`100%`:`auto`,width:getProportion(draw)<1?`100%`:`auto`}">
         </nuxt-link>
-        <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-           :style="{color:draw.focus?`red`:`gray`}" title="收藏"
-           @click.stop="collection(draw)"></a>
+        <div class="tool">
+          <Checkbox :value="draw" valueKey="id"></Checkbox>
+          <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
+             :style="{color:draw.focus?`red`:`gray`}" title="收藏"
+             @click.stop="collection(draw)"></a>
+        </div>
         <div class="flex-box info-box">
           <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
             <img :src="$img.head(draw.user.head)" :title="draw.user.name">
@@ -28,9 +31,11 @@
           </div>
         </div>
       </div>
-    </div>
+    </CheckboxGroup>
     <br>
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
+    <button class="btn is-suspend" style="position: fixed;right: 50px;bottom: 50px;" @click="selectList = []"><i
+      class="icon s-edit"></i></button>
   </div>
 </template>
 
@@ -58,7 +63,13 @@
       return {
         pageable,
         page: result.data,
-        list: result.data.content
+        list: result.data.content,
+        selectList:[]
+      }
+    },
+    watch:{
+      selectList(val){
+        console.log(val);
       }
     },
     components: {
@@ -143,12 +154,14 @@
         width: @size;
         height: @size;
       }
-      .like {
-        position: absolute;
-        bottom: @info-box-height + 5px;
-        right: 5px;
-      }
 
+      .tool{
+        user-select: none;
+        padding: 0 10px;text-align: right;
+        .like{
+          margin-left: 10px;
+        }
+      }
       .info-box {
         @img-size: 50px;
         @padding-size: 15px;

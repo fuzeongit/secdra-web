@@ -18,7 +18,7 @@
       },
       label: {
         type: String | Number,
-        default: ""
+        default: null
       },
       disabled: {
         type: Boolean,
@@ -83,8 +83,9 @@
 
   .checkbox {
     display: inline-block;
-    line-height: @small-font-size;
+    vertical-align: baseline;
     cursor: pointer;
+    user-select: none;
     .checkbox-inner {
       display: inline-block;
       width: @default-font-size;
@@ -100,6 +101,7 @@
         color: @white;
         transition: .1s;
         opacity: 0;
+        vertical-align: super;
       }
     }
     .checkbox-label {

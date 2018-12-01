@@ -15,7 +15,7 @@
       input: {},
       label: {
         type: String | Number,
-        default: ""
+        default: null
       },
       disabled: {
         type: Boolean,
@@ -82,10 +82,12 @@
   @import "../../../assets/style/color.less";
   @import "../../../assets/style/config.less";
 
+
   .radio {
     display: inline-block;
-    line-height: @small-font-size;
     cursor: pointer;
+    vertical-align: baseline;
+    user-select: none;
     .radio-inner {
       display: inline-block;
       width: @default-font-size;
@@ -96,52 +98,39 @@
       transition: .1s;
       font-size: @small-font-size;
       vertical-align: middle;
-      .icon {
-        font-size: @small-font-size;
-        color: @white;
-        transition: .1s;
-        opacity: 0;
-      }
     }
-    .radio-label{
+    .radio-label {
       display: inline-block;
       font-size: @default-font-size;
       transition: .1s;
     }
-    .radio-original{
+    .radio-original {
       display: none;
     }
 
-    &:hover{
-      .radio-inner{
+    &:hover {
+      .radio-inner {
         border-color: @theme-color;
       }
     }
 
     &.active {
-      .radio-inner{
+      .radio-inner {
         border:5px solid @theme-color;
-        background-color: @white;
-        .icon {
-          opacity: 1;
-        }
       }
-      .radio-label{
-        color:@theme-color
+      .radio-label {
+        color: @theme-color
       }
     }
 
-    &.disabled{
+    &.disabled {
       cursor: not-allowed;
-      .radio-inner{
-        border-color:@box-border-color;
+      .radio-inner {
+        border-color: @box-border-color;
         background-color: @box-disabled-color;
-        .icon{
-          color: @box-border-color;
-        }
       }
-      .radio-label{
-        color:@box-border-color
+      .radio-label {
+        color: @box-border-color
       }
     }
   }

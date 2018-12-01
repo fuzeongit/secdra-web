@@ -67,6 +67,7 @@
   @import "../../../assets/style/config.less";
 
   .pageable-content {
+    user-select: none;
     margin-bottom: 10px;
     font-weight: 500;
     a, span {

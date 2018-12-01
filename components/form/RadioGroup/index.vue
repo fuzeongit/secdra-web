@@ -14,6 +14,14 @@
       prop: "input",
       event: "input"
     },
+    watch: {
+      input: {
+        handler(val) {
+          this.model = val
+        },
+        deep: true
+      }
+    },
     data() {
       return {model: this.input}
     },

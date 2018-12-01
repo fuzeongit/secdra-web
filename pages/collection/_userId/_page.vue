@@ -6,9 +6,11 @@
           <img :src="$img.scedra(draw.url,`specifiedWidth`)"
                :style="{height:getProportion(draw)>1?`100%`:`auto`,width:getProportion(draw)<1?`100%`:`auto`}">
         </nuxt-link>
-        <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-           :style="{color:draw.focus?`red`:`gray`}" title="收藏"
-           @click.stop="collection(draw)"></a>
+        <div class="tool">
+          <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
+             :style="{color:draw.focus?`red`:`gray`}" title="收藏"
+             @click.stop="collection(draw)"></a>
+        </div>
         <div class="flex-box info-box">
           <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
             <img :src="$img.head(draw.user.head)" :title="draw.user.name">
@@ -148,12 +150,12 @@
         width: @size;
         height: @size;
       }
-      .like {
-        position: absolute;
-        bottom: @info-box-height + 5px;
-        right: 5px;
+      .tool{
+        padding: 0 10px;text-align: right;
+        .like{
+          margin-left: 10px;
+        }
       }
-
       .info-box {
         @img-size: 50px;
         @padding-size: 15px;

@@ -155,6 +155,7 @@
     background-color: @white;
     z-index: 10;
     min-width: @window-min-width;
+    user-select: none;
     nav {
       width: @visual-width;
       margin: 0 auto;
@@ -192,6 +193,7 @@
     width: 120px;
     border-radius: @smallest-border-radius;
     text-align: center;
+    user-select: none;
     li {
       border-bottom: 1px solid @border-color;
       line-height: 45px;
