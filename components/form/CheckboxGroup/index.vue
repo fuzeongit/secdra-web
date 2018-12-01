@@ -35,6 +35,7 @@
         } else {
           this.model.push(value)
         }
+        this.$emit("input", this.model);
       }
     }
   }

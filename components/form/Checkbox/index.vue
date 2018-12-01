@@ -1,10 +1,8 @@
 <template>
-  <label>
-  <span>
-  <span class="checkbox-inner"></span>
-  <input type="checkbox" class="checkbox-original" :disabled="disabled" v-model="model">
-  </span>
+  <label class="checkbox" :class="{active:model,disabled:disabled}">
+    <span class="checkbox-inner"><i class="icon s-correct-bold"></i></span>
     <span class="checkbox-label">{{label}}</span>
+    <input type="checkbox" class="checkbox-original" :disabled="disabled" v-model="model">
   </label>
 </template>
 
@@ -54,7 +52,7 @@
         },
         set(val) {
           if (this.isGroup) {
-            this.checkboxGroup.getNewModel(this.value,this.valueKey)
+            this.checkboxGroup.getNewModel(this.value, this.valueKey)
           } else {
             this.selfModel = val;
             this.$emit("input", val)
@@ -77,6 +75,73 @@
   }
 </script>
 
-<style scoped>
+<style type="text/less" lang="less" scoped>
+  @import "../../../assets/style/color.less";
+  @import "../../../assets/style/config.less";
+
+  .checkbox {
+    display: inline-block;
+    line-height: @small-font-size;
+    cursor: pointer;
+    .checkbox-inner {
+      display: inline-block;
+      width: @default-font-size;
+      height: @default-font-size;
+      border-radius: @smallest-border-radius;
+      border: 1px solid @box-border-color;
+      background-color: @white;
+      transition: .1s;
+      font-size: @small-font-size;
+      vertical-align: middle;
+      .icon {
+        font-size: @small-font-size;
+        color: @white;
+        transition: .1s;
+        opacity: 0;
+      }
+    }
+    .checkbox-label{
+      display: inline-block;
+      font-size: @default-font-size;
+      transition: .1s;
+    }
+    .checkbox-original{
+      display: none;
+    }
+
+    &:hover{
+      .checkbox-inner{
+        border-color: @theme-color;
+      }
+    }
+
+    &.active {
+      .checkbox-inner{
+        border-color: @theme-color;
+        background-color: @theme-color;
+        .icon {
+          opacity: 1;
+        }
+      }
+      .checkbox-label{
+        color:@theme-color
+      }
+    }
+
+    &.disabled{
+      cursor: not-allowed;
+      .checkbox-inner{
+        border-color:@box-border-color;
+        background-color: @box-disabled-color;
+        .icon{
+          color: @box-border-color;
+        }
+      }
+      .checkbox-label{
+        color:@box-border-color
+      }
+    }
+  }
+
 
 </style>

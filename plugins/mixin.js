@@ -5,6 +5,8 @@ import Popper from "../components/global/Popper";
 import Dialog from "../components/global/Dialog";
 import CheckboxGroup from "../components/form/CheckboxGroup";
 import Checkbox from "../components/form/Checkbox";
+import RadioGroup from "../components/form/RadioGroup";
+import Radio from "../components/form/Radio";
 
 import Http from '../assets/js/util/httpUtil'
 import Img from '../assets/js/util/imgUrlUtil'
@@ -20,6 +22,8 @@ Vue.component("Popper",Popper);
 Vue.component("Dialog",Dialog);
 Vue.component("CheckboxGroup",CheckboxGroup);
 Vue.component("Checkbox",Checkbox);
+Vue.component("RadioGroup",RadioGroup);
+Vue.component("Radio",Radio);
 // import vueSocketIO from 'vue-socket.io'
 // import io from 'socket.io-client'
 // Vue.use(vueSocketIO,io("http://47.107.131.24:8089"));
