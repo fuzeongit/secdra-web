@@ -1,7 +1,9 @@
 <template>
   <label  class="radio" :class="{active:model,disabled:disabled}">
-    <span class="radio-inner"></span>
-    <span class="radio-label">{{label}}</span>
+    <slot>
+      <span class="radio-inner"></span>
+    </slot>
+    <span class="radio-label" v-if="label!==null">{{label}}</span>
     <input type="radio" class="radio-original" :disabled="disabled" v-model="model" :value="true">
   </label>
 </template>

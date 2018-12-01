@@ -1,7 +1,9 @@
 <template>
   <label class="checkbox" :class="{active:model,disabled:disabled}">
-    <span class="checkbox-inner"><i class="icon s-correct-bold"></i></span>
-    <span class="checkbox-label">{{label}}</span>
+    <slot>
+      <span class="checkbox-inner"><i class="icon s-correct-bold"></i></span>
+    </slot>
+    <span class="checkbox-label" v-if="label!==null">{{label}}</span>
     <input type="checkbox" class="checkbox-original" :disabled="disabled" v-model="model">
   </label>
 </template>
@@ -100,45 +102,45 @@
         opacity: 0;
       }
     }
-    .checkbox-label{
+    .checkbox-label {
       display: inline-block;
       font-size: @default-font-size;
       transition: .1s;
     }
-    .checkbox-original{
+    .checkbox-original {
       display: none;
     }
 
-    &:hover{
-      .checkbox-inner{
+    &:hover {
+      .checkbox-inner {
         border-color: @theme-color;
       }
     }
 
     &.active {
-      .checkbox-inner{
+      .checkbox-inner {
         border-color: @theme-color;
         background-color: @theme-color;
         .icon {
           opacity: 1;
         }
       }
-      .checkbox-label{
-        color:@theme-color
+      .checkbox-label {
+        color: @theme-color
       }
     }
 
-    &.disabled{
+    &.disabled {
       cursor: not-allowed;
-      .checkbox-inner{
-        border-color:@box-border-color;
+      .checkbox-inner {
+        border-color: @box-border-color;
         background-color: @box-disabled-color;
-        .icon{
+        .icon {
           color: @box-border-color;
         }
       }
-      .checkbox-label{
-        color:@box-border-color
+      .checkbox-label {
+        color: @box-border-color
       }
     }
   }

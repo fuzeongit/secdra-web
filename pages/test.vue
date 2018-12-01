@@ -1,8 +1,8 @@
 <template>
   <div style="background-color: white">
     <RadioGroup v-model="a">
-      <Radio :value="value1" valueKey="name" :disabled="true"  label="测试1"></Radio>
-      <Radio :value="value2" valueKey="name"  label="测试2"></Radio>
+      <Radio :value="value1" valueKey="name"></Radio>
+      <Radio :value="value2" valueKey="name"></Radio>
     </RadioGroup>
     <CheckboxGroup v-model="b">
       <Checkbox :value="value1" valueKey="name" label="测试1"/>
