@@ -67,7 +67,7 @@
     @size: 300px;
     width: @size;
     position: fixed;
-    z-index: @mask-index - 1;
+    z-index: @mask-index + 1;
     display: inline-block;
     top: 20px;
     left: 50%;

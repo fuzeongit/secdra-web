@@ -33,6 +33,7 @@
     </div>
     <br>
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
+    <br>
     <button class="btn is-suspend" style="position: fixed;right: 50px;bottom: 50px;" @click="unCollection"><i
       class="icon s-edit"></i></button>
   </div>

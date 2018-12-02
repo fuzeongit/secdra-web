@@ -49,68 +49,6 @@ a {
   cursor: pointer;
 }
 
-//一共30列
-.row {
-  width: 100%;
-  &:before {
-    display: table;
-    content: "";
-  }
-  &:after {
-    clear: both;
-    display: table;
-    content: "";
-  }
-
-  .col(@number,@width) when (@number <= 30) {
-    .col-@{number} {
-      float: left;
-      width: @number*@width;
-    }
-    @media only screen and (max-width: @grid-xs-width) {
-      .col-xs-@{number} {
-        float: left;
-        width: @number*@width;
-      }
-    }
-    @media (min-width: @grid-sm-width) and (max-width: @grid-md-width) {
-      .col-sm-@{number} {
-        float: left;
-        width: @number*@width;
-      }
-    }
-    @media (min-width: @grid-md-width) and (max-width: @grid-lg-width) {
-      .col-md-@{number} {
-        float: left;
-        width: @number*@width;
-      }
-    }
-    @media only screen and (min-width: @grid-lg-width) {
-      .col-lg-@{number} {
-        float: left;
-        width: @number*@width;
-      }
-    }
-    .col((@number+1), @width)
-  }
-  .col(1, @grid-column-width);
-}
-
-//一共30列
-.flex-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  flex-direction: row;
-  .col(@number,@width) when (@number <= 30) {
-    .col-@{number} {
-      width: @number*@width;
-    }
-    .col((@number+1), @width)
-  }
-  .col(1, @grid-column-width);
-}
-
 //弹性盒子
 .flex-box {
   display: flex;
@@ -228,6 +166,7 @@ a {
 }
 
 .input(@color) {
+  width: 200px;
   display: inline-block;
   margin: 0;
   transition: 0.1s;
@@ -240,6 +179,7 @@ a {
   user-select: none;
   line-height: @input-line-height;
   border-radius: @smallest-border-radius;
+
 
   .input-color(@realColor) {
     &:focus {
@@ -265,6 +205,9 @@ a {
   &.block {
     display: block;
     width: 100%;
+  }
+  &textarea{
+    line-height: @small-input-line-height;
   }
 }
 
@@ -457,5 +400,69 @@ a {
   &[x-placement^=left] {
     margin-right: 12px;
   }
+}
+
+
+/*---------------------------------------*/
+//一共30列
+.row {
+  width: 100%;
+  &:before {
+    display: table;
+    content: "";
+  }
+  &:after {
+    clear: both;
+    display: table;
+    content: "";
+  }
+
+  .col(@number,@width) when (@number <= 30) {
+    .col-@{number} {
+      float: left;
+      width: @number*@width;
+    }
+    @media only screen and (max-width: @grid-xs-width) {
+      .col-xs-@{number} {
+        float: left;
+        width: @number*@width;
+      }
+    }
+    @media (min-width: @grid-sm-width) and (max-width: @grid-md-width) {
+      .col-sm-@{number} {
+        float: left;
+        width: @number*@width;
+      }
+    }
+    @media (min-width: @grid-md-width) and (max-width: @grid-lg-width) {
+      .col-md-@{number} {
+        float: left;
+        width: @number*@width;
+      }
+    }
+    @media only screen and (min-width: @grid-lg-width) {
+      .col-lg-@{number} {
+        float: left;
+        width: @number*@width;
+      }
+    }
+    .col((@number+1), @width)
+  }
+  .col(1, @grid-column-width);
+}
+
+//一共30列
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: row;
+  .col(@number,@width) when (@number <= 30) {
+    .col-@{number} {
+      width: @number*@width;
+    }
+    .col((@number+1), @width)
+  }
+  .col(1, @grid-column-width);
 }
 

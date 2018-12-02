@@ -19,3 +19,12 @@ export class Pageable {
     this.sort = sort
   }
 }
+
+export class DrawForm {
+  constructor() {
+    this.name = "";
+    this.introduction = "";
+    this.isPrivate = null;
+    this.tagList = [];
+  }
+}

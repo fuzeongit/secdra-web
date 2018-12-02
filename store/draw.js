@@ -32,6 +32,9 @@ const actions = {
   },
   async ASave(context,params){
     return await httpUtil.post("/draw/save",params);
+  },
+  async ABatchUpdate(context,params){
+    return await httpUtil.post("/draw/batchUpdate",params);
   }
 };
 

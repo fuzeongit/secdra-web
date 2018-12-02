@@ -34,15 +34,57 @@
     </CheckboxGroup>
     <br>
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
-    <button class="btn is-suspend" style="position: fixed;right: 50px;bottom: 50px;" @click="selectList = []"><i
-      class="icon s-edit"></i></button>
+    <button class="btn is-suspend" style="position: fixed;right: 50px;bottom: 50px;" @click="isShowEdit = true"
+            :disabled="selectList.isEmpty()"><i
+      class="icon s-bianji"></i></button>
+    <Dialog v-model="isShowEdit" title="批量操作">
+      <div class="edit-dialog-content">
+        <div style="margin-bottom: 10px">
+          <Tag v-for="(draw,index) in selectList" :content="draw.name" @close="test" :key="draw.id"
+               :value="index"></Tag>
+        </div>
+        <form @submit.prevent="()=>{}">
+          <div class="input-group">
+            <h5 class="sub-name">修改名称：</h5>
+            <input type="text" title="name" v-model="drawForm.name" class="input block">
+          </div>
+          <div class="input-group">
+            <h5 class="sub-name">修改简介：</h5>
+            <textarea v-model="drawForm.introduction" class="input block" title="introduction" rows="3"></textarea>
+          </div>
+          <div class="input-group">
+            <h5 class="sub-name">修改私密：</h5>
+            <RadioGroup v-model="drawForm.isPrivate">
+              <Radio :value="true" label="隐藏"></Radio>
+              <Radio :value="false" label="显示" style="margin-left: 10px"></Radio>
+              <Radio :value="null" label="不作修改" style="margin-left: 10px"></Radio>
+            </RadioGroup>
+          </div>
+          <div class="input-group">
+            <h5 class="sub-name">添加标签：</h5>
+            <div class="row">
+              <input type="text" title="name" v-model="inputTag" class="input block col-25">
+              <button class="btn is-text col-5" @click="addTag">加</button>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px">
+            <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName"
+                 :value="index"></Tag>
+          </div>
+          <div class="input-group">
+            <button class="btn" @click="save">保存</button>
+            <button class="btn is-plain" @click="reset">清空</button>
+          </div>
+        </form>
+      </div>
+    </Dialog>
   </div>
 </template>
 
 <script>
   import PageableCom from '../../../components/global/Pageable'
   import config from "../../../assets/js/config";
-  import {Pageable} from "../../../assets/js/model/base";
+  import {DrawForm, Pageable} from "../../../assets/js/model/base";
   import {mapActions} from "vuex"
 
   export default {
@@ -64,22 +106,37 @@
         pageable,
         page: result.data,
         list: result.data.content,
-        selectList:[]
+        selectList: [],
+        isShowEdit: false,
+        inputTag: "",
+        drawForm: new DrawForm()
       }
     },
-    watch:{
-      selectList(val){
-        console.log(val);
+    watch: {
+      selectList(newVal) {
+        if (newVal.isEmpty()) {
+          this.isShowEdit = false;
+        }
+      },
+      drawForm: {
+        handler(newVal) {
+          console.log(newVal);
+        },
+        deep: true
       }
     },
     components: {
       Pageable: PageableCom
     },
-    mounted(){
+    mounted() {
       this.$notify({message: `说是作品，其实都是从p站下载的，侵删`, waitTime: 4000});
     },
     methods: {
-      ...mapActions("draw", ["ACollection"]),
+      test({value}) {
+        console.log(value);
+        this.selectList.removeIndex(value)
+      },
+      ...mapActions("draw", ["ACollection", "ABatchUpdate"]),
       ...mapActions("user", ["AFollow"]),
       getProportion(draw) {
         return draw.height / draw.width
@@ -110,6 +167,41 @@
             draw.user.focus = result.data
           }
         }
+      },
+      addTag() {
+        if (this.inputTag === null || this.inputTag === "") {
+          this.inputTag = "";
+          return
+        }
+        if (this.drawForm.tagList.indexOf(this.inputTag) !== -1) {
+          this.inputTag = "";
+          this.$message({
+            message: "不能重复添加"
+          });
+          return
+        }
+        this.drawForm.tagList.push(this.inputTag);
+        this.inputTag = "";
+      },
+      removeTag({value}) {
+        this.drawForm.tagList.removeIndex(value)
+      },
+      reset() {
+        this.inputTag = "";
+        this.drawForm = new DrawForm();
+      },
+      async save() {
+        let form = this.drawForm;
+        form.idList = this.selectList.map(item => item.id);
+        let result = await this.ABatchUpdate(form);
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+          return
+        }
+        this.inputTag = "";
+        this.selectList.clear();
+        this.drawForm = new DrawForm();
+        this.$notify({message: "批量更新完毕"});
       }
     }
   }
@@ -155,10 +247,11 @@
         height: @size;
       }
 
-      .tool{
+      .tool {
         user-select: none;
-        padding: 0 10px;text-align: right;
-        .like{
+        padding: 0 10px;
+        text-align: right;
+        .like {
           margin-left: 10px;
         }
       }
@@ -202,6 +295,20 @@
           transform: translateY(10px);
         }
       }
+    }
+  }
+
+  .edit-dialog-content {
+    width: 600px;
+    margin-top: 15px;
+    overflow: auto;
+    height: 70vh;
+    .sub-name {
+      line-height: 25px;
+      margin-bottom: 5px;
+    }
+    textarea {
+      resize: none;
     }
   }
 </style>

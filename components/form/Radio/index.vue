@@ -1,5 +1,5 @@
 <template>
-  <label  class="radio" :class="{active:model,disabled:disabled}">
+  <label class="radio" :class="{active:model,disabled:disabled}">
     <slot>
       <span class="radio-inner"></span>
     </slot>
@@ -22,9 +22,7 @@
         default: false
       },
       //如果value是Object的话valueKey必填
-      value: {
-        type: String | Number | Object
-      },
+      value: {},
       valueKey: String | Number
     },
     model: {
@@ -82,7 +80,6 @@
   @import "../../../assets/style/color.less";
   @import "../../../assets/style/config.less";
 
-
   .radio {
     display: inline-block;
     cursor: pointer;
@@ -116,7 +113,7 @@
 
     &.active {
       .radio-inner {
-        border:5px solid @theme-color;
+        border: 5px solid @theme-color;
       }
       .radio-label {
         color: @theme-color

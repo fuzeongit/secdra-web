@@ -4,9 +4,9 @@
       <transition name="fade" enter-active-class="fadeInUp duration" leave-active-class="fadeOutDown duration">
         <div class="card" v-show="visible" :style="{marginTop: `-${offset}vh`}">
           <div class="flex-box">
-            <div class="title">
+            <h3 class="title">
               {{title}}
-            </div>
+            </h3>
             <div>
               <a class="icon s-close" @click="close"></a>
             </div>
@@ -87,6 +87,7 @@
     .title {
       .ellipsis();
       .left();
+      line-height: 35px;
       width: 100%;
     }
     .dialog-body {

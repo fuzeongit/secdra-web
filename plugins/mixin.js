@@ -3,6 +3,7 @@ import Vue from 'vue'
 import {Alert, Confirm, Message, Prompt,Notification} from '../components/global'
 import Popper from "../components/global/Popper";
 import Dialog from "../components/global/Dialog";
+import Tag from "../components/global/Tag";
 import CheckboxGroup from "../components/form/CheckboxGroup";
 import Checkbox from "../components/form/Checkbox";
 import RadioGroup from "../components/form/RadioGroup";
@@ -20,6 +21,7 @@ Vue.prototype.$message = Message;
 Vue.prototype.$notify = Notification;
 Vue.component("Popper",Popper);
 Vue.component("Dialog",Dialog);
+Vue.component("Tag",Tag);
 Vue.component("CheckboxGroup",CheckboxGroup);
 Vue.component("Checkbox",Checkbox);
 Vue.component("RadioGroup",RadioGroup);
