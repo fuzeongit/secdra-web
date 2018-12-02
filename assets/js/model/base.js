@@ -16,7 +16,7 @@ export class Pageable {
   constructor(page = 0, size = 20, sort = "") {
     this.page = page;
     this.size = size;
-    this.sort = sort
+    this.sort = sort;
   }
 }
 

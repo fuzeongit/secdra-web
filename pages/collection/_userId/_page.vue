@@ -1,12 +1,13 @@
 <template>
   <div class="page">
-    <div class="content row">
+    <CheckboxGroup class="content row" v-model="selectList">
       <div class="card " v-for="(draw,index) in list" :key="index">
         <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box">
           <img :src="$img.scedra(draw.url,`specifiedWidth`)"
                :style="{height:getProportion(draw)>1?`100%`:`auto`,width:getProportion(draw)<1?`100%`:`auto`}">
         </nuxt-link>
         <div class="tool">
+          <Checkbox v-if="isSelf" :value="draw" valueKey="id"></Checkbox>
           <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
              :style="{color:draw.focus?`red`:`gray`}" title="收藏"
              @click.stop="collection(draw)"></a>
@@ -30,17 +31,17 @@
           </div>
         </div>
       </div>
-    </div>
+    </CheckboxGroup>
     <br>
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
     <br>
-    <button class="btn is-suspend" style="position: fixed;right: 50px;bottom: 50px;" @click="unCollection"><i
+    <button v-if="isSelf" class="btn is-suspend" style="position: fixed;right: 50px;bottom: 50px;"
+            @click="unCollection"><i
       class="icon s-edit"></i></button>
   </div>
 </template>
 
 <script>
-  import PageableCom from '../../../components/global/Pageable'
   import config from "../../../assets/js/config";
   import {Pageable} from "../../../assets/js/model/base";
   import {mapActions} from "vuex"
@@ -48,10 +49,7 @@
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
       store.state.menu.name = "collection";
-      let pageable = new Pageable();
-      pageable.size = 16;
-      pageable.page = route.params.page * 1 || 0;
-      pageable.sort = "createDate,desc";
+      let pageable = new Pageable(route.params.page * 1 || 0, 16, "createDate,desc");
       let {data: result} = await $axios.get(`${config.host}/collection/paging`, {
         params: Object.assign({
           id: route.params.userId
@@ -64,14 +62,16 @@
         pageable,
         page: result.data,
         list: result.data.content,
-        selectDrawIdList:[],
+        selectList: [],
       }
     },
-    components: {
-      Pageable: PageableCom
+    computed: {
+      isSelf() {
+        return this.$store.state.user.user.id === this.$route.params.userId
+      }
     },
     methods: {
-      ...mapActions("draw", ["ACollection","AUnCollection"]),
+      ...mapActions("draw", ["ACollection", "AUnCollection"]),
       ...mapActions("user", ["AFollow"]),
       getProportion(draw) {
         return draw.height / draw.width
@@ -89,9 +89,26 @@
         }
         draw.focus = result.data;
       },
-      async unCollection(){
-        let result = await this.AUnCollection({
-          drawIdList: [""]
+      unCollection() {
+        this.$confirm({
+          message: `你确定要取消选中的收藏吗？`,
+          okCallback: async () => {
+            let result = await this.AUnCollection({
+              drawIdList: this.selectList.map(item => item.id)
+            });
+            if(result.status !== 200){
+              this.$notify({message: result.message});
+              return
+            }
+            for(let id of result.data){
+              let draw = this.list.find(item=>item.id===id);
+              if(!draw){
+                continue
+              }
+              draw.focus = false;
+            }
+            this.$notify({message: `取消收藏成功`});
+          }
         });
       },
       async follow(id) {
@@ -151,13 +168,17 @@
         width: @size;
         height: @size;
       }
-      .tool{
-        padding: 0 10px;text-align: right;
-        .like{
+      .tool {
+        margin: 10px;
+        user-select: none;
+        padding: 0 10px;
+        text-align: right;
+        .like {
           margin-left: 10px;
         }
       }
       .info-box {
+        margin-top: -10px;
         @img-size: 50px;
         @padding-size: 15px;
         padding: @padding-size;

@@ -59,7 +59,8 @@
 
   .cover {
     height: @size /2;
-    width: @size
+    width: @size;
+    background-color: @border-color;
   }
 
   .head-box {

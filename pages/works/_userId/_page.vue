@@ -7,12 +7,12 @@
                :style="{height:getProportion(draw)>1?`100%`:`auto`,width:getProportion(draw)<1?`100%`:`auto`}">
         </nuxt-link>
         <div class="tool">
-          <Checkbox :value="draw" valueKey="id"></Checkbox>
-          <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
+          <Checkbox v-if="isSelf" :value="draw" valueKey="id"></Checkbox>
+          <a v-if="!isSelf" class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
              :style="{color:draw.focus?`red`:`gray`}" title="收藏"
              @click.stop="collection(draw)"></a>
         </div>
-        <div class="flex-box info-box">
+        <div v-if="!isSelf" class="flex-box info-box">
           <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
             <img :src="$img.head(draw.user.head)" :title="draw.user.name">
           </nuxt-link>
@@ -34,10 +34,11 @@
     </CheckboxGroup>
     <br>
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
-    <button class="btn is-suspend" style="position: fixed;right: 50px;bottom: 50px;" @click="isShowEdit = true"
+    <button v-if="isSelf" class="btn is-suspend" style="position: fixed;right: 50px;bottom: 50px;"
+            @click="isShowEdit = true"
             :disabled="selectList.isEmpty()"><i
       class="icon s-bianji"></i></button>
-    <Dialog v-model="isShowEdit" title="批量操作">
+    <Dialog v-if="isSelf" v-model="isShowEdit" title="批量操作">
       <div class="edit-dialog-content">
         <div style="margin-bottom: 10px">
           <Tag v-for="(draw,index) in selectList" :content="draw.name" @close="test" :key="draw.id"
@@ -82,7 +83,6 @@
 </template>
 
 <script>
-  import PageableCom from '../../../components/global/Pageable'
   import config from "../../../assets/js/config";
   import {DrawForm, Pageable} from "../../../assets/js/model/base";
   import {mapActions} from "vuex"
@@ -109,7 +109,7 @@
         selectList: [],
         isShowEdit: false,
         inputTag: "",
-        drawForm: new DrawForm()
+        drawForm:  new DrawForm()
       }
     },
     watch: {
@@ -117,16 +117,12 @@
         if (newVal.isEmpty()) {
           this.isShowEdit = false;
         }
-      },
-      drawForm: {
-        handler(newVal) {
-          console.log(newVal);
-        },
-        deep: true
       }
     },
-    components: {
-      Pageable: PageableCom
+    computed: {
+      isSelf() {
+        return this.$store.state.user.user.id === this.$route.params.userId
+      }
     },
     mounted() {
       this.$notify({message: `说是作品，其实都是从p站下载的，侵删`, waitTime: 4000});
@@ -248,6 +244,7 @@
       }
 
       .tool {
+        margin: 10px;
         user-select: none;
         padding: 0 10px;
         text-align: right;
@@ -256,6 +253,7 @@
         }
       }
       .info-box {
+        margin-top: -10px;
         @img-size: 50px;
         @padding-size: 15px;
         padding: @padding-size;

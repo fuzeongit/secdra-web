@@ -175,6 +175,7 @@
       .user-card {
         .user-bk {
           height: @width / 2;
+          background-color: @border-color;
         }
         @head-img-height: 80px;
         @head-img-border: 2px;

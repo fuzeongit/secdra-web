@@ -29,32 +29,27 @@
   import config from "../../../assets/js/config/index";
   import {mapActions} from "vuex"
   import {Pageable} from "../../../assets/js/model/base";
-  import PageableCom from '../../../components/global/Pageable/index'
 
   export default {
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
     async asyncData({store, req, redirect, route, $axios}) {
       store.state.menu.name = "follower";
-      let pageable = new Pageable();
-      pageable.size = 16;
-      pageable.page = route.params.page * 1 || 0;
-      pageable.sort = "createDate,desc";
+      let pageable = new Pageable(route.params.page * 1 || 0,16,"createDate,desc");
       let {data: result} = await $axios.get(`${config.host}/follower/paging`, {
         params: Object.assign({
           id: route.params.userId
-        }, pageable)
+        },pageable)
       });
       if (result.status !== 200) {
         throw new Error(result.message)
       }
       return {
-        pageable,
+        pageable:pageable,
         page: result.data,
         list: result.data.content
       }
     },
-    components: {Pageable: PageableCom},
     methods: {
       ...mapActions("user", ["APagingFollower"]),
       paging(page){
