@@ -13,6 +13,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.0.0",
     "cookieparser": "^0.1.0",
+    "cropperjs": "^1.4.3",
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.9",
     "js-cookie": "^2.2.0",
