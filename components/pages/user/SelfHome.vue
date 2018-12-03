@@ -6,10 +6,11 @@
     </div>
     <div class="content card" :style="{marginTop:`-100px`}">
       <div class="head-box">
-        <a>
+        <label class="upload">
+          <input type="file" style="display: none" @change="uploadFile">
           <img :src="$img.head(user.head)"
                :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`">
-        </a>
+        </label>
         <div style="height: 3000px">
           <input type="text" class="input" title="" v-model="url" placeholder="url">
           <input type="text" class="input" title="" v-model="name" placeholder="name">
@@ -22,11 +23,18 @@
         </div>
       </div>
     </div>
+    <Dialog  v-model="isShowTailoring" title="剪切">
+      <div class="edit-dialog-content" style="width: 300px;margin: 10px 0">
+        <img :src="tailoringImg" style="width: 100%" ref="tailoringImg">
+      </div>
+      <button class="btn block" @click="saveHead">保存</button>
+    </Dialog>
   </div>
 </template>
 
 <script>
-  import Popper from '../../global/Popper'
+  import Cropper from "cropperjs"
+  import ioUtil from '../../../assets/js/util/ioUtil'
   import {mapActions} from "vuex"
 
   export default {
@@ -37,6 +45,9 @@
         name: '',
         isPrivate: false,
         tagList: [],
+        isShowTailoring: false,
+        tailoringImg: "",
+        cropper: {}
       }
     },
     computed: {
@@ -52,8 +63,13 @@
         }
       }
     },
-    components: {
-      Popper
+    mounted(){
+      this.cropper = new Cropper(this.$refs["tailoringImg"]._isVue ? this.$refs["tailoringImg"].$el : this.$refs["tailoringImg"], {
+        aspectRatio: 1,
+        viewMode: 1,
+        background: false,
+        zoomable: false
+      });
     },
     methods: {
       ...mapActions("draw", ["ASave"]),
@@ -78,6 +94,25 @@
           isPrivate: this.isPrivate,
           tagList: this.tagList.map(item => item.name),
         });
+      },
+      uploadFile($event) {
+        let file = $event.target.files[0];
+        if(!file){
+          return false;
+        }
+        if (!ioUtil.isImage(file)) {
+          this.$notify({message: "请上传图片"});
+          return false;
+        }
+        this.tailoringImg = URL.createObjectURL(file);
+        this.cropper.replace(this.tailoringImg);
+        this.isShowTailoring = true;
+        $event.target.value="";
+      },
+      saveHead(){
+        this.user.head = URL.createObjectURL(ioUtil.dataURLtoFile(ioUtil.getRoundedCanvas(this.cropper.getCroppedCanvas()).toDataURL()));
+        URL.revokeObjectURL(this.tailoringImg);
+        this.isShowTailoring = false
       }
     }
   }
@@ -126,6 +161,9 @@
     @head-img-height: 150px;
     @head-img-border: 2px;
     transform: translateY(0);
+    .upload {
+      cursor: pointer;
+    }
     .head-box {
       padding: 0 100px 20px;
       img {

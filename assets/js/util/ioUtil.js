@@ -60,4 +60,21 @@ export default {
     context.fill();
     return canvas;
   },
+  isImage(file, suffixList = ['jpg', 'png', 'jpeg']) {
+    if (!file instanceof File) {
+      throw new Error("not File")
+    }
+    if (file.type.indexOf("image/") === -1) {
+      console.log("indexOf" + file.type);
+      return false
+    }
+    if (!suffixList.isEmpty()) {
+      let fileSuffix = file.name.substring(file.name.lastIndexOf(".") + 1).toLowerCase();
+      if(suffixList.indexOf(fileSuffix) === -1){
+        return false
+      }
+    }
+
+    return true;
+  }
 }
