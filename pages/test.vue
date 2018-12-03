@@ -1,45 +1,55 @@
 <template>
-  <div style="background-color: white">
-    <RadioGroup v-model="a">
-      <Radio :value="value1" valueKey="name" label="测试1"></Radio>
-      <Radio :value="value2" valueKey="name"></Radio>
-    </RadioGroup>
-    <CheckboxGroup v-model="b">
-      <Checkbox :value="value1" valueKey="name" label="测试1"/>
-      <Checkbox :value="value2" valueKey="name" :disabled="true" label="测试2"/>
-      <Checkbox :value="value3" valueKey="name"  label="测试3"/>
-    </CheckboxGroup>
-    <Checkbox v-model="c" label="测试3" />
+  <div style="background-color: white;height: 100vh">
+    <label>
+      <span class="btn">测试</span>
+      <input type="file" value="上传" style="display: none" @change="changeImage">
+    </label>
+    <button class="btn" @click="implement">剪裁</button>
+
+    <div style="width: 700px">
+      <img :src="imageUrl" ref="image" style="width: 100%"/>
+    </div>
+    <img :src="imageUrl2">
   </div>
 </template>
 
 <script>
+  import Cropper from "cropperjs"
+  import ioUtil from "../assets/js/util/ioUtil"
+
   export default {
     layout: 'login',
     data() {
       return {
-        value1: {name: "1"},
-        value2: {name: "2"},
-        value3: {name: "3"},
-        a: {name: "1"},
-        b: [{name: "2"}],
-        c:false
+        imageUrl: "",
+        imageUrl2: "",
       }
     },
-    watch: {
-      a(val) {
-        console.log(val);
+    mounted() {
+      this.cropper = new Cropper(this.$refs["image"]._isVue ? this.$refs["image"].$el : this.$refs["image"], {
+        aspectRatio: 1/3,
+        viewMode: 1,
+        background: false,
+        zoomable: false,
+        ready: function () {
+
+        }
+      });
+    },
+    methods: {
+      changeImage($event) {
+        let file = $event.target.files[0];
+        console.log(file);
+        this.imageUrl = URL.createObjectURL(file);
+        this.cropper.replace(this.imageUrl)
       },
-      b(val){
-        console.log(val);
-      },
-      c(val){
-        console.log(val);
+      async implement() {
+        this.imageUrl2 = URL.createObjectURL(ioUtil.dataURLtoFile(ioUtil.getRoundedCanvas(this.cropper.getCroppedCanvas()).toDataURL()));
+        console.log(await ioUtil.getOffset(this.imageUrl2));
       }
     }
   }
 </script>
-
 <style scoped>
 
 </style>
