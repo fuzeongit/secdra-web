@@ -6,28 +6,38 @@
     </div>
     <div class="content card" :style="{marginTop:`-100px`}">
       <div class="head-box">
-        <label class="upload">
-          <input type="file" style="display: none" @change="uploadFile">
+        <label class="upload-head">
+          <input type="file" style="display: none" @change="uploadHead">
           <img :src="$img.head(user.head)"
                :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`">
         </label>
-        <div style="height: 3000px">
-          <input type="text" class="input" title="" v-model="url" placeholder="url">
-          <input type="text" class="input" title="" v-model="name" placeholder="name">
-          <input type="text" class="input" title="" v-model="desc" placeholder="desc">
-          <button class="btn" @click="add">增加</button>
-          <input type="text" class="input" title="" v-model="tag.name" :key="index" placeholder="tag"
-                 v-for="(tag,index)  in tagList">
-          <button class="btn" @click="click">发送</button>
-          <Checkbox v-model="isPrivate"></Checkbox>
-        </div>
+        <label class="btn is-suspend upload-back" style="">
+          <input type="file" style="display: none" @change="uploadBack">
+          <i class="icon s-bianji" style="color:white;opacity: .7"></i>
+        </label>
+      </div>
+      <div style="height: 3000px">
+        <input type="text" class="input" title="" v-model="url" placeholder="url">
+        <input type="text" class="input" title="" v-model="name" placeholder="name">
+        <input type="text" class="input" title="" v-model="desc" placeholder="desc">
+        <button class="btn" @click="add">增加</button>
+        <input type="text" class="input" title="" v-model="tag.name" :key="index" placeholder="tag"
+               v-for="(tag,index)  in tagList">
+        <button class="btn" @click="click">发送</button>
+        <Checkbox v-model="isPrivate"></Checkbox>
       </div>
     </div>
-    <Dialog  v-model="isShowTailoring" title="剪切">
-      <div class="edit-dialog-content" style="width: 300px;margin: 10px 0">
-        <img :src="tailoringImg" style="width: 100%" ref="tailoringImg">
+    <Dialog v-model="isShowTailoringHead" title="剪切">
+      <div class="edit-dialog-content" style="margin: 10px 0;width: 500px;height: 50vh">
+        <img :src="tailoringHeadImage" ref="tailoringHeadImage">
       </div>
       <button class="btn block" @click="saveHead">保存</button>
+    </Dialog>
+    <Dialog v-model="isShowTailoringBack" title="剪切">
+      <div class="edit-dialog-content" style="margin: 10px 0;width: 700px;height: 70vh">
+        <img :src="tailoringBackImage" ref="tailoringBackImage">
+      </div>
+      <button class="btn block" @click="saveBack">保存</button>
     </Dialog>
   </div>
 </template>
@@ -45,9 +55,24 @@
         name: '',
         isPrivate: false,
         tagList: [],
-        isShowTailoring: false,
-        tailoringImg: "",
-        cropper: {}
+        isShowTailoringHead: false,
+        isShowTailoringBack: false,
+        tailoringHeadImage: "",
+        tailoringBackImage: "",
+        headCropper: {},
+        backCropper: {}
+      }
+    },
+    watch: {
+      tailoringHeadImage(newVal, oldVal) {
+        if (oldVal) {
+          URL.revokeObjectURL(oldVal);
+        }
+      },
+      tailoringBackImage(newVal, oldVal) {
+        if (oldVal) {
+          URL.revokeObjectURL(oldVal);
+        }
       }
     },
     computed: {
@@ -63,9 +88,15 @@
         }
       }
     },
-    mounted(){
-      this.cropper = new Cropper(this.$refs["tailoringImg"]._isVue ? this.$refs["tailoringImg"].$el : this.$refs["tailoringImg"], {
+    mounted() {
+      this.headCropper = new Cropper(this.$refs["tailoringHeadImage"]._isVue ? this.$refs["tailoringHeadImage"].$el : this.$refs["tailoringHeadImage"], {
         aspectRatio: 1,
+        viewMode: 1,
+        background: false,
+        zoomable: false
+      });
+      this.backCropper = new Cropper(this.$refs["tailoringBackImage"]._isVue ? this.$refs["tailoringBackImage"].$el : this.$refs["tailoringBackImage"], {
+        aspectRatio: 2,
         viewMode: 1,
         background: false,
         zoomable: false
@@ -73,20 +104,10 @@
     },
     methods: {
       ...mapActions("draw", ["ASave"]),
-      test(...a) {
-        console.log(a);
-      },
       add() {
         this.tagList.push({name: ""});
       },
       async click() {
-        console.log({
-          url: this.url,
-          desc: this.desc,
-          name: this.name,
-          isPrivate: this.isPrivate,
-          tagList: this.tagList.map(item => item.name),
-        });
         let result = await this.ASave({
           url: this.url,
           desc: this.desc,
@@ -95,24 +116,41 @@
           tagList: this.tagList.map(item => item.name),
         });
       },
-      uploadFile($event) {
+      uploadHead($event) {
         let file = $event.target.files[0];
-        if(!file){
+        if (!file) {
           return false;
         }
         if (!ioUtil.isImage(file)) {
           this.$notify({message: "请上传图片"});
           return false;
         }
-        this.tailoringImg = URL.createObjectURL(file);
-        this.cropper.replace(this.tailoringImg);
-        this.isShowTailoring = true;
-        $event.target.value="";
+        this.tailoringHeadImage = URL.createObjectURL(file);
+        this.headCropper.replace(this.tailoringHeadImage);
+        this.isShowTailoringHead = true;
+        $event.target.value = "";
       },
-      saveHead(){
-        this.user.head = URL.createObjectURL(ioUtil.dataURLtoFile(ioUtil.getRoundedCanvas(this.cropper.getCroppedCanvas()).toDataURL()));
-        URL.revokeObjectURL(this.tailoringImg);
-        this.isShowTailoring = false
+      saveHead() {
+        this.user.head = URL.createObjectURL(ioUtil.dataURLtoFile(ioUtil.getRoundedCanvas(this.headCropper.getCroppedCanvas()).toDataURL()));
+        this.isShowTailoringHead = false
+      },
+      uploadBack($event) {
+        let file = $event.target.files[0];
+        if (!file) {
+          return false;
+        }
+        if (!ioUtil.isImage(file)) {
+          this.$notify({message: "请上传图片"});
+          return false;
+        }
+        this.tailoringBackImage = URL.createObjectURL(file);
+        this.backCropper.replace(this.tailoringBackImage);
+        this.isShowTailoringBack = true;
+        $event.target.value = "";
+      },
+      saveBack() {
+        this.user.background = URL.createObjectURL(ioUtil.dataURLtoFile(ioUtil.getRoundedCanvas(this.backCropper.getCroppedCanvas()).toDataURL()));
+        this.isShowTailoringBack = false
       }
     }
   }
@@ -161,11 +199,20 @@
     @head-img-height: 150px;
     @head-img-border: 2px;
     transform: translateY(0);
-    .upload {
-      cursor: pointer;
-    }
+
     .head-box {
       padding: 0 100px 20px;
+      .upload-head {
+        cursor: pointer;
+      }
+      .upload-back {
+        float: right;
+        line-height: 45px;
+        transform: translateY(-75px);
+        border: none;
+        background-color: rgba(0, 0, 0, .3);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      }
       img {
         transform: translateY(-(@head-img-height+@head-img-border)/2);
         height: @head-img-height;
