@@ -19,7 +19,7 @@ function goTop(el, binding) {
 }
 
 export default {
-  bind(el, binding, vnode) {
+  inserted(el, binding, vnode) {
     goTop(el, binding, vnode);
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page" v-loading="a">
     <CheckboxGroup class="content row" v-model="selectList">
       <div class="card " v-for="(draw,index) in list" :key="index">
         <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box">
@@ -36,12 +36,11 @@
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
     <button v-if="isSelf" class="btn is-suspend" style="position: fixed;right: 50px;bottom: 50px;"
             @click="isShowEdit = true"
-            :disabled="selectList.isEmpty()"><i
-      class="icon s-bianji"></i></button>
+            :disabled="selectList.isEmpty()"><i class="icon s-bianji"></i></button>
     <Dialog v-if="isSelf" v-model="isShowEdit" title="批量操作">
       <div class="edit-dialog-content">
         <div style="margin-bottom: 10px">
-          <Tag v-for="(draw,index) in selectList" :content="draw.name" @close="test" :key="draw.id"
+          <Tag v-for="(draw,index) in selectList" :content="draw.name" @close="removeSelectDraw" :key="draw.id"
                :value="index"></Tag>
         </div>
         <form @submit.prevent="()=>{}">
@@ -102,7 +101,7 @@
       if (result.status !== 200) {
         throw new Error(result.message)
       }
-      return {
+      return {a:true,
         pageable,
         page: result.data,
         list: result.data.content,
@@ -128,10 +127,6 @@
       this.$notify({message: `说是作品，其实都是从p站下载的，侵删`, waitTime: 4000});
     },
     methods: {
-      test({value}) {
-        console.log(value);
-        this.selectList.removeIndex(value)
-      },
       ...mapActions("draw", ["ACollection", "ABatchUpdate"]),
       ...mapActions("user", ["AFollow"]),
       getProportion(draw) {
@@ -163,6 +158,9 @@
             draw.user.focus = result.data
           }
         }
+      },
+      removeSelectDraw({value}){
+        this.selectList.removeIndex(value)
       },
       addTag() {
         if (this.inputTag === null || this.inputTag === "") {

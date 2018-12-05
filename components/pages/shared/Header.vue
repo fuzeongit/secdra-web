@@ -2,7 +2,7 @@
   <header class="animated duration" :class="{fadeInDown:isShow&&hid,fadeOutUp:!isShow}">
     <nav>
       <nuxt-link to="/">
-        <img src="../../../assets/image/logo/logo.svg" height="30px" style="vertical-align: -5px;">
+        <img src="../../../assets/image/svg/logo.svg" height="30px" style="vertical-align: -5px;">
       </nuxt-link>
       <nuxt-link to="/find" :class="{active:activeName===`find`}">
         发现

@@ -12,9 +12,9 @@ function popover(el, binding, vnode) {
 
 export default {
   bind(el, binding, vnode) {
-    getReference(el, binding, vnode);
+    popover(el, binding, vnode);
   },
   inserted(el, binding, vnode) {
-    getReference(el, binding, vnode);
+    popover(el, binding, vnode);
   }
 };
