@@ -4,7 +4,7 @@ import LoadingComponent from "../../../components/global/Loading/Main"
 const LoadingConstructor = Vue.extend(LoadingComponent);
 let loadingEL = null;
 
-function loading(el, binding) { 
+function loading(el, binding) {
   let instance = new LoadingConstructor();
   instance.vm = instance.$mount();
   let elPosition = window.getComputedStyle(el).position;

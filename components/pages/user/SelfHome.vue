@@ -152,10 +152,10 @@
       saveBack() {
         this.user.background = URL.createObjectURL(ioUtil.dataURLtoFile(ioUtil.getRoundedCanvas(this.backCropper.getCroppedCanvas()).toDataURL()));
         this.uploadBackLoading = true;
-        // setTimeout(()=>{
-        //   this.uploadBackLoading = false;
-        //   this.isShowTailoringBack = false
-        // },5000);
+        setTimeout(()=>{
+          this.uploadBackLoading = false;
+          this.isShowTailoringBack = false
+        },5000);
         // this.isShowTailoringBack = false
       }
     }
