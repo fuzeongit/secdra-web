@@ -33,7 +33,7 @@
       </div>
       <button class="btn block" @click="saveHead">保存</button>
     </Dialog>
-    <Dialog v-model="isShowTailoringBack" title="剪切">
+    <Dialog v-model="isShowTailoringBack" title="剪切"  v-loading="uploadBackLoading">
       <div class="edit-dialog-content" style="margin: 10px 0;width: 700px;height: 70vh">
         <img :src="tailoringBackImage" ref="tailoringBackImage">
       </div>
@@ -60,7 +60,8 @@
         tailoringHeadImage: "",
         tailoringBackImage: "",
         headCropper: {},
-        backCropper: {}
+        backCropper: {},
+        uploadBackLoading:false
       }
     },
     watch: {
@@ -150,7 +151,12 @@
       },
       saveBack() {
         this.user.background = URL.createObjectURL(ioUtil.dataURLtoFile(ioUtil.getRoundedCanvas(this.backCropper.getCroppedCanvas()).toDataURL()));
-        this.isShowTailoringBack = false
+        this.uploadBackLoading = true;
+        // setTimeout(()=>{
+        //   this.uploadBackLoading = false;
+        //   this.isShowTailoringBack = false
+        // },5000);
+        // this.isShowTailoringBack = false
       }
     }
   }
