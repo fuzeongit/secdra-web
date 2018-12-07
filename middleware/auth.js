@@ -32,7 +32,7 @@ export default async ({store, req, redirect, route, $axios}) => {
       if (user.id) {
         responses = await $axios.post(`${config.host}/user/checkLogin`);
       } else {
-        responses = await $axios.get(`${config.host}/user/getSelfInfo`);
+        responses = await $axios.get(`${config.host}/user/getInfo`);
       }
       result = responses.data;
     } catch (e) {

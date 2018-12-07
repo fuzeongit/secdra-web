@@ -156,7 +156,9 @@
           this.uploadBackLoading = false;
           this.isShowTailoringBack = false
         },5000);
-        // this.isShowTailoringBack = false
+      },
+      upload(file){
+
       }
     }
   }

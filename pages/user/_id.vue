@@ -18,28 +18,23 @@
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
     async asyncData({store, req, redirect, route, $axios}) {
-      let res = {};
-
-      if (store.state.user.user.id === route.params.id) {
-        res = await $axios.get(`${config.host}/user/getSelfInfo`);
-      } else {
-        res = await $axios.get(`${config.host}/user/getInfo`, {
-          params: {
-            userId: route.params.id
-          }
-        });
-      }
+      let res = await $axios.get(`${config.host}/user/getInfo`, {
+        params: {
+          id: route.params.id
+        }
+      });
       let rusult = res.data;
       let user = rusult.data;
-      let isSelf = false;
+      if (rusult.status !== 200) {
+        redirect(`/user/${store.state.user.user.id}`)
+      }
       if (store.state.user.user.id === user.id) {
         store.state.menu.name = "user";
         store.state.user.user = user;
-        isSelf = true;
       } else {
         store.state.menu.name = "";
       }
-      return {user, isSelf}
+      return {user}
     },
     data() {
       return {}
@@ -49,6 +44,9 @@
       OtherHome
     },
     computed: {
+      isSelf() {
+        return this.$store.state.user.user.id === this.$route.params.id
+      },
       scrollTop() {
         return this.$store.state.window.scrollTop || 0
       }
