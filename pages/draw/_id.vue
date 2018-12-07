@@ -85,12 +85,12 @@
       let res = await $axios.get(`${config.host}/draw/get`, {
         params: {id}
       });
-      let rusult = res.data;
-      if (rusult.status !== 200) {
-        throw new Error(rusult.message)
+      let result = res.data;
+      if (result.status !== 200) {
+        throw new Error(result.message)
       }
       return {
-        draw: rusult.data
+        draw: result.data
       }
     },
     components: {

@@ -45,16 +45,16 @@ export default {
     })
   },
 
-  getRoundedCanvas(sourceCanvas) {
+  getRoundedCanvas(sourceCanvas, width, height) {
     let canvas = document.createElement("canvas");
     let context = canvas.getContext("2d");
     // let width = sourceCanvas.width;
-    let width = sourceCanvas.width;
-    let height = sourceCanvas.height;
+    let _width = width || sourceCanvas.width;
+    let _height = height || sourceCanvas.height;
     canvas.width = width;
     canvas.height = height;
     context.imageSmoothingEnabled = true;
-    context.drawImage(sourceCanvas, 0, 0, width, height);
+    context.drawImage(sourceCanvas, 0, 0, _width, _height);
     context.globalCompositeOperation = "destination-in";
     context.beginPath();
     context.fill();
@@ -70,7 +70,7 @@ export default {
     }
     if (!suffixList.isEmpty()) {
       let fileSuffix = file.name.substring(file.name.lastIndexOf(".") + 1).toLowerCase();
-      if(suffixList.indexOf(fileSuffix) === -1){
+      if (suffixList.indexOf(fileSuffix) === -1) {
         return false
       }
     }

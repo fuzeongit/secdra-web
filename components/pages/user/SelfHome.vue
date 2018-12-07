@@ -27,13 +27,13 @@
         <Checkbox v-model="isPrivate"></Checkbox>
       </div>
     </div>
-    <Dialog v-model="isShowTailoringHead" title="剪切">
+    <Dialog v-model="isShowTailoringHead" title="剪切" v-loading="uploadHeadLoading">
       <div class="edit-dialog-content" style="margin: 10px 0;width: 500px;height: 50vh">
         <img :src="tailoringHeadImage" ref="tailoringHeadImage">
       </div>
       <button class="btn block" @click="saveHead">保存</button>
     </Dialog>
-    <Dialog v-model="isShowTailoringBack" title="剪切"  v-loading="uploadBackLoading">
+    <Dialog v-model="isShowTailoringBack" title="剪切" v-loading="uploadBackLoading">
       <div class="edit-dialog-content" style="margin: 10px 0;width: 700px;height: 70vh">
         <img :src="tailoringBackImage" ref="tailoringBackImage">
       </div>
@@ -46,6 +46,7 @@
   import Cropper from "cropperjs"
   import ioUtil from '../../../assets/js/util/ioUtil'
   import {mapActions} from "vuex"
+  import {Result} from "../../../assets/js/model/base";
 
   export default {
     data() {
@@ -61,7 +62,8 @@
         tailoringBackImage: "",
         headCropper: {},
         backCropper: {},
-        uploadBackLoading:false
+        uploadHeadLoading: false,
+        uploadBackLoading: false
       }
     },
     watch: {
@@ -77,6 +79,9 @@
       }
     },
     computed: {
+      uploadToken() {
+        return this.$store.state.user.uploadToken || ""
+      },
       user() {
         return this.$store.state.user.user || {}
       },
@@ -105,6 +110,7 @@
     },
     methods: {
       ...mapActions("draw", ["ASave"]),
+      ...mapActions("user", ["AUpdateBack", "AUpdateHead"]),
       add() {
         this.tagList.push({name: ""});
       },
@@ -131,9 +137,18 @@
         this.isShowTailoringHead = true;
         $event.target.value = "";
       },
-      saveHead() {
-        this.user.head = URL.createObjectURL(ioUtil.dataURLtoFile(ioUtil.getRoundedCanvas(this.headCropper.getCroppedCanvas()).toDataURL()));
-        this.isShowTailoringHead = false
+      async saveHead() {
+        let file = ioUtil.dataURLtoFile(ioUtil.getRoundedCanvas(this.headCropper.getCroppedCanvas(),400,400).toDataURL());
+        this.user.head = URL.createObjectURL(file);
+        this.uploadHeadLoading = true;
+        let result = await this.upload(file, "head");
+        this.uploadHeadLoading = false;
+        console.log(result);
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+          return;
+        }
+        this.isShowTailoringHead = false;
       },
       uploadBack($event) {
         let file = $event.target.files[0];
@@ -149,16 +164,37 @@
         this.isShowTailoringBack = true;
         $event.target.value = "";
       },
-      saveBack() {
-        this.user.background = URL.createObjectURL(ioUtil.dataURLtoFile(ioUtil.getRoundedCanvas(this.backCropper.getCroppedCanvas()).toDataURL()));
+      async saveBack() {
+        let file = ioUtil.dataURLtoFile(this.backCropper.getCroppedCanvas().toDataURL());
+        this.user.background = URL.createObjectURL(file);
         this.uploadBackLoading = true;
-        setTimeout(()=>{
-          this.uploadBackLoading = false;
-          this.isShowTailoringBack = false
-        },5000);
+        let result = await this.upload(file, "back");
+        this.uploadBackLoading = false;
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+          return;
+        }
+        this.isShowTailoringBack = false;
       },
-      upload(file){
+      async upload(file, type) {
+        let form = new FormData();
+        form.append("token", this.uploadToken);
+        form.append("file", file);
 
+        let qiniuResult = (await this.$axios.post(`http://upload-z2.qiniup.com`, form, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })).data;
+        console.log(qiniuResult);
+        if (!qiniuResult.hash) {
+          return new Result(500, null, "上传失败");
+        }
+        if (type === "back") {
+          return await this.AUpdateBack({url: qiniuResult.hash});
+        } else if (type === "head") {
+          return await this.AUpdateHead({url: qiniuResult.hash});
+        }
       }
     }
   }

@@ -7,7 +7,8 @@ import httpUtil from '../assets/js/util/httpUtil'
  */
 
 const state = {
-  user: null
+  user: null,
+  uploadToken: null
 };
 
 const mutations = {
@@ -33,6 +34,12 @@ const actions = {
   },
   async AGetInfo(context, params) {
     return await httpUtil.get("/user/getInfo", params)
+  },
+  async AUpdateBack(context, params) {
+    return await httpUtil.post("/user/updateBack", params)
+  },
+  async AUpdateHead(context, params) {
+    return await httpUtil.post("/user/updateHead", params)
   },
   async AFollow(context, params) {
     return await httpUtil.post("/follower/focus", params)

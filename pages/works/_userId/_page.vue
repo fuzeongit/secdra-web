@@ -1,5 +1,5 @@
 <template>
-  <div class="page" v-loading="a">
+  <div class="page">
     <CheckboxGroup class="content row" v-model="selectList">
       <div class="card " v-for="(draw,index) in list" :key="index">
         <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box">
@@ -101,7 +101,7 @@
       if (result.status !== 200) {
         throw new Error(result.message)
       }
-      return {a:true,
+      return {
         pageable,
         page: result.data,
         list: result.data.content,

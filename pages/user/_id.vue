@@ -18,23 +18,27 @@
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
     async asyncData({store, req, redirect, route, $axios}) {
-      let res = await $axios.get(`${config.host}/user/getInfo`, {
-        params: {
-          id: route.params.id
-        }
-      });
-      let rusult = res.data;
-      let user = rusult.data;
-      if (rusult.status !== 200) {
+      let taskList = [];
+      taskList.push($axios.get(`${config.host}/user/getInfo`, {params: {id: route.params.id}}));
+      if(store.state.user.user.id === route.params.id){
+        taskList.push($axios.get(`${config.host}/qiniu/getUploadToken`));
+      }
+      let resultList = (await Promise.all(taskList)).map(item => item.data);
+
+      if (resultList[0].status !== 200) {
         redirect(`/user/${store.state.user.user.id}`)
       }
+      let user = resultList[0].data;
       if (store.state.user.user.id === user.id) {
         store.state.menu.name = "user";
         store.state.user.user = user;
+        store.state.user.uploadToken = resultList[1].data;
       } else {
         store.state.menu.name = "";
       }
-      return {user}
+      return {
+        user
+      }
     },
     data() {
       return {}
@@ -52,6 +56,7 @@
       }
     },
     mounted() {
+
     }
   }
 </script>
