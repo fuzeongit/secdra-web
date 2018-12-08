@@ -51,8 +51,8 @@ export default {
     // let width = sourceCanvas.width;
     let _width = width || sourceCanvas.width;
     let _height = height || sourceCanvas.height;
-    canvas.width = width;
-    canvas.height = height;
+    canvas.width = _width;
+    canvas.height = _height;
     context.imageSmoothingEnabled = true;
     context.drawImage(sourceCanvas, 0, 0, _width, _height);
     context.globalCompositeOperation = "destination-in";
@@ -74,7 +74,6 @@ export default {
         return false
       }
     }
-
     return true;
   }
 }

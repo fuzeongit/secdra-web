@@ -71,7 +71,7 @@
             <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName"
                  :value="index"></Tag>
           </div>
-          <div class="input-group">
+          <div class="input-group" style="text-align: center;">
             <button class="btn" @click="save">保存</button>
             <button class="btn is-plain" @click="reset">清空</button>
           </div>
@@ -108,7 +108,7 @@
         selectList: [],
         isShowEdit: false,
         inputTag: "",
-        drawForm:  new DrawForm()
+        drawForm: new DrawForm()
       }
     },
     watch: {
@@ -159,7 +159,7 @@
           }
         }
       },
-      removeSelectDraw({value}){
+      removeSelectDraw({value}) {
         this.selectList.removeIndex(value)
       },
       addTag() {

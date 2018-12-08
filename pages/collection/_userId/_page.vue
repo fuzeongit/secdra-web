@@ -12,7 +12,7 @@
              :style="{color:draw.focus?`red`:`gray`}" title="收藏"
              @click.stop="collection(draw)"></a>
         </div>
-        <div class="flex-box info-box">
+        <div class="flex-box info-box" v-if="draw.user.id">
           <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
             <img :src="$img.head(draw.user.head)" :title="draw.user.name">
           </nuxt-link>
@@ -36,8 +36,9 @@
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
     <br>
     <button v-if="isSelf" class="btn is-suspend" style="position: fixed;right: 50px;bottom: 50px;"
-            @click="unCollection"><i
-      class="icon s-edit"></i></button>
+            @click="unCollection">
+      <i class="icon s-heart" style="color: red"></i>
+    </button>
   </div>
 </template>
 
@@ -96,13 +97,13 @@
             let result = await this.AUnCollection({
               drawIdList: this.selectList.map(item => item.id)
             });
-            if(result.status !== 200){
+            if (result.status !== 200) {
               this.$notify({message: result.message});
               return
             }
-            for(let id of result.data){
-              let draw = this.list.find(item=>item.id===id);
-              if(!draw){
+            for (let id of result.data) {
+              let draw = this.list.find(item => item.id === id);
+              if (!draw) {
                 continue
               }
               draw.focus = false;

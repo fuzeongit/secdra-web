@@ -45,7 +45,9 @@ export default {
     // NProgress.start();
     let result = null;
     try {
-      let response = await axios.post(config.host + url, qs.stringify(body ,{ indices: false }), {
+      let response = await axios.post(config.host + url, qs.stringify(body, {
+        arrayFormat: 'repeat'
+      }), {
         params: params
       });
       this._handleToken(response);
@@ -72,7 +74,7 @@ export default {
   _handleToken(response = {}) {
     let headers = response.headers || {};
     if (headers.token) {
-      Cookies.set("token", headers.token,{ expires: 30 })
+      Cookies.set("token", headers.token, {expires: 30})
     }
     if (response.data.status === 401) {
       Cookies.remove("token");

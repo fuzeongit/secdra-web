@@ -47,6 +47,7 @@
   import ioUtil from '../../../assets/js/util/ioUtil'
   import {mapActions} from "vuex"
   import {Result} from "../../../assets/js/model/base";
+  import config from "../../../assets/js/config";
 
   export default {
     data() {
@@ -181,12 +182,11 @@
         form.append("token", this.uploadToken);
         form.append("file", file);
 
-        let qiniuResult = (await this.$axios.post(`http://upload-z2.qiniup.com`, form, {
+        let qiniuResult = (await this.$axios.post(config.qiniuUploadAddress, form, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         })).data;
-        console.log(qiniuResult);
         if (!qiniuResult.hash) {
           return new Result(500, null, "上传失败");
         }
