@@ -4,7 +4,7 @@
       <div class="card " v-for="(draw,index) in list" :key="index">
         <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box">
           <img :src="$img.scedra(draw.url,`specifiedWidth`)"
-               :style="{height:getProportion(draw)>1?`100%`:`auto`,width:getProportion(draw)<1?`100%`:`auto`}">
+               :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
         </nuxt-link>
         <div class="tool">
           <Checkbox v-if="isSelf" :value="draw" valueKey="id"></Checkbox>

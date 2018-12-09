@@ -17,14 +17,6 @@
         </label>
       </div>
       <div style="height: 3000px">
-        <input type="text" class="input" title="" v-model="url" placeholder="url">
-        <input type="text" class="input" title="" v-model="name" placeholder="name">
-        <input type="text" class="input" title="" v-model="desc" placeholder="desc">
-        <button class="btn" @click="add">增加</button>
-        <input type="text" class="input" title="" v-model="tag.name" :key="index" placeholder="tag"
-               v-for="(tag,index)  in tagList">
-        <button class="btn" @click="click">发送</button>
-        <Checkbox v-model="isPrivate"></Checkbox>
       </div>
     </div>
     <Dialog v-model="isShowTailoringHead" title="剪切" v-loading="uploadHeadLoading">
@@ -52,11 +44,6 @@
   export default {
     data() {
       return {
-        url: "",
-        desc: '',
-        name: '',
-        isPrivate: false,
-        tagList: [],
         isShowTailoringHead: false,
         isShowTailoringBack: false,
         tailoringHeadImage: "",
@@ -110,20 +97,7 @@
       });
     },
     methods: {
-      ...mapActions("draw", ["ASave"]),
       ...mapActions("user", ["AUpdateBack", "AUpdateHead"]),
-      add() {
-        this.tagList.push({name: ""});
-      },
-      async click() {
-        let result = await this.ASave({
-          url: this.url,
-          desc: this.desc,
-          name: this.name,
-          isPrivate: this.isPrivate,
-          tagList: this.tagList.map(item => item.name),
-        });
-      },
       uploadHead($event) {
         let file = $event.target.files[0];
         if (!file) {
@@ -144,7 +118,6 @@
         this.uploadHeadLoading = true;
         let result = await this.upload(file, "head");
         this.uploadHeadLoading = false;
-        console.log(result);
         if (result.status !== 200) {
           this.$notify({message: result.message});
           return;

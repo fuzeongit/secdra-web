@@ -31,7 +31,7 @@
     border-radius: @smallest-border-radius;
     border: 1px solid @theme-color;
     color: @theme-color;
-    background-color: darken(@theme-color, -45%);
+    background-color: @tag-color;
     display: inline-block;
     margin-right: 10px;
     margin-bottom: 10px;

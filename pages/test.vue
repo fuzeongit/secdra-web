@@ -39,13 +39,11 @@
     methods: {
       changeImage($event) {
         let file = $event.target.files[0];
-        console.log(file);
         this.imageUrl = URL.createObjectURL(file);
         this.cropper.replace(this.imageUrl)
       },
       async implement() {
         this.imageUrl2 = URL.createObjectURL(ioUtil.dataURLtoFile(ioUtil.getRoundedCanvas(this.cropper.getCroppedCanvas()).toDataURL()));
-        console.log(await ioUtil.getOffset(this.imageUrl2));
       }
     }
   }

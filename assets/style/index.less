@@ -125,7 +125,7 @@ a {
   .btn-color(@color);
   &[disabled] {
     cursor: not-allowed;
-    .btn-color(darken(@color, -15%));
+    .btn-color(@disabled-color);
   }
 
   &.block {
@@ -201,7 +201,7 @@ a {
   &[disabled] {
     background-color: #f0f0f0;
     cursor: not-allowed;
-    .input-color(darken(@color, -15%));
+    .input-color(@disabled-color);
   }
   &.block {
     display: block;

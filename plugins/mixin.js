@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-import {Alert, Confirm, Message, Prompt,Notification} from '../components/global'
+import {Alert, Confirm, Message, Prompt,Notification,Loading} from '../components/global'
 import Popper from "../components/global/Popper";
 import Dialog from "../components/global/Dialog";
 import Tag from "../components/global/Tag";
@@ -20,6 +20,7 @@ Vue.prototype.$confirm = Confirm;
 Vue.prototype.$prompt = Prompt;
 Vue.prototype.$message = Message;
 Vue.prototype.$notify = Notification;
+Vue.prototype.$loading = Loading;
 Vue.component("Popper",Popper);
 Vue.component("Dialog",Dialog);
 Vue.component("Tag",Tag);

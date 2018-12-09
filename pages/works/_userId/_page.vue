@@ -4,7 +4,7 @@
       <div class="card " v-for="(draw,index) in list" :key="index">
         <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box">
           <img :src="$img.scedra(draw.url,`specifiedWidth`)"
-               :style="{height:getProportion(draw)>1?`100%`:`auto`,width:getProportion(draw)<1?`100%`:`auto`}">
+               :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
         </nuxt-link>
         <div class="tool">
           <Checkbox v-if="isSelf" :value="draw" valueKey="id"></Checkbox>
@@ -43,7 +43,7 @@
           <Tag v-for="(draw,index) in selectList" :content="draw.name" @close="removeSelectDraw" :key="draw.id"
                :value="index"></Tag>
         </div>
-        <form @submit.prevent="()=>{}">
+        <div>
           <div class="input-group">
             <h5 class="sub-name">修改名称：</h5>
             <input type="text" title="name" v-model="drawForm.name" class="input block">
@@ -62,10 +62,8 @@
           </div>
           <div class="input-group">
             <h5 class="sub-name">添加标签：</h5>
-            <div class="row">
-              <input type="text" title="name" v-model="inputTag" class="input block col-25">
-              <button class="btn is-text col-5" @click="addTag">加</button>
-            </div>
+            <input type="text" title="name" v-model="inputTag" class="input block"  @keyup.enter="addTag">
+            <h5 class="sub-name">*回车添加一个标签</h5>
           </div>
           <div style="margin-bottom: 10px">
             <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName"
@@ -75,7 +73,7 @@
             <button class="btn" @click="save">保存</button>
             <button class="btn is-plain" @click="reset">清空</button>
           </div>
-        </form>
+        </div>
       </div>
     </Dialog>
   </div>
