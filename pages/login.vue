@@ -13,6 +13,10 @@
       <button type="submit" class="btn block" :disabled="loginLoading">{{!loginLoading?`登录`:`登录中...`}}
       </button>
     </form>
+    <p class="center" style="position: fixed;bottom: 30px">
+      <span> © 2018-2019</span>
+      <a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备18144953号-1</a>
+    </p>
   </section>
 </template>
 <script>
@@ -36,7 +40,7 @@
       ...mapActions("user", ["ALogin", "ARegister", "AGetInfo"]),
       ...mapMutations("user", ["MSetUserInfo"]),
       async login() {
-        let phone = this.form.phone || "13760029486";
+        let phone = this.form.phone;
         let password = this.form.password || "123456";
         this.loginLoading = true;
         let result = await this.ALogin({phone, password});

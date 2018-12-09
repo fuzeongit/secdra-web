@@ -2,34 +2,100 @@
   <div>
     <div class="user-bk cover"
          :style="{transform: `translateY(${scrollTop*.5}px)`,backgroundImage: `url(${$img.back(user.background)})`}">
-      <div class="user-bk-content"></div>
+      <div class="user-bk-content">
+        <div class="tool">
+          <label class="btn is-suspend">
+            <input type="file" style="display: none" @change="uploadBack">
+            <i class="icon s-upload"></i>
+          </label>
+          <button class="btn is-suspend" style="margin-left: 15px;" @click="isShowEdit = true">
+            <i class="icon s-bianji"></i>
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="content card" :style="{marginTop:`-100px`}">
+    <div class="content card">
       <div class="head-box">
         <label class="upload-head">
           <input type="file" style="display: none" @change="uploadHead">
           <img :src="$img.head(user.head)"
                :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`">
         </label>
-        <label class="btn is-suspend upload-back" style="">
-          <input type="file" style="display: none" @change="uploadBack">
-          <i class="icon s-bianji" style="color:white;opacity: .7"></i>
-        </label>
+        <div class="info-box">
+          <p class="name"> {{user.name}} <i class="icon"
+                                            :class="{'s-xingbie-nv':user.gender==='FEMALE','s-xingbie-nan':user.gender==='MALE'}"></i>
+          </p>
+          <p class="introduction"> {{user.introduction || "这人很懒，什么都没有留下"}}</p>
+        </div>
       </div>
-      <div style="height: 3000px">
+      <div class="draw-box">
+        <div class="works-box" v-loading="worksLoading">
+          <h3 class="line center">
+            <span>我的作品</span>
+          </h3>
+          <div class="draw-list row">
+            <div class="card draw-item" v-for="(draw ,index) in worksList" :key="index">
+              <nuxt-link style="width: 100%;height: 230px;" class="flex-box" :to="`/draw/${draw.id}`">
+                <img :src="$img.scedra(draw.url,`specifiedWidth`)"
+                     :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
+              </nuxt-link>
+            </div>
+          </div>
+          <p class="move" v-if="worksList.length===8">
+            <nuxt-link :to="`/works/${user.id||''}`">查看更多>></nuxt-link>
+          </p>
+        </div>
+        <div class="collection-box" v-loading="collectionLoading">
+          <h3 class="line center">
+            <span>我的收藏</span>
+          </h3>
+          <div class="draw-list row">
+            <div class="card draw-item" v-for="(draw ,index) in collectionList" :key="index">
+              <nuxt-link style="width: 100%;height: 230px;" class="flex-box" :to="`/draw/${draw.id}`">
+                <img :src="$img.scedra(draw.url,`specifiedWidth`)"
+                     :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
+              </nuxt-link>
+            </div>
+          </div>
+          <p class="move" v-if="collectionList.length===8">
+            <nuxt-link :to="`/collection/${user.id||''}`">查看更多>></nuxt-link>
+          </p>
+        </div>
       </div>
     </div>
     <Dialog v-model="isShowTailoringHead" title="剪切" v-loading="uploadHeadLoading">
-      <div class="edit-dialog-content" style="margin: 10px 0;width: 500px;height: 50vh">
+      <div class="edit-dialog-content" style="width: 500px;height: 50vh">
         <img :src="tailoringHeadImage" ref="tailoringHeadImage">
       </div>
       <button class="btn block" @click="saveHead">保存</button>
     </Dialog>
     <Dialog v-model="isShowTailoringBack" title="剪切" v-loading="uploadBackLoading">
-      <div class="edit-dialog-content" style="margin: 10px 0;width: 700px;height: 70vh">
+      <div class="edit-dialog-content" style="width: 700px;height: 70vh">
         <img :src="tailoringBackImage" ref="tailoringBackImage">
       </div>
       <button class="btn block" @click="saveBack">保存</button>
+    </Dialog>
+    <Dialog v-model="isShowEdit" title="修改" v-loading="editLoading">
+      <div class="edit-dialog-content" style="width: 500px;height: 400px;overflow: auto">
+        <div>
+          <div class="input-group">
+            <h5 class="sub-name">修改名称：</h5>
+            <input type="text" title="name" v-model="userForm.name" class="input block">
+          </div>
+          <div class="input-group">
+            <h5 class="sub-name">修改简介：</h5>
+            <textarea v-model="userForm.introduction" class="input block" title="introduction" rows="3"></textarea>
+          </div>
+          <div class="input-group">
+            <h5 class="sub-name">修改性别：</h5>
+            <RadioGroup v-model="userForm.gender">
+              <Radio value="MALE" label="男孩"></Radio>
+              <Radio value="FEMALE" label="女孩" style="margin-left: 10px"></Radio>
+            </RadioGroup>
+          </div>
+        </div>
+      </div>
+      <button class="btn block" @click="update">保存</button>
     </Dialog>
   </div>
 </template>
@@ -38,7 +104,7 @@
   import Cropper from "cropperjs"
   import ioUtil from '../../../assets/js/util/ioUtil'
   import {mapActions} from "vuex"
-  import {Result} from "../../../assets/js/model/base";
+  import {Pageable, Result} from "../../../assets/js/model/base";
   import config from "../../../assets/js/config";
 
   export default {
@@ -51,7 +117,16 @@
         headCropper: {},
         backCropper: {},
         uploadHeadLoading: false,
-        uploadBackLoading: false
+        uploadBackLoading: false,
+
+        worksLoading: false,
+        worksList: [],
+        collectionLoading: false,
+        collectionList: [],
+
+        isShowEdit: false,
+        userForm: Object.assign({}, this.$store.state.user.user), //需要脱离vuex
+        editLoading: false
       }
     },
     watch: {
@@ -70,8 +145,13 @@
       uploadToken() {
         return this.$store.state.user.uploadToken || ""
       },
-      user() {
-        return this.$store.state.user.user || {}
+      user:{
+        get(){
+          return this.$store.state.user.user || {}
+        },
+        set(val){
+          this.$store.state.user.user = val
+        }
       },
       scrollTop: {
         get() {
@@ -95,9 +175,36 @@
         background: false,
         zoomable: false
       });
+      this.pagingWorks();
+      this.pagingCollection();
+
     },
     methods: {
-      ...mapActions("user", ["AUpdateBack", "AUpdateHead"]),
+      ...mapActions("user", ["AUpdateBack", "AUpdateHead", "APagingFollower", "AUpdate"]),
+      ...mapActions("draw", ["APagingCollection", "APagingByUserId"]),
+      async pagingWorks() {
+        this.worksLoading = true;
+        let result = await this.APagingByUserId(new Pageable(0, 8, "createDate,desc"));
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+          return
+        }
+        this.worksLoading = false;
+        this.worksList = result.data.content;
+      },
+      async pagingCollection() {
+        this.collectionLoading = true;
+        let result = await this.APagingCollection(new Pageable(0, 8, "createDate,desc"));
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+          return
+        }
+        this.collectionLoading = false;
+        this.collectionList = result.data.content;
+      },
+      getProportion(draw) {
+        return draw.height / draw.width
+      },
       uploadHead($event) {
         let file = $event.target.files[0];
         if (!file) {
@@ -113,7 +220,7 @@
         $event.target.value = "";
       },
       async saveHead() {
-        let file = ioUtil.dataURLtoFile(ioUtil.getRoundedCanvas(this.headCropper.getCroppedCanvas(),400,400).toDataURL());
+        let file = ioUtil.dataURLtoFile(ioUtil.getRoundedCanvas(this.headCropper.getCroppedCanvas(), 400, 400).toDataURL());
         this.user.head = URL.createObjectURL(file);
         this.uploadHeadLoading = true;
         let result = await this.upload(file, "head");
@@ -168,6 +275,19 @@
         } else if (type === "head") {
           return await this.AUpdateHead({url: qiniuResult.hash});
         }
+      },
+      async update() {
+        this.editLoading = true;
+        let result = await this.AUpdate(this.userForm);
+        this.editLoading = false;
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+          return
+        }
+        this.isShowEdit = false;
+        this.$notify({message: `修改成功`});
+        this.user = result.data;
+        this.userForm = Object.assign({}, this.user);
       }
     }
   }
@@ -181,11 +301,28 @@
     width: 100%;
     margin-top: -@herder-height;
     height: @window-min-width / 2;
-    /*background-image: url("../../../assets/image/bk/login-bk.jpg");*/
     .user-bk-content {
       padding-top: @herder-height;
-      width: 100%;
+      width: @visual-width;
       height: 100%;
+      margin: 0 auto;
+      position: relative;
+      .tool {
+        position: absolute;
+        bottom: 125px;
+        right: 100px;
+        text-align: right;
+        .btn {
+          line-height: 45px;
+          border: none;
+          background-color: rgba(0, 0, 0, .3);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+          i {
+            color: white;
+            opacity: .7
+          }
+        }
+      }
     }
   }
 
@@ -212,31 +349,100 @@
 
   .content {
     width: @visual-width;
-    margin: 0 auto;
+    margin: -100px auto 24px;
     @head-img-height: 150px;
     @head-img-border: 2px;
     transform: translateY(0);
 
     .head-box {
-      padding: 0 100px 20px;
+      padding: 0 100px;
       .upload-head {
         cursor: pointer;
+        margin-top: -(@head-img-height+@head-img-border)/2;
+        display: inline-block;
+        position: absolute;
+        img {
+          height: @head-img-height;
+          width: @head-img-height;
+          border: @head-img-border solid @white;
+          border-radius: 50%;
+        }
       }
-      .upload-back {
-        float: right;
-        line-height: 45px;
-        transform: translateY(-75px);
-        border: none;
-        background-color: rgba(0, 0, 0, .3);
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-      }
-      img {
-        transform: translateY(-(@head-img-height+@head-img-border)/2);
-        height: @head-img-height;
-        width: @head-img-height;
-        border: @head-img-border solid @white;
-        border-radius: 50%;
+      .info-box {
+        margin-left: @head-img-height;
+        padding: 20px;
+        .name {
+          line-height: 30px;
+          .icon {
+            margin-left: 10px;
+            vertical-align: baseline;
+            &.s-xingbie-nv {
+              color: #ff74cd;
+            }
+            &.s-xingbie-nan {
+              color: #0b99ff;
+            }
+          }
+
+        }
+        .introduction {
+          font-size: @small-font-size;
+        }
       }
     }
+
+    .draw-box {
+      margin-top: 30px;
+      padding: 0 50px;
+      .line {
+        width: 100%;
+        border-bottom: 1px dashed @border-color;
+        margin-bottom: 18px;
+        span {
+          background-color: white;
+          margin-bottom: -18px;
+          display: inline-block;
+          padding: 0 15px;
+        }
+      }
+
+      .works-box {
+        padding-bottom: 24px;
+        min-height: 250px;
+      }
+      .collection-box {
+        margin-top: 30px;
+        padding-bottom: 24px;
+        min-height: 250px;
+      }
+
+      .move {
+        margin-top: 24px;
+        text-align: right;
+        a {
+          color: @theme-color;
+        }
+      }
+      .draw-list {
+        .draw-item {
+          @size: 230px;
+          float: left;
+          margin-top: 20px;
+          margin-right: 20px;
+          overflow: hidden;
+          transition: @default-animate-time;
+          position: relative;
+          width: @size;
+          &:nth-child(4n+1) {
+            margin-left: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  .edit-dialog-content {
+    overflow: hidden;
+    margin: 10px 0;
   }
 </style>

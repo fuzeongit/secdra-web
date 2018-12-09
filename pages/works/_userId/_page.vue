@@ -37,7 +37,7 @@
     <button v-if="isSelf" class="btn is-suspend" style="position: fixed;right: 50px;bottom: 50px;"
             @click="isShowEdit = true"
             :disabled="selectList.isEmpty()"><i class="icon s-bianji"></i></button>
-    <Dialog v-if="isSelf" v-model="isShowEdit" title="批量操作">
+    <Dialog v-if="isSelf" v-model="isShowEdit" title="批量操作" v-loading="editLoading">
       <div class="edit-dialog-content">
         <div style="margin-bottom: 10px">
           <Tag v-for="(draw,index) in selectList" :content="draw.name" @close="removeSelectDraw" :key="draw.id"
@@ -62,18 +62,18 @@
           </div>
           <div class="input-group">
             <h5 class="sub-name">添加标签：</h5>
-            <input type="text" title="name" v-model="inputTag" class="input block"  @keyup.enter="addTag">
+            <input type="text" title="name" v-model="inputTag" class="input block" @keyup.enter="addTag">
             <h5 class="sub-name">*回车添加一个标签</h5>
           </div>
           <div style="margin-bottom: 10px">
             <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName"
                  :value="index"></Tag>
           </div>
-          <div class="input-group" style="text-align: center;">
-            <button class="btn" @click="save">保存</button>
-            <button class="btn is-plain" @click="reset">清空</button>
-          </div>
         </div>
+      </div>
+      <div class="input-group" style="text-align: center;">
+        <button class="btn" @click="save">保存</button>
+        <button class="btn is-plain" @click="reset">清空</button>
       </div>
     </Dialog>
   </div>
@@ -105,6 +105,7 @@
         list: result.data.content,
         selectList: [],
         isShowEdit: false,
+        editLoading: false,
         inputTag: "",
         drawForm: new DrawForm()
       }
@@ -185,7 +186,9 @@
       async save() {
         let form = this.drawForm;
         form.idList = this.selectList.map(item => item.id);
+        this.editLoading = true;
         let result = await this.ABatchUpdate(form);
+        this.editLoading = false;
         if (result.status !== 200) {
           this.$notify({message: result.message});
           return
@@ -296,13 +299,10 @@
     width: 600px;
     margin-top: 15px;
     overflow: auto;
-    height: 70vh;
+    height: 500px;
     .sub-name {
       line-height: 25px;
       margin-bottom: 5px;
-    }
-    textarea {
-      resize: none;
     }
   }
 </style>

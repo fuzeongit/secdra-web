@@ -2,17 +2,16 @@ import Vue from 'vue';
 import LoadingComponent from "../../../components/global/Loading/Main"
 
 const LoadingConstructor = Vue.extend(LoadingComponent);
-let loadingEL = null;
-
 function loading(el, binding) {
   let instance = new LoadingConstructor();
   instance.vm = instance.$mount();
   let elPosition = window.getComputedStyle(el).position;
+
   if (elPosition !== "fixed" && elPosition !== "absolute" && elPosition !== "relative") {
     el.classList.add("loading-parent");
   }
   el.appendChild(instance.vm.$el);
-  loadingEL = instance.vm.$el
+  el.loading = instance.vm.$el;
 }
 
 export default {
@@ -29,7 +28,7 @@ export default {
         }catch (e) {
 
         }
-        el.removeChild(loadingEL);
+        el.removeChild(el.loading);
       }
     }
   }
