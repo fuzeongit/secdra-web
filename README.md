@@ -6,7 +6,9 @@
 项目api来源于[secdra](https://github.com/JunJieFu/secdra)，完全实现前后端分离。  
 图片来源p站，通过[Pxer](https://github.com/FoXZilla/Pxer)采集到七牛云上。  
 
-注，项目上传功能已实现，但是由于图片的上传涉及审核，所以暂时不开放uploadToken。
+注：
+注册和修改功能已经实现，但是没有开放，暂时初始化了50个账号，账号名为1-50，密码不用填。
+上传功能也实现，但是由于图片的上传涉及审核，所以暂时不开放uploadToken。
 #### 快速链接
 官网：[www.secdra.com](http://www.secdra.com)
 

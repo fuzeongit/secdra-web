@@ -261,12 +261,16 @@
         let form = new FormData();
         form.append("token", this.uploadToken);
         form.append("file", file);
-
-        let qiniuResult = (await this.$axios.post(config.qiniuUploadAddress, form, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })).data;
+        let qiniuResult;
+        try{
+          qiniuResult = (await this.$axios.post(config.qiniuUploadAddress, form, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })).data;
+        }catch (e) {
+          return new Result(500, null, "上传失败");
+        }
         if (!qiniuResult.hash) {
           return new Result(500, null, "上传失败");
         }
