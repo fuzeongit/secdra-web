@@ -1,5 +1,4 @@
 import httpUtil from "../assets/js/util/httpUtil";
-import {Result} from "../assets/js/model/base";
 
 const state = {};
 

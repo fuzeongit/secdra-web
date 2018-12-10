@@ -45,7 +45,3 @@ for (let name in filters) {
 Vue.directive("goTop", directive.goTop);
 Vue.directive("popover", directive.popover);
 Vue.directive("loading", directive.loading);
-//
-// for (let name in directive) {
-//   Vue.directive(name, directive[name])
-// }
