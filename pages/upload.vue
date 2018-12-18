@@ -148,11 +148,18 @@
         form.append("token", this.uploadToken);
         form.append("file", this.file);
         let loading = this.$loading();
-        let qiniuResult = (await this.$axios.post(config.qiniuUploadAddress, form, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })).data;
+        let qiniuResult;
+        try{
+          qiniuResult = (await this.$axios.post(config.qiniuUploadAddress, form, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })).data;
+        }catch (e) {
+          loading.close();
+          this.$notify({message: `上传失败`});
+          return;
+        }
         if (!qiniuResult.hash) {
           loading.close();
           this.$notify({message: `上传失败`});

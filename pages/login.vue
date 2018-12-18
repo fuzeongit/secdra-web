@@ -1,7 +1,7 @@
 <template>
   <section class="container bk cover">
     <form class="card" @submit.prevent="login">
-      <img src="../assets/image/svg/logo.svg" width="250px">
+      <img src="../assets/image/svg/logo.svg" >
       <p class="sub-logo">想你所想</p>
       <div class="row input-group">
         <input type="text" class="input block" title="手机" v-model="form.phone" placeholder="手机号码">
@@ -49,7 +49,7 @@
           this.$router.replace("/");
         } else {
           this.loginLoading = false;
-          this.$alert({message: result.message})
+          this.$notify({message: result.message})
         }
       },
       // async register() {
@@ -77,6 +77,9 @@
   }
 
   .card {
+    img{
+      width:250px;
+    }
     padding: 50px;
     position: relative;
     background-size: cover;
