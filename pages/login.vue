@@ -2,7 +2,7 @@
   <section class="container bk cover">
     <form class="card" @submit.prevent="login">
       <img src="../assets/image/svg/logo.svg" width="250px">
-      <p class="sub-logo">苟利国家生死以，岂因祸福避趋之</p>
+      <p class="sub-logo">想你所想</p>
       <div class="row input-group">
         <input type="text" class="input block" title="手机" v-model="form.phone" placeholder="手机号码">
       </div>
