@@ -70,7 +70,6 @@
     },
     data() {
       return {
-        inputPage: 1,
         pageLoading: false,
         listConstant: new ListConstant(),
         showGoTop: false
