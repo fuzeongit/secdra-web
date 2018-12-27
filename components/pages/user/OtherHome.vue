@@ -2,10 +2,11 @@
   <div>
     <div class="user-bk cover"
          :style="{transform: `translateY(${scrollTop*.5}px)`,backgroundImage: `url(${$img.back(user.background)})`}">
+      {{user}}
       <div class="user-bk-content">
         <div class="tool">
-          <button class="btn is-suspend" style="margin-left: 15px;">
-            <i class="icon s-bianji"></i>
+          <button class="btn">
+            <span>关注</span>
           </button>
         </div>
       </div>
@@ -24,7 +25,7 @@
       <div class="draw-box">
         <div class="works-box" v-loading="worksLoading">
           <h3 class="line center">
-            <span>我的作品</span>
+            <span>{{user.gender==='FEMALE'?"她":"他"}}的作品</span>
           </h3>
           <div class="draw-list row">
             <div class="card draw-item" v-for="(draw ,index) in worksList" :key="index">
@@ -40,7 +41,7 @@
         </div>
         <div class="collection-box" v-loading="collectionLoading">
           <h3 class="line center">
-            <span>我的收藏</span>
+            <span>{{user.gender==='FEMALE'?"她":"他"}}的收藏</span>
           </h3>
           <div class="draw-list row">
             <div class="card draw-item" v-for="(draw ,index) in collectionList" :key="index">
@@ -89,12 +90,12 @@
       this.pagingWorks();
       this.pagingCollection();
     },
-    methods:{
-      ...mapActions("user", [ "APagingFollower"]),
+    methods: {
+      ...mapActions("user", ["APagingFollower"]),
       ...mapActions("draw", ["APagingCollection", "APagingByUserId"]),
       async pagingWorks() {
         this.worksLoading = true;
-        let result = await this.APagingByUserId(Object.assign(new Pageable(0, 8, "createDate,desc"),{id:this.user.id}));
+        let result = await this.APagingByUserId(Object.assign(new Pageable(0, 8, "createDate,desc"), {id: this.user.id}));
         if (result.status !== 200) {
           this.$notify({message: result.message});
           return
@@ -104,7 +105,7 @@
       },
       async pagingCollection() {
         this.collectionLoading = true;
-        let result = await this.APagingCollection(Object.assign(new Pageable(0, 8, "createDate,desc"),{id:this.user.id}));
+        let result = await this.APagingCollection(Object.assign(new Pageable(0, 8, "createDate,desc"), {id: this.user.id}));
         if (result.status !== 200) {
           this.$notify({message: result.message});
           return
@@ -122,9 +123,7 @@
 <style type="text/less" lang="less" scoped>
   @import "../../../assets/style/color";
   @import "../../../assets/style/config";
-
-  @import "../../../assets/style/color";
-  @import "../../../assets/style/config";
+  @import "../../../assets/style/mixin";
 
   .user-bk {
     width: 100%;
@@ -146,7 +145,10 @@
           border: none;
           background-color: rgba(0, 0, 0, .3);
           box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-          i {
+          border-radius: 30px;
+          width: 100px;
+          .center();
+          span{
             color: white;
             opacity: .7
           }
