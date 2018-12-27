@@ -5,11 +5,9 @@
         <div class="cover"
              :style="{backgroundImage: `url(${$img.back(follower.background,`backCard`)})`}">
         </div>
-        <div class="head-box center">
-          <nuxt-link :to="`/user/${follower.id}`" class="head-box">
-            <img :src="$img.head(follower.head)">
-          </nuxt-link>
-        </div>
+        <nuxt-link :to="`/user/${follower.id}`" class="head-box center">
+          <img :src="$img.head(follower.head)">
+        </nuxt-link>
         <div class="user-info-box center ">
           <p class="nickname">
             {{follower.name}}
@@ -85,6 +83,7 @@
       }
       .head-box {
         padding: 10px;
+        display: block;
         img {
           border-radius: 50%;
           width: 80px;

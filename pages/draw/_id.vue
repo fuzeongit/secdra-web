@@ -22,7 +22,7 @@
               </nuxt-link>
               <div class="user-info-box">
                 <p class="nickname">
-                  <nuxt-link :to="`/user/${draw.user.name}`" class="head-box">
+                  <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
                     {{draw.user.name}}
                   </nuxt-link>
                 </p>

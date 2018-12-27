@@ -4,8 +4,8 @@
          :style="{transform: `translateY(${scrollTop*.5}px)`,backgroundImage: `url(${$img.back(user.background)})`}">
       <div class="user-bk-content">
         <div class="tool">
-          <button class="btn">
-            <span>关注</span>
+          <button class="btn" @click="$emit('follow')">
+            <span>{{user.focus?"已关注":"关注"}}</span>
           </button>
         </div>
       </div>
@@ -54,17 +54,42 @@
             <nuxt-link :to="`/collection/${user.id||''}`">查看更多>></nuxt-link>
           </p>
         </div>
+        <div class="follower-box" v-loading="followerLoading">
+          <h3 class="line center">
+            <span>{{user.gender==='FEMALE'?"她":"他"}}的关注</span>
+          </h3>
+          <div class="follower-list row">
+            <div class="card follower-item" v-for="(follower ,index) in followerList" :key="index">
+              <div class="cover"
+                   :style="{backgroundImage: `url(${$img.back(follower.background,`backCard`)})`}">
+              </div>
+              <div class="center">
+                <nuxt-link :to="`/user/${follower.id}`" class="follower-head-box">
+                  <img :src="$img.head(follower.head)">
+                </nuxt-link>
+              </div>
+              <div class="user-info-box center ">
+                <p class="nickname">
+                  {{follower.name}}
+                </p>
+                <p class="introduction" :title="follower.introduction">
+                  {{follower.introduction}}
+                </p>
+              </div>
+            </div>
+          </div>
+          <p class="move" v-if="followerList.length===8">
+            <nuxt-link :to="`/follower/${user.id||''}`">查看更多>></nuxt-link>
+          </p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import Cropper from "cropperjs"
-  import ioUtil from '../../../assets/js/util/ioUtil'
   import {mapActions} from "vuex"
-  import {Pageable, Result} from "../../../assets/js/model/base";
-  import config from "../../../assets/js/config";
+  import {Pageable} from "../../../assets/js/model/base";
 
   export default {
     props: ["user"],
@@ -73,7 +98,9 @@
         worksLoading: false,
         worksList: [],
         collectionLoading: false,
-        collectionList: []
+        collectionList: [],
+        followerLoading: false,
+        followerList: []
       }
     },
     computed: {
@@ -88,10 +115,14 @@
     }, mounted() {
       this.pagingWorks();
       this.pagingCollection();
+      this.pagingFollower();
     },
     methods: {
       ...mapActions("user", ["APagingFollower"]),
       ...mapActions("draw", ["APagingCollection", "APagingByUserId"]),
+      getProportion(draw) {
+        return draw.height / draw.width
+      },
       async pagingWorks() {
         this.worksLoading = true;
         let result = await this.APagingByUserId(Object.assign(new Pageable(0, 8, "createDate,desc"), {id: this.user.id}));
@@ -112,8 +143,15 @@
         this.collectionLoading = false;
         this.collectionList = result.data.content;
       },
-      getProportion(draw) {
-        return draw.height / draw.width
+      async pagingFollower() {
+        this.followerLoading = true;
+        let result = await this.APagingFollower(Object.assign(new Pageable(0, 8, "createDate,desc"), {id: this.user.id}));
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+          return
+        }
+        this.followerLoading = false;
+        this.followerList = result.data.content;
       },
     }
   }
@@ -147,7 +185,8 @@
           border-radius: 30px;
           width: 100px;
           .center();
-          span{
+          span {
+            font-size: @medium-font-size;
             color: white;
             opacity: .7
           }
@@ -243,6 +282,11 @@
         min-height: 250px;
       }
 
+      .follower-box{
+        margin-top: 30px;
+        padding-bottom: 24px;
+        min-height: 250px;
+      }
       .move {
         margin-top: 24px;
         text-align: right;
@@ -260,8 +304,68 @@
           transition: @default-animate-time;
           position: relative;
           width: @size;
+          box-shadow: 0 0 20px rgba(150, 150, 150, 0.55);
           &:nth-child(4n+1) {
             margin-left: 20px;
+          }
+        }
+      }
+      .follower-list {
+        .follower-item {
+          @size: 230px;
+          @margin: 20px;
+          float: left;
+          margin-top: @margin;
+          margin-right: @margin;
+          transition: @default-animate-time;
+          overflow: hidden;
+          width: @size;
+          box-shadow: 0 0 20px rgba(150, 150, 150, 0.55);
+          &:nth-child(4n+1) {
+            margin-left: @margin;
+          }
+          .cover {
+            height: @size /2;
+            width: @size;
+            transition: @default-animate-time;
+          }
+          .follower-head-box{
+            padding: 10px;
+            display: block;
+            img {
+              border-radius: 50%;
+              width: 80px;
+              border: 2px solid @white;
+              transition: @default-animate-time;
+            }
+          }
+          .user-info-box {
+            padding: 0 20px 20px 20px;
+            transition: @default-animate-time;
+            .nickname {
+              .ellipsis()
+            }
+            .introduction {
+              font-size: @small-font-size;
+              margin-top: 10px;
+              .ellipsis()
+            }
+          }
+          &:hover {
+            .cover {
+              filter: blur(60px);
+            }
+            .follower-head-box {
+              img {
+                transform: translateY(-25px) scale(2);
+              }
+            }
+            .user-info-box {
+              opacity: 0;
+              transform: translateY(25px);
+            }
+            transform: translateY(-1px);
+            box-shadow: 0 0 50px rgba(150, 150, 150, 0.55);
           }
         }
       }

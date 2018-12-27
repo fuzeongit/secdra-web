@@ -56,7 +56,7 @@ const actions = {
   },
   // 分页获取关注用户
   async APagingFollower(context, params) {
-    return await httpUtil.post("/follower/paging", params)
+    return await httpUtil.get("/follower/paging", params)
   }
 };
 
