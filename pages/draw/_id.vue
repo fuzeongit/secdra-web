@@ -6,14 +6,14 @@
           <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
              :style="{color:draw.focus?`red`:`gray`}" title="收藏"
              @click.stop="collection(draw)"></a>
-          <img :src="$img.scedra(draw.url)"
+          <img :src="$img.secdra(draw.url)"
                :style="{height:proportion>1?`100%`:`auto`,width:proportion<1?`100%`:`auto`}">
         </div>
       </div>
       <div class="right-box">
         <div class="card user-card ">
           <div class="user-bk cover"
-               :style="{backgroundImage: `url(${$img.back(draw.user.background,`imageMogr2/thumbnail/1920x/gravity/Center/crop/1920x960/blur/1x0/quality/75|imageslim`,true)})`}">
+               :style="{backgroundImage: `url(${$img.back(draw.user.background,`backCard`)})`}">
           </div>
           <div style="padding: 15px">
             <div class="flex-box">

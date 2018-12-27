@@ -1,7 +1,7 @@
 import config from "../config"
 
 export default {
-  scedra(url, type) {
+  secdra(url, type) {
     if(url){
       if (url.indexOf("blob") === 0 || url.indexOf("http") === 0) return url;
       if (type) {

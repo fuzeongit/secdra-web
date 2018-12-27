@@ -3,7 +3,7 @@
     <CheckboxGroup class="content row" v-model="selectList">
       <div class="card " v-for="(draw,index) in list" :key="index">
         <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box">
-          <img :src="$img.scedra(draw.url,`specifiedWidth`)"
+          <img :src="$img.secdra(draw.url,`specifiedWidth`)"
                :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
         </nuxt-link>
         <div class="tool">

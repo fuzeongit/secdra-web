@@ -4,7 +4,7 @@
       <div class="item" :style="{left:`${offset[index].left}px`,top:`${offset[index].top}px`}"
            v-for="(draw,index) in list" :key="index">
         <nuxt-link :to="`/draw/${draw.id}`" class="img-box">
-          <img :src="$img.scedra(draw.url,`specifiedWidth`)"
+          <img :src="$img.secdra(draw.url,`specifiedWidth`)"
                :style="{width:listConstant.colWidth+`px`,height:getHeight(draw)+`px`}">
         </nuxt-link>
         <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"

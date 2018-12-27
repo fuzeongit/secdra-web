@@ -2,7 +2,7 @@
   <div>
     <div class="size">
       <nuxt-link :to="`/draw/search/${tag}`" class="cover" v-if="draw"
-                 :style="{backgroundImage: `url(${$img.scedra(draw.url,`specifiedWidth`)})`}">
+                 :style="{backgroundImage: `url(${$img.secdra(draw.url,`specifiedWidth`)})`}">
       </nuxt-link>
     </div>
     <p class="tag-name">
