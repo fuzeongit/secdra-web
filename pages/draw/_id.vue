@@ -7,7 +7,7 @@
              :style="{color:draw.focus?`red`:`gray`}" title="收藏"
              @click.stop="collection(draw)"></a>
           <img :src="$img.secdra(draw.url)"
-               :style="{height:proportion>1?`100%`:`auto`,width:proportion<1?`100%`:`auto`}">
+               :style="{height:proportion>=1?`100%`:`auto`,width:proportion<=1?`100%`:`auto`}">
         </div>
       </div>
       <div class="right-box">

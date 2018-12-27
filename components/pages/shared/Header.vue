@@ -85,7 +85,7 @@
     watch: {
       $route() {
         this.scrollTop = 0;
-        document.documentElement.scrollTop = 0
+        window.scrollTo(0,0)
       },
     },
     computed: {
@@ -119,8 +119,8 @@
     },
     methods: {
       documentScroll(event) {
-        this.scrollTop = event.target.documentElement.scrollTop;
-        this.$store.state.window.scrollBottom = event.target.documentElement.scrollHeight - this.scrollTop - event.target.documentElement.clientHeight
+        this.scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+        this.$store.state.window.scrollBottom = document.body.scrollHeight - this.scrollTop - event.target.documentElement.clientHeight;
       },
       search() {
         this.$router.push(`/draw/search/${this.tag}`)

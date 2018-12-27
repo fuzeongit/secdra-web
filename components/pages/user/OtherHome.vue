@@ -2,7 +2,6 @@
   <div>
     <div class="user-bk cover"
          :style="{transform: `translateY(${scrollTop*.5}px)`,backgroundImage: `url(${$img.back(user.background)})`}">
-      {{user}}
       <div class="user-bk-content">
         <div class="tool">
           <button class="btn">
