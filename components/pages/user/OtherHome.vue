@@ -304,7 +304,6 @@
           transition: @default-animate-time;
           position: relative;
           width: @size;
-          box-shadow: 0 0 20px rgba(150, 150, 150, 0.55);
           &:nth-child(4n+1) {
             margin-left: 20px;
           }
