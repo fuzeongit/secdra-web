@@ -75,19 +75,19 @@
       </div>
       <button class="btn block" @click="saveBack">保存</button>
     </Dialog>
-    <Dialog v-model="isShowEdit" title="修改" v-loading="editLoading">
+    <Dialog v-model="isShowEdit" title="编辑" v-loading="editLoading">
       <div class="edit-dialog-content" style="width: 500px;height: 400px;overflow: auto">
         <div>
           <div class="input-group">
-            <h5 class="sub-name">修改名称：</h5>
+            <h5 class="sub-name">名称：</h5>
             <input type="text" title="name" v-model="userForm.name" class="input block">
           </div>
           <div class="input-group">
-            <h5 class="sub-name">修改简介：</h5>
+            <h5 class="sub-name">简介：</h5>
             <textarea v-model="userForm.introduction" class="input block" title="introduction" rows="3"></textarea>
           </div>
           <div class="input-group">
-            <h5 class="sub-name">修改性别：</h5>
+            <h5 class="sub-name">性别：</h5>
             <RadioGroup v-model="userForm.gender">
               <Radio value="MALE" label="男孩"></Radio>
               <Radio value="FEMALE" label="女孩" style="margin-left: 10px"></Radio>

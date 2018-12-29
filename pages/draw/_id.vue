@@ -77,22 +77,22 @@
       <div class="edit-dialog-content" >
         <div>
           <div class="input-group">
-            <h5 class="sub-name">修改名称：</h5>
+            <h5 class="sub-name">名称：</h5>
             <input type="text" title="name" v-model="drawForm.name" class="input block">
           </div>
           <div class="input-group">
-            <h5 class="sub-name">修改简介：</h5>
+            <h5 class="sub-name">简介：</h5>
             <textarea v-model="drawForm.introduction" class="input block" title="introduction" rows="3"></textarea>
           </div>
           <div class="input-group">
-            <h5 class="sub-name">修改私密：</h5>
+            <h5 class="sub-name">私密：</h5>
             <RadioGroup v-model="drawForm.isPrivate">
               <Radio :value="true" label="隐藏"></Radio>
               <Radio :value="false" label="显示" style="margin-left: 10px"></Radio>
             </RadioGroup>
           </div>
           <div class="input-group">
-            <h5 class="sub-name">修改标签：</h5>
+            <h5 class="sub-name">标签：</h5>
             <input type="text" title="name" v-model="inputTag" class="input block" @keyup.enter="addTag">
             <h5 class="sub-name">*回车添加一个标签</h5>
           </div>
