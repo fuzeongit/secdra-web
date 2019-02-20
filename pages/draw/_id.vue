@@ -9,6 +9,20 @@
           <img :src="$img.secdra(draw.url)"
                :style="{height:proportion>=1?`100%`:`auto`,width:proportion<=1?`100%`:`auto`}">
         </div>
+        <br>
+        <div class="card" style="padding: 10px">
+          <div class="row">
+            <div class="col-23">
+              <input type="text" title="input" class="input block" placeholder="请输入评论">
+            </div>
+            <div class="col-3 center" style="line-height: 35px">
+              暂未
+            </div>
+            <div class="col-4 center">
+              <button class="btn block">发送</button>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="right-box">
         <div class="card user-card ">
