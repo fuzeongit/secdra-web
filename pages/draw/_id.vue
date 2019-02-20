@@ -13,13 +13,13 @@
         <div class="card" style="padding: 10px">
           <div class="row">
             <div class="col-23">
-              <input type="text" title="input" class="input block" placeholder="请输入评论">
+              <input type="text" title="input" class="input block" placeholder="请输入评论" v-model="commentForm.content">
             </div>
             <div class="col-3 center" style="line-height: 35px">
               暂未
             </div>
             <div class="col-4 center">
-              <button class="btn block">发送</button>
+              <button class="btn block" @click="sendComment">发送</button>
             </div>
           </div>
         </div>
@@ -128,6 +128,7 @@
   import config from "../../assets/js/config";
   import TagCard from "../../components/pages/shared/TagCard";
   import {mapActions} from "vuex"
+  import {CommentForm} from "../../assets/js/model/base";
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
@@ -145,14 +146,16 @@
       drawForm.isPrivate = drawForm.private;
       return {
         draw: result.data,
-        drawForm
+        drawForm,
+        commentForm:new CommentForm(result.data.user.id,result.data.id)
       }
     },
     data() {
       return {
         isShowEdit: false,
         editLoading: false,
-        inputTag: ""
+        inputTag: "",
+
       }
     },
     components: {
@@ -171,6 +174,7 @@
     methods: {
       ...mapActions("draw", ["ACollection", "AUpdate"]),
       ...mapActions("user", ["AFollow"]),
+      ...mapActions("comment", ["ASave"]),
       showTagPopper(refId) {
         let ref = this.$refs[refId];
         if (ref === null) {
@@ -202,6 +206,14 @@
           return
         }
         this.draw.user.focus = result.data
+      },
+      async sendComment(){
+        let result = await this.ASave(this.commentForm);
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+          return
+        }
+        console.log(result);
       },
       addTag() {
         if (this.inputTag === null || this.inputTag === "") {

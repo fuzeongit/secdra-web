@@ -28,3 +28,11 @@ export class DrawForm {
     this.tagList = [];
   }
 }
+
+export class CommentForm {
+  constructor(authorId = "", drawId = "") {
+    this.authorId = authorId;
+    this.drawId = drawId;
+    this.content = "";
+  }
+}
