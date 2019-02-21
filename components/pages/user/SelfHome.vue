@@ -145,11 +145,11 @@
       uploadToken() {
         return this.$store.state.user.uploadToken || ""
       },
-      user:{
-        get(){
+      user: {
+        get() {
           return this.$store.state.user.user || {}
         },
-        set(val){
+        set(val) {
           this.$store.state.user.user = val
         }
       },
@@ -262,13 +262,13 @@
         form.append("token", this.uploadToken);
         form.append("file", file);
         let qiniuResult;
-        try{
+        try {
           qiniuResult = (await this.$axios.post(config.qiniuUploadAddress, form, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
           })).data;
-        }catch (e) {
+        } catch (e) {
           return new Result(500, null, "上传失败");
         }
         if (!qiniuResult.hash) {

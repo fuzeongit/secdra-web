@@ -10,19 +10,7 @@
                :style="{height:proportion>=1?`100%`:`auto`,width:proportion<=1?`100%`:`auto`}">
         </div>
         <br>
-        <div class="card" style="padding: 10px">
-          <div class="row">
-            <div class="col-23">
-              <input type="text" title="input" class="input block" placeholder="请输入评论" v-model="commentForm.content">
-            </div>
-            <div class="col-3 center" style="line-height: 35px">
-              暂未
-            </div>
-            <div class="col-4 center">
-              <button class="btn block" @click="sendComment">发送</button>
-            </div>
-          </div>
-        </div>
+        <Comment :user-id="draw.user.id" :draw-id="draw.id"></Comment>
       </div>
       <div class="right-box">
         <div class="card user-card ">
@@ -88,7 +76,7 @@
       </div>
     </div>
     <Dialog v-model="isShowEdit" title="编辑" v-loading="editLoading">
-      <div class="edit-dialog-content" >
+      <div class="edit-dialog-content">
         <div>
           <div class="input-group">
             <h5 class="sub-name">名称：</h5>
@@ -127,6 +115,7 @@
 <script>
   import config from "../../assets/js/config";
   import TagCard from "../../components/pages/shared/TagCard";
+  import Comment from "../../components/pages/draw/Comment";
   import {mapActions} from "vuex"
   import {CommentForm} from "../../assets/js/model/base";
 
@@ -147,7 +136,7 @@
       return {
         draw: result.data,
         drawForm,
-        commentForm:new CommentForm(result.data.user.id,result.data.id)
+        commentForm: new CommentForm(result.data.user.id, result.data.id)
       }
     },
     data() {
@@ -155,11 +144,11 @@
         isShowEdit: false,
         editLoading: false,
         inputTag: "",
-
       }
     },
     components: {
-      TagCard
+      TagCard,
+      Comment
     },
     computed: {
       proportion() {
@@ -169,12 +158,11 @@
         return this.$store.state.user.user
       }
     },
-    mounted() {
-    },
+    mounted() {},
     methods: {
       ...mapActions("draw", ["ACollection", "AUpdate"]),
       ...mapActions("user", ["AFollow"]),
-      ...mapActions("comment", ["ASave"]),
+
       showTagPopper(refId) {
         let ref = this.$refs[refId];
         if (ref === null) {
@@ -206,14 +194,6 @@
           return
         }
         this.draw.user.focus = result.data
-      },
-      async sendComment(){
-        let result = await this.ASave(this.commentForm);
-        if (result.status !== 200) {
-          this.$notify({message: result.message});
-          return
-        }
-        console.log(result);
       },
       addTag() {
         if (this.inputTag === null || this.inputTag === "") {
@@ -281,6 +261,7 @@
           font-size: @big-font-size;
         }
       }
+
     }
     .right-box {
       @width: 250px;

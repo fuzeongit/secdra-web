@@ -9,6 +9,14 @@ const actions = {
   async ASave(context, params) {
     return await httpUtil.post("/comment/save", params);
   },
+
+  async AList(context, params) {
+    return await httpUtil.get("/comment/list", params);
+  },
+
+  async AListTop4(context, params) {
+    return await httpUtil.get("/comment/listTop4", params);
+  },
 };
 
 export default {
