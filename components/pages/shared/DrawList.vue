@@ -11,7 +11,7 @@
          @click.stop="$emit(`collection`,draw,index)"></a>
       <div class="flex-box info-box" :style="{width:listConstant.colWidth+`px`,height:listConstant.infoHeight+`px`}">
         <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
-          <img :src="$img.head(draw.user.head)" :title="draw.user.name">
+          <img :src="$img.head(draw.user.head,'small50')" :title="draw.user.name">
         </nuxt-link>
         <div class="user-info-box">
           <p class="nickname">

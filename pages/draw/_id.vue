@@ -20,7 +20,7 @@
           <div style="padding: 15px">
             <div class="flex-box">
               <nuxt-link :to="`/user/${draw.user.id}`" class="head-box center">
-                <img :src="$img.head(draw.user.head)">
+                <img :src="$img.head(draw.user.head,'small100')">
               </nuxt-link>
               <div class="user-info-box">
                 <p class="nickname">

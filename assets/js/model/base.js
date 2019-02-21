@@ -36,3 +36,13 @@ export class CommentForm {
     this.content = "";
   }
 }
+
+export class ReplyForm {
+  constructor(commentId = "", drawId = "", authorId = "", criticId = "") {
+    this.commentId = commentId;
+    this.drawId = drawId;
+    this.authorId = authorId;
+    this.criticId = criticId;
+    this.content = "";
+  }
+}

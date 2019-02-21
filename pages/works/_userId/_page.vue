@@ -14,7 +14,7 @@
         </div>
         <div v-if="!isSelf" class="flex-box info-box">
           <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
-            <img :src="$img.head(draw.user.head)" :title="draw.user.name">
+            <img :src="$img.head(draw.user.head,'small50')" :title="draw.user.name">
           </nuxt-link>
           <div class="user-info-box">
             <p class="nickname">

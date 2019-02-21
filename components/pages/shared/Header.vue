@@ -25,7 +25,7 @@
           </a>
           <div class="head-img-box">
             <nuxt-link :to="`/user/${user.id||''}`">
-              <img :src="$img.head(user.head)" width="40" height="40" v-popover:popover
+              <img :src="$img.head(user.head,'small50')" width="40" height="40" v-popover:popover
                    :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`"
                    style="border-radius: 50%;">
             </nuxt-link>

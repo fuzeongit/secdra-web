@@ -4,6 +4,7 @@ import menu from './menu'
 import user from './user'
 import draw from './draw'
 import comment from './comment'
+import reply from './reply'
 import window from './window'
 
 /**
@@ -23,6 +24,7 @@ export default () => new Store({
     user,
     draw,
     comment,
+    reply,
     window
   },
   actions: {

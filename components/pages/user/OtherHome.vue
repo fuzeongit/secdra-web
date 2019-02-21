@@ -65,7 +65,7 @@
               </div>
               <div class="center">
                 <nuxt-link :to="`/user/${follower.id}`" class="follower-head-box">
-                  <img :src="$img.head(follower.head)">
+                  <img :src="$img.head(follower.head,'small200')">
                 </nuxt-link>
               </div>
               <div class="user-info-box center ">
@@ -243,10 +243,10 @@
             margin-left: 10px;
             vertical-align: baseline;
             &.s-xingbie-nv {
-              color: #ff74cd;
+              color: @female-color;
             }
             &.s-xingbie-nan {
-              color: #0b99ff;
+              color: @male-color;
             }
           }
 

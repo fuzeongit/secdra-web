@@ -5,7 +5,7 @@
     </div>
     <div class="flex-box" style="padding:10px">
       <nuxt-link :to="`/user/${user.id}`" class="head-box">
-        <img :src="$img.head(user.head)">
+        <img :src="$img.head(user.head,'small50')">
       </nuxt-link>
       <div class="user-info-box">
         <p class="nickname">

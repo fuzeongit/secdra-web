@@ -381,10 +381,10 @@
             margin-left: 10px;
             vertical-align: baseline;
             &.s-xingbie-nv {
-              color: #ff74cd;
+              color: @female-color;
             }
             &.s-xingbie-nan {
-              color: #0b99ff;
+              color: @male-color;
             }
           }
 

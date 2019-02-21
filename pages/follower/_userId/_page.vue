@@ -6,7 +6,7 @@
              :style="{backgroundImage: `url(${$img.back(follower.background,`backCard`)})`}">
         </div>
         <nuxt-link :to="`/user/${follower.id}`" class="head-box center">
-          <img :src="$img.head(follower.head)">
+          <img :src="$img.head(follower.head,'small200')">
         </nuxt-link>
         <div class="user-info-box center ">
           <p class="nickname">

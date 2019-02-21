@@ -17,6 +17,9 @@ const actions = {
   async AListTop4(context, params) {
     return await httpUtil.get("/comment/listTop4", params);
   },
+  async AListReply(context, params){
+    return await httpUtil.get("/reply/list", params);
+  }
 };
 
 export default {
