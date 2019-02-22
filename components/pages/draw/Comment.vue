@@ -37,16 +37,16 @@
             </p>
             <div class="row send-reply-box" v-if="item.isShowReplyInput" >
               <div class="col-23">
-                <input type="text" title="input" class="input block" placeholder="请输入评论" v-model="replyForm.content">
+                <input type="text" title="input" class="input block" placeholder="请输入评论" v-model="replyForm[item.id].content">
               </div>
               <div class="col-3 center">
                 <a class="icon s-laugh"></a>
               </div>
               <div class="col-4 center">
-                <button class="btn block" @click="sendReply" :disabled="replyForm.content===''">发送</button>
+                <button class="btn block" @click="sendReply(item)" :disabled="replyForm[item.id].content===''">发送</button>
               </div>
             </div>
-            <Reply v-if="item.isShowReply" :comment-id="item.id" :draw-id="drawId" :author-id="userId"
+            <Reply :is-show="item.isShowReply" :comment-id="item.id" :draw-id="drawId" :author-id="userId"
                    :critic-id="item.criticId" :ref="item.id"></Reply>
           </div>
         </div>
@@ -74,7 +74,7 @@
     data() {
       return {
         commentForm: new CommentForm(this.userId, this.drawId),
-        replyForm: new ReplyForm("", this.drawId, this.userId),
+        replyForm: [],
         loading: true,
         loadingMore: false,
         list: [],
@@ -83,6 +83,7 @@
       }
     },
     mounted() {
+      console.log(this.commentForm instanceof  CommentForm);
       this.listTop4();
     },
     methods: {
@@ -118,12 +119,23 @@
         this.list = result.data
       },
       showReplyInput(item) {
-        this.replyForm.commentId = item.id;
-        this.replyForm.criticId = item.criticId;
-        this.$set(item, 'isShowReplyInput', !item.isShowReplyInput)
+        this.$set(this.replyForm, item.id, new ReplyForm("", this.drawId, this.userId));
+        this.$set(item, 'isShowReplyInput', !item.isShowReplyInput);
       },
-      sendReply(){
-        console.log(this.$refs[this.replyForm.commentId]);
+      async sendReply(item){
+        this.replyForm[item.id].commentId = item.id;
+        this.replyForm[item.id].criticId = item.criticId;
+        let ref = this.$refs[item.id];
+        if (ref === null) {
+          return
+        }
+        if (ref instanceof Array) {
+          ref = ref[0]
+        }
+        await ref.sendReply(this.replyForm[item.id]);
+        this.$set(item, 'isShowReply', true);
+        this.$set(item, 'isShowReplyInput', false);
+        this.$set(this.replyForm, item.id, new ReplyForm("", this.drawId, this.userId));
       }
     }
   }
@@ -149,7 +161,7 @@
       min-height: 130px;
       padding: 20px 50px 0;
       .comment-item {
-        padding: 10px 0 25px;
+        padding: 10px 0;
         border-top: 1px solid darken(@border-color, -7%);
         &:first-child {
           border-top: 0;
