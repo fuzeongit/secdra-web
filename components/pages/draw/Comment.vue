@@ -83,7 +83,6 @@
       }
     },
     mounted() {
-      console.log(this.commentForm instanceof  CommentForm);
       this.listTop4();
     },
     methods: {

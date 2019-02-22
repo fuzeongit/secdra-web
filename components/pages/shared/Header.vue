@@ -67,6 +67,7 @@
 
 <script>
   import Cookie from 'js-cookie'
+  import {mapActions} from "vuex"
 
   export default {
     componentName: "Header",
@@ -85,7 +86,7 @@
     watch: {
       $route() {
         this.scrollTop = 0;
-        window.scrollTo(0,0)
+        window.scrollTo(0, 0)
       },
     },
     computed: {
@@ -112,12 +113,14 @@
       }
     },
     mounted() {
+      this.countUnread();
       document.addEventListener('scroll', this.documentScroll);
     },
     beforeDestroy() {
       document.removeEventListener('scroll', this.documentScroll);
     },
     methods: {
+      ...mapActions("notify", ["ACount"]),
       documentScroll(event) {
         this.scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
         this.$store.state.window.scrollBottom = document.body.scrollHeight - this.scrollTop - event.target.documentElement.clientHeight;
@@ -134,6 +137,10 @@
           }
         });
       },
+      async countUnread() {
+        let result = await this.ACount();
+        console.log(result);
+      }
     }
   }
 </script>
