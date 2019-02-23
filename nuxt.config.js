@@ -16,6 +16,7 @@ module.exports = {
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
+      {rel: 'stylesheet', type: 'text/css', href: '//at.alicdn.com/t/font_896802_45g3y7tp55w.css'},
     ]
   },
 
@@ -41,8 +42,7 @@ module.exports = {
   plugins: [
     '~/plugins/mixin',
     '~/plugins/route',
-    '~/plugins/extend',
-    '~/plugins/element'
+    '~/plugins/extend'
   ],
 
 

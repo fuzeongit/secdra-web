@@ -12,13 +12,11 @@
   import Header from "../components/pages/shared/Header"
 
   export default {
-    middleware: 'auth',
+    middleware: ['auth','notifyRedirect'],
     components: {
       Header
     }
   }
 </script>
 <style type="text/less" lang="less">
-  /*@import "https://unpkg.com/element-ui@2.4.9/lib/theme-chalk/index.css";*/
-  @import "//at.alicdn.com/t/font_896802_45g3y7tp55w.css";
 </style>

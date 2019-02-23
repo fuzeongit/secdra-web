@@ -39,6 +39,12 @@
                   </nuxt-link>
                 </li>
                 <li>
+                  <nuxt-link to="/notify/comment" :class="{active:activeName===`upload`}">
+                    <i class="icon s-xinxizhongxin"></i>
+                    我的消息
+                  </nuxt-link>
+                </li>
+                <li>
                   <nuxt-link :to="`/follower/${user.id||''}`" :class="{active:activeName===`follower`}">
                     <i class="icon s-guanzhu1"></i>
                     关注用户

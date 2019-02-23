@@ -1,5 +1,7 @@
-export default ({app}) => {
-  app.router.afterEach((to, from) => {
-    // console.log(to.path)
-  })
+export default ({app,redirect}) => {
+  // app.router.afterEach((to, from) => {
+  //     if(to.path==="/notify"){
+  //       redirect("/notify/comment");
+  //     }
+  // })
 }
