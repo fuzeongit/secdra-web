@@ -24,6 +24,9 @@
           <!--<a @click="search">-->
             <!--<i class="s-chaxun icon"></i>-->
           <!--</a>-->
+          <nuxt-link to="/message/comment" class="link" :class="{active:activeName===`message`}">
+            <i class="icon s-xinxizhongxin"></i>
+          </nuxt-link>
           <div class="head-img-box">
             <nuxt-link :to="`/user/${user.id||''}`">
               <img :src="$img.head(user.head,'small50')" width="30" height="30" v-popover:popover
@@ -31,39 +34,50 @@
                    style="border-radius: 50%;">
             </nuxt-link>
             <Popper ref="popover"
-                    trigger="hover">
-              <ul class="head-menu">
-                <li>
-                  <nuxt-link to="/footprint" :class="{active:activeName===`footprint`}">
-                    <i class="icon s-zuji"></i>
-                    我的足迹
-                  </nuxt-link>
-                </li>
-                <li>
-                  <nuxt-link to="/message/comment" :class="{active:activeName===`message`}">
-                    <i class="icon s-xinxizhongxin"></i>
-                    我的消息
-                  </nuxt-link>
-                </li>
-                <li>
-                  <nuxt-link :to="`/following/${user.id||''}`" :class="{active:activeName===`following`}">
-                    <i class="icon s-guanzhu1"></i>
-                    关注用户
-                  </nuxt-link>
-                </li>
-                <li>
-                  <nuxt-link to="/upload" :class="{active:activeName===`upload`}">
-                    <i class="icon s-upload"></i>
-                    我要上传
-                  </nuxt-link>
-                </li>
-                <li>
-                  <a @click="logout">
-                    <i class="icon s-zhuxiao"></i>
-                    退出登录
-                  </a>
-                </li>
-              </ul>
+                    trigger="hover"
+                    :visibleArrow="false">
+             <div class="head-popover">
+               <div class="bk cover"  :style="{backgroundImage: `url(${$img.back(user.background,`backCard`)})`}"></div>
+               <p class="name">{{user.name}}</p>
+               <ul class="head-menu row">
+                 <!--<li>-->
+                   <!--<nuxt-link to="/message/comment" :class="{active:activeName===`message`}">-->
+                     <!--<i class="icon s-xinxizhongxin"></i>-->
+                     <!--我的消息-->
+                   <!--</nuxt-link>-->
+                 <!--</li>-->
+                 <li>
+                   <nuxt-link :to="`/follower/${user.id||''}`" :class="{active:activeName===`follower`}">
+                     <i class="icon s-guanzhu1"></i>
+                     我的粉丝
+                   </nuxt-link>
+                 </li>
+                 <li>
+                   <nuxt-link :to="`/following/${user.id||''}`" :class="{active:activeName===`following`}">
+                     <i class="icon s-guanzhu1"></i>
+                     关注用户
+                   </nuxt-link>
+                 </li>
+                 <li>
+                   <nuxt-link to="/footprint" :class="{active:activeName===`footprint`}">
+                     <i class="icon s-zuji"></i>
+                     我的足迹
+                   </nuxt-link>
+                 </li>
+                 <li>
+                   <nuxt-link to="/upload" :class="{active:activeName===`upload`}">
+                     <i class="icon s-upload"></i>
+                     我要上传
+                   </nuxt-link>
+                 </li>
+               </ul>
+               <div class="footer">
+                 <a @click="logout">
+                   <i class="icon s-zhuxiao"></i>
+                   退出登录
+                 </a>
+               </div>
+             </div>
             </Popper>
           </div>
         </div>
@@ -155,6 +169,7 @@
 <style type="text/less" lang="less" scoped>
   @import "../../../assets/style/color.less";
   @import "../../../assets/style/config.less";
+  @import "../../../assets/style/mixin.less";
 
   header {
     height: @herder-height;
@@ -192,6 +207,12 @@
       .right-box {
         line-height: @herder-height;
         float: right;
+        .link{
+          font-size: @default-font-size;
+          &.active,&:hover{
+            color:@theme-color;
+          }
+        }
         .head-img-box {
           display: inline-block;
           position: relative;
@@ -200,20 +221,27 @@
       }
     }
   }
-
+.head-popover{
+  @size:280px;
+  .bk{
+    height: @size / 2;
+    width: @size;
+  }
+  .name{
+    .center();
+    font-weight: bold;
+    margin: 25px 0;
+  }
   .head-menu {
+    width: @size;
     background-color: white;
-    padding: 0 15px;
-    width: 120px;
     border-radius: @smallest-border-radius;
     text-align: center;
     user-select: none;
     li {
-      border-bottom: 1px solid @border-color;
-      line-height: 45px;
-      &:last-child {
-        border-bottom: none;
-      }
+      width: 50%;
+      float: left;
+      line-height: 28px;
       a {
         color: @font-color;
         display: inline-block;
@@ -232,5 +260,15 @@
       }
     }
   }
+  .footer{
+    margin-top: 15px;
+    padding:0 30px;
+    line-height: 28px;
+    text-align: right;
+    background-color: @theme-background-color;
+    font-size: @small-font-size;
+  }
+}
+
 </style>
 

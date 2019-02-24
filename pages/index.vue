@@ -1,5 +1,13 @@
 <template>
   <div class="page">
+    <div class="user-bk cover flex-box"
+         :style="{backgroundImage: `url(${$img.back(user.background)})`}">
+      <div class="user-bk-content">
+        <input type="search" title="input" class="input" placeholder="请输入标签搜索" @search="search" v-model="tag">
+        <button class="btn" @click="search">搜&nbsp;&nbsp;&nbsp;&nbsp;索</button>
+      </div>
+    </div>
+    <br>
     <div class="content row">
       <div class="left-box">
         <div class="card image-card ">
@@ -16,7 +24,8 @@
                            :style="{backgroundImage: `url(${$img.secdra(draw.url,'specifiedWidth')})`}"
                            style="width: 100%">
                 </nuxt-link>
-                <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}" :style="{color:draw.focus?`red`:`gray`}" title="收藏"
+                <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
+                   :style="{color:draw.focus?`red`:`gray`}" title="收藏"
                    @click.stop="collection(draw)"></a>
               </div>
               <p class="draw-name center">
@@ -49,7 +58,8 @@
                            :style="{backgroundImage: `url(${$img.secdra(draw.url,'specifiedWidth')})`}"
                            style="width: 100%">
                 </nuxt-link>
-                <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}" :style="{color:draw.focus?`red`:`gray`}" title="收藏"
+                <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
+                   :style="{color:draw.focus?`red`:`gray`}" title="收藏"
                    @click.stop="collection(draw)"></a>
               </div>
               <p class="draw-name center">
@@ -82,8 +92,8 @@
         </div>
       </div>
     </div>
-    <p class="center" style="margin-top: 30px">
-     <span> © 2018-2019</span>
+    <p class="center" style="margin-top: 30px;transform: translateY(0);">
+      <span> © 2018-2019</span>
       <a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备18144953号-1</a>
     </p>
   </div>
@@ -108,6 +118,7 @@
         tagList: resultList[0].data,
         likeList: resultList[1].data.content,
         newList: resultList[2].data.content,
+        tag:''
       }
     },
     components: {
@@ -118,6 +129,14 @@
     computed: {
       user() {
         return this.$store.state.user.user || {}
+      },
+      scrollTop: {
+        get() {
+          return this.$store.state.window.scrollTop || 0
+        },
+        set(val) {
+          this.$store.state.window.scrollTop = val || 0
+        }
       }
     },
     mounted() {
@@ -135,16 +154,19 @@
         draw.focus = result.data
       },
       follow({userId, focus}) {
-        for(let draw of this.likeList){
-          if(draw.user.id === userId){
+        for (let draw of this.likeList) {
+          if (draw.user.id === userId) {
             draw.user.focus = focus;
           }
         }
-        for(let draw of this.newList){
-          if(draw.user.id === userId){
+        for (let draw of this.newList) {
+          if (draw.user.id === userId) {
             draw.user.focus = focus;
           }
         }
+      },
+      search() {
+        this.$router.push(`/draw/search/${this.tag}`)
       }
     }
   }
@@ -155,14 +177,32 @@
   @import "../assets/style/config";
   @import "../assets/style/mixin";
 
-  .page {
-    padding: 24px 0;
+  .user-bk {
+    width: 100%;
+    margin-top: -@herder-height;
+    height: @window-min-width / 2;
+    .user-bk-content {
+      font-size: 0;
+      .input {
+        width: 350px;
+        font-size: @default-font-size;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        border-right: 0;
+      }
+      .btn {
+        width: 100px;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        font-size: @default-font-size;
+      }
+    }
   }
 
   .content {
     width: @visual-width;
     margin: 0 auto;
-
+    transform: translateY(0);
     .card {
       .title {
         font-size: @medium-font-size;

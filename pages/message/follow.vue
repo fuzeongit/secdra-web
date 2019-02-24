@@ -1,15 +1,55 @@
 <template>
   <div class="list">
-    <div class="not card">
+    <div class="item card" v-for="item in list" :key="item.id">
+      <div class="row">
+        <div class="col-3 head">
+          <nuxt-link :to="`/user/${item.follower.id}`">
+            <img :src="$img.head(item.follower.head,'small50')">
+          </nuxt-link>
+        </div>
+        <div class="col-27 desc">
+          <p class="name">
+            <nuxt-link :to="`/user/${item.follower.id}`">
+              {{item.follower.name}}
+            </nuxt-link>
+            <span>关注了我</span>
+          </p>
+          <p class="time">{{item.createDate}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="not card" v-if="!loading && !list.length">
       <img src="../../assets/image/default/not.png">
     </div>
   </div>
 </template>
 
 <script>
+  import {mapActions} from "vuex"
+
   export default {
-    beforeCreate() {
-      this.$parent.type = "follow"
+    data() {
+      return {
+        type: "follow",
+        loading: true,
+        list: []
+      }
+    },
+    mounted() {
+      this.$parent.type = this.type;
+      this.getList()
+    },
+    methods: {
+      ...mapActions("message", ["AList"]),
+      async getList() {
+        this.loading = true;
+        let result = await this.AList({messageType: this.type.toUpperCase()});
+        this.loading = false;
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+        }
+        this.list = result.data;
+      }
     }
   }
 </script>

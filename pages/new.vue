@@ -131,5 +131,6 @@
     position: fixed;
     bottom: 50px;
     right: 50px;
+    color: @font-color;
   }
 </style>

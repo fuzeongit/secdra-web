@@ -1,18 +1,16 @@
 import httpUtil from "../assets/js/util/httpUtil";
 
 /**
- *  有关notify的仓库
+ *  有关message的仓库
  *
  *  @author fjj
  */
 
 const state = {
-
+  count: 0
 };
 
-const mutations = {
-
-};
+const mutations = {};
 
 const actions = {
   //获取未读条数

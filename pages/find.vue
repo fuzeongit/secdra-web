@@ -2,7 +2,7 @@
   <div class="page">
     <DrawList :page="page" :list="list" :pageLoading="pageLoading" @paging="paging" @collection="collection" @follow="follow"></DrawList>
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <button class="btn is-suspend got-top" v-goTop  v-show="showGoTop">
+      <button class="btn is-suspend go-top" v-goTop  v-show="showGoTop">
         <i class="icon s-zhiding"></i></button>
     </transition>
   </div>
@@ -136,9 +136,10 @@
   @import "../assets/style/config";
   @import "../assets/style/mixin";
 
-  .got-top {
+  .go-top {
     position: fixed;
     bottom: 50px;
     right: 50px;
+    color:@font-color
   }
 </style>
