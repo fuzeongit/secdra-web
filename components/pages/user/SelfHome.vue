@@ -180,7 +180,7 @@
 
     },
     methods: {
-      ...mapActions("user", ["AUpdateBack", "AUpdateHead", "APagingFollower", "AUpdate"]),
+      ...mapActions("user", ["AUpdateBack", "AUpdateHead", "APagingFollowing", "AUpdate"]),
       ...mapActions("draw", ["APagingCollection", "APagingByUserId"]),
       async pagingWorks() {
         this.worksLoading = true;

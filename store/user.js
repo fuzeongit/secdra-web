@@ -52,11 +52,11 @@ const actions = {
   },
   //关注用户
   async AFollow(context, params) {
-    return await httpUtil.post("/follower/focus", params)
+    return await httpUtil.post("/following/focus", params)
   },
   // 分页获取关注用户
-  async APagingFollower(context, params) {
-    return await httpUtil.get("/follower/paging", params)
+  async APagingFollowing(context, params) {
+    return await httpUtil.get("/following/paging", params)
   }
 };
 

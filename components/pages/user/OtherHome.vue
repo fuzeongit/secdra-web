@@ -54,32 +54,32 @@
             <nuxt-link :to="`/collection/${user.id||''}`">查看更多>></nuxt-link>
           </p>
         </div>
-        <div class="follower-box" v-loading="followerLoading">
+        <div class="following-box" v-loading="followingLoading">
           <h3 class="line center">
             <span>{{user.gender==='FEMALE'?"她":"他"}}的关注</span>
           </h3>
-          <div class="follower-list row">
-            <div class="card follower-item" v-for="(follower ,index) in followerList" :key="index">
+          <div class="following-list row">
+            <div class="card following-item" v-for="(item ,index) in followingList" :key="index">
               <div class="cover"
-                   :style="{backgroundImage: `url(${$img.back(follower.background,`backCard`)})`}">
+                   :style="{backgroundImage: `url(${$img.back(item.background,`backCard`)})`}">
               </div>
               <div class="center">
-                <nuxt-link :to="`/user/${follower.id}`" class="follower-head-box">
-                  <img :src="$img.head(follower.head,'small200')">
+                <nuxt-link :to="`/user/${item.id}`" class="following-head-box">
+                  <img :src="$img.head(item.head,'small200')">
                 </nuxt-link>
               </div>
               <div class="user-info-box center ">
                 <p class="nickname">
-                  {{follower.name}}
+                  {{item.name}}
                 </p>
-                <p class="introduction" :title="follower.introduction">
-                  {{follower.introduction}}
+                <p class="introduction" :title="item.introduction">
+                  {{item.introduction}}
                 </p>
               </div>
             </div>
           </div>
-          <p class="move" v-if="followerList.length===8">
-            <nuxt-link :to="`/follower/${user.id||''}`">查看更多>></nuxt-link>
+          <p class="move" v-if="followingList.length===8">
+            <nuxt-link :to="`/following/${user.id||''}`">查看更多>></nuxt-link>
           </p>
         </div>
       </div>
@@ -99,8 +99,8 @@
         worksList: [],
         collectionLoading: false,
         collectionList: [],
-        followerLoading: false,
-        followerList: []
+        followingLoading: false,
+        followingList: []
       }
     },
     computed: {
@@ -118,7 +118,7 @@
       this.pagingFollower();
     },
     methods: {
-      ...mapActions("user", ["APagingFollower"]),
+      ...mapActions("user", ["APagingFollowing"]),
       ...mapActions("draw", ["APagingCollection", "APagingByUserId"]),
       getProportion(draw) {
         return draw.height / draw.width
@@ -144,14 +144,14 @@
         this.collectionList = result.data.content;
       },
       async pagingFollower() {
-        this.followerLoading = true;
-        let result = await this.APagingFollower(Object.assign(new Pageable(0, 8, "createDate,desc"), {id: this.user.id}));
+        this.followingLoading = true;
+        let result = await this.APagingFollowing(Object.assign(new Pageable(0, 8, "createDate,desc"), {id: this.user.id}));
         if (result.status !== 200) {
           this.$notify({message: result.message});
           return
         }
-        this.followerLoading = false;
-        this.followerList = result.data.content;
+        this.followingLoading = false;
+        this.followingList = result.data.content;
       },
     }
   }
@@ -282,7 +282,7 @@
         min-height: 250px;
       }
 
-      .follower-box{
+      .following-box{
         margin-top: 30px;
         padding-bottom: 24px;
         min-height: 250px;
@@ -309,8 +309,8 @@
           }
         }
       }
-      .follower-list {
-        .follower-item {
+      .following-list {
+        .following-item {
           @size: 230px;
           @margin: 20px;
           float: left;
@@ -328,7 +328,7 @@
             width: @size;
             transition: @default-animate-time;
           }
-          .follower-head-box{
+          .following-head-box{
             padding: 10px;
             display: block;
             img {
@@ -354,7 +354,7 @@
             .cover {
               filter: blur(60px);
             }
-            .follower-head-box {
+            .following-head-box {
               img {
                 transform: translateY(-25px) scale(2);
               }

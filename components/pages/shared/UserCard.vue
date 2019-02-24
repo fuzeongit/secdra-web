@@ -34,7 +34,7 @@
       ...mapActions("user", ["AFollow"]),
       async follow() {
         let result = await this.AFollow({
-          followerId: this.user.id
+          followingId: this.user.id
         });
         if (result.status !== 200) {
           this.$notify({message: result.message});

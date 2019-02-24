@@ -1,19 +1,19 @@
 <template>
   <div class="page">
     <div class="content row">
-      <div class="card" v-for="(follower,index) in list" :key="index">
+      <div class="card" v-for="(item,index) in list" :key="index">
         <div class="cover"
-             :style="{backgroundImage: `url(${$img.back(follower.background,`backCard`)})`}">
+             :style="{backgroundImage: `url(${$img.back(item.background,`backCard`)})`}">
         </div>
-        <nuxt-link :to="`/user/${follower.id}`" class="head-box center">
-          <img :src="$img.head(follower.head,'small200')">
+        <nuxt-link :to="`/user/${item.id}`" class="head-box center">
+          <img :src="$img.head(item.head,'small200')">
         </nuxt-link>
         <div class="user-info-box center ">
           <p class="nickname">
-            {{follower.name}}
+            {{item.name}}
           </p>
-          <p class="introduction" :title="follower.introduction">
-            {{follower.introduction}}
+          <p class="introduction" :title="item.introduction">
+            {{item.introduction}}
           </p>
         </div>
       </div>
@@ -32,9 +32,9 @@
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "follower";
+      store.state.menu.name = "following";
       let pageable = new Pageable(route.params.page * 1 || 0,16,"createDate,desc");
-      let {data: result} = await $axios.get(`${config.host}/follower/paging`, {
+      let {data: result} = await $axios.get(`${config.host}/following/paging`, {
         params: Object.assign({
           id: route.params.userId
         },pageable)
@@ -49,9 +49,9 @@
       }
     },
     methods: {
-      ...mapActions("user", ["APagingFollower"]),
+      ...mapActions("user", ["APagingFollowing"]),
       paging(page){
-        this.$router.push(`/follower/${this.$route.params.userId}/${page}`);
+        this.$router.push(`/following/${this.$route.params.userId}/${page}`);
       },
     }
   }

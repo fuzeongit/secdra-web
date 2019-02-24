@@ -37,11 +37,11 @@
     data() {
       return {
         type: "comment",
-        loading: false,
+        loading: true,
         list: []
       }
     },
-    created() {
+    mounted() {
       this.$parent.type = this.type;
       this.getList()
     },
