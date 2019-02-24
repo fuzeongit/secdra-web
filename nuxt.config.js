@@ -25,7 +25,7 @@ module.exports = {
   */
   loading: {
     name: 'nuxt',
-    color: '#0b99ff',
+    color: '#fb7299',
     background: '#fff'
   },
 

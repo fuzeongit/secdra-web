@@ -12,7 +12,7 @@
   import Header from "../components/pages/shared/Header"
 
   export default {
-    middleware: ['auth','notifyRedirect'],
+    middleware: ['auth','messageRedirect'],
     components: {
       Header
     }

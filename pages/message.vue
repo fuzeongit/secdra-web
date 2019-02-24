@@ -4,10 +4,7 @@
       <div class="left-box card">
         <h4 class="title"><strong><i class="icon s-xinxizhongxin"></i>消息中心</strong></h4>
         <ul class="list">
-          <li @click="$router.push(`comment`)" :class="{active:(type===`comment`)}">评论我的</li>
-          <li @click="$router.push(`reply`)" :class="{active:(type===`reply`)}">回复我的</li>
-          <li @click="$router.push(`like`)" :class="{active:(type===`like`)}">收到的赞</li>
-          <li @click="$router.push(`system`)" :class="{active:(type===`system`)}">系统通知</li>
+          <li @click="$router.push(item.type)" :class="{active:(type===item.type)}" v-for="item in menuList" :key="item.type">{{item.name}}</li>
         </ul>
       </div>
       <div class="right-box card">
@@ -20,10 +17,22 @@
 </template>
 
 <script>
+  class Menu {
+    constructor(type,name){
+      this.type = type;
+      this.name = name;
+    }
+  }
   export default {
     data() {
       return {
-        type: ""
+        type: "comment",
+        menuList:[
+          new Menu('comment','评论我的'),
+          new Menu('reply','回复我的'),
+          new Menu('follow','收到的赞'),
+          new Menu('system','系统通知')
+        ]
       }
     }
   }
@@ -35,7 +44,7 @@
   @import "../assets/style/mixin";
 
   .bk {
-    background-image: url("../assets/image/bk/notify-bk.png");
+    background-image: url("../assets/image/bk/message-bk.png");
     height: calc(100vh - (@herder-height + @herder-border-height));
   }
 

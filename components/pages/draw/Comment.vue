@@ -32,26 +32,30 @@
               {{item.content}}
             </p>
             <p class="tool">
-              <a @click="$set(item,'isShowReply',!item.isShowReply)"><i class="icon s-pingjia"></i>{{item.isShowReply?'收起':'查看回复'}}</a>
-              <a @click="showReplyInput(item)"><i class="icon s-bianji"></i>{{item.isShowReplyInput?'收起':'回复'}}</a>
+              <a @click="item.isShowReply = !item.isShowReply"><i class="icon s-pingjia"></i>{{item.isShowReply?'收起':'查看回复'}}</a>
+              <a @click="item.isShowReplyInput=!item.isShowReplyInput"><i class="icon s-bianji"></i>{{item.isShowReplyInput?'收起':'回复'}}</a>
             </p>
-            <div class="row send-reply-box" v-if="item.isShowReplyInput" >
+            <div class="row send-reply-box" v-if="item.isShowReplyInput">
               <div class="col-23">
-                <input type="text" title="input" class="input block" placeholder="请输入评论" v-model="replyForm[item.id].content">
+                <input type="text" title="input" class="input block" placeholder="请输入评论"
+                       v-model="replyForm[item.id].content">
               </div>
               <div class="col-3 center">
                 <a class="icon s-laugh"></a>
               </div>
               <div class="col-4 center">
-                <button class="btn block" @click="sendReply(item)" :disabled="replyForm[item.id].content===''">发送</button>
+                <button class="btn block" @click="sendReply(item)" :disabled="replyForm[item.id].content===''">发送
+                </button>
               </div>
             </div>
-            <Reply :is-show="item.isShowReply" :comment-id="item.id" :draw-id="drawId" :author-id="userId"
-                   :critic-id="item.criticId" :ref="item.id"></Reply>
+            <Reply v-if="item.isShowReply" :comment-id="item.id" :draw-id="drawId" :author-id="userId"
+                   :critic-id="item.criticId" :ref="item.id" :key="index"></Reply>
           </div>
         </div>
         <button class="btn block more" v-if="!loading&&!isAll&&list.length>=4" @click="listAll">查看全部</button>
-        <p class="is-not" v-if="!loading&&!list.length">暂无评论</p>
+        <p class="is-not" v-if="!loading&&!list.length">
+          <img src="../../../assets/image/default/not.png">
+        </p>
       </div>
     </div>
   </div>
@@ -74,7 +78,7 @@
     data() {
       return {
         commentForm: new CommentForm(this.userId, this.drawId),
-        replyForm: [],
+        replyForm: {},
         loading: true,
         loadingMore: false,
         list: [],
@@ -103,8 +107,12 @@
           this.$notify({message: result.message});
           return
         }
+        this.replyForm = {};
+        this.list = result.data.map(item => {
+          this.$set(this.replyForm,item.id, new ReplyForm("", this.drawId, this.userId));
+          return Object.assign(item, {isShowReplyInput: false, isShowReply: false})
+        });
         this.loading = false;
-        this.list = result.data
       },
       async listAll() {
         this.loading = true;
@@ -114,14 +122,14 @@
           return
         }
         this.isAll = true;
+        this.replyForm = {};
+        this.list = result.data.map(item => {
+          this.$set(this.replyForm,item.id, new ReplyForm("", this.drawId, this.userId));
+          return Object.assign(item, {isShowReplyInput: false, isShowReply: false})
+        });
         this.loading = false;
-        this.list = result.data
       },
-      showReplyInput(item) {
-        this.$set(this.replyForm, item.id, new ReplyForm("", this.drawId, this.userId));
-        this.$set(item, 'isShowReplyInput', !item.isShowReplyInput);
-      },
-      async sendReply(item){
+      async sendReply(item) {
         this.replyForm[item.id].commentId = item.id;
         this.replyForm[item.id].criticId = item.criticId;
         let ref = this.$refs[item.id];
@@ -132,9 +140,13 @@
           ref = ref[0]
         }
         await ref.sendReply(this.replyForm[item.id]);
-        this.$set(item, 'isShowReply', true);
-        this.$set(item, 'isShowReplyInput', false);
-        this.$set(this.replyForm, item.id, new ReplyForm("", this.drawId, this.userId));
+        if(item.isShowReply){
+          ref.listAll()
+        }else{
+          item.isShowReply = true;
+        }
+        item.isShowReplyInput = false;
+        this.$set(this.replyForm,item.id, new ReplyForm("", this.drawId, this.userId));
       }
     }
   }
@@ -145,7 +157,7 @@
   @import "../../../assets/style/config";
   @import "../../../assets/style/mixin";
 
-  .send-comment-box,.send-reply-box {
+  .send-comment-box, .send-reply-box {
     > div {
       line-height: 35px;
     }

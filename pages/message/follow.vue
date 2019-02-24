@@ -5,7 +5,7 @@
 <script>
   export default {
     beforeCreate() {
-      this.$parent.type = "like"
+      this.$parent.type = "follow"
     }
   }
 </script>

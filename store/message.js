@@ -17,15 +17,15 @@ const mutations = {
 const actions = {
   //获取未读条数
   async ACount(context, params) {
-    return await httpUtil.get("/notify/count", params);
+    return await httpUtil.get("/message/count", params);
   },
   //获取未读列表
   async AListUnread(context, params) {
-    return await httpUtil.get("/notify/listUnread", params);
+    return await httpUtil.get("/message/listUnread", params);
   },
   //获取全部
   async AList(context, params) {
-    return await httpUtil.get("/notify/list", params);
+    return await httpUtil.get("/message/list", params);
   },
 };
 

@@ -2,7 +2,7 @@
   <header class="animated duration" :class="{fadeInDown:isShow&&hid,fadeOutUp:!isShow}">
     <nav>
       <nuxt-link to="/">
-        <img src="../../../assets/image/svg/logo.svg" height="30px" style="vertical-align: -5px;">
+        <img src="../../../assets/image/svg/logo.svg" height="30px">
       </nuxt-link>
       <nuxt-link to="/find" :class="{active:activeName===`find`}">
         发现
@@ -25,7 +25,7 @@
           </a>
           <div class="head-img-box">
             <nuxt-link :to="`/user/${user.id||''}`">
-              <img :src="$img.head(user.head,'small50')" width="40" height="40" v-popover:popover
+              <img :src="$img.head(user.head,'small50')" width="30" height="30" v-popover:popover
                    :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`"
                    style="border-radius: 50%;">
             </nuxt-link>
@@ -39,7 +39,7 @@
                   </nuxt-link>
                 </li>
                 <li>
-                  <nuxt-link to="/notify/comment" :class="{active:activeName===`upload`}">
+                  <nuxt-link to="/message/comment" :class="{active:activeName===`upload`}">
                     <i class="icon s-xinxizhongxin"></i>
                     我的消息
                   </nuxt-link>
@@ -126,7 +126,7 @@
       document.removeEventListener('scroll', this.documentScroll);
     },
     methods: {
-      ...mapActions("notify", ["ACount"]),
+      ...mapActions("message", ["ACount"]),
       documentScroll(event) {
         this.scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
         this.$store.state.window.scrollBottom = document.body.scrollHeight - this.scrollTop - event.target.documentElement.clientHeight;
@@ -157,7 +157,7 @@
 
   header {
     height: @herder-height;
-    font-size: @big-font-size;
+    font-size: @default-font-size;
     position: fixed;
     top: 0;
     left: 0;
@@ -178,8 +178,8 @@
         display: inline-block;
         color: @font-color;
         padding: 0 20px;
-        font-size: @medium-font-size;
-        &.active {
+        font-size: @default-font-size;
+        &.active,&:hover {
           color: @theme-color;
           border-bottom: (@herder-height - @herder-nav-height) solid @theme-color;
         }
@@ -216,7 +216,7 @@
         color: @font-color;
         display: inline-block;
         height: 100%;
-        font-size: @default-font-size;
+        font-size: @small-font-size;
         &.active {
           color: @theme-color;
           .icon {
@@ -224,7 +224,7 @@
           }
         }
         .icon {
-          font-size: @medium-font-size + 2px;
+          font-size: @medium-font-size;
           vertical-align: -1px;
         }
       }

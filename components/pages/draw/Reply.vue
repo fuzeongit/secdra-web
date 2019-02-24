@@ -1,5 +1,5 @@
 <template>
-  <div class="reply-list" v-loading="loading" v-if="isShow">
+  <div class="reply-list" v-loading="loading">
 
     <div class="reply-item row" v-for="(item,index) in list" :key="index">
       <div class="col-3 head">
@@ -22,11 +22,12 @@
           {{item.content}}
         </p>
         <p class="tool">
-          <a @click="showReplyInput(item)"><i class="icon s-bianji"></i>{{item.isShowReplyInput?'收起':'回复'}}</a>
+          <a @click="item.isShowReplyInput = !item.isShowReplyInput"><i class="icon s-bianji"></i>{{item.isShowReplyInput?'收起':'回复'}}</a>
         </p>
-        <div class="row send-reply-box" v-if="item.isShowReplyInput" >
+        <div class="row send-reply-box" v-if="item.isShowReplyInput">
           <div class="col-23">
-            <input type="text" title="input" class="input block" placeholder="请输入评论" v-model="replyForm[item.id].content">
+            <input type="text" title="input" class="input block" placeholder="请输入评论"
+                   v-model="replyForm[item.id].content">
           </div>
           <div class="col-3 center">
             <a class="icon s-laugh"></a>
@@ -37,7 +38,9 @@
         </div>
       </div>
     </div>
-    <p class="is-not" v-if="!loading&&!list.length">暂无回复</p>
+    <p class="is-not" v-if="!loading&&!list.length">
+      <img src="../../../assets/image/default/not.png">
+    </p>
   </div>
 </template>
 
@@ -48,27 +51,20 @@
   export default {
     componentName: "Reply",
     props: {
-      isShow:Boolean,
       commentId: String,
       drawId: String,
       authorId: String,
       criticId: String
     },
-    watch:{
-      isShow(newVal){
-        if(newVal&&this.isFirst){
-          this.isFirst = false;
-          this.listAll()
-        }
+    data() {
+      return {
+        loading: false,
+        list: [],
+        replyForm: {},
       }
     },
-    data(){
-      return {
-        isFirst:true,
-        loading:false,
-        list:[],
-        replyForm:[],
-      }
+    mounted() {
+      this.listAll()
     },
     methods: {
       ...mapActions("reply", ["ASave", "AList"]),
@@ -79,36 +75,29 @@
           this.$notify({message: result.message});
           return
         }
+        this.replyForm = {};
+        this.list = result.data.map(item => {
+          this.$set(this.replyForm, item.id, new ReplyForm(this.commentId, this.drawId, this.authorId));
+          return Object.assign(item, {isShowReplyInput: false})
+        });
         this.loading = false;
-        this.list = result.data
       },
-      async sendReply(form){
+      async sendReply(form) {
         let result = await this.ASave(form);
         if (result.status !== 200) {
           this.$notify({message: result.message});
-          return
         }
-        if(!this.isFirst){
-          this.listAll();
-        }
-        return this.isFirst
       },
-      async send(item){
+      async send(item) {
         this.replyForm[item.id].criticId = item.answerer.id;
         let result = await this.ASave(this.replyForm[item.id]);
         if (result.status !== 200) {
           this.$notify({message: result.message});
           return
         }
-        this.$set(item, 'isShowReplyInput', false);
-        if(!this.isFirst){
-          this.listAll();
-        }
-      },
-      showReplyInput(item) {
-        this.$set(this.replyForm, item.id, new ReplyForm(this.commentId, this.drawId, this.authorId));
-        this.$set(item, 'isShowReplyInput', !item.isShowReplyInput)
-      },
+        item.isShowReplyInput = false;
+        this.listAll();
+      }
     }
   }
 </script>
@@ -117,6 +106,7 @@
   @import "../../../assets/style/color";
   @import "../../../assets/style/config";
   @import "../../../assets/style/mixin";
+
   .send-reply-box {
     padding-bottom: 8px;
     > div {
@@ -127,6 +117,7 @@
       color: darken(@font-color, -35%);
     }
   }
+
   .reply-list {
     min-height: 130px;
     padding-top: 8px;
