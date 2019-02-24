@@ -4,13 +4,18 @@
       <div class="left-box card">
         <h4 class="title"><strong><i class="icon s-xinxizhongxin"></i>消息中心</strong></h4>
         <ul class="list">
-          <li @click="$router.push(item.type)" :class="{active:(type===item.type)}" v-for="item in menuList" :key="item.type">{{item.name}}</li>
+          <li @click="$router.push(key)" :class="{active:(type===key)}" v-for="(item,key) in menuList" :key="key">{{item}}</li>
         </ul>
       </div>
       <div class="right-box card">
-        <transition name="fade" enter-active-class="fadeIn duration" leave-active-class="fadeOut duration">
-          <nuxt-child/>
-        </transition>
+        <div class="card title">
+          {{menuList[type]}}
+        </div>
+        <div class="message">
+          <transition name="fade" enter-active-class="fadeIn duration" leave-active-class="fadeOut duration">
+            <nuxt-child/>
+          </transition>
+        </div>
       </div>
     </div>
   </section>
@@ -24,17 +29,20 @@
     }
   }
   export default {
+    asyncData({store}){
+      store.state.menu.name = "message";
+    },
     data() {
       return {
         type: "comment",
-        menuList:[
-          new Menu('comment','评论我的'),
-          new Menu('reply','回复我的'),
-          new Menu('follow','收到的赞'),
-          new Menu('system','系统通知')
-        ]
+        menuList:{
+          comment:'评论我的',
+          reply:'回复我的',
+          follow:'关注我的',
+          system:'系统通知',
+        },
       }
-    }
+    },
   }
 </script>
 
@@ -70,7 +78,7 @@
         li {
           user-select: none;
           font-size: @default-font-size;
-          color: @gray;
+          color: darken(@gray,10%);
           display: block;
           line-height: 40px;
           cursor: pointer;
@@ -83,7 +91,7 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: @gray;
+            background-color: darken(@gray,10%);
           }
           &.active, &:hover {
             color: @theme-color;
@@ -101,6 +109,17 @@
       float: right;
       border-radius: 0;
       background-color: hsla(0, 0%, 100%, .8);
+      @title-height:40px;
+      @margin:10px;
+      .title{
+        padding: 0 30px;
+        line-height: @title-height;
+        text-align: left;
+        margin-bottom: @margin;
+      }
+      .message{
+        height: calc(100% - @margin - @title-height);
+      }
     }
   }
 </style>

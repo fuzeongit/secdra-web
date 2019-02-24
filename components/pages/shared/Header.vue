@@ -1,8 +1,9 @@
 <template>
   <header class="animated duration" :class="{fadeInDown:isShow&&hid,fadeOutUp:!isShow}">
     <nav>
-      <nuxt-link to="/">
-        <img src="../../../assets/image/svg/logo.svg" height="30px">
+      <nuxt-link to="/" :class="{active:activeName===`home`}">
+        <!--<img src="../../../assets/image/svg/logo.svg" height="30px">-->
+        主站
       </nuxt-link>
       <nuxt-link to="/find" :class="{active:activeName===`find`}">
         发现
@@ -18,11 +19,11 @@
       </nuxt-link>
       <template>
         <div class="right-box">
-          <input type="search" title="search" class="input is-plain" @search="search" v-model="tag"
-                 placeholder="输入标签搜索">
-          <a @click="search">
-            <i class="s-chaxun icon"></i>
-          </a>
+          <!--<input type="search" title="search" class="input is-plain" @search="search" v-model="tag"-->
+                 <!--placeholder="输入标签搜索">-->
+          <!--<a @click="search">-->
+            <!--<i class="s-chaxun icon"></i>-->
+          <!--</a>-->
           <div class="head-img-box">
             <nuxt-link :to="`/user/${user.id||''}`">
               <img :src="$img.head(user.head,'small50')" width="30" height="30" v-popover:popover
@@ -39,7 +40,7 @@
                   </nuxt-link>
                 </li>
                 <li>
-                  <nuxt-link to="/message/comment" :class="{active:activeName===`upload`}">
+                  <nuxt-link to="/message/comment" :class="{active:activeName===`message`}">
                     <i class="icon s-xinxizhongxin"></i>
                     我的消息
                   </nuxt-link>
@@ -179,6 +180,7 @@
         color: @font-color;
         padding: 0 20px;
         font-size: @default-font-size;
+        border-bottom: (@herder-height - @herder-nav-height) solid @white;
         &.active,&:hover {
           color: @theme-color;
           border-bottom: (@herder-height - @herder-nav-height) solid @theme-color;
