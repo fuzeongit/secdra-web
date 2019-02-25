@@ -54,6 +54,7 @@
         if (result.status !== 200) {
           this.$notify({message: result.message});
         }
+        this.$store.state.message.replyCount = 0;
         this.list = result.data;
       }
     }

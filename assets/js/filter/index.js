@@ -16,5 +16,11 @@ export default {
         return _number.toFixed(2);
       }
     }
+  },
+  toMore(number,threshold = 100){
+    if(number>threshold){
+      return 99
+    }
+    return number
   }
 };

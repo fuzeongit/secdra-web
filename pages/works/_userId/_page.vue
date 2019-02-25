@@ -34,7 +34,7 @@
     </CheckboxGroup>
     <br>
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
-    <button v-if="isSelf" class="btn is-suspend" style="position: fixed;right: 50px;bottom: 50px;"
+    <button v-if="isSelf" class="btn is-suspend edit-btn"
             @click="isShowEdit = true"
             :disabled="selectList.isEmpty()"><i class="icon s-bianji"></i></button>
     <Dialog v-if="isSelf" v-model="isShowEdit" title="批量操作" v-loading="editLoading">
@@ -293,6 +293,13 @@
         }
       }
     }
+  }
+
+  .edit-btn {
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    color: @font-color;
   }
 
   .edit-dialog-content {

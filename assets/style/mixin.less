@@ -10,7 +10,16 @@
   text-align: center;
 }
 .ellipsis {
-  overflow: hidden;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+}
+
+.ellipsis--clamp(@line) {
   text-overflow: ellipsis;
-  white-space: nowrap;
+  display: -webkit-box;
+  overflow:hidden;
+  /*! autoprefixer: off */
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @line;
 }

@@ -48,6 +48,7 @@
         if (result.status !== 200) {
           this.$notify({message: result.message});
         }
+        this.$store.state.message.followCount = 0;
         this.list = result.data;
       }
     }

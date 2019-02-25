@@ -7,7 +7,9 @@ import httpUtil from "../assets/js/util/httpUtil";
  */
 
 const state = {
-  count: 0
+  commentCount: 0,
+  replyCount: 0,
+  followCount: 0,
 };
 
 const mutations = {};

@@ -20,11 +20,13 @@
       <template>
         <div class="right-box">
           <!--<input type="search" title="search" class="input is-plain" @search="search" v-model="tag"-->
-                 <!--placeholder="输入标签搜索">-->
+          <!--placeholder="输入标签搜索">-->
           <!--<a @click="search">-->
-            <!--<i class="s-chaxun icon"></i>-->
+          <!--<i class="s-chaxun icon"></i>-->
           <!--</a>-->
-          <nuxt-link to="/message/comment" class="link" :class="{active:activeName===`message`}">
+          <nuxt-link to="/message/comment" class="link" :class="{active:activeName===`message`}"
+                     style="position: relative">
+            <span class="message-count" v-if="messageCount">{{messageCount|toMore}}</span>
             <i class="icon s-xinxizhongxin"></i>
           </nuxt-link>
           <div class="head-img-box">
@@ -36,53 +38,54 @@
             <Popper ref="popover"
                     trigger="hover"
                     :visibleArrow="false">
-             <div class="head-popover">
-               <div class="bk cover"  :style="{backgroundImage: `url(${$img.back(user.background,`backCard`)})`}"></div>
-               <!--<nuxt-link :to="`/user/${user.id||''}`">-->
-                 <!--<img :src="$img.head(user.head)" width="100" height="100"-->
-                      <!--:onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`"-->
-                      <!--style="border-radius: 50%;margin: 0 auto;display: block;transform: translateY(-50px)">-->
-               <!--</nuxt-link>-->
-               <p class="name">{{user.name}}</p>
-               <ul class="head-menu row">
-                 <!--<li>-->
-                   <!--<nuxt-link to="/message/comment" :class="{active:activeName===`message`}">-->
-                     <!--<i class="icon s-xinxizhongxin"></i>-->
-                     <!--我的消息-->
-                   <!--</nuxt-link>-->
-                 <!--</li>-->
-                 <li>
-                   <nuxt-link :to="`/follower/${user.id||''}`" :class="{active:activeName===`follower`}">
-                     <i class="icon s-guanzhu1"></i>
-                     我的粉丝
-                   </nuxt-link>
-                 </li>
-                 <li>
-                   <nuxt-link :to="`/following/${user.id||''}`" :class="{active:activeName===`following`}">
-                     <i class="icon s-guanzhu1"></i>
-                     关注用户
-                   </nuxt-link>
-                 </li>
-                 <li>
-                   <nuxt-link to="/footprint" :class="{active:activeName===`footprint`}">
-                     <i class="icon s-zuji"></i>
-                     我的足迹
-                   </nuxt-link>
-                 </li>
-                 <li>
-                   <nuxt-link to="/upload" :class="{active:activeName===`upload`}">
-                     <i class="icon s-upload"></i>
-                     我要上传
-                   </nuxt-link>
-                 </li>
-               </ul>
-               <div class="footer">
-                 <a @click="logout">
-                   <i class="icon s-zhuxiao"></i>
-                   退出登录
-                 </a>
-               </div>
-             </div>
+              <div class="head-popover">
+                <div class="bk cover" :style="{backgroundImage: `url(${$img.back(user.background,`backCard`)})`}"></div>
+                <!--<nuxt-link :to="`/user/${user.id||''}`">-->
+                <!--<img :src="$img.head(user.head)" width="100" height="100"-->
+                <!--:onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`"-->
+                <!--style="border-radius: 50%;margin: 0 auto;display: block;transform: translateY(-50px)">-->
+                <!--</nuxt-link>-->
+                <p class="name">{{user.name}}</p>
+                <p class="introduction" :title="user.introduction">{{user.introduction}}</p>
+                <ul class="head-menu row">
+                  <!--<li>-->
+                  <!--<nuxt-link to="/message/comment" :class="{active:activeName===`message`}">-->
+                  <!--<i class="icon s-xinxizhongxin"></i>-->
+                  <!--我的消息-->
+                  <!--</nuxt-link>-->
+                  <!--</li>-->
+                  <li>
+                    <nuxt-link :to="`/follower/${user.id||''}`" :class="{active:activeName===`follower`}">
+                      <i class="icon s-guanzhu1"></i>
+                      我的粉丝
+                    </nuxt-link>
+                  </li>
+                  <li>
+                    <nuxt-link :to="`/following/${user.id||''}`" :class="{active:activeName===`following`}">
+                      <i class="icon s-guanzhu1"></i>
+                      关注用户
+                    </nuxt-link>
+                  </li>
+                  <li>
+                    <nuxt-link to="/footprint" :class="{active:activeName===`footprint`}">
+                      <i class="icon s-zuji"></i>
+                      我的足迹
+                    </nuxt-link>
+                  </li>
+                  <li>
+                    <nuxt-link to="/upload" :class="{active:activeName===`upload`}">
+                      <i class="icon s-upload"></i>
+                      我要上传
+                    </nuxt-link>
+                  </li>
+                </ul>
+                <div class="footer">
+                  <a @click="logout">
+                    <i class="icon s-zhuxiao"></i>
+                    退出登录
+                  </a>
+                </div>
+              </div>
             </Popper>
           </div>
         </div>
@@ -136,6 +139,9 @@
         set(val) {
           this.$store.state.window.scrollTop = val || 0
         }
+      },
+      messageCount() {
+        return (this.$store.state.message.commentCount + this.$store.state.message.replyCount + this.$store.state.message.followCount)
       }
     },
     mounted() {
@@ -165,7 +171,12 @@
       },
       async countUnread() {
         let result = await this.ACount();
-        console.log(result);
+        if (result.status !== 200) {
+          return
+        }
+        this.$store.state.message.commentCount = result.data.COMMENT;
+        this.$store.state.message.replyCount = result.data.REPLY;
+        this.$store.state.message.followCount = result.data.FOLLOW;
       }
     }
   }
@@ -201,7 +212,7 @@
         padding: 0 20px;
         font-size: @default-font-size;
         border-bottom: (@herder-height - @herder-nav-height) solid @white;
-        &.active,&:hover {
+        &.active, &:hover {
           color: @theme-color;
           border-bottom: (@herder-height - @herder-nav-height) solid @theme-color;
         }
@@ -212,10 +223,22 @@
       .right-box {
         line-height: @herder-height;
         float: right;
-        .link{
+        .message-count {
+          font-size: @small-font-size;
+          height: @medium-font-size;
+          line-height: @medium-font-size;
+          color: @white;
+          background-color: @theme-color;
+          padding: 0 5px;
+          border-radius: @medium-font-size / 2;
+          position: absolute;
+          top: -10px;
+          right: -12px;
+        }
+        .link {
           font-size: @default-font-size;
-          &.active,&:hover{
-            color:@theme-color;
+          &.active, &:hover {
+            color: @theme-color;
           }
         }
         .head-img-box {
@@ -226,54 +249,64 @@
       }
     }
   }
-.head-popover{
-  @size:280px;
-  .bk{
-    height: @size / 2;
-    width: @size;
-  }
-  .name{
-    .center();
-    font-weight: bold;
-    margin: 25px 0;
-  }
-  .head-menu {
-    width: @size;
-    background-color: white;
-    border-radius: @smallest-border-radius;
-    text-align: center;
-    user-select: none;
-    li {
-      width: 50%;
-      float: left;
-      line-height: 28px;
-      a {
-        color: @font-color;
-        display: inline-block;
-        height: 100%;
-        font-size: @small-font-size;
-        &.active {
-          color: @theme-color;
-          .icon {
+
+  .head-popover {
+    @size: 280px;
+    .bk {
+      height: @size / 2;
+      width: @size;
+    }
+    .name {
+      .center();
+      font-weight: bold;
+      margin: 25px 0 0;
+    }
+    .introduction {
+      .ellipsis--clamp(2);
+      width: @size;
+      padding: 0 25px;
+      margin: 10px 0;
+      text-indent: 2em;
+      color: darken(@font-color, -45%);
+      font-size: @small-font-size;
+    }
+    .head-menu {
+      width: @size;
+      background-color: white;
+      border-radius: @smallest-border-radius;
+      text-align: center;
+      user-select: none;
+      li {
+        width: 50%;
+        float: left;
+        line-height: 28px;
+        a {
+          color: @font-color;
+          display: inline-block;
+          height: 100%;
+          font-size: @small-font-size;
+          &.active {
             color: @theme-color;
+            .icon {
+              color: @theme-color;
+            }
           }
-        }
-        .icon {
-          font-size: @medium-font-size;
-          vertical-align: -1px;
+          .icon {
+            font-size: @medium-font-size;
+            vertical-align: -1px;
+          }
         }
       }
     }
+    .footer {
+      margin-top: 15px;
+      padding: 0 30px;
+      line-height: 28px;
+      text-align: right;
+      background-color: @theme-background-color;
+      font-size: @small-font-size;
+    }
   }
-  .footer{
-    margin-top: 15px;
-    padding:0 30px;
-    line-height: 28px;
-    text-align: right;
-    background-color: @theme-background-color;
-    font-size: @small-font-size;
-  }
-}
 
 </style>
 
