@@ -38,6 +38,11 @@
                     :visibleArrow="false">
              <div class="head-popover">
                <div class="bk cover"  :style="{backgroundImage: `url(${$img.back(user.background,`backCard`)})`}"></div>
+               <!--<nuxt-link :to="`/user/${user.id||''}`">-->
+                 <!--<img :src="$img.head(user.head)" width="100" height="100"-->
+                      <!--:onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`"-->
+                      <!--style="border-radius: 50%;margin: 0 auto;display: block;transform: translateY(-50px)">-->
+               <!--</nuxt-link>-->
                <p class="name">{{user.name}}</p>
                <ul class="head-menu row">
                  <!--<li>-->

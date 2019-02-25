@@ -52,7 +52,7 @@
   @import "../assets/style/mixin";
 
   .bk {
-    background-image: url("../assets/image/bk/message-bk.png");
+    /*background-image: url("../assets/image/bk/message-bk.png");*/
     height: calc(100vh - (@herder-height + @herder-border-height));
   }
 
