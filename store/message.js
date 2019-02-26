@@ -10,6 +10,7 @@ const state = {
   commentCount: 0,
   replyCount: 0,
   followCount: 0,
+  systemCount: 0,
 };
 
 const mutations = {};
@@ -26,6 +27,10 @@ const actions = {
   //获取全部
   async AList(context, params) {
     return await httpUtil.get("/message/list", params);
+  },
+  //获取
+  async ASaveSetting(context, params) {
+    return await httpUtil.post("/message/saveSettings", params);
   },
 };
 

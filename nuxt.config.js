@@ -8,7 +8,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'Secdra',
+    title: 'Secdra - 想你所想',
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
@@ -58,7 +58,7 @@ module.exports = {
     [
       '/api',
       {
-        target: "http://127.0.0.1:8080", // api主机
+        target: "http://127.0.0.1:8081", // api主机
         secure: false,
         changeOrigin: true,
         pathRewrite: {'^/api': '/'}

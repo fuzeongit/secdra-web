@@ -4,7 +4,14 @@
       <div class="left-box card">
         <h4 class="title"><strong><i class="icon s-xinxizhongxin"></i>消息中心</strong></h4>
         <ul class="list">
-          <li @click="$router.push(key)" :class="{active:(type===key)}" v-for="(item,key) in menuList" :key="key">{{item}}</li>
+          <li @click="$router.push(key)" :class="{active:(type===key),settings:(key===`settings`)}"
+              v-for="(item,key) in menuList" :key="key">
+            <i class="icon s-shezhi" v-if="key===`settings`"></i>
+            {{item}}
+            <span class="message-count" v-if="key!==`settings`&&$store.state.message[key+`Count`]">
+              {{$store.state.message[key+"Count"]|toMore}}
+            </span>
+          </li>
         </ul>
       </div>
       <div class="right-box card">
@@ -23,23 +30,25 @@
 
 <script>
   class Menu {
-    constructor(type,name){
+    constructor(type, name) {
       this.type = type;
       this.name = name;
     }
   }
+
   export default {
-    asyncData({store}){
+    asyncData({store}) {
       store.state.menu.name = "message";
     },
     data() {
       return {
         type: "comment",
-        menuList:{
-          comment:'评论我的',
-          reply:'回复我的',
-          follow:'关注我的',
-          system:'系统通知',
+        menuList: {
+          comment: '评论我的',
+          reply: '回复我的',
+          follow: '关注我的',
+          system: '系统通知',
+          settings: '消息设置',
         },
       }
     },
@@ -52,7 +61,7 @@
   @import "../assets/style/mixin";
 
   .bk {
-    background-image: url("../assets/image/bk/message-bk.png");
+    /*background-image: url("../assets/image/bk/message-bk.png");*/
     height: calc(100vh - (@herder-height + @herder-border-height));
   }
 
@@ -78,7 +87,7 @@
         li {
           user-select: none;
           font-size: @default-font-size;
-          color: darken(@gray,10%);
+          color: darken(@gray, 10%);
           display: block;
           line-height: 40px;
           cursor: pointer;
@@ -91,7 +100,7 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: darken(@gray,10%);
+            background-color: darken(@gray, 10%);
           }
           &.active, &:hover {
             color: @theme-color;
@@ -99,8 +108,30 @@
               background-color: @theme-color;
             }
           }
+          &.settings {
+            padding-left: 18px;
+            border-top: 1px solid white;
+            margin-left: -20px;
+            &:before {
+              display: none;
+            }
+            .icon {
+              margin-right: 7px
+            }
+          }
+          .message-count {
+            font-size: 12px;
+            height: 16px;
+            line-height: 16px;
+            color: #ffffff;
+            background-color: #fb7299;
+            padding: 0 5px;
+            border-radius: 8px;
+            margin-left: 10px;
+          }
         }
       }
+
     }
     .right-box {
       padding: 10px;
@@ -109,15 +140,15 @@
       float: right;
       border-radius: 0;
       background-color: hsla(0, 0%, 100%, .8);
-      @title-height:40px;
-      @margin:10px;
-      .title{
+      @title-height: 40px;
+      @margin: 10px;
+      .title {
         padding: 0 30px;
         line-height: @title-height;
         text-align: left;
         margin-bottom: @margin;
       }
-      .message{
+      .message {
         height: calc(100% - @margin - @title-height);
       }
     }

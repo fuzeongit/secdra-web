@@ -92,7 +92,7 @@
         </div>
       </div>
     </div>
-    <p class="center" style="margin-top: 30px;transform: translateY(0);">
+    <p class="center" style="margin: 30px;">
       <span> © 2018-2019</span>
       <a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备18144953号-1</a>
     </p>

@@ -141,7 +141,7 @@
         }
       },
       messageCount() {
-        return (this.$store.state.message.commentCount + this.$store.state.message.replyCount + this.$store.state.message.followCount)
+        return (this.$store.state.message.commentCount + this.$store.state.message.replyCount + this.$store.state.message.followCount + this.$store.state.message.systemCount)
       }
     },
     mounted() {
@@ -177,6 +177,7 @@
         this.$store.state.message.commentCount = result.data.COMMENT;
         this.$store.state.message.replyCount = result.data.REPLY;
         this.$store.state.message.followCount = result.data.FOLLOW;
+        this.$store.state.message.systemCount = result.data.SYSTEM;
       }
     }
   }
@@ -242,6 +243,7 @@
           }
         }
         .head-img-box {
+          vertical-align: top;
           display: inline-block;
           position: relative;
           padding-left: 30px;

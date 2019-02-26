@@ -1,15 +1,50 @@
 <template>
   <div class="list">
-    <div class="not card">
+    <div class="item card" v-for="item in list" :key="item.id">
+      <div class="row">
+        <div class="col-30 desc">
+          <p class="name">
+            <span>{{item.title}}</span>
+          </p>
+          <p class="time">{{item.createDate}}</p>
+          <div class="content" v-html="item.content">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="not card" v-if="!loading && !list.length">
       <img src="../../assets/image/default/not.png">
     </div>
   </div>
 </template>
 
 <script>
+  import {mapActions} from "vuex"
+
   export default {
-    beforeCreate() {
-      this.$parent.type = "system"
+    data() {
+      return {
+        type: "system",
+        loading: true,
+        list: []
+      }
+    },
+    mounted() {
+      this.$parent.type = this.type;
+      this.getList()
+    },
+    methods: {
+      ...mapActions("message", ["AList"]),
+      async getList() {
+        this.loading = true;
+        let result = await this.AList({messageType: this.type.toUpperCase()});
+        this.loading = false;
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+        }
+        this.$store.state.message.systemCount = 0;
+        this.list = result.data;
+      }
     }
   }
 </script>
@@ -38,29 +73,10 @@
       .desc {
         line-height: 25px;
         .name {
-          a {
-            font-weight: bold;
-            color: @theme-color;
-          }
+          font-weight: bold;
         }
         .time {
           color: darken(@font-color, -30%);
-        }
-        .tool {
-          user-select: none;
-          a {
-            user-select: none;
-            width: 100px;
-            display: inline-block;
-            color: @theme-color;
-            font-size: @default-font-size;
-            margin-right: 15px;
-            i {
-              display: inline-block;
-              color: @theme-color;
-              margin-right: 3px;
-            }
-          }
         }
       }
     }
