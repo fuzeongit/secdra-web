@@ -61,8 +61,8 @@
   @import "../assets/style/mixin";
 
   .bk {
-    /*background-image: url("../assets/image/bk/message-bk.png");*/
-    background-image: url("../assets/image/bk/login-bk.jpg");
+    background-image: url("../assets/image/bk/message-bk.png");
+    /*background-image: url("../assets/image/bk/login-bk.jpg");*/
     height: calc(100vh - (@herder-height + @herder-border-height));
   }
 
