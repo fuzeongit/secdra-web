@@ -8,7 +8,7 @@
         <nuxt-link :to="`/user/${item.id}`" class="head-box center">
           <img :src="$img.head(item.head,'small200')">
         </nuxt-link>
-        <div class="user-info-box center ">
+        <div class="user-info-box center">
           <p class="nickname">
             {{item.name}}
           </p>
@@ -31,9 +31,9 @@
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "following";
+      store.state.menu.name = "follower";
       let pageable = new Pageable(route.params.page * 1 || 0,16,"createDate,desc");
-      let {data: result} = await $axios.get(`${config.host}/following/paging`, {
+      let {data: result} = await $axios.get(`${config.host}/follower/paging`, {
         params: Object.assign({
           id: route.params.userId
         },pageable)
@@ -49,7 +49,7 @@
     },
     methods: {
       paging(page){
-        this.$router.push(`/following/${this.$route.params.userId}/${page}`);
+        this.$router.push(`/follower/${this.$route.params.userId}/${page}`);
       },
     }
   }
