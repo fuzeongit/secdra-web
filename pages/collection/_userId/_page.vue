@@ -175,6 +175,7 @@
         padding: 0 10px;
         text-align: right;
         .like {
+          vertical-align: middle;
           margin-left: 10px;
         }
       }

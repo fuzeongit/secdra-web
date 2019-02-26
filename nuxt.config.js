@@ -3,7 +3,6 @@ const pkg = require('./package');
 
 module.exports = {
   mode: 'universal',
-
   /*
   ** Headers of the page
   */
@@ -19,7 +18,12 @@ module.exports = {
       {rel: 'stylesheet', type: 'text/css', href: '//at.alicdn.com/t/font_896802_45g3y7tp55w.css'},
     ]
   },
-
+  /*
+   ** Global CSS
+   */
+  css: [
+    {src: '@/assets/style/index.less', lang: 'less'},
+  ],
   /*
   ** Customize the progress-bar color
   */
@@ -29,12 +33,6 @@ module.exports = {
     background: '#fff'
   },
 
-  /*
-  ** Global CSS
-  */
-  css: [
-    {src: '../assets/style/index.less', lang: 'less'},
-  ],
 
   /*
   ** Plugins to load before mounting the App
@@ -91,4 +89,4 @@ module.exports = {
      */
     extractCSS: true,
   }
-}
+};

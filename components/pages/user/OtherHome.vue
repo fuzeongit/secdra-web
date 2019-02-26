@@ -266,9 +266,10 @@
         margin-bottom: 18px;
         span {
           background-color: white;
-          margin-bottom: -18px;
+          margin-bottom: -15px;
           display: inline-block;
           padding: 0 15px;
+          vertical-align: middle;
         }
       }
 

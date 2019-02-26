@@ -323,7 +323,8 @@
           box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
           i {
             color: white;
-            opacity: .7
+            opacity: .7;
+            vertical-align: middle;
           }
         }
       }
@@ -404,9 +405,10 @@
         margin-bottom: 18px;
         span {
           background-color: white;
-          margin-bottom: -18px;
+          margin-bottom: -15px;
           display: inline-block;
           padding: 0 15px;
+          vertical-align: middle;
         }
       }
 

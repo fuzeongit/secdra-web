@@ -299,7 +299,9 @@
     position: fixed;
     right: 50px;
     bottom: 50px;
-    color: @font-color;
+    i{
+      color: @font-color;
+    }
   }
 
   .edit-dialog-content {
