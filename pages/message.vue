@@ -42,7 +42,6 @@
     },
     data() {
       return {
-        type: "comment",
         menuList: {
           comment: '评论我的',
           reply: '回复我的',
@@ -52,6 +51,11 @@
         },
       }
     },
+    computed:{
+      type(){
+        return this.$store.state.message.type
+      }
+    }
   }
 </script>
 
@@ -61,7 +65,7 @@
   @import "../assets/style/mixin";
 
   .bk {
-    background-image: url("../assets/image/bk/message-bk.png");
+    /*background-image: url("../assets/image/bk/message-bk.png");*/
     /*background-image: url("../assets/image/bk/login-bk.jpg");*/
     height: calc(100vh - (@herder-height + @herder-border-height));
   }

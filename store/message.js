@@ -7,6 +7,7 @@ import httpUtil from "../assets/js/util/httpUtil";
  */
 
 const state = {
+  type:"",
   commentCount: 0,
   replyCount: 0,
   followCount: 0,

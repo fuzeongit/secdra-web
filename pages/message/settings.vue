@@ -28,6 +28,7 @@
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
+      store.state.message.type = "settings";
       let {data: result} = await $axios.get(`${config.host}/message/getSettings`);
       let settingsForm = {
         id: result.data.id,
@@ -46,14 +47,6 @@
         },
         deep: true
       }
-    },
-    data() {
-      return {
-        type: "settings",
-      }
-    },
-    mounted() {
-      this.$parent.type = this.type;
     },
     methods: {
       ...mapActions("message", ["ASaveSetting"]),

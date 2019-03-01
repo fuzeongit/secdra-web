@@ -24,38 +24,29 @@
         </div>
       </div>
     </div>
-    <div class="not card" v-if="!loading && !list.length">
+    <div class="not card" v-if="!list.length">
       <img src="../../assets/image/default/not.png">
     </div>
   </div>
 </template>
 
 <script>
-  import {mapActions} from "vuex"
+  import config from "../../assets/js/config";
 
   export default {
-    data() {
-      return {
-        type: "reply",
-        loading: true,
-        list: []
-      }
-    },
-    mounted() {
-      this.$parent.type = this.type;
-      this.getList()
-    },
-    methods: {
-      ...mapActions("message", ["AList"]),
-      async getList() {
-        this.loading = true;
-        let result = await this.AList({messageType: this.type.toUpperCase()});
-        this.loading = false;
-        if (result.status !== 200) {
-          this.$notify({message: result.message});
+    async asyncData({store, req, redirect, route, $axios}) {
+      let type = "reply";
+      store.state.message.type = type;
+      let {data: result} = await $axios.get(`${config.host}/message/list`, {
+        params: {
+          messageType: type.toUpperCase()
         }
-        this.$store.state.message.replyCount = 0;
-        this.list = result.data;
+      });
+      if (result.status !== 200) {
+        throw new Error(result.message)
+      }
+      return {
+        list: result.data
       }
     }
   }
