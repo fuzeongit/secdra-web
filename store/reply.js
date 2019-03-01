@@ -6,7 +6,7 @@ const mutations = {};
 
 const actions = {
   //发表回复
-  async ASave(context, params) {
+  async ASaveReply(context, params) {
     return await httpUtil.post("/reply/save", params);
   },
   async AList(context, params){

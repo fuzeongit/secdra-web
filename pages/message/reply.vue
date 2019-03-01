@@ -37,6 +37,7 @@
     async asyncData({store, req, redirect, route, $axios}) {
       let type = "reply";
       store.state.message.type = type;
+      store.state.message[type+"Count"] = 0;
       let {data: result} = await $axios.get(`${config.host}/message/list`, {
         params: {
           messageType: type.toUpperCase()

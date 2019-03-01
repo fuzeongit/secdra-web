@@ -91,6 +91,7 @@
     },
     methods: {
       ...mapActions("comment", ["ASave", "AList", "AListTop4"]),
+      ...mapActions("reply", ["ASaveReply"]),
       async send() {
         let result = await this.ASave(this.commentForm);
         if (result.status !== 200) {
@@ -132,15 +133,19 @@
       async sendReply(item) {
         this.replyForm[item.id].commentId = item.id;
         this.replyForm[item.id].criticId = item.criticId;
-        let ref = this.$refs[item.id];
-        if (ref === null) {
+        let result = await this.ASaveReply(this.replyForm[item.id]);
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
           return
         }
-        if (ref instanceof Array) {
-          ref = ref[0]
-        }
-        await ref.sendReply(this.replyForm[item.id]);
         if(item.isShowReply){
+          let ref = this.$refs[item.id];
+          if (!ref) {
+            return
+          }
+          if (ref instanceof Array) {
+            ref = ref[0]
+          }
           ref.listAll()
         }else{
           item.isShowReply = true;

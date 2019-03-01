@@ -67,7 +67,7 @@
       this.listAll()
     },
     methods: {
-      ...mapActions("reply", ["ASave", "AList"]),
+      ...mapActions("reply", ["ASaveReply", "AList"]),
       async listAll() {
         this.loading = true;
         let result = await this.AList({commentId: this.commentId});
@@ -82,15 +82,15 @@
         });
         this.loading = false;
       },
-      async sendReply(form) {
-        let result = await this.ASave(form);
-        if (result.status !== 200) {
-          this.$notify({message: result.message});
-        }
-      },
+      // async sendReply(form) {
+      //   let result = await this.ASaveReply(form);
+      //   if (result.status !== 200) {
+      //     this.$notify({message: result.message});
+      //   }
+      // },
       async send(item) {
         this.replyForm[item.id].criticId = item.answerer.id;
-        let result = await this.ASave(this.replyForm[item.id]);
+        let result = await this.ASaveReply(this.replyForm[item.id]);
         if (result.status !== 200) {
           this.$notify({message: result.message});
           return
