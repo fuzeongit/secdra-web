@@ -1,6 +1,5 @@
 <template>
   <div class="reply-list" v-loading="loading">
-
     <div class="reply-item row" v-for="(item,index) in list" :key="index">
       <div class="col-3 head">
         <nuxt-link :to="`/user/${item.answerer.id}`">

@@ -44,6 +44,7 @@
           <p class="move" v-if="worksList.length===8">
             <nuxt-link :to="`/works/${user.id||''}`">查看更多>></nuxt-link>
           </p>
+          <img src="../../../assets/image/default/not.png" class="is-not" v-if="!worksLoading&&!worksList.length">
         </div>
         <div class="collection-box" v-loading="collectionLoading">
           <h3 class="line center">
@@ -60,6 +61,7 @@
           <p class="move" v-if="collectionList.length===8">
             <nuxt-link :to="`/collection/${user.id||''}`">查看更多>></nuxt-link>
           </p>
+          <img src="../../../assets/image/default/not.png" class="is-not" v-if="!collectionLoading&&!collectionList.length">
         </div>
       </div>
     </div>
@@ -119,9 +121,9 @@
         uploadHeadLoading: false,
         uploadBackLoading: false,
 
-        worksLoading: false,
+        worksLoading: true,
         worksList: [],
-        collectionLoading: false,
+        collectionLoading: true,
         collectionList: [],
 
         isShowEdit: false,
@@ -415,11 +417,19 @@
       .works-box {
         padding-bottom: 24px;
         min-height: 250px;
+        .is-not{
+          display: block;
+          margin: 0 auto;
+        }
       }
       .collection-box {
         margin-top: 30px;
         padding-bottom: 24px;
         min-height: 250px;
+        .is-not{
+          display: block;
+          margin: 0 auto;
+        }
       }
 
       .move {
