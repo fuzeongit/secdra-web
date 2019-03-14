@@ -1,7 +1,7 @@
 <template>
   <section class="container bk cover">
     <form class="card" @submit.prevent="login">
-      <img src="../assets/image/svg/logo.svg" >
+      <img src="../assets/image/svg/logo.svg">
       <p class="sub-logo">想你所想</p>
       <div class="row input-group">
         <input type="text" class="input block" title="手机" v-model="form.phone" placeholder="手机号码">
@@ -35,7 +35,14 @@
         }
       }
     },
-    mounted() {},
+    mounted() {
+      this.$confirm({
+        message: `暂时不开放注册，是否随机账号登录`, okCallback: _ => {
+          this.form.phone = Math.floor(Math.random() * 50).toString();
+          this.login();
+        }
+      })
+    },
     methods: {
       ...mapActions("user", ["ALogin", "ARegister", "AGetInfo"]),
       ...mapMutations("user", ["MSetUserInfo"]),
@@ -51,7 +58,7 @@
           this.loginLoading = false;
           this.$notify({message: result.message})
         }
-      },
+      }
       // async register() {
       //   let result = await this.ARegister({phone: "13760029486", password: "123456"});
       //   if (result.status === 200) {
@@ -77,8 +84,8 @@
   }
 
   .card {
-    img{
-      width:250px;
+    img {
+      width: 250px;
     }
     padding: 50px;
     position: relative;
