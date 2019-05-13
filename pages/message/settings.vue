@@ -13,7 +13,6 @@
         <SSwitch v-model="settingsForm.replyStatus"></SSwitch>
       </div>
     </div>
-
     <div class="row">
       <div class="col-10">关注我的</div>
       <div class="col-20">

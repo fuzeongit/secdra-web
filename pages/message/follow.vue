@@ -79,22 +79,6 @@
         .time {
           color: darken(@font-color, -30%);
         }
-        .tool {
-          user-select: none;
-          a {
-            user-select: none;
-            width: 100px;
-            display: inline-block;
-            color: @theme-color;
-            font-size: @default-font-size;
-            margin-right: 15px;
-            i {
-              display: inline-block;
-              color: @theme-color;
-              margin-right: 3px;
-            }
-          }
-        }
       }
     }
     .not {
