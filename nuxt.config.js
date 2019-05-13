@@ -11,7 +11,9 @@ module.exports = {
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-      {hid: 'description', name: 'description', content: pkg.description}
+      {hid: 'application-name', name: 'application-name', content: "Secdra"},
+      {hid: 'keywords', name: 'keywords', content: "secdra,pixiv,二次元,插画,开源项目"},
+      {hid: 'description', name: 'description', content: "Secdra是一个采集pixiv为素材而开发的一个开源网站。目前还在优化更新中..."}
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},

@@ -19,7 +19,7 @@ export default {
   },
   toMore(number,threshold = 100){
     if(number>threshold){
-      return 99
+      return threshold - 1
     }
     return number
   }
