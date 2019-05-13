@@ -4,7 +4,7 @@
     <OtherHome v-else :user="user" @follow="follow"></OtherHome>
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
       <button class="btn is-suspend go-top" v-goTop v-show="scrollTop>150"><i
-        class="icon s-zhiding"></i></button>
+        class="icon s-up"></i></button>
     </transition>
   </div>
 </template>

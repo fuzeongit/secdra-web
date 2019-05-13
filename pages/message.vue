@@ -125,7 +125,7 @@
             }
           }
           .message-count {
-            font-size: 12px;
+            font-size: @small-font-size;
             height: 16px;
             line-height: 16px;
             color: #ffffff;

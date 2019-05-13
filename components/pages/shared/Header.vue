@@ -171,8 +171,8 @@
       },
       async countUnread() {
         let result = await this.ACount();
-        if (result.status !== 200) {
-          return
+          if (result.status !== 200) {
+            return
         }
         this.$store.state.message.commentCount = result.data.COMMENT;
         this.$store.state.message.replyCount = result.data.REPLY;
