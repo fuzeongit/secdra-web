@@ -92,7 +92,7 @@
 
 <script>
   import {mapActions} from "vuex"
-  import {Pageable} from "../../../assets/js/model/base";
+  import {Pageable} from "../../../assets/script/model/base";
 
   export default {
     props: ["user"],
@@ -189,7 +189,7 @@
           width: 100px;
           .center();
           span {
-            font-size: @medium-font-size;
+            font-size: @default-font-size;
             color: white;
             opacity: .7
           }
@@ -255,7 +255,7 @@
 
         }
         .introduction {
-          font-size: @small-font-size;
+          font-size: @smallest-font-size;
         }
       }
     }
@@ -265,7 +265,7 @@
       padding: 0 50px;
       .line {
         width: 100%;
-        border-bottom: 1px dashed @border-color;
+        border-bottom: 1px dashed @font-color-dark-line;
         margin-bottom: 18px;
         span {
           background-color: white;
@@ -362,7 +362,7 @@
               .ellipsis()
             }
             .introduction {
-              font-size: @small-font-size;
+              font-size: @smallest-font-size;
               margin-top: 10px;
               .ellipsis()
             }

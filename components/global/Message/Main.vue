@@ -78,7 +78,7 @@
       .ellipsis();
       .left();
       width: 100%;
-      font-size: @default-font-size;
+      font-size: @small-font-size;
     }
   }
 </style>

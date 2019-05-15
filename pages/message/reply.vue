@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import config from "../../assets/js/config";
+  import config from "../../assets/script/config";
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
@@ -82,7 +82,7 @@
           }
         }
         .time {
-          color: darken(@font-color, -30%);
+          color: @font-color-dark-fade;
         }
       }
     }

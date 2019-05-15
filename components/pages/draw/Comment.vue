@@ -62,7 +62,7 @@
 </template>
 
 <script>
-  import {CommentForm, ReplyForm} from "../../../assets/js/model/base";
+  import {CommentForm, ReplyForm} from "../../../assets/script/model/base";
   import {mapActions} from "vuex"
   import Reply from "./Reply"
 
@@ -168,7 +168,7 @@
     }
     .icon {
       font-size: 25px;
-      color: darken(@font-color, -35%);
+      color: @icon-color-dark;
     }
   }
 
@@ -178,7 +178,7 @@
       padding: 20px 50px 0;
       .comment-item {
         padding: 10px 0;
-        border-top: 1px solid darken(@border-color, -7%);
+        border-top: 1px solid @font-color-dark-line;
         &:first-child {
           border-top: 0;
         }
@@ -202,7 +202,7 @@
             }
           }
           .time {
-            color: darken(@font-color, -30%);
+            color: @font-color-dark-fade;
           }
           .tool {
             user-select: none;
@@ -211,7 +211,7 @@
               width: 100px;
               display: inline-block;
               color: @theme-color;
-              font-size: @default-font-size;
+              font-size: @small-font-size;
               margin-right: 15px;
               i {
                 display: inline-block;
@@ -225,17 +225,17 @@
       .more {
         background-color: @theme-background-color;
         border-color: @theme-background-color;
-        color: darken(@font-color, -20%);
+        color: @font-color-dark-fade;
+        transition: @short-animate-time all;
         &:hover {
-          background-color: @border-color;
-          border-color: @border-color;
-          color: @font-color;
+          background-color: darken(@theme-background-color,4%);
+          border-color: darken(@theme-background-color,4%);
         }
       }
       .is-not {
         line-height: 130px;
-        font-size: @default-font-size;
-        color: darken(@font-color, -20%);
+        font-size: @small-font-size;
+        color: @font-color-dark-fade;
         .center();
       }
     }

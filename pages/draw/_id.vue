@@ -113,11 +113,11 @@
 </template>
 
 <script>
-  import config from "../../assets/js/config";
+  import config from "../../assets/script/config";
   import TagCard from "../../components/pages/shared/TagCard";
   import Comment from "../../components/pages/draw/Comment";
   import {mapActions} from "vuex"
-  import {CommentForm} from "../../assets/js/model/base";
+  import {CommentForm} from "../../assets/script/model/base";
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
@@ -270,7 +270,7 @@
       .user-card {
         .user-bk {
           height: @width / 2;
-          background-color: @border-color;
+          background-color: @font-color-dark-line;
         }
         @head-img-height: 80px;
         @head-img-border: 2px;
@@ -289,7 +289,7 @@
             .ellipsis()
           }
           .introduction {
-            font-size: @small-font-size;
+            font-size: @smallest-font-size;
             margin-top: 10px;
             .ellipsis()
           }
@@ -297,22 +297,22 @@
       }
       .info-card {
         padding: 10px 20px;
-        font-size: @default-font-size;
+        font-size: @small-font-size;
         .name {
           .ellipsis()
         }
         .introduction {
           margin-top: 10px;
-          font-size: @small-font-size;
-          color: @gray;
+          font-size: @smallest-font-size;
+          color: @font-color-dark-fade;
         }
         .row {
           margin-top: 10px;
-          font-size: @small-font-size;
-          color: @gray;
+          font-size: @smallest-font-size;
+          color: @font-color-dark-fade;
           i {
-            font-size: @small-font-size;
-            color: @gray;
+            font-size: @smallest-font-size;
+            color: @font-color-dark-fade;
           }
           span {
             margin-left: 10px;

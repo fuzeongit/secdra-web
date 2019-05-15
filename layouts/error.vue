@@ -10,8 +10,10 @@
 <script>
   export default {
     props: ['error'],
+    // layout: 'empty',
     name: "error",
     mounted(){
+      console.error(this.error)
     }
   }
 </script>

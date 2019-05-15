@@ -7,7 +7,7 @@
           <p>
             {{message}}
           </p>
-          <div class="alert-btn-group">
+          <div class="btn-group">
             <button class="btn" @click.stop="close">
               {{btnDesc}}
             </button>
@@ -75,7 +75,7 @@
       line-height: 25px;
       color: @gray;
     }
-    .alert-btn-group {
+    .btn-group {
       margin-top: 10px;
       text-align: right;
     }

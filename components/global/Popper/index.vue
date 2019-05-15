@@ -19,7 +19,7 @@
 </template>
 <script>
   import Popper from './vue-popper';
-  import {on, off, addClass, removeClass} from '../../../assets/js/util/domUtil';
+  import {on, off, addClass, removeClass} from '../../../assets/script/util/domUtil';
 
   export default {
     componentName: "Popper",

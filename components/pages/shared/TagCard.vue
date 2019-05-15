@@ -58,7 +58,7 @@
   .size {
     width: @size;
     height: @size /1.5;
-    background-color: @border-color;
+    background-color: @theme-background-color;
     .cover {
       display: block;
       width: 100%;
@@ -69,7 +69,7 @@
   .tag-name {
     .center();
     .ellipsis();
-    font-size: @default-font-size;
+    font-size: @small-font-size;
     padding: 8px;
   }
 </style>

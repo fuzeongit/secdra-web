@@ -50,8 +50,8 @@
 </template>
 
 <script>
-  import config from "../assets/js/config";
-  import ioUtil from "../assets/js/util/ioUtil";
+  import config from "../assets/script/config";
+  import ioUtil from "../assets/script/util/ioUtil";
   import {mapActions} from "vuex"
 
   export default {
@@ -216,7 +216,7 @@
               line-height: 35px
             }
             p {
-              font-size: @default-font-size;
+              font-size: @small-font-size;
             }
           }
           .view-box {

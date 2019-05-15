@@ -45,7 +45,7 @@
 
 <script>
   import {mapActions} from "vuex"
-  import {ReplyForm} from "../../../assets/js/model/base";
+  import {ReplyForm} from "../../../assets/script/model/base";
 
   export default {
     componentName: "Reply",
@@ -113,7 +113,7 @@
     }
     .icon {
       font-size: 25px;
-      color: darken(@font-color, -35%);
+      color: @icon-color-dark;
     }
   }
 
@@ -122,7 +122,7 @@
     padding-top: 8px;
     .reply-item {
       padding: 10px 0 0;
-      border-top: 1px solid darken(@border-color, -7%);
+      border-top: 1px solid @font-color-dark-line;
       .head {
         img {
           border-radius: 50%;
@@ -143,7 +143,7 @@
           }
         }
         .time {
-          color: darken(@font-color, -30%);
+          color: @font-color-dark-fade;
         }
         .tool {
           user-select: none;
@@ -152,7 +152,7 @@
             width: 100px;
             display: inline-block;
             color: @theme-color;
-            font-size: @default-font-size;
+            font-size: @small-font-size;
             margin-right: 15px;
             i {
               display: inline-block;
@@ -165,8 +165,8 @@
     }
     .is-not {
       line-height: 130px;
-      font-size: @default-font-size;
-      color: darken(@font-color, -20%);
+      font-size: @small-font-size;
+      color: @font-color-dark-fade;
       .center();
     }
   }

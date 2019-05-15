@@ -23,7 +23,7 @@
 </template>
 <script>
   import {mapActions} from "vuex"
-  import config from "../../assets/js/config";
+  import config from "../../assets/script/config";
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {

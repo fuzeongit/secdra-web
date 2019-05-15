@@ -88,16 +88,16 @@
     user-select: none;
     .checkbox-inner {
       display: inline-block;
-      width: @default-font-size;
-      height: @default-font-size;
+      width: @small-font-size;
+      height: @small-font-size;
       border-radius: @smallest-border-radius;
       border: 1px solid @box-border-color;
       background-color: @white;
       transition: .1s;
-      font-size: @small-font-size;
+      font-size: @smallest-font-size;
       vertical-align: middle;
       .icon {
-        font-size: @small-font-size;
+        font-size: @smallest-font-size;
         color: @white;
         transition: .1s;
         opacity: 0;
@@ -106,7 +106,7 @@
     }
     .checkbox-label {
       display: inline-block;
-      font-size: @default-font-size;
+      font-size: @small-font-size;
       transition: .1s;
     }
     .checkbox-original {

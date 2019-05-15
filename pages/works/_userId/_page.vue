@@ -80,8 +80,8 @@
 </template>
 
 <script>
-  import config from "../../../assets/js/config";
-  import {DrawForm, Pageable} from "../../../assets/js/model/base";
+  import config from "../../../assets/script/config";
+  import {DrawForm, Pageable} from "../../../assets/script/model/base";
   import {mapActions} from "vuex"
 
   export default {
@@ -275,7 +275,7 @@
             .ellipsis()
           }
           .introduction {
-            font-size: @small-font-size;
+            font-size: @smallest-font-size;
             margin-top: 10px;
             .ellipsis()
           }
@@ -300,7 +300,7 @@
     right: 50px;
     bottom: 50px;
     i{
-      color: @font-color;
+      color:@font-color-dark;
     }
   }
 

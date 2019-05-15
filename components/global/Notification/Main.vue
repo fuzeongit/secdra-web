@@ -88,7 +88,7 @@
     }
     .message {
       margin-top: 8px;
-      font-size: @default-font-size;
+      font-size: @small-font-size;
     }
   }
 </style>

@@ -7,13 +7,13 @@
 <script>
   export default {
     componentName: "Loading",
-    data(){
+    data() {
       return {
-        fixed:false
+        fixed: false
       }
     },
-    methods:{
-      close(){
+    methods: {
+      close() {
         this.$destroy(true);
         this.$el.parentNode.removeChild(this.$el);
       }
@@ -30,7 +30,7 @@
   .loading-mack {
     position: absolute;
     z-index: @mask-index;
-    background-color: rgba(255, 255, 255, .9);
+    background-color: fade(white, 90);
     margin: 0;
     top: 0;
     right: 0;
@@ -38,7 +38,8 @@
     left: 0;
     transition: opacity .3s;
   }
-  .fixed{
+
+  .fixed {
     position: fixed;
   }
 </style>

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import config from "../../assets/js/config";
+  import config from "../../assets/script/config";
   import SelfHome from "../../components/pages/user/SelfHome";
   import OtherHome from "../../components/pages/user/OtherHome";
   import {mapActions} from "vuex"
@@ -81,6 +81,6 @@
     position: fixed;
     right: 50px;
     bottom: 50px;
-    color: @font-color;
+    color: @theme-color;
   }
 </style>

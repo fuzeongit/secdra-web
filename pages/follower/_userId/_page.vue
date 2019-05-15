@@ -24,8 +24,8 @@
 </template>
 
 <script>
-  import config from "../../../assets/js/config/index";
-  import {Pageable} from "../../../assets/js/model/base";
+  import config from "../../../assets/script/config/index";
+  import {Pageable} from "../../../assets/script/model/base";
 
   export default {
     //在这里不能使用httpUtil
@@ -97,7 +97,7 @@
           .ellipsis()
         }
         .introduction {
-          font-size: @small-font-size;
+          font-size: @smallest-font-size;
           margin-top: 10px;
           .ellipsis()
         }

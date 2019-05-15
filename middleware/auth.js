@@ -1,5 +1,5 @@
-import {Result} from "../assets/js/model/base";
-import config from "../assets/js/config";
+import {Result} from "../assets/script/model/base";
+import config from "../assets/script/config";
 
 //快速，通过cookie
 // export default async ({store, req, redirect, route}) => {

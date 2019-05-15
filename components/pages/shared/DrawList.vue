@@ -36,7 +36,7 @@
 </template>
 
 <script>
-  import {ListConstant} from "../../../assets/js/constant/base";
+  import {ListConstant} from "../../../assets/script/constant/base";
 
   export default {
     componentName: "DrawList",
@@ -193,7 +193,7 @@
             .ellipsis()
           }
           .introduction {
-            font-size: @small-font-size;
+            font-size: @smallest-font-size;
             margin-top: 10px;
             .ellipsis()
           }

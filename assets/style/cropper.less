@@ -1,5 +1,5 @@
 /*!
- * Cropper.js v1.4.3
+ * Cropper.script v1.4.3
  * https://fengyuanchen.github.io/cropperjs
  *
  * Copyright 2015-present Chen Fengyuan
@@ -7,6 +7,7 @@
  *
  * Date: 2018-10-24T13:07:11.429Z
  */
+@import "./color";
 
 .cropper-container {
   direction: ltr;
@@ -50,26 +51,25 @@
 }
 
 .cropper-drag-box {
-  background-color: #fff;
+  background-color: white;
   opacity: 0;
 }
 
 .cropper-modal {
-  background-color: #000;
+  background-color: black;
   opacity: .5;
 }
 
 .cropper-view-box {
   display: block;
   height: 100%;
-  outline-color: rgba(51, 153, 255, 0.75);
-  outline: 1px solid #39f;
+  outline: @blue solid 1px;
   overflow: hidden;
   width: 100%;
 }
 
 .cropper-dashed {
-  border: 0 dashed #eee;
+  border: 0 dashed @font-color-dark-line;
   display: block;
   opacity: .5;
   position: absolute;
@@ -105,7 +105,7 @@
 
 .cropper-center:before,
 .cropper-center:after {
-  background-color: #eee;
+  background-color: @theme-background-color;
   content: ' ';
   display: block;
   position: absolute;
@@ -136,13 +136,13 @@
 }
 
 .cropper-face {
-  background-color: #fff;
+  background-color: white;
   left: 0;
   top: 0;
 }
 
 .cropper-line {
-  background-color: #39f;
+  background-color: @blue;
 }
 
 .cropper-line.line-e {
@@ -174,7 +174,7 @@
 }
 
 .cropper-point {
-  background-color: #39f;
+  background-color: @blue;
   height: 5px;
   opacity: .75;
   width: 5px;
@@ -258,7 +258,7 @@
 }
 
 .cropper-point.point-se:before {
-  background-color: #39f;
+  background-color: @blue;
   bottom: -50%;
   content: ' ';
   display: block;

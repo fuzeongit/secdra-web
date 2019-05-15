@@ -25,19 +25,19 @@
 
 *::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background: #BBB;
+  background-color: #BBB;
 }
 
 *::-webkit-scrollbar-track {
   border-radius: 10px;
-  background: #EDEDED;
+  background-color: #EDEDED;
 }
 
 html, body {
   background-color: @theme-background-color;
-  font-size: @default-font-size;
+  font-size: @small-font-size;
   min-width: @window-min-width;
-  color:@font-color;
+  color: @font-color-dark;
 }
 
 h1, h2, h3 {
@@ -52,7 +52,7 @@ a {
   cursor: pointer;
 }
 
-img{
+img {
   vertical-align: middle;
 }
 
@@ -78,11 +78,12 @@ img{
 /*--------------------------------------*/
 .input-group {
   line-height: @input-line-height+2;
-  font-size: @default-font-size;
+  font-size: @small-font-size;
   margin-bottom: 15px;
 }
 
 .btn(@color) {
+  position: relative;
   display: inline-block;
   white-space: nowrap;
   cursor: pointer;
@@ -93,22 +94,47 @@ img{
   padding: 0 1.5em;
   user-select: none;
   border-radius: @smallest-border-radius;
-  font-size: @default-font-size;
+  font-size: @small-font-size;
   line-height: @input-line-height;
   margin: 0;
+  @border-size: 1px;
 
+  .disabled(@disabled-color) {
+    &:before {
+      cursor: not-allowed;
+      content: " ";
+      position: absolute;
+      background-color: @disabled-color;
+      top: -@border-size;
+      bottom: -@border-size;
+      left: -@border-size;
+      right: -@border-size;
+    }
+  }
   .btn-color(@realColor) {
     background-color: @realColor;
-    border: 1px solid @realColor;
+    border: @border-size solid @realColor;
     color: @white;
+    &[disabled]{
+      .disabled(@font-color-dark-disabled)
+    }
 
     &.is-plain {
       background-color: transparent;
       color: @realColor;
       &:hover {
         background-color: @realColor;
-        border: 1px solid @realColor;
+        border: @border-size solid @realColor;
         color: @white;
+      }
+
+      &[disabled]{
+        .disabled(@font-color-dark-disabled);
+        &:hover {
+          background-color: transparent;
+          border: @border-size solid @realColor;
+          color: @realColor;
+        }
       }
     }
 
@@ -118,22 +144,29 @@ img{
       height: 50px;
       width: 50px;
       border-radius: 50%;
-      border: 1px solid @border-color;
+      border: @border-size solid @font-color-dark-line;
       box-shadow: 0 5px 10px rgba(180, 180, 180, 0.55);
+      &[disabled]{
+        .disabled(@font-color-dark-disabled);
+        &:before {
+          border-radius: 50%;
+        }
+      }
     }
 
     &.is-text {
       background-color: transparent;
       border: transparent;
       color: @realColor;
+      &[disabled]{
+        .disabled(@font-color-dark-disabled);
+        &:before {
+          background-color: @font-color-light-disabled;
+        }
+      }
     }
   }
   .btn-color(@color);
-  &[disabled] {
-    cursor: not-allowed;
-    .btn-color(@disabled-color);
-  }
-
   &.block {
     width: 100%;
     display: block;
@@ -178,42 +211,45 @@ img{
   margin: 0;
   transition: 0.1s;
   padding: 0 1.5em;
-  font-size: @default-font-size;
-  color: @font-color;
-  border: 1px solid @border-color;
+  font-size: @small-font-size;
+  color: @font-color-dark;
+  border: 1px solid @font-color-dark-line;
   box-shadow: none;
   outline: none;
   user-select: none;
   line-height: @input-line-height;
   border-radius: @smallest-border-radius;
-
+  position: relative;
+  @border-size: 1px;
 
   .input-color(@realColor) {
     &:focus {
-      border: 1px solid @color;
+      border: @border-size solid @color;
     }
-
+    &[disabled]{
+      cursor: not-allowed;
+      background-color: #bdbdbd;
+    }
     &.is-plain {
-      border-left: 1px solid transparent;
-      border-top: 1px solid transparent;
-      border-right: 1px solid transparent;
+      border-left-color: transparent;
+      border-top-color: transparent;
+      border-right-color: transparent;
       background-color: transparent;
       &:focus {
-        border-bottom: 1px solid @color;
+        border-bottom: @border-size solid @color;
+      }
+      &[disabled]{
+        cursor: not-allowed;
+        background-color: @font-color-light-disabled;
       }
     }
   }
   .input-color(@color);
-  &[disabled] {
-    background-color: #f0f0f0;
-    cursor: not-allowed;
-    .input-color(@disabled-color);
-  }
   &.block {
     display: block;
     width: 100%;
   }
-  &textarea{
+  &textarea {
     line-height: @small-input-line-height;
   }
 }
@@ -280,7 +316,7 @@ textarea {
   margin: 0 auto;
 
   .card-header {
-    border-bottom: 1px solid @border-color;
+    border-bottom: 1px solid @font-color-dark-line;
   }
 
   .card-body {
@@ -288,7 +324,7 @@ textarea {
   }
 
   .card-footer {
-    border-top: 1px solid @border-color;
+    border-top: 1px solid @font-color-dark-line;
   }
 }
 
@@ -296,9 +332,11 @@ textarea {
 .duration {
   animation-duration: @default-animate-time;
 }
-.short-duration{
+
+.short-duration {
   animation-duration: @short-animate-time;
 }
+
 .mask-duration {
   animation-duration: @short-animate-time;
 }
@@ -334,7 +372,7 @@ textarea {
       bottom: -6px;
       left: 50%;
       margin-right: 3px;
-      border-top-color: @border-color;
+      border-top-color: @font-color-dark-line;
       border-bottom-width: 0;
       &:after {
         bottom: 1px;
@@ -349,7 +387,7 @@ textarea {
       top: 50%;
       left: -6px;
       margin-bottom: 3px;
-      border-right-color: @border-color;
+      border-right-color: @font-color-dark-line;
       border-left-width: 0;
       &:after {
         bottom: -6px;
@@ -365,7 +403,7 @@ textarea {
       left: 50%;
       margin-right: 3px;
       border-top-width: 0;
-      border-bottom-color: @border-color;
+      border-bottom-color: @font-color-dark-line;
       &:after {
         top: 1px;
         margin-left: -6px;
@@ -380,7 +418,7 @@ textarea {
       right: -6px;
       margin-bottom: 3px;
       border-right-width: 0;
-      border-left-color: @border-color;
+      border-left-color: @font-color-dark-line;
       &:after {
         right: 1px;
         bottom: -6px;
@@ -394,7 +432,7 @@ textarea {
 
 .popover {
   position: absolute;
-  background: @white;
+  background-color: @white;
   //border: 1px solid @border-color;
   z-index: @mask-index - 1;
   border-radius: @smallest-border-radius;
@@ -413,12 +451,10 @@ textarea {
   }
 }
 
-
 /*---------------------------------------*/
-.loading-parent{
+.loading-parent {
   position: relative !important;
 }
-
 
 /*---------------------------------------*/
 //一共30列

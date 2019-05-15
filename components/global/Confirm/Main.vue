@@ -9,7 +9,7 @@
           <p>
             {{message}}
           </p>
-          <div class="confirm-btn-group">
+          <div class="btn-group">
             <button class="btn is-plain" @click.stop="no">
               {{noDesc}}
             </button>
@@ -87,7 +87,7 @@
       line-height: 25px;
       color: @gray;
     }
-    .confirm-btn-group {
+    .btn-group {
       margin-top: 10px;
       text-align: right;
     }

@@ -90,23 +90,23 @@
     padding: 50px;
     position: relative;
     background-size: cover;
-    background: rgba(255, 255, 255, 0.92) center top;
+    background: rgba(255, 255, 255, 0.9) center top;
   }
 
   .sub-logo {
     margin-bottom: 50px;
-    font-size: @small-font-size
+    font-size: @smallest-font-size
   }
 
   .input-group {
     label {
       i {
         font-size: 25px;
-        color: @border-color
+        color: @icon-color-dark;
       }
     }
     input {
-      color: @font-color
+      color: @font-color-dark;
     }
   }
 </style>

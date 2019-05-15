@@ -9,8 +9,8 @@
 </template>
 
 <script>
-  import config from "../assets/js/config/index";
-  import {Pageable} from "../assets/js/model/base";
+  import config from "../assets/script/config/index";
+  import {Pageable} from "../assets/script/model/base";
   import {mapActions} from "vuex"
   import DrawList from "../components/pages/shared/DrawList"
 
@@ -140,6 +140,6 @@
     position: fixed;
     bottom: 50px;
     right: 50px;
-    color:@font-color
+    color:@theme-color;
   }
 </style>

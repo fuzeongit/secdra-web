@@ -87,18 +87,18 @@
     user-select: none;
     .radio-inner {
       display: inline-block;
-      width: @default-font-size;
-      height: @default-font-size;
+      width: @small-font-size;
+      height: @small-font-size;
       border-radius: 50%;
       border: 1px solid @box-border-color;
       background-color: @white;
       transition: .1s;
-      font-size: @small-font-size;
+      font-size: @smallest-font-size;
       vertical-align: middle;
     }
     .radio-label {
       display: inline-block;
-      font-size: @default-font-size;
+      font-size: @small-font-size;
       transition: .1s;
       vertical-align: middle;
     }
@@ -132,6 +132,4 @@
       }
     }
   }
-
-
 </style>

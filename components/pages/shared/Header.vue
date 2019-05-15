@@ -190,7 +190,7 @@
 
   header {
     height: @herder-height;
-    font-size: @default-font-size;
+    font-size: @small-font-size;
     position: fixed;
     top: 0;
     left: 0;
@@ -209,9 +209,9 @@
       line-height: @herder-nav-height;
       > a {
         display: inline-block;
-        color: @font-color;
+        color: @font-color-dark;
         padding: 0 20px;
-        font-size: @default-font-size;
+        font-size: @small-font-size;
         border-bottom: (@herder-height - @herder-nav-height) solid @white;
         &.active, &:hover {
           color: @theme-color;
@@ -225,19 +225,19 @@
         line-height: @herder-height;
         float: right;
         .message-count {
-          font-size: @small-font-size;
-          height: @medium-font-size;
-          line-height: @medium-font-size;
+          font-size: @smallest-font-size;
+          height: @default-font-size;
+          line-height: @default-font-size;
           color: @white;
           background-color: @theme-color;
           padding: 0 5px;
-          border-radius: @medium-font-size / 2;
+          border-radius: @default-font-size / 2;
           position: absolute;
           top: -10px;
           right: -12px;
         }
         .link {
-          font-size: @default-font-size;
+          font-size: @small-font-size;
           &.active, &:hover {
             color: @theme-color;
           }
@@ -269,8 +269,8 @@
       padding: 0 25px;
       margin: 10px 0;
       text-indent: 2em;
-      color: darken(@font-color, -45%);
-      font-size: @small-font-size;
+      color: @font-color-dark-fade;
+      font-size: @smallest-font-size;
     }
     .head-menu {
       width: @size;
@@ -283,10 +283,10 @@
         float: left;
         line-height: 28px;
         a {
-          color: @font-color;
+          color:  @font-color-dark;
           display: inline-block;
           height: 100%;
-          font-size: @small-font-size;
+          font-size: @smallest-font-size;
           &.active {
             color: @theme-color;
             .icon {
@@ -294,7 +294,7 @@
             }
           }
           .icon {
-            font-size: @medium-font-size;
+            font-size: @default-font-size;
             vertical-align: -1px;
           }
         }
@@ -306,9 +306,7 @@
       line-height: 28px;
       text-align: right;
       background-color: @theme-background-color;
-      font-size: @small-font-size;
+      font-size: @smallest-font-size;
     }
   }
-
 </style>
-

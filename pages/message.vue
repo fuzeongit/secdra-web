@@ -81,7 +81,7 @@
       border-radius: 0;
       background-color: hsla(0, 0%, 100%, .8);
       .title {
-        font-size: @default-font-size;
+        font-size: @small-font-size;
         line-height: 60px;
         .icon {
           margin-right: 10px;
@@ -91,8 +91,8 @@
         padding-left: 20px;
         li {
           user-select: none;
-          font-size: @default-font-size;
-          color: darken(@gray, 10%);
+          font-size: @small-font-size;
+          color: @font-color-dark;
           display: block;
           line-height: 40px;
           cursor: pointer;
@@ -105,7 +105,7 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: darken(@gray, 10%);
+            background-color: @icon-color-dark;
           }
           &.active, &:hover {
             color: @theme-color;
@@ -125,11 +125,11 @@
             }
           }
           .message-count {
-            font-size: @small-font-size;
+            font-size: @smallest-font-size;
             height: 16px;
             line-height: 16px;
-            color: #ffffff;
-            background-color: #fb7299;
+            color: white;
+            background-color: @theme-color;
             padding: 0 5px;
             border-radius: 8px;
             margin-left: 10px;

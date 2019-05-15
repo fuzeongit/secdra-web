@@ -1,4 +1,4 @@
-import httpUtil from "../assets/js/util/httpUtil";
+import httpUtil from "../assets/script/util/httpUtil";
 
 /**
  *  有关message的仓库

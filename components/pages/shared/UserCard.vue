@@ -60,7 +60,7 @@
   .cover {
     height: @size /2;
     width: @size;
-    background-color: @border-color;
+    background-color: @theme-background-color;
   }
 
   .head-box {
@@ -80,7 +80,7 @@
       .ellipsis()
     }
     .introduction {
-      font-size: @small-font-size;
+      font-size: @smallest-font-size;
       margin-top: 10px;
       .ellipsis()
     }

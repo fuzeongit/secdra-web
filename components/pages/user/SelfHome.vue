@@ -104,10 +104,10 @@
 
 <script>
   import Cropper from "cropperjs"
-  import ioUtil from '../../../assets/js/util/ioUtil'
+  import ioUtil from '../../../assets/script/util/ioUtil'
   import {mapActions} from "vuex"
-  import {Pageable, Result} from "../../../assets/js/model/base";
-  import config from "../../../assets/js/config";
+  import {Pageable, Result} from "../../../assets/script/model/base";
+  import config from "../../../assets/script/config";
 
   export default {
     data() {
@@ -393,7 +393,7 @@
 
         }
         .introduction {
-          font-size: @small-font-size;
+          font-size: @smallest-font-size;
         }
       }
     }
@@ -403,7 +403,7 @@
       padding: 0 50px;
       .line {
         width: 100%;
-        border-bottom: 1px dashed @border-color;
+        border-bottom: 1px dashed @font-color-dark-line;
         margin-bottom: 18px;
         span {
           background-color: white;

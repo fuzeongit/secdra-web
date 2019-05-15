@@ -22,10 +22,6 @@
   @import "../../../assets/style/config.less";
   @import "../../../assets/style/mixin.less";
 
-  .duration {
-
-  }
-
   .tag {
     line-height: @small-input-line-height;
     border-radius: @smallest-border-radius;
@@ -36,12 +32,11 @@
     margin-right: 10px;
     margin-bottom: 10px;
     padding: 0 .5em;
-    font-size: @default-font-size;
+    font-size: @small-font-size;
     .icon {
       color: @theme-color;
-      font-size: @default-font-size;
+      font-size: @small-font-size;
     }
     .center();
-
   }
 </style>

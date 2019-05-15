@@ -11,10 +11,10 @@ import RadioGroup from "../components/form/RadioGroup";
 import Radio from "../components/form/Radio";
 import Switch from "../components/form/Switch";
 
-import Http from '../assets/js/util/httpUtil'
-import Img from '../assets/js/util/imgUrlUtil'
-import filters from "../assets/js/filter"
-import directive from "../assets/js/directive"
+import Http from '../assets/script/util/httpUtil'
+import Img from '../assets/script/util/imgUrlUtil'
+import filters from "../assets/script/filter"
+import directive from "../assets/script/directive"
 
 Vue.prototype.$alert = Alert;
 Vue.prototype.$confirm = Confirm;

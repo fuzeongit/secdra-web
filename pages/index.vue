@@ -100,8 +100,8 @@
 </template>
 
 <script>
-  import config from "../assets/js/config";
-  import {Pageable} from "../assets/js/model/base";
+  import config from "../assets/script/config";
+  import {Pageable} from "../assets/script/model/base";
   import UserCard from "../components/pages/shared/UserCard";
   import {mapActions} from "vuex"
 
@@ -185,7 +185,7 @@
       font-size: 0;
       .input {
         width: 350px;
-        font-size: @default-font-size;
+        font-size: @small-font-size;
         border-bottom-right-radius: 0;
         border-top-right-radius: 0;
         border-right: 0;
@@ -194,7 +194,7 @@
         width: 100px;
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
-        font-size: @default-font-size;
+        font-size: @small-font-size;
       }
     }
   }
@@ -205,9 +205,9 @@
     transform: translateY(0);
     .card {
       .title {
-        font-size: @medium-font-size;
+        font-size: @default-font-size;
         padding-left: 10px;
-        line-height: @medium-font-size;
+        line-height: @default-font-size;
         border-left: 5px solid @theme-color;
         a {
           line-height: 16px;
@@ -241,19 +241,19 @@
                 position: absolute;
                 right: 5px;
                 bottom: 5px;
-                font-size: @medium-font-size
+                font-size: @default-font-size
               }
             }
             .draw-name {
               margin-top: 10px;
-              font-size: @default-font-size;
+              font-size: @small-font-size;
               font-weight: 600;
               .ellipsis()
             }
             .user-name {
-              font-size: @small-font-size;
+              font-size: @smallest-font-size;
               line-height: 20px;
-              color: @gray;
+              color: @font-color-dark;
               .ellipsis();
             }
           }

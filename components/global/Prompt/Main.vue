@@ -7,7 +7,7 @@
             {{title}}
           </h3>
           <input type="text" v-model="input" title="input" class="input block" :placeholder="message">
-          <div class="prompt-btn-group">
+          <div class="btn-group">
             <button class="btn is-plain" @click.stop="no">
               {{noDesc}}
             </button>
@@ -84,7 +84,7 @@
     input {
       margin: 20px 0;
     }
-    .prompt-btn-group {
+    .btn-group {
       margin-top: 10px;
       text-align: right;
     }
