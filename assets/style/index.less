@@ -116,7 +116,7 @@ img {
     border: @border-size solid @realColor;
     color: @white;
     &[disabled]{
-      .disabled(@font-color-dark-disabled)
+      .disabled(@font-color-light-disabled)
     }
 
     &.is-plain {
@@ -129,7 +129,7 @@ img {
       }
 
       &[disabled]{
-        .disabled(@font-color-dark-disabled);
+        .disabled(@font-color-light-disabled);
         &:hover {
           background-color: transparent;
           border: @border-size solid @realColor;
@@ -147,7 +147,7 @@ img {
       border: @border-size solid @font-color-dark-line;
       box-shadow: 0 5px 10px rgba(180, 180, 180, 0.55);
       &[disabled]{
-        .disabled(@font-color-dark-disabled);
+        .disabled(@font-color-light-disabled);
         &:before {
           border-radius: 50%;
         }
@@ -159,10 +159,7 @@ img {
       border: transparent;
       color: @realColor;
       &[disabled]{
-        .disabled(@font-color-dark-disabled);
-        &:before {
-          background-color: @font-color-light-disabled;
-        }
+        .disabled(@font-color-light-disabled);
       }
     }
   }
