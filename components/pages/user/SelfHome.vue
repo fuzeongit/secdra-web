@@ -406,7 +406,7 @@
         border-bottom: 1px dashed @font-color-dark-line;
         margin-bottom: 18px;
         span {
-          background-color: white;
+          background-color: @white;
           margin-bottom: -15px;
           display: inline-block;
           padding: 0 15px;

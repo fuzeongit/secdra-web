@@ -274,7 +274,7 @@
     }
     .head-menu {
       width: @size;
-      background-color: white;
+      background-color: @white;
       border-radius: @smallest-border-radius;
       text-align: center;
       user-select: none;
