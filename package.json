@@ -11,23 +11,22 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.0.0",
+    "@nuxtjs/axios": "^5.4.1",
     "cookieparser": "^0.1.0",
-    "cropperjs": "^1.4.3",
+    "cropperjs": "^1.5.1",
     "cross-env": "^5.2.0",
-    "element-ui": "^2.4.9",
     "js-cookie": "^2.2.0",
-    "less": "^3.8.1",
+    "less": "^3.9.0",
     "less-loader": "^4.1.0",
-    "moment": "^2.22.2",
-    "nuxt": "^2.3.1",
-    "popper.js": "^1.14.5",
-    "qs": "^6.5.2",
-    "socket.io": "^2.1.1",
-    "vue-socket.io": "^2.1.1-b",
+    "moment": "^2.24.0",
+    "nuxt": "^2.7.1",
+    "popper.js": "^1.15.0",
+    "qs": "^6.7.0",
+    "socket.io": "^2.2.0",
+    "vue-socket.io": "^2.1.1",
     "vue2-animate": "^2.1.0"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.19.0"
   }
 }
