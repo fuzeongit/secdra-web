@@ -4,22 +4,14 @@
  *  @author fjj
  */
 
-const state = {
-  name:"home"
+export const state = () => ({
+  name: 'home'
+});
+
+export const mutations = {
+  MChangeName(state, name) {
+    state.name = name;
+  }
 };
 
-const mutations = {
-
-};
-
-const actions = {
-
-};
-
-export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions
-};
-
+export const actions = {};

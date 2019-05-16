@@ -6,18 +6,21 @@ import httpUtil from '../assets/script/util/httpUtil'
  *  @author fjj
  */
 
-const state = {
+export const state = ()=>({
   user: null,
   uploadToken: null
-};
+});
 
-const mutations = {
+export const mutations = {
   MSetUserInfo(state, user) {
     state.user = user;
   },
+  MSetUploadToken(state, uploadToken) {
+    state.uploadToken = uploadToken;
+  },
 };
 
-const actions = {
+export const actions = {
   //登录
   async ALogin(context, params) {
     let result = await httpUtil.post("/user/login", params);
@@ -63,12 +66,3 @@ const actions = {
     return await httpUtil.get("/follower/paging", params)
   }
 };
-
-export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions
-};
-
-

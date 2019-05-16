@@ -6,17 +6,27 @@ import httpUtil from "../assets/script/util/httpUtil";
  *  @author fjj
  */
 
-const state = {
-  type:"",
+export const state = () => ({
+  type: "",
   commentCount: 0,
   replyCount: 0,
   followCount: 0,
   systemCount: 0,
+});
+
+export const mutations = {
+  MChangeType(state, {type, reset}) {
+    state.type = type;
+    if(reset){
+      state[type + 'Count'] = 0;
+    }
+  },
+  MChangeCount(state, {type, count}) {
+    state[type + 'Count'] = count;
+  }
 };
 
-const mutations = {};
-
-const actions = {
+export const actions = {
   //获取未读条数
   async ACount(context, params) {
     return await httpUtil.get("/message/count", params);
@@ -33,12 +43,5 @@ const actions = {
   async ASaveSetting(context, params) {
     return await httpUtil.post("/message/saveSettings", params);
   },
-};
-
-export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions
 };
 

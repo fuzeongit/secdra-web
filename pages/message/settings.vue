@@ -27,7 +27,7 @@
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.message.type = "settings";
+      store.commit('message/MChangeType', {type: "settings", reset: false});
       let {data: result} = await $axios.get(`${config.host}/message/getSettings`);
       let settingsForm = {
         id: result.data.id,

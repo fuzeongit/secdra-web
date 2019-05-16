@@ -1,8 +1,9 @@
 <template>
   <div class="page">
-    <DrawList :page="page" :list="list" :pageLoading="pageLoading" @paging="paging" @collection="collection" @follow="follow"></DrawList>
+    <DrawList :page="page" :list="list" :pageLoading="pageLoading" @paging="paging" @collection="collection"
+              @follow="follow"></DrawList>
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <button class="btn is-suspend go-top" v-goTop  v-show="showGoTop">
+      <button class="btn is-suspend go-top" v-goTop v-show="showGoTop">
         <i class="icon s-up"></i></button>
     </transition>
   </div>
@@ -11,17 +12,17 @@
 <script>
   import config from "../assets/script/config/index";
   import {Pageable} from "../assets/script/model/base";
-  import {mapActions} from "vuex"
+  import {mapState, mapActions} from "vuex"
   import DrawList from "../components/pages/shared/DrawList"
 
   export default {
-    components:{
+    components: {
       DrawList
     },
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "find";
+      store.commit('menu/MChangeName', "find");
       let pageable = new Pageable();
       pageable.size = 16;
       let {data: result} = await $axios.get(`${config.host}/draw/pagingByRecommend`, {
@@ -59,9 +60,7 @@
       }
     },
     computed: {
-      scrollTop() {
-        return this.$store.state.window.scrollTop
-      }
+      ...mapState('window', ['scrollTop'])
     },
     mounted() {
       this.$notify({message: `现在暂时先随机出`, waitTime: 4000});
@@ -140,6 +139,6 @@
     position: fixed;
     bottom: 50px;
     right: 50px;
-    color:@theme-color;
+    color: @theme-color;
   }
 </style>

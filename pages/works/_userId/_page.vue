@@ -86,7 +86,7 @@
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "works";
+      store.commit('menu/MChangeName', "works");
       let pageable = new Pageable();
       pageable.size = 16;
       pageable.page = route.params.page * 1 || 0;

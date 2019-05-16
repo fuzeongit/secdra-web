@@ -11,8 +11,7 @@
 <script>
   import config from "../assets/script/config/index";
   import {Pageable} from "../assets/script/model/base";
-  import {ListConstant} from "../assets/script/constant/base";
-  import {mapActions} from "vuex"
+  import {mapActions, mapState} from "vuex"
   import DrawList from "../components/pages/shared/DrawList"
 
   export default {
@@ -22,7 +21,7 @@
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "new";
+      store.commit('menu/MChangeName', "new");
       let pageable = new Pageable();
       pageable.size = 16;
       pageable.sort = "createDate,desc";
@@ -61,9 +60,7 @@
       }
     },
     computed: {
-      scrollTop() {
-        return this.$store.state.window.scrollTop
-      }
+      ...mapState('window', ['scrollTop'])
     },
     mounted() {
     },

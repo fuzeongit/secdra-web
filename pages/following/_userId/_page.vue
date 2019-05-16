@@ -31,7 +31,7 @@
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "following";
+      store.commit('menu/MChangeName', "following");
       let pageable = new Pageable(route.params.page * 1 || 0,16,"createDate,desc");
       let {data: result} = await $axios.get(`${config.host}/following/paging`, {
         params: Object.assign({

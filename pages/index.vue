@@ -103,12 +103,12 @@
   import config from "../assets/script/config";
   import {Pageable} from "../assets/script/model/base";
   import UserCard from "../components/pages/shared/UserCard";
-  import {mapActions} from "vuex"
+  import {mapState, mapActions} from "vuex"
 
   export default {
     //在这里不能使用httpUtil
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "home";
+      store.commit('menu/MChangeName', "home");
       let taskList = [];
       taskList.push($axios.get(`${config.host}/tag/listTagOrderByLikeAmount`));
       taskList.push($axios.get(`${config.host}/draw/pagingByRecommend`, {params: new Pageable(0, 10)}));
@@ -118,7 +118,7 @@
         tagList: resultList[0].data,
         likeList: resultList[1].data.content,
         newList: resultList[2].data.content,
-        tag:''
+        tag: ''
       }
     },
     components: {
@@ -127,17 +127,7 @@
     data() {
     },
     computed: {
-      user() {
-        return this.$store.state.user.user || {}
-      },
-      scrollTop: {
-        get() {
-          return this.$store.state.window.scrollTop || 0
-        },
-        set(val) {
-          this.$store.state.window.scrollTop = val || 0
-        }
-      }
+      ...mapState('user', ['user'])
     },
     mounted() {
     },

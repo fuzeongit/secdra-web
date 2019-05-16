@@ -15,23 +15,11 @@ import window from './window'
  */
 Vue.use(vuex);
 
-/**
- * 返回工厂模式
- * @returns {Store<>}
- */
-export default () => new Store({
-  modules: {
-    menu,
-    user,
-    draw,
-    comment,
-    reply,
-    message,
-    window
+//  暂时关闭严格模式
+export const strict = false;
+export const actions = {
+  nuxtServerInit({commit}) {
+    commit("user/MSetUserInfo", null)
   },
-  actions: {
-    nuxtServerInit({commit}) {
-      commit("user/MSetUserInfo", null)
-    },
-  }
-})
+};
+

@@ -23,9 +23,10 @@
   import Cookies from 'js-cookie'
   import {mapActions, mapMutations} from "vuex"
 
+  let layout = 'login';
   export default {
     name: "login",
-    layout: 'login',
+    layout,
     data() {
       return {
         loginLoading: false,
@@ -36,16 +37,17 @@
       }
     },
     mounted() {
-      this.$confirm({
-        message: `暂时不开放注册，是否随机账号登录`, okCallback: _ => {
-          this.form.phone = Math.floor(Math.random() * 50).toString();
-          this.login();
-        }
-      })
+      if (this.$root.layoutName === layout) {
+        this.$confirm({
+          message: `暂时不开放注册，是否随机账号登录`, okCallback: _ => {
+            this.form.phone = Math.floor(Math.random() * 50).toString();
+            this.login();
+          }
+        })
+      }
     },
     methods: {
       ...mapActions("user", ["ALogin", "ARegister", "AGetInfo"]),
-      ...mapMutations("user", ["MSetUserInfo"]),
       async login() {
         let phone = this.form.phone;
         let password = this.form.password || "123456";

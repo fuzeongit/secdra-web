@@ -116,12 +116,12 @@
   import config from "../../assets/script/config";
   import TagCard from "../../components/pages/shared/TagCard";
   import Comment from "../../components/pages/draw/Comment";
-  import {mapActions} from "vuex"
+  import {mapState, mapActions} from "vuex"
   import {CommentForm} from "../../assets/script/model/base";
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "";
+      store.commit('menu/MChangeName', "");
       let id = route.params.id;
       let res = await $axios.get(`${config.host}/draw/get`, {
         params: {id}
@@ -151,14 +151,13 @@
       Comment
     },
     computed: {
+      ...mapState("user", ["user"]),
       proportion() {
         return this.draw.height / this.draw.width
-      },
-      user() {
-        return this.$store.state.user.user
       }
     },
-    mounted() {},
+    mounted() {
+    },
     methods: {
       ...mapActions("draw", ["ACollection", "AUpdate"]),
       ...mapActions("user", ["AFollow"]),

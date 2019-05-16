@@ -36,8 +36,7 @@
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
       let type = "comment";
-      store.state.message.type = type;
-      store.state.message[type+"Count"] = 0;
+      store.commit('message/MChangeType', {type, reset: true});
       let {data: result} = await $axios.get(`${config.host}/message/list`, {
         params: {
           messageType: type.toUpperCase()

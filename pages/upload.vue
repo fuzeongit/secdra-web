@@ -52,18 +52,18 @@
 <script>
   import config from "../assets/script/config";
   import ioUtil from "../assets/script/util/ioUtil";
-  import {mapActions} from "vuex"
+  import {mapState, mapActions} from "vuex"
 
   export default {
     name: "upload",
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "upload";
+      store.commit('menu/MChangeName', "upload");
       let res = await $axios.get(`${config.host}/qiniu/getUploadToken`);
       let result = res.data || {};
       if (result.status !== 200) {
         throw new Error(result)
       }
-      store.state.user.uploadToken = result.data;
+      store.commit('user/MSetUploadToken', result.data);
     },
     data() {
       return {
@@ -89,12 +89,7 @@
       }
     },
     computed: {
-      user() {
-        return this.$store.state.user.user || {}
-      },
-      uploadToken() {
-        return this.$store.state.user.uploadToken || ""
-      },
+      ...mapState("user", ["user", "uploadToken"]),
       proportion() {
         return this.height / this.width
       }
@@ -149,13 +144,13 @@
         form.append("file", this.file);
         let loading = this.$loading();
         let qiniuResult;
-        try{
+        try {
           qiniuResult = (await this.$axios.post(config.qiniuUploadAddress, form, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
           })).data;
-        }catch (e) {
+        } catch (e) {
           loading.close();
           this.$notify({message: `上传失败`});
           return;

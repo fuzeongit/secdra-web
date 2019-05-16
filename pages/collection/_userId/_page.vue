@@ -49,7 +49,7 @@
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "collection";
+      store.commit('menu/MChangeName', "collection");
       let pageable = new Pageable(route.params.page * 1 || 0, 16, "createDate,desc");
       let {data: result} = await $axios.get(`${config.host}/collection/paging`, {
         params: Object.assign({
