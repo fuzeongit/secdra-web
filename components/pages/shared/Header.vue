@@ -96,7 +96,7 @@
 
 <script>
   import Cookie from 'js-cookie'
-  import {mapActions} from "vuex"
+  import {mapState, mapMutations, mapActions} from "vuex"
 
   export default {
     componentName: "Header",
@@ -114,31 +114,19 @@
     },
     watch: {
       $route() {
-        this.scrollTop = 0;
         window.scrollTo(0, 0)
       },
     },
     computed: {
+      ...mapState('menu', {activeName: 'name'}),
+      ...mapState('user', ['user']),
+      ...mapState('window', ['scrollTop']),
       isShow() {
         let isShow = this.scrollTop < this.offset;
         if (!isShow && !this.hid) {
           this.hid = true
         }
         return isShow
-      },
-      user() {
-        return this.$store.state.user.user || {}
-      },
-      activeName() {
-        return this.$store.state.menu.name
-      },
-      scrollTop: {
-        get() {
-          return this.$store.state.window.scrollTop || 0
-        },
-        set(val) {
-          this.$store.state.window.scrollTop = val || 0
-        }
       },
       messageCount() {
         return (this.$store.state.message.commentCount + this.$store.state.message.replyCount + this.$store.state.message.followCount + this.$store.state.message.systemCount)
@@ -152,10 +140,13 @@
       document.removeEventListener('scroll', this.documentScroll);
     },
     methods: {
+      ...mapMutations("window", ["MChangesScroll"]),
+      ...mapMutations("message", ["MChangeCount"]),
       ...mapActions("message", ["ACount"]),
       documentScroll(event) {
-        this.scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-        this.$store.state.window.scrollBottom = document.body.scrollHeight - this.scrollTop - event.target.documentElement.clientHeight;
+        let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+        let scrollBottom = document.body.scrollHeight - this.scrollTop - event.target.documentElement.clientHeight;
+        this.MChangesScroll({scrollTop, scrollBottom})
       },
       search() {
         this.$router.push(`/draw/search/${this.tag}`)
@@ -171,13 +162,13 @@
       },
       async countUnread() {
         let result = await this.ACount();
-          if (result.status !== 200) {
-            return
+        if (result.status !== 200) {
+          return
         }
-        this.$store.state.message.commentCount = result.data.COMMENT;
-        this.$store.state.message.replyCount = result.data.REPLY;
-        this.$store.state.message.followCount = result.data.FOLLOW;
-        this.$store.state.message.systemCount = result.data.SYSTEM;
+        this.MChangeCount({type: 'comment', count: result.data.COMMENT});
+        this.MChangeCount({type: 'reply', count: result.data.REPLY});
+        this.MChangeCount({type: 'follow', count: result.data.FOLLOW});
+        this.MChangeCount({type: 'system', count: result.data.SYSTEM});
       }
     }
   }
@@ -283,7 +274,7 @@
         float: left;
         line-height: 28px;
         a {
-          color:  @font-color-dark;
+          color: @font-color-dark;
           display: inline-block;
           height: 100%;
           font-size: @smallest-font-size;

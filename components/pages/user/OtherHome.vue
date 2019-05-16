@@ -54,7 +54,8 @@
           <p class="move" v-if="collectionList.length===8">
             <nuxt-link :to="`/collection/${user.id||''}`">查看更多>></nuxt-link>
           </p>
-          <img src="../../../assets/image/default/not.png" class="is-not" v-if="!collectionLoading&&!collectionList.length">
+          <img src="../../../assets/image/default/not.png" class="is-not"
+               v-if="!collectionLoading&&!collectionList.length">
         </div>
         <div class="following-box" v-loading="followingLoading">
           <h3 class="line center">
@@ -83,7 +84,8 @@
           <p class="move" v-if="followingList.length===8">
             <nuxt-link :to="`/following/${user.id||''}`">查看更多>></nuxt-link>
           </p>
-          <img src="../../../assets/image/default/not.png" class="is-not" v-if="!followingLoading&&!followingList.length">
+          <img src="../../../assets/image/default/not.png" class="is-not"
+               v-if="!followingLoading&&!followingList.length">
         </div>
       </div>
     </div>
@@ -91,7 +93,7 @@
 </template>
 
 <script>
-  import {mapActions} from "vuex"
+  import {mapState, mapActions} from "vuex"
   import {Pageable} from "../../../assets/script/model/base";
 
   export default {
@@ -107,14 +109,7 @@
       }
     },
     computed: {
-      scrollTop: {
-        get() {
-          return this.$store.state.window.scrollTop || 0
-        },
-        set(val) {
-          this.$store.state.window.scrollTop = val || 0
-        }
-      }
+      ...mapState('window', ['scrollTop']),
     }, mounted() {
       this.pagingWorks();
       this.pagingCollection();
@@ -276,12 +271,10 @@
         }
       }
 
-
-
       .works-box {
         padding-bottom: 24px;
         min-height: 250px;
-        .is-not{
+        .is-not {
           display: block;
           margin: 0 auto;
         }
@@ -290,16 +283,16 @@
         margin-top: 30px;
         padding-bottom: 24px;
         min-height: 250px;
-        .is-not{
+        .is-not {
           display: block;
           margin: 0 auto;
         }
       }
-      .following-box{
+      .following-box {
         margin-top: 30px;
         padding-bottom: 24px;
         min-height: 250px;
-        .is-not{
+        .is-not {
           display: block;
           margin: 0 auto;
         }
@@ -345,7 +338,7 @@
             width: @size;
             transition: @default-animate-time;
           }
-          .following-head-box{
+          .following-head-box {
             padding: 10px;
             display: block;
             img {

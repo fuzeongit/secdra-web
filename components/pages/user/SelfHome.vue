@@ -61,7 +61,8 @@
           <p class="move" v-if="collectionList.length===8">
             <nuxt-link :to="`/collection/${user.id||''}`">查看更多>></nuxt-link>
           </p>
-          <img src="../../../assets/image/default/not.png" class="is-not" v-if="!collectionLoading&&!collectionList.length">
+          <img src="../../../assets/image/default/not.png" class="is-not"
+               v-if="!collectionLoading&&!collectionList.length">
         </div>
       </div>
     </div>
@@ -105,7 +106,7 @@
 <script>
   import Cropper from "cropperjs"
   import ioUtil from '../../../assets/script/util/ioUtil'
-  import {mapActions} from "vuex"
+  import {mapState, mapMutations, mapActions} from "vuex"
   import {Pageable, Result} from "../../../assets/script/model/base";
   import config from "../../../assets/script/config";
 
@@ -144,25 +145,8 @@
       }
     },
     computed: {
-      uploadToken() {
-        return this.$store.state.user.uploadToken || ""
-      },
-      user: {
-        get() {
-          return this.$store.state.user.user || {}
-        },
-        set(val) {
-          this.$store.state.user.user = val
-        }
-      },
-      scrollTop: {
-        get() {
-          return this.$store.state.window.scrollTop || 0
-        },
-        set(val) {
-          this.$store.state.window.scrollTop = val || 0
-        }
-      }
+      ...mapState('user', ['user','uploadToken']),
+      ...mapState('window', ['scrollTop']),
     },
     mounted() {
       this.headCropper = new Cropper(this.$refs["tailoringHeadImage"]._isVue ? this.$refs["tailoringHeadImage"].$el : this.$refs["tailoringHeadImage"], {
@@ -182,6 +166,7 @@
 
     },
     methods: {
+      ...mapMutations("user", ["MSetUserInfo"]),
       ...mapActions("user", ["AUpdateBack", "AUpdateHead", "APagingFollowing", "AUpdate"]),
       ...mapActions("draw", ["APagingCollection", "APagingByUserId"]),
       async pagingWorks() {
@@ -292,7 +277,7 @@
         }
         this.isShowEdit = false;
         this.$notify({message: `修改成功`});
-        this.user = result.data;
+        this.MSetUserInfo(result.data);
         this.userForm = Object.assign({}, this.user);
       }
     }
@@ -417,7 +402,7 @@
       .works-box {
         padding-bottom: 24px;
         min-height: 250px;
-        .is-not{
+        .is-not {
           display: block;
           margin: 0 auto;
         }
@@ -426,7 +411,7 @@
         margin-top: 30px;
         padding-bottom: 24px;
         min-height: 250px;
-        .is-not{
+        .is-not {
           display: block;
           margin: 0 auto;
         }

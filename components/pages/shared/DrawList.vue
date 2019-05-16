@@ -37,6 +37,7 @@
 
 <script>
   import {ListConstant} from "../../../assets/script/constant/base";
+  import {mapState} from 'vuex'
 
   export default {
     componentName: "DrawList",
@@ -68,12 +69,7 @@
       },
     },
     computed: {
-      scrollBottom() {
-        return this.$store.state.window.scrollBottom
-      },
-      scrollTop() {
-        return this.$store.state.window.scrollTop
-      },
+      ...mapState('window', ['scrollTop', 'scrollBottom']),
       //计算偏移
       offset() {
         let o = [];
