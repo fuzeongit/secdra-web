@@ -145,7 +145,7 @@
       }
     },
     computed: {
-      ...mapState('user', ['user','uploadToken']),
+      ...mapState('user', ['user', 'uploadToken']),
       ...mapState('window', ['scrollTop']),
     },
     mounted() {
@@ -166,7 +166,7 @@
 
     },
     methods: {
-      ...mapMutations("user", ["MSetUserInfo"]),
+      ...mapMutations("user", ["MSetUserInfo", "MSetUserInfoAttr"]),
       ...mapActions("user", ["AUpdateBack", "AUpdateHead", "APagingFollowing", "AUpdate"]),
       ...mapActions("draw", ["APagingCollection", "APagingByUserId"]),
       async pagingWorks() {
@@ -208,7 +208,7 @@
       },
       async saveHead() {
         let file = ioUtil.dataURLtoFile(ioUtil.getRoundedCanvas(this.headCropper.getCroppedCanvas(), 400, 400).toDataURL());
-        this.user.head = URL.createObjectURL(file);
+        this.MSetUserInfoAttr({attr: "head", value: URL.createObjectURL(file)});
         this.uploadHeadLoading = true;
         let result = await this.upload(file, "head");
         this.uploadHeadLoading = false;
@@ -234,7 +234,7 @@
       },
       async saveBack() {
         let file = ioUtil.dataURLtoFile(this.backCropper.getCroppedCanvas().toDataURL());
-        this.user.background = URL.createObjectURL(file);
+        this.MSetUserInfoAttr({attr: "background",value:URL.createObjectURL(file)});
         this.uploadBackLoading = true;
         let result = await this.upload(file, "back");
         this.uploadBackLoading = false;

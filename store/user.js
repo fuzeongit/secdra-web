@@ -6,7 +6,7 @@ import httpUtil from '../assets/script/util/httpUtil'
  *  @author fjj
  */
 
-export const state = ()=>({
+export const state = () => ({
   user: null,
   uploadToken: null
 });
@@ -14,6 +14,14 @@ export const state = ()=>({
 export const mutations = {
   MSetUserInfo(state, user) {
     state.user = user;
+  },
+  MSetUserInfoAttr(state, {attr, value}) {
+    try {
+      state.user[attr] = value
+    } catch (e) {
+      //TODO
+      throw e
+    }
   },
   MSetUploadToken(state, uploadToken) {
     state.uploadToken = uploadToken;
