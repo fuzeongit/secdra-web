@@ -20,9 +20,8 @@
           <div class="row">
             <div v-for="(draw,index) in likeList" class="item" :key="index">
               <div class="img-box">
-                <nuxt-link :to="`/draw/${draw.id}`" class="cover"
-                           :style="{backgroundImage: `url(${$img.secdra(draw.url,'specifiedWidth')})`}"
-                           style="width: 100%">
+                <nuxt-link :to="`/draw/${draw.id}`">
+                  <img :src="$img.secdra(draw.url,'specifiedWidth')"  class="cover">
                 </nuxt-link>
                 <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
                    :style="{color:draw.focus?`red`:`gray`}" title="收藏"
@@ -54,9 +53,8 @@
           <div class="row">
             <div v-for="(draw,index) in newList" class="item" :key="index">
               <div class="img-box">
-                <nuxt-link :to="`/draw/${draw.id}`" class="cover"
-                           :style="{backgroundImage: `url(${$img.secdra(draw.url,'specifiedWidth')})`}"
-                           style="width: 100%">
+                <nuxt-link :to="`/draw/${draw.id}`">
+                  <img :src="$img.secdra(draw.url,'specifiedWidth')"  class="cover">
                 </nuxt-link>
                 <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
                    :style="{color:draw.focus?`red`:`gray`}" title="收藏"
