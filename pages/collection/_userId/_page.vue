@@ -153,7 +153,6 @@
       }
       &:hover {
         transform: translateY(-1px);
-        box-shadow: 0 0 50px rgba(150, 150, 150, 0.55);
         .info-box {
           .user-info-box {
             opacity: 0;

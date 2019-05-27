@@ -65,6 +65,7 @@
     text-align: left;
     padding: 10px 30px;
     line-height: 35px;
+    box-shadow: none;
     .row {
       width: 400px;
     }

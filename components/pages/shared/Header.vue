@@ -187,7 +187,6 @@
     left: 0;
     right: 0;
     box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
-    border-bottom: 1px solid #e2e2e2;
     background-color: @white;
     z-index: 10;
     min-width: @window-min-width;

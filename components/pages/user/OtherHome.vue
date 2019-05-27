@@ -27,7 +27,7 @@
             <span>{{user.gender==='FEMALE'?"她":"他"}}的作品</span>
           </h3>
           <div class="draw-list row">
-            <div class="card draw-item" v-for="(draw ,index) in worksList" :key="index">
+            <div class="draw-item" v-for="(draw ,index) in worksList" :key="index">
               <nuxt-link style="width: 100%;height: 230px;" class="flex-box" :to="`/draw/${draw.id}`">
                 <img :src="$img.secdra(draw.url,`specifiedWidth`)"
                      :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
@@ -44,7 +44,7 @@
             <span>{{user.gender==='FEMALE'?"她":"他"}}的收藏</span>
           </h3>
           <div class="draw-list row">
-            <div class="card draw-item" v-for="(draw ,index) in collectionList" :key="index">
+            <div class="draw-item" v-for="(draw ,index) in collectionList" :key="index">
               <nuxt-link style="width: 100%;height: 230px;" class="flex-box" :to="`/draw/${draw.id}`">
                 <img :src="$img.secdra(draw.url,`specifiedWidth`)"
                      :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">

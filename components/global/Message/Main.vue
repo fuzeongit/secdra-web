@@ -72,7 +72,6 @@
     top: 20px;
     left: 50%;
     margin: 0 auto 0 -(@size / 2);
-    box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
     padding: 15px;
     .message {
       .ellipsis();

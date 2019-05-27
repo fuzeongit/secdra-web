@@ -71,7 +71,7 @@ img {
 }
 
 .page {
-  min-height: calc(100vh - (@herder-height + @herder-border-height));
+  min-height: calc(100vh - @herder-height);
   margin-top: @herder-height;
 }
 
@@ -311,7 +311,7 @@ textarea {
   border-radius: @smallest-border-radius;
   background-color: @white;
   margin: 0 auto;
-
+  .card-box-shadow();
   .card-header {
     border-bottom: 1px solid @font-color-dark-line;
   }

@@ -201,6 +201,7 @@
       margin: 0 auto;
       .upload-card {
         background-color: #f6f6f6;
+        box-shadow: none;
         .image-box {
           height: @size;
           width: @size;

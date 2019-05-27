@@ -78,7 +78,6 @@
     right: 15px;
     z-index: @mask-index + 1;
     margin: 0 auto 0 -(@size / 2);
-    box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
     transition: all @default-animate-time;
     padding: 15px;
     .title {

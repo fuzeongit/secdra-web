@@ -64,6 +64,7 @@
       margin-top: 10px;
       padding: 20px 30px;
       text-align: left;
+      box-shadow: none;
       &:first-child {
         margin-top: 0;
       }
@@ -87,6 +88,7 @@
     }
     .not {
       text-align: center;
+      box-shadow: none;
     }
   }
 </style>

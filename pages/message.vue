@@ -1,7 +1,7 @@
 <template>
   <section class="container bk cover page">
     <div class="content row">
-      <div class="left-box card">
+      <div class="left-box">
         <h4 class="title"><strong><i class="icon s-xinxizhongxin"></i>消息中心</strong></h4>
         <ul class="list">
           <li @click="$router.push(key)" :class="{active:(type===key),settings:(key===`settings`)}"
@@ -14,7 +14,7 @@
           </li>
         </ul>
       </div>
-      <div class="right-box card">
+      <div class="right-box">
         <div class="card title">
           {{menuList[type]}}
         </div>
@@ -65,9 +65,9 @@
   @import "../assets/style/mixin";
 
   .bk {
-    /*background-image: url("../assets/image/bk/message-bk.png");*/
+    background-image: url("../assets/image/bk/message-bk.png");
     /*background-image: url("../assets/image/bk/login-bk.jpg");*/
-    height: calc(100vh - (@herder-height + @herder-border-height));
+    height: calc(100vh - @herder-height);
   }
 
   .content {
@@ -152,6 +152,7 @@
         line-height: @title-height;
         text-align: left;
         margin-bottom: @margin;
+        box-shadow: none;
       }
       .message {
         height: calc(100% - @margin - @title-height);

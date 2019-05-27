@@ -1,6 +1,6 @@
 <template>
   <div class="list-content" :style="{height:`${listContentOffset.height}px`}">
-    <div class="item" :style="{left:`${offset[index].left}px`,top:`${offset[index].top}px`}"
+    <div class="item card" :style="{left:`${offset[index].left}px`,top:`${offset[index].top}px`}"
          v-for="(draw,index) in list" :key="index">
       <nuxt-link :to="`/draw/${draw.id}`" class="img-box">
         <img :src="$img.secdra(draw.url,`specifiedWidth`)"
@@ -139,11 +139,9 @@
       @info-box-height: 80px;
       position: absolute;
       transition: 0.5s;
-      border-radius: @smallest-border-radius;
-      background-color: @white;
+
       &:hover {
         transform: translateY(-1px);
-        box-shadow: 0 0 50px rgba(150, 150, 150, 0.55);
         .info-box {
           .user-info-box {
             opacity: 0;
