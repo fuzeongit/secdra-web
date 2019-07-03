@@ -2,27 +2,40 @@
 @import "../color";
 
 .background-color(@color) {
-  background-color: @color;
-  border-color: @color;
-}
-.text-color(@color) {
-  color: @color;
+  background-color: @color !important;
+  border-color: @color !important;
 }
 
-.light-background{
+.text-color(@color) {
+  color: @color !important;
+  caret-color: @color !important
+}
+
+.light-background {
   .background-color(@light)
 }
-.primary-background{
+
+.primary-background {
   .background-color(@theme-color)
 }
-.disabled-background{
+
+.disabled-background {
   .background-color(@font-color-dark-line)
 }
 
-.primary-text{
+.primary-text {
   .text-color(@theme-color)
 }
-.disabled-text{
+
+.dark-text {
+  .text-color(@font-color-dark)
+}
+
+.dark-fade-text {
+  .text-color(@font-color-dark-fade)
+}
+
+.disabled-text {
   .text-color(@font-color-dark-disabled)
 }
 

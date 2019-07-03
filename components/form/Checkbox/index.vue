@@ -1,9 +1,13 @@
 <template>
-  <label class="checkbox" :class="{active:model,disabled:disabled}">
+  <label class="checkbox" :class="classObject">
     <slot>
-      <span class="checkbox-inner"><i class="icon s-correct-bold"></i></span>
+      <div class="checkbox-inner" v-ripple="{class:`${color}-text`}" :class="{'dark-fade-text':!model}">
+        <div class="content">
+          <i class="icon" :class="{'s-checkboxoutlineblank':!model,'s-check-box':model}"></i>
+        </div>
+      </div>
     </slot>
-    <span class="checkbox-label" v-if="label!==null">{{label}}</span>
+    <span class="checkbox-label" v-if="label!==null" :class="{'dark-text':!model}">{{label}}</span>
     <input type="checkbox" class="checkbox-original" :disabled="disabled" v-model="model">
   </label>
 </template>
@@ -21,6 +25,14 @@
         default: null
       },
       disabled: {
+        type: Boolean,
+        default: false
+      },
+      color: {
+        type: String,
+        default: 'default'
+      },
+      small: {
         type: Boolean,
         default: false
       },
@@ -72,78 +84,17 @@
           }
         }
         return false;
+      },
+      classObject() {
+        let classObject = {};
+        classObject[this.color + "-color"] = true;
+        classObject["small"] = this.small;
+        classObject["disabled"] = this.disabled;
+        return classObject
       }
     }
   }
 </script>
 
 <style type="text/less" lang="less" scoped>
-  @import "../../../assets/style/color.less";
-  @import "../../../assets/style/config.less";
-
-  .checkbox {
-    display: inline-block;
-    vertical-align: baseline;
-    cursor: pointer;
-    user-select: none;
-    .checkbox-inner {
-      display: inline-block;
-      width: @small-font-size;
-      height: @small-font-size;
-      border-radius: @smallest-border-radius;
-      border: 1px solid @box-border-color;
-      background-color: white;
-      transition: .1s;
-      font-size: @smallest-font-size;
-      vertical-align: middle;
-      .icon {
-        font-size: @smallest-font-size;
-        color: white;
-        transition: .1s;
-        opacity: 0;
-        vertical-align: super;
-      }
-    }
-    .checkbox-label {
-      display: inline-block;
-      font-size: @small-font-size;
-      transition: .1s;
-    }
-    .checkbox-original {
-      display: none;
-    }
-
-    &:hover {
-      .checkbox-inner {
-        border-color: @theme-color;
-      }
-    }
-
-    &.active {
-      .checkbox-inner {
-        border-color: @theme-color;
-        background-color: @theme-color;
-        .icon {
-          opacity: 1;
-        }
-      }
-      .checkbox-label {
-        color: @theme-color
-      }
-    }
-
-    &.disabled {
-      cursor: not-allowed;
-      .checkbox-inner {
-        border-color: @box-border-color;
-        background-color: @box-disabled-color;
-        .icon {
-          color: @box-border-color;
-        }
-      }
-      .checkbox-label {
-        color: @box-border-color
-      }
-    }
-  }
 </style>

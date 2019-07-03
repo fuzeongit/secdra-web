@@ -3,9 +3,6 @@
     <div class="content row">
       <div class="left-box">
         <div class="card img-card flex-box">
-          <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-             :style="{color:draw.focus?`red`:`gray`}" title="收藏"
-             @click.stop="collection(draw)"></a>
           <img :src="$img.secdra(draw.url)"
                :style="{height:proportion>=1?`100%`:`auto`,width:proportion<=1?`100%`:`auto`}">
         </div>
@@ -19,14 +16,12 @@
           </div>
           <div style="padding: 15px">
             <div class="flex-box">
-              <nuxt-link :to="`/user/${draw.user.id}`" class="head-box center">
+              <nuxt-link :to="`/user/${draw.user.id}`" class="head-box center" v-ripple>
                 <img :src="$img.head(draw.user.head,'small100')">
               </nuxt-link>
               <div class="user-info-box">
                 <p class="nickname">
-                  <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
-                    {{draw.user.name}}
-                  </nuxt-link>
+                  <Btn block flat small :to="`/user/${draw.user.id}`">{{draw.user.name}}</Btn>
                 </p>
                 <p class="introduction" :title="draw.user.introduction">
                   {{draw.user.introduction}}
@@ -43,7 +38,7 @@
         <div class="card info-card">
           <h3 class="name"><strong>{{draw.name}}</strong></h3>
           <p class="introduction">{{draw.introduction}}</p>
-          <div class="row">
+          <div class="row" style="margin-top: 5px;">
             <div class="col-15">
               <Btn flat icon small title="浏览">
                 <i class="icon s-eye"></i>
@@ -56,7 +51,7 @@
               </Btn>
               <span>{{draw.likeAmount}}</span>
             </div>
-            <div class="col-30" style="margin-top: 5px">
+            <div class="col-30">
               创建于：{{draw.createDate|date}}
             </div>
           </div>
@@ -67,9 +62,9 @@
             <Popper trigger="hover" placement="top" @show="showTagPopper(tag.id)" v-for="tag in draw.tagList"
                     :key="tag.id">
               <TagCard :ref="tag.id" :tag="tag.name"></TagCard>
-              <nuxt-link class="btn is-plain" :to="`/draw/search/${tag.name}`" slot="reference">
+              <Btn outline small color="primary" :to="`/draw/search/${tag.name}`" slot="reference" class="tag">
                 {{tag.name}}
-              </nuxt-link>
+              </Btn>
             </Popper>
           </div>
         </div>
@@ -274,10 +269,13 @@
         @head-img-height: 80px;
         @head-img-border: 2px;
         .head-box {
+          border-radius: 50%;
+          height: @head-img-height;
+          width: @head-img-height;
+          border: @head-img-border solid white;
           img {
-            height: @head-img-height;
-            width: @head-img-height;
-            border: @head-img-border solid white;
+            height: 100%;
+            width: 100%;
             border-radius: 50%;
           }
         }
@@ -305,7 +303,7 @@
           font-size: @smallest-font-size;
           color: @font-color-dark-fade;
         }
-       
+
       }
       .tag-card {
         @spacing: 10px;
@@ -313,11 +311,9 @@
 
         .tag-list {
           margin-bottom: -@spacing;
-          .btn {
+          .tag {
             margin-right: @spacing;
             margin-bottom: @spacing;
-            line-height: 25px;
-            padding: 0 1em;
           }
         }
       }

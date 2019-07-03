@@ -1,12 +1,14 @@
 <template>
   <div>
     <div class="size">
-      <nuxt-link :to="`/draw/search/${tag}`" class="cover" v-if="draw"
+      <nuxt-link :to="`/draw/search/${tag}`" class="cover" v-if="draw" v-ripple
                  :style="{backgroundImage: `url(${$img.secdra(draw.url,`specifiedWidth`)})`}">
       </nuxt-link>
     </div>
     <p class="tag-name">
-      <nuxt-link :to="`/draw/search/${tag}`">{{tag}}({{amount}})</nuxt-link>
+      <Btn outline small round color="primary" :to="`/draw/search/${tag}`" >
+        {{tag}}&nbsp;&nbsp;({{amount}})
+      </Btn>
     </p>
   </div>
 </template>

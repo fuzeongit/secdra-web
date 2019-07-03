@@ -39,28 +39,28 @@
                 <ul class="head-menu">
                   <li>
                     <nuxt-link :to="`/follower/${user.id||''}`" :class="{active:activeName===`follower`}"
-                               v-ripple="{ class: `primary--text` }">
+                               v-ripple>
                       <i class="icon s-guanzhu1"></i>
                       我的粉丝
                     </nuxt-link>
                   </li>
                   <li>
                     <nuxt-link :to="`/following/${user.id||''}`" :class="{active:activeName===`following`}"
-                               v-ripple="{ class: `primary--text` }">
+                               v-ripple>
                       <i class="icon s-guanzhu1"></i>
                       关注用户
                     </nuxt-link>
                   </li>
                   <li>
                     <nuxt-link to="/footprint" :class="{active:activeName===`footprint`}"
-                               v-ripple="{ class: `primary--text` }">
+                               v-ripple>
                       <i class="icon s-zuji"></i>
                       我的足迹
                     </nuxt-link>
                   </li>
                   <li>
                     <nuxt-link to="/upload" :class="{active:activeName===`upload`}"
-                               v-ripple="{ class: `primary--text` }">
+                               v-ripple>
                       <i class="icon s-upload"></i>
                       我要上传
                     </nuxt-link>

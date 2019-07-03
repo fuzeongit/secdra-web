@@ -1,9 +1,13 @@
 <template>
-  <label class="radio" :class="{active:model,disabled:disabled}">
+  <label class="radio" :class="classObject">
     <slot>
-      <span class="radio-inner"></span>
+      <div class="radio-inner" v-ripple="{class:`${color}-text`}" :class="{'dark-fade-text':!model}">
+         <div class="content">
+          <i class="icon" :class="{'s-md-radio-button-off':!model,'s-md-radio-button-on':model}"></i>
+        </div>
+      </div>
     </slot>
-    <span class="radio-label" v-if="label!==null">{{label}}</span>
+    <span class="radio-label" v-if="label!==null" :class="{'dark-text':!model}">{{label}}</span>
     <input type="radio" class="radio-original" :disabled="disabled" v-model="model" :value="true">
   </label>
 </template>
@@ -18,6 +22,14 @@
         default: null
       },
       disabled: {
+        type: Boolean,
+        default: false
+      },
+      color: {
+        type: String,
+        default: 'default'
+      },
+      small: {
         type: Boolean,
         default: false
       },
@@ -71,65 +83,18 @@
           }
         }
         return false;
+      },
+      classObject() {
+        let classObject = {};
+        classObject[this.color + "-color"] = true;
+        classObject["small"] = this.small;
+        classObject["disabled"] = this.disabled;
+        return classObject
       }
     }
   }
 </script>
 
 <style type="text/less" lang="less" scoped>
-  @import "../../../assets/style/color.less";
-  @import "../../../assets/style/config.less";
 
-  .radio {
-    display: inline-block;
-    cursor: pointer;
-    vertical-align: baseline;
-    user-select: none;
-    .radio-inner {
-      display: inline-block;
-      width: @small-font-size;
-      height: @small-font-size;
-      border-radius: 50%;
-      border: 1px solid @box-border-color;
-      background-color: white;
-      transition: .1s;
-      font-size: @smallest-font-size;
-      vertical-align: middle;
-    }
-    .radio-label {
-      display: inline-block;
-      font-size: @small-font-size;
-      transition: .1s;
-      vertical-align: middle;
-    }
-    .radio-original {
-      display: none;
-    }
-
-    &:hover {
-      .radio-inner {
-        border-color: @theme-color;
-      }
-    }
-
-    &.active {
-      .radio-inner {
-        border: 5px solid @theme-color;
-      }
-      .radio-label {
-        color: @theme-color
-      }
-    }
-
-    &.disabled {
-      cursor: not-allowed;
-      .radio-inner {
-        border-color: @box-border-color;
-        background-color: @box-disabled-color;
-      }
-      .radio-label {
-        color: @box-border-color
-      }
-    }
-  }
 </style>

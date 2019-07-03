@@ -3,12 +3,12 @@
     <div class="user-bk cover flex-box"
          :style="{backgroundImage: `url(${$img.back(user.background)})`}">
       <div class="user-bk-content">
-        <input type="search" title="input" class="input" placeholder="请输入标签搜索" @search="search" v-model="tag">
-        <button class="btn" @click="search">搜&nbsp;&nbsp;&nbsp;&nbsp;索</button>
+        <input type="search" title="搜索" class="input primary-color" placeholder="请输入标签搜索" @search="search" v-model="tag">
+        <Btn color="primary" class="btn" @click="search">搜&nbsp;&nbsp;&nbsp;&nbsp;索</Btn>
       </div>
     </div>
     <br>
-    <div class="content row">
+    <div class="content-grid">
       <div class="left-box">
         <div class="card image-card ">
           <h3 class="title">
@@ -177,7 +177,6 @@
         border-right: 0;
       }
       .btn {
-        width: 100px;
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
         font-size: @small-font-size;
@@ -185,10 +184,12 @@
     }
   }
 
-  .content {
+  .content-grid {
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: 850px 250px;
     width: @visual-width;
     margin: 0 auto;
-    transform: translateY(0);
     .card {
       .title {
         font-size: 16px;
@@ -199,85 +200,76 @@
         }
       }
     }
-    .left-box {
-      width: 850px;
-      float: left;
-      .image-card {
-        padding: 10px;
-        .image-grid-row {
-          @img-size: 200px;
-          display: grid;
-          width: 100%;
-          margin: 0 auto;
-          justify-content: space-between;
-          grid-template-columns: repeat(4, @img-size);
-          grid-gap: 10px;
+    .image-card {
+      padding: 10px;
+      .image-grid-row {
+        @img-size: 200px;
+        display: grid;
+        width: 100%;
+        margin: 0 auto;
+        justify-content: space-between;
+        grid-template-columns: repeat(4, @img-size);
+        grid-gap: 10px;
 
-          .img-box {
-            position: relative;
-            a {
-              width: @img-size;
-              height: @img-size;
-              display: block
-            }
-            .cover {
-              display: block;
+        .img-box {
+          position: relative;
+          a {
+            width: @img-size;
+            height: @img-size;
+            display: block
+          }
+          .cover {
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+          .like {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            margin: 0;
+          }
+        }
+        .draw-name {
+          text-align: center;
+          font-size: @small-font-size;
+          font-weight: 600;
+          margin-bottom: 0;
+          .ellipsis();
+          a {
+            color: @font-color-dark;
+          }
+        }
+        .tool {
+          margin: 10px 0;
+          text-align: right;
+          .head-image {
+            @head-size: 28px;
+            width: @head-size;
+            height: @head-size;
+            border-radius: 50%;
+            overflow: hidden;
+            display: inline-block;
+            float: left;
+            img {
               width: 100%;
               height: 100%;
-            }
-            .like {
-              position: absolute;
-              right: 0;
-              bottom: 0;
-              margin: 0;
-            }
-          }
-          .draw-name {
-            text-align: center;
-            font-size: @small-font-size;
-            font-weight: 600;
-            margin-bottom: 0;
-            .ellipsis();
-            a {
-              color: @font-color-dark;
-            }
-          }
-          .tool {
-            margin: 10px 0;
-            text-align: right;
-            .head-image {
-              @head-size: 28px;
-              width: @head-size;
-              height: @head-size;
               border-radius: 50%;
-              overflow: hidden;
-              display: inline-block;
-              float: left;
-              img {
-                width: 100%;
-                height: 100%;
-                border-radius: 50%;
-              }
             }
           }
         }
       }
     }
-    .right-box {
-      width: 250px;
-      float: right;
-      .tag-card {
-        @spacing: 10px;
-        padding: @spacing;
-
-        .tag-list {
-          margin-bottom: -@spacing;
-          .btn {
-            margin-right: @spacing;
-            margin-bottom: @spacing;
-            line-height: 25px;
-            padding: 0 2em;
-          }
+    .tag-card {
+      @spacing: 10px;
+      padding: @spacing;
+      .tag-list {
+        margin-bottom: -@spacing;
+        .btn {
+          margin-right: @spacing;
+          margin-bottom: @spacing;
+          line-height: 25px;
+          padding: 0 2em;
         }
       }
     }

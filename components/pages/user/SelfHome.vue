@@ -92,8 +92,8 @@
           <div class="input-group">
             <h5 class="sub-name">性别：</h5>
             <RadioGroup v-model="userForm.gender">
-              <Radio value="MALE" label="男孩"></Radio>
-              <Radio value="FEMALE" label="女孩" style="margin-left: 10px"></Radio>
+              <Radio value="MALE" label="男孩" color="primary"></Radio>
+              <Radio value="FEMALE" label="女孩" color="primary" style="margin-left: 10px"></Radio>
             </RadioGroup>
           </div>
         </div>
