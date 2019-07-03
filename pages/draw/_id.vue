@@ -34,12 +34,8 @@
               </div>
             </div>
             <div style="margin-top: 20px;">
-              <button class="btn block" v-if="draw.user.id===user.id" @click="isShowEdit=true">
-                编辑
-              </button>
-              <button class="btn block" v-else @click="follow(draw.user.id)">
-                {{draw.user.focus?`已关注`:`关注`}}
-              </button>
+              <Btn block color="primary" v-if="draw.user.id===user.id" @click="isShowEdit=true">编辑</Btn>
+              <Btn block color="primary" v-else @click="follow(draw.user.id)">{{draw.user.focus?`已关注`:`关注`}}</Btn>
             </div>
           </div>
         </div>
@@ -49,11 +45,15 @@
           <p class="introduction">{{draw.introduction}}</p>
           <div class="row">
             <div class="col-15">
-              <i class="icon s-eye"></i>
+              <Btn flat icon small title="浏览">
+                <i class="icon s-eye"></i>
+              </Btn>
               <span>{{draw.viewAmount}}</span>
             </div>
             <div class="col-15">
-              <i class="icon s-heart"></i>
+              <Btn flat icon small :color="draw.focus?`primary`:`default`" @click="collection(draw)" title="收藏">
+                <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+              </Btn>
               <span>{{draw.likeAmount}}</span>
             </div>
             <div class="col-30" style="margin-top: 5px">
@@ -305,19 +305,7 @@
           font-size: @smallest-font-size;
           color: @font-color-dark-fade;
         }
-        .row {
-          margin-top: 10px;
-          font-size: @smallest-font-size;
-          color: @font-color-dark-fade;
-          i {
-            font-size: @smallest-font-size;
-            color: @font-color-dark-fade;
-          }
-          span {
-            margin-left: 10px;
-            vertical-align: baseline;
-          }
-        }
+       
       }
       .tag-card {
         @spacing: 10px;

@@ -135,5 +135,4 @@
   @import "../assets/style/color";
   @import "../assets/style/config";
   @import "../assets/style/mixin";
-
 </style>
