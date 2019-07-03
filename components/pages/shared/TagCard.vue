@@ -67,7 +67,7 @@
   }
 
   .tag-name {
-    .center();
+    text-align: center;
     .ellipsis();
     font-size: @small-font-size;
     padding: 8px;

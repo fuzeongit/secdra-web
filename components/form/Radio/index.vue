@@ -91,7 +91,7 @@
       height: @small-font-size;
       border-radius: 50%;
       border: 1px solid @box-border-color;
-      background-color: @white;
+      background-color: white;
       transition: .1s;
       font-size: @smallest-font-size;
       vertical-align: middle;

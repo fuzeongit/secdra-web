@@ -19,7 +19,7 @@
       </div>
     </div>
     <div style="margin-top: -10px;padding: 10px;">
-      <button class="btn block" @click="follow" :disabled="user.focus===null">{{user.focus?`已关注`:`关注`}}</button>
+      <Btn block color="primary" @click="follow" :disabled="user.focus===null">{{user.focus?`已关注`:`关注`}}</Btn>
     </div>
   </div>
 </template>
@@ -40,7 +40,7 @@
           this.$notify({message: result.message});
           return
         }
-        this.$emit("focus", {userId: this.user.id, focus: result.data})
+        this.$emit("follow", {userId: this.user.id, focus: result.data})
       }
     }
   }

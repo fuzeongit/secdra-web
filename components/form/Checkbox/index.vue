@@ -92,13 +92,13 @@
       height: @small-font-size;
       border-radius: @smallest-border-radius;
       border: 1px solid @box-border-color;
-      background-color: @white;
+      background-color: white;
       transition: .1s;
       font-size: @smallest-font-size;
       vertical-align: middle;
       .icon {
         font-size: @smallest-font-size;
-        color: @white;
+        color: white;
         transition: .1s;
         opacity: 0;
         vertical-align: super;

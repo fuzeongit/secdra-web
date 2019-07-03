@@ -30,7 +30,7 @@
   .loading-mack {
     position: absolute;
     z-index: @mask-index;
-    background-color: fade(@white, 90);
+    background-color: fade(white, 90);
     margin: 0;
     top: 0;
     right: 0;

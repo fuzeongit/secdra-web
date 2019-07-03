@@ -10,6 +10,7 @@ import Checkbox from "../components/form/Checkbox";
 import RadioGroup from "../components/form/RadioGroup";
 import Radio from "../components/form/Radio";
 import Switch from "../components/form/Switch";
+import Btn from "../components/form/Btn";
 
 import Http from '../assets/script/util/httpUtil'
 import Img from '../assets/script/util/imgUrlUtil'
@@ -31,6 +32,7 @@ Vue.component("Checkbox",Checkbox);
 Vue.component("RadioGroup",RadioGroup);
 Vue.component("Radio",Radio);
 Vue.component("SSwitch",Switch);
+Vue.component("Btn",Btn);
 // import vueSocketIO from 'vue-socket.io'
 // import io from 'socket.io-client'
 // Vue.use(vueSocketIO,io("http://47.107.131.24:8089"));
@@ -47,3 +49,4 @@ for (let name in filters) {
 Vue.directive("goTop", directive.goTop);
 Vue.directive("popover", directive.popover);
 Vue.directive("loading", directive.loading);
+Vue.directive("ripple", directive.ripple);

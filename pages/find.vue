@@ -3,8 +3,9 @@
     <DrawList :page="page" :list="list" :pageLoading="pageLoading" @paging="paging" @collection="collection"
               @follow="follow"></DrawList>
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <button class="btn is-suspend go-top" v-goTop v-show="showGoTop">
-        <i class="icon s-up"></i></button>
+      <Btn icon v-goTop v-show="showGoTop" class="go-top">
+        <i class="icon s-up"></i>
+      </Btn>
     </transition>
   </div>
 </template>
@@ -135,10 +136,4 @@
   @import "../assets/style/config";
   @import "../assets/style/mixin";
 
-  .go-top {
-    position: fixed;
-    bottom: 50px;
-    right: 50px;
-    color: @theme-color;
-  }
 </style>

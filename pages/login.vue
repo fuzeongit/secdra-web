@@ -10,8 +10,7 @@
         <input type="password" class="input block" title="密码" v-model="form.password" placeholder="密码">
       </div>
       <br>
-      <button type="submit" class="btn block" :disabled="loginLoading">{{!loginLoading?`登录`:`登录中...`}}
-      </button>
+      <Btn block color="primary" :disabled="loginLoading" type="submit">{{!loginLoading?`登录`:`登录中...`}}</Btn>
     </form>
     <p class="center" style="position: fixed;bottom: 30px">
       <span> © 2018-2019</span>

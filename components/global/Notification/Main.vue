@@ -6,7 +6,9 @@
           {{title}}
         </div>
         <div>
-          <a class="icon s-close" @click="close"></a>
+          <Btn flat icon small @click.stop="close">
+            <i class="icon s-close"></i>
+          </Btn>
         </div>
       </div>
       <div class="message">
@@ -82,7 +84,7 @@
     padding: 15px;
     .title {
       .ellipsis();
-      .left();
+      text-align: left;
       width: 100%;
     }
     .message {

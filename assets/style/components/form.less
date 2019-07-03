@@ -1,0 +1,226 @@
+@import "../config";
+@import "../color";
+@import "../mixin";
+
+.input-group {
+  line-height: @input-line-height + @input-border-size + @input-border-size;
+  font-size: @small-font-size;
+  margin-bottom: 15px;
+  &.small {
+    line-height: @small-input-line-height + @input-border-size + @input-border-size;
+  }
+}
+
+.btn {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  cursor: pointer;
+  text-align: center;
+  outline: none;
+  transition: .1s;
+  font-weight: 500;
+  padding: 0 1.5em;
+  user-select: none;
+  border-radius: @smallest-border-radius;
+  font-size: @small-font-size;
+  line-height: @input-line-height;
+  border: 0 solid;
+  margin: 0;
+  .color(@color,@font-color) {
+    background-color: @color;
+    border-color: @color;
+    color: @font-color;
+    &.flat {
+      background-color: transparent;
+      border-color: transparent;
+      color: @color
+    }
+    &.outline {
+      background-color: transparent;
+      border-color: @color;
+      color: @color
+    }
+    &.disabled {
+      background-color: @font-color-dark-line;
+      border-color: @font-color-dark-line;
+      color: @font-color-dark-disabled;
+      cursor: not-allowed;
+      &:hover:before {
+        background-color: transparent;
+      }
+    }
+  }
+  &:before {
+    border-radius: inherit;
+    color: inherit;
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    opacity: 0.12;
+    transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+    width: 100%;
+  }
+  &:hover:before {
+    background-color: currentColor;
+  }
+
+  &.block {
+    display: block;
+    width: 100%;
+  }
+  &.small {
+    line-height: @small-input-line-height;
+    font-size: @smallest-font-size;
+  }
+  &.round {
+    border-radius: @input-line-height;
+    &.small {
+      border-radius: @small-input-line-height;
+    }
+  }
+  &.icon {
+    width: @input-line-height;
+    height: @input-line-height;
+    border-radius: 50%;
+    padding: 0;
+    &.small {
+      width: @small-input-line-height;
+      height: @small-input-line-height;
+    }
+    &.outline {
+      height: @input-line-height - @input-border-size - @input-border-size;
+      width: @input-line-height - @input-border-size - @input-border-size;
+      border-width: @input-border-size;
+      &.small {
+        height: @small-input-line-height - @input-border-size - @input-border-size;
+        width: @small-input-line-height - @input-border-size - @input-border-size;
+      }
+    }
+  }
+  &.outline {
+    line-height: @input-line-height - @input-border-size - @input-border-size;
+    border-width: @input-border-size;
+    &.small {
+      line-height: @small-input-line-height - @input-border-size - @input-border-size;
+    }
+    &.disabled {
+      line-height: @input-line-height;
+      border-width: 0;
+      &.small {
+        line-height: @small-input-line-height;
+      }
+    }
+  }
+
+  &.default-color {
+    .color(@light, @font-color-dark);
+    &.flat {
+      color:  @font-color-dark
+    }
+  }
+  &.primary-color {
+    .color(@theme-color, white)
+  }
+
+  .content {
+    align-items: center;
+    border-radius: inherit;
+    color: inherit;
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+    transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+    white-space: nowrap;
+    width: inherit;
+  }
+}
+
+.input(@color) {
+  width: 200px;
+  display: inline-block;
+  margin: 0;
+  transition: 0.1s;
+  padding: 0 1.5em;
+  font-size: @small-font-size;
+  color: @font-color-dark;
+  border: 1px solid @font-color-dark-line;
+  box-shadow: none;
+  outline: none;
+  user-select: none;
+  line-height: @input-line-height;
+  border-radius: @smallest-border-radius;
+  position: relative;
+  @border-size: 1px;
+
+  .input-color(@realColor) {
+    &:focus {
+      border: @border-size solid @color;
+    }
+    &[disabled] {
+      cursor: not-allowed;
+      background-color: #bdbdbd;
+    }
+    &.is-plain {
+      border-left-color: transparent;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      background-color: transparent;
+      &:focus {
+        border-bottom: @border-size solid @color;
+      }
+      &[disabled] {
+        cursor: not-allowed;
+        background-color: @font-color-light-disabled;
+      }
+    }
+  }
+  .input-color(@color);
+  &.block {
+    display: block;
+    width: 100%;
+  }
+  &textarea {
+    line-height: @small-input-line-height;
+  }
+}
+
+.input {
+  .input(@theme-color)
+}
+
+.input-red {
+  .input(@red);
+}
+
+.input-orange {
+  .input(@orange);
+}
+
+.input-yellow {
+  .input(@yellow);
+}
+
+.input-green {
+  .input(@green);
+}
+
+.input-cyan {
+  .input(@cyan);
+}
+
+.input-blue {
+  .input(@blue);
+}
+
+.input-purple {
+  .input(@purple);
+}
+
+textarea {
+  resize: vertical;
+}

@@ -1,89 +1,75 @@
 <template>
   <header class="animated duration" :class="{fadeInDown:isShow&&hid,fadeOutUp:!isShow}">
     <nav>
-      <nuxt-link to="/" :class="{active:activeName===`home`}">
+      <nuxt-link to="/" :class="{active:activeName===`home`}" v-ripple>
         <!--<img src="../../../assets/image/svg/logo.svg" height="30px">-->
         主站
       </nuxt-link>
-      <nuxt-link to="/find" :class="{active:activeName===`find`}">
+      <nuxt-link to="/find" :class="{active:activeName===`find`}" v-ripple>
         发现
       </nuxt-link>
-      <nuxt-link to="/new" :class="{active:activeName===`new`}">
+      <nuxt-link to="/new" :class="{active:activeName===`new`}" v-ripple>
         最新
       </nuxt-link>
-      <nuxt-link :to="`/collection/${user.id||''}`" :class="{active:activeName===`collection`}">
+      <nuxt-link :to="`/collection/${user.id||''}`" :class="{active:activeName===`collection`}" v-ripple>
         收藏
       </nuxt-link>
-      <nuxt-link :to="`/works/${user.id||''}`" :class="{active:activeName===`works`}">
+      <nuxt-link :to="`/works/${user.id||''}`" :class="{active:activeName===`works`}" v-ripple>
         作品
       </nuxt-link>
       <template>
         <div class="right-box">
-          <!--<input type="search" title="search" class="input is-plain" @search="search" v-model="tag"-->
-          <!--placeholder="输入标签搜索">-->
-          <!--<a @click="search">-->
-          <!--<i class="s-chaxun icon"></i>-->
-          <!--</a>-->
-          <nuxt-link to="/message/comment" class="link" :class="{active:activeName===`message`}"
-                     style="position: relative">
+          <nuxt-link to="/message/comment" class="link icon s-xinxizhongxin" :class="{active:activeName===`message`}"
+                     v-ripple>
             <span class="message-count" v-if="messageCount">{{messageCount|toMore}}</span>
-            <i class="icon s-xinxizhongxin"></i>
           </nuxt-link>
-          <div class="head-img-box">
+          <div class="head-img-box" v-ripple>
             <nuxt-link :to="`/user/${user.id||''}`">
               <img :src="$img.head(user.head,'small50')" width="30" height="30" v-popover:popover
                    :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`"
-                   style="border-radius: 50%;">
+                   style="border-radius: 50%">
             </nuxt-link>
             <Popper ref="popover"
                     trigger="hover"
                     :visibleArrow="false">
               <div class="head-popover">
                 <div class="bk cover" :style="{backgroundImage: `url(${$img.back(user.background,`backCard`)})`}"></div>
-                <!--<nuxt-link :to="`/user/${user.id||''}`">-->
-                <!--<img :src="$img.head(user.head)" width="100" height="100"-->
-                <!--:onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`"-->
-                <!--style="border-radius: 50%;margin: 0 auto;display: block;transform: translateY(-50px)">-->
-                <!--</nuxt-link>-->
                 <p class="name">{{user.name}}</p>
                 <p class="introduction" :title="user.introduction">{{user.introduction}}</p>
-                <ul class="head-menu row">
-                  <!--<li>-->
-                  <!--<nuxt-link to="/message/comment" :class="{active:activeName===`message`}">-->
-                  <!--<i class="icon s-xinxizhongxin"></i>-->
-                  <!--我的消息-->
-                  <!--</nuxt-link>-->
-                  <!--</li>-->
+                <ul class="head-menu">
                   <li>
-                    <nuxt-link :to="`/follower/${user.id||''}`" :class="{active:activeName===`follower`}">
+                    <nuxt-link :to="`/follower/${user.id||''}`" :class="{active:activeName===`follower`}"
+                               v-ripple="{ class: `primary--text` }">
                       <i class="icon s-guanzhu1"></i>
                       我的粉丝
                     </nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link :to="`/following/${user.id||''}`" :class="{active:activeName===`following`}">
+                    <nuxt-link :to="`/following/${user.id||''}`" :class="{active:activeName===`following`}"
+                               v-ripple="{ class: `primary--text` }">
                       <i class="icon s-guanzhu1"></i>
                       关注用户
                     </nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link to="/footprint" :class="{active:activeName===`footprint`}">
+                    <nuxt-link to="/footprint" :class="{active:activeName===`footprint`}"
+                               v-ripple="{ class: `primary--text` }">
                       <i class="icon s-zuji"></i>
                       我的足迹
                     </nuxt-link>
                   </li>
                   <li>
-                    <nuxt-link to="/upload" :class="{active:activeName===`upload`}">
+                    <nuxt-link to="/upload" :class="{active:activeName===`upload`}"
+                               v-ripple="{ class: `primary--text` }">
                       <i class="icon s-upload"></i>
                       我要上传
                     </nuxt-link>
                   </li>
                 </ul>
                 <div class="footer">
-                  <a @click="logout">
+                  <Btn flat icon @click="logout" small title="退出登录">
                     <i class="icon s-zhuxiao"></i>
-                    退出登录
-                  </a>
+                  </Btn>
                 </div>
               </div>
             </Popper>
@@ -187,7 +173,7 @@
     left: 0;
     right: 0;
     box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
-    background-color: @white;
+    background-color: white;
     z-index: 10;
     min-width: @window-min-width;
     user-select: none;
@@ -202,7 +188,7 @@
         color: @font-color-dark;
         padding: 0 20px;
         font-size: @small-font-size;
-        border-bottom: (@herder-height - @herder-nav-height) solid @white;
+        border-bottom: (@herder-height - @herder-nav-height) solid white;
         &.active, &:hover {
           color: @theme-color;
           border-bottom: (@herder-height - @herder-nav-height) solid @theme-color;
@@ -218,7 +204,7 @@
           font-size: @smallest-font-size;
           height: @default-font-size;
           line-height: @default-font-size;
-          color: @white;
+          color: white;
           background-color: @theme-color;
           padding: 0 5px;
           border-radius: @default-font-size / 2;
@@ -227,7 +213,10 @@
           right: -12px;
         }
         .link {
-          font-size: @small-font-size;
+          display: inline-block;
+          padding: 0 20px;
+          position: relative;
+          font-size: @big-font-size;
           &.active, &:hover {
             color: @theme-color;
           }
@@ -236,7 +225,8 @@
           vertical-align: top;
           display: inline-block;
           position: relative;
-          padding-left: 30px;
+          padding: 0 10px;
+          color: @theme-color;
         }
       }
     }
@@ -249,7 +239,7 @@
       width: @size;
     }
     .name {
-      .center();
+      text-align: center;
       font-weight: bold;
       margin: 25px 0 0;
     }
@@ -262,22 +252,26 @@
       color: @font-color-dark-fade;
       font-size: @smallest-font-size;
     }
+
     .head-menu {
+      @gap: 8px;
       width: @size;
-      background-color: @white;
-      border-radius: @smallest-border-radius;
+      background-color: white;
       text-align: center;
       user-select: none;
+      display: grid;;
+      justify-content: space-evenly;
+      align-content: space-evenly;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: @gap;
+      padding: @gap;
       li {
-        width: 50%;
-        float: left;
-        line-height: 28px;
         a {
           color: @font-color-dark;
-          display: inline-block;
-          height: 100%;
+          display: block;
           font-size: @smallest-font-size;
-          &.active {
+          line-height: 28px;
+          &.active, &:hover {
             color: @theme-color;
             .icon {
               color: @theme-color;
@@ -290,10 +284,10 @@
         }
       }
     }
+
     .footer {
       margin-top: 15px;
-      padding: 0 30px;
-      line-height: 28px;
+      padding: 5px 30px;
       text-align: right;
       background-color: @theme-background-color;
       font-size: @smallest-font-size;

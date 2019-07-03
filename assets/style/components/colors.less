@@ -1,0 +1,30 @@
+@import "../config";
+@import "../color";
+
+.background-color(@color) {
+  background-color: @color;
+  border-color: @color;
+}
+.text-color(@color) {
+  color: @color;
+}
+
+.light-background{
+  .background-color(@light)
+}
+.primary-background{
+  .background-color(@theme-color)
+}
+.disabled-background{
+  .background-color(@font-color-dark-line)
+}
+
+.primary-text{
+  .text-color(@theme-color)
+}
+.disabled-text{
+  .text-color(@font-color-dark-disabled)
+}
+
+
+

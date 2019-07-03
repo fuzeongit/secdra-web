@@ -5,7 +5,7 @@
       @after-enter="handleAfterEnter"
       @after-leave="handleAfterLeave">
       <div
-        class="popover popper"
+        class="card"
         ref="popper"
         v-show="showPopper"
         :style="{ width: width + 'px' }"

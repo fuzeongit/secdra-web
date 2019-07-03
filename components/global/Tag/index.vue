@@ -37,6 +37,6 @@
       color: @theme-color;
       font-size: @small-font-size;
     }
-    .center();
+    text-align: center;
   }
 </style>

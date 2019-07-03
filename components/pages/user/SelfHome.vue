@@ -42,7 +42,7 @@
             </div>
           </div>
           <p class="move" v-if="worksList.length===8">
-            <nuxt-link :to="`/works/${user.id||''}`">查看更多>></nuxt-link>
+            <Btn round flat small color="primary" :to="`/works/${user.id||''}`">查看更多>></Btn>
           </p>
           <img src="../../../assets/image/default/not.png" class="is-not" v-if="!worksLoading&&!worksList.length">
         </div>
@@ -59,7 +59,7 @@
             </div>
           </div>
           <p class="move" v-if="collectionList.length===8">
-            <nuxt-link :to="`/collection/${user.id||''}`">查看更多>></nuxt-link>
+            <Btn round flat small color="primary" :to="`/collection/${user.id||''}`">查看更多>></Btn>
           </p>
           <img src="../../../assets/image/default/not.png" class="is-not"
                v-if="!collectionLoading&&!collectionList.length">
@@ -356,7 +356,7 @@
         img {
           height: @head-img-height;
           width: @head-img-height;
-          border: @head-img-border solid @white;
+          border: @head-img-border solid white;
           border-radius: 50%;
         }
       }
@@ -391,7 +391,7 @@
         border-bottom: 1px dashed @font-color-dark-line;
         margin-bottom: 18px;
         span {
-          background-color: @white;
+          background-color: white;
           margin-bottom: -15px;
           display: inline-block;
           padding: 0 15px;

@@ -86,7 +86,7 @@
           border-radius: 50%;
           width: 80px;
           height: 80px;
-          border: 2px solid @white;
+          border: 2px solid white;
           transition: @default-animate-time;
         }
       }

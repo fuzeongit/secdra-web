@@ -86,7 +86,7 @@
     padding: 15px;
     .title {
       .ellipsis();
-      .left();
+      text-align: left;
       line-height: 35px;
       width: 100%;
     }

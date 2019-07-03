@@ -277,7 +277,7 @@
           img {
             height: @head-img-height;
             width: @head-img-height;
-            border: @head-img-border solid @white;
+            border: @head-img-border solid white;
             border-radius: 50%;
           }
         }

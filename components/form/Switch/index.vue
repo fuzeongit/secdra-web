@@ -60,7 +60,7 @@
       bottom: auto;
       width: @size - @distance * 2;
       height:  @size - @distance * 2;
-      background-color: @white;
+      background-color: white;
       border-radius: 50%;
       transition: all .3s;
       margin-left:0;

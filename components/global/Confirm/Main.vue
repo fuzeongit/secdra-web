@@ -10,12 +10,12 @@
             {{message}}
           </p>
           <div class="btn-group">
-            <button class="btn is-plain" @click.stop="no">
+            <Btn flat color="primary" @click="no">
               {{noDesc}}
-            </button>
-            <button class="btn" @click.stop="ok">
+            </Btn>
+            <Btn flat color="primary" @click="ok">
               {{okDesc}}
-            </button>
+            </Btn>
           </div>
         </div>
       </transition>
@@ -29,9 +29,9 @@
     watch: {
       closed(newVal) {
         if (newVal) {
-          this.visible = false;
           this.$el.firstElementChild.addEventListener('transitionend', this.destroyElement);
           this.$el.firstElementChild.addEventListener('animationend', this.destroyElement);
+          this.visible = false;
         }
       }
     },

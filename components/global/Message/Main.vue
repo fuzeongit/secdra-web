@@ -75,7 +75,7 @@
     padding: 15px;
     .message {
       .ellipsis();
-      .left();
+      text-align: left;
       width: 100%;
       font-size: @small-font-size;
     }

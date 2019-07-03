@@ -236,7 +236,7 @@
         line-height: 130px;
         font-size: @small-font-size;
         color: @font-color-dark-fade;
-        .center();
+        text-align: center;
       }
     }
   }

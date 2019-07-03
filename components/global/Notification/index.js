@@ -25,19 +25,17 @@ export const Notification = function (notificationOptions = {}) {
   notificationOptions.callback = function() {
     close(id, callback);
   };
-
-  instance.id = id;
-  instance.$mount();
-  document.body.appendChild(instance.$el);
-  instance.visible = true;
-  instance.dom = instance.$el;
-
   let verticalOffset = notificationOptions.offset || 0;
   instances.forEach(item => {
     verticalOffset += item.$el.offsetHeight + 15;
   });
   verticalOffset += 15;
   instance.verticalOffset = verticalOffset;
+  instance.id = id;
+  instance.$mount();
+  document.body.appendChild(instance.$el);
+  instance.dom = instance.$el;
+  instance.visible = true;
   instances.push(instance);
   return instance;
 };

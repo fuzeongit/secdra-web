@@ -22,9 +22,7 @@
           </p>
         </div>
         <div class="follow-box flex-box">
-          <button class="btn block" @click="$emit(`follow`,draw.user.id)" :disabled="draw.user.focus===null">
-            {{draw.user.focus?`已关注`:`关注`}}
-          </button>
+          <Btn block color="primary" @click="$emit(`follow`,draw.user.id)" :disabled="draw.user.focus===null">{{draw.user.focus?`已关注`:`关注`}}</Btn>
         </div>
       </div>
     </div>

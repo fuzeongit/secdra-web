@@ -13,32 +13,31 @@
         <div class="card image-card ">
           <h3 class="title">
             发现
-            <nuxt-link to="/find">
-              更多>>
-            </nuxt-link>
+            <Btn round flat small color="primary" to="/find"> 更多>></Btn>
           </h3>
-          <div class="row">
+          <div class="image-grid-row">
             <div v-for="(draw,index) in likeList" class="item" :key="index">
               <div class="img-box">
-                <nuxt-link :to="`/draw/${draw.id}`">
-                  <img :src="$img.secdra(draw.url,'specifiedWidth')"  class="cover">
+                <nuxt-link :to="`/draw/${draw.id}`" v-ripple :title="draw.name">
+                  <img :src="$img.secdra(draw.url,'specifiedWidth')" class="cover">
                 </nuxt-link>
-                <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-                   :style="{color:draw.focus?`red`:`gray`}" title="收藏"
-                   @click.stop="collection(draw)"></a>
               </div>
-              <p class="draw-name center">
-                <nuxt-link :to="`/draw/${draw.id}`">
-                  {{draw.name}}
-                </nuxt-link>
-              </p>
-              <div class="user-name center">
+              <div class="tool">
                 <Popper placement="top" trigger="hover">
-                  <UserCard :user="draw.user" @focus="follow"></UserCard>
-                  <nuxt-link :to="`/user/${draw.userId}`" slot="reference">
-                    {{draw.user.name}}
+                  <UserCard :user="draw.user" @follow="follow"></UserCard>
+                  <nuxt-link :to="`/draw/${draw.id}`" v-ripple class="head-image" slot="reference"
+                             :title="draw.user.name">
+                    <img :src="$img.head(draw.user.head,'small50')">
                   </nuxt-link>
                 </Popper>
+                <Btn flat icon small title="浏览">
+                  <i class="icon s-eye"></i>
+                </Btn>
+                <span>{{draw.viewAmount}}</span>
+                <Btn flat icon :color="draw.focus?`primary`:`default`" @click.stop="collection(draw)" small title="收藏">
+                  <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+                </Btn>
+                <span>{{draw.likeAmount}}</span>
               </div>
             </div>
           </div>
@@ -46,32 +45,31 @@
         <div class="card image-card " style="margin-top: 20px;">
           <h3 class="title">
             最新
-            <nuxt-link to="/new">
-              更多>>
-            </nuxt-link>
+            <Btn round flat small color="primary" to="/new"> 更多>></Btn>
           </h3>
-          <div class="row">
+          <div class="image-grid-row">
             <div v-for="(draw,index) in newList" class="item" :key="index">
               <div class="img-box">
-                <nuxt-link :to="`/draw/${draw.id}`">
-                  <img :src="$img.secdra(draw.url,'specifiedWidth')"  class="cover">
+                <nuxt-link :to="`/draw/${draw.id}`" v-ripple :title="draw.name">
+                  <img :src="$img.secdra(draw.url,'specifiedWidth')" class="cover">
                 </nuxt-link>
-                <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-                   :style="{color:draw.focus?`red`:`gray`}" title="收藏"
-                   @click.stop="collection(draw)"></a>
               </div>
-              <p class="draw-name center">
-                <nuxt-link :to="`/draw/${draw.id}`">
-                  {{draw.name}}
-                </nuxt-link>
-              </p>
-              <div class="user-name center">
+              <div class="tool">
                 <Popper placement="top" trigger="hover">
-                  <UserCard :user="draw.user" @focus="follow"></UserCard>
-                  <nuxt-link :to="`/user/${draw.userId}`" slot="reference">
-                    {{draw.user.name}}
+                  <UserCard :user="draw.user" @follow="follow"></UserCard>
+                  <nuxt-link :to="`/draw/${draw.id}`" v-ripple class="head-image" slot="reference"
+                             :title="draw.user.name">
+                    <img :src="$img.head(draw.user.head,'small50')">
                   </nuxt-link>
                 </Popper>
+                <Btn flat icon small title="浏览">
+                  <i class="icon s-eye"></i>
+                </Btn>
+                <span>{{draw.viewAmount}}</span>
+                <Btn flat icon :color="draw.focus?`primary`:`default`" @click.stop="collection(draw)" small title="收藏">
+                  <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+                </Btn>
+                <span>{{draw.likeAmount}}</span>
               </div>
             </div>
           </div>
@@ -83,9 +81,9 @@
             热门推荐
           </h3>
           <div class="tag-list">
-            <nuxt-link class="btn is-plain" v-for="(tag,index) in tagList" :to="`/draw/search/${tag.name}`"
-                       :key="index"> {{tag.name}}
-            </nuxt-link>
+            <Btn v-for="(tag,index) in tagList" :to="`/draw/search/${tag.name}`" color="primary" outline small
+                 :key="index">{{tag.name}}
+            </Btn>
           </div>
         </div>
       </div>
@@ -109,8 +107,8 @@
       store.commit('menu/MChangeName', "home");
       let taskList = [];
       taskList.push($axios.get(`${config.host}/tag/listTagOrderByLikeAmount`));
-      taskList.push($axios.get(`${config.host}/draw/pagingByRecommend`, {params: new Pageable(0, 10)}));
-      taskList.push($axios.get(`${config.host}/draw/paging`, {params: new Pageable(0, 10, "createDate,desc")}));
+      taskList.push($axios.get(`${config.host}/draw/pagingByRecommend`, {params: new Pageable(0, 12)}));
+      taskList.push($axios.get(`${config.host}/draw/paging`, {params: new Pageable(0, 12, "createDate,desc")}));
       let resultList = (await Promise.all(taskList)).map(item => item.data);
       return {
         tagList: resultList[0].data,
@@ -193,16 +191,11 @@
     transform: translateY(0);
     .card {
       .title {
-        font-size: @default-font-size;
-        padding-left: 10px;
-        line-height: @default-font-size;
-        border-left: 5px solid @theme-color;
+        font-size: 16px;
+        line-height: 28px;
+        margin-bottom: 10px;
         a {
-          line-height: 16px;
-          vertical-align: baseline;
-          display: inline-block;
           float: right;
-          color: @theme-color
         }
       }
     }
@@ -211,38 +204,60 @@
       float: left;
       .image-card {
         padding: 10px;
-        .row {
-          margin-top: 8px;
-          .item {
-            margin: 12px 8px;
-            float: left;
-            .img-box {
-              position: relative;
-              width: 150px;
-              height: 150px;
-              .cover {
-                display: block;
+        .image-grid-row {
+          @img-size: 200px;
+          display: grid;
+          width: 100%;
+          margin: 0 auto;
+          justify-content: space-between;
+          grid-template-columns: repeat(4, @img-size);
+          grid-gap: 10px;
+
+          .img-box {
+            position: relative;
+            a {
+              width: @img-size;
+              height: @img-size;
+              display: block
+            }
+            .cover {
+              display: block;
+              width: 100%;
+              height: 100%;
+            }
+            .like {
+              position: absolute;
+              right: 0;
+              bottom: 0;
+              margin: 0;
+            }
+          }
+          .draw-name {
+            text-align: center;
+            font-size: @small-font-size;
+            font-weight: 600;
+            margin-bottom: 0;
+            .ellipsis();
+            a {
+              color: @font-color-dark;
+            }
+          }
+          .tool {
+            margin: 10px 0;
+            text-align: right;
+            .head-image {
+              @head-size: 28px;
+              width: @head-size;
+              height: @head-size;
+              border-radius: 50%;
+              overflow: hidden;
+              display: inline-block;
+              float: left;
+              img {
                 width: 100%;
                 height: 100%;
+                border-radius: 50%;
               }
-              .like {
-                position: absolute;
-                right: 5px;
-                bottom: 5px;
-                font-size: @default-font-size
-              }
-            }
-            .draw-name {
-              margin-top: 10px;
-              font-size: @small-font-size;
-              font-weight: 600;
-              .ellipsis()
-            }
-            .user-name {
-              font-size: @smallest-font-size;
-              line-height: 20px;
-              color: @font-color-dark;
-              .ellipsis();
             }
           }
         }
@@ -256,7 +271,6 @@
         padding: @spacing;
 
         .tag-list {
-          margin-top: @spacing * 2;
           margin-bottom: -@spacing;
           .btn {
             margin-right: @spacing;
