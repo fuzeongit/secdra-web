@@ -209,8 +209,8 @@
           padding: 0 5px;
           border-radius: @default-font-size / 2;
           position: absolute;
-          top: -10px;
-          right: -12px;
+          top: 4px;
+          right: 2px;
         }
         .link {
           display: inline-block;

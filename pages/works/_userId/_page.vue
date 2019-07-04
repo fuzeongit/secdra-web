@@ -7,10 +7,10 @@
                :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
         </nuxt-link>
         <div class="tool">
-          <Checkbox v-if="isSelf" :value="draw" valueKey="id" color="primary"></Checkbox>
-          <a v-if="!isSelf" class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-             :style="{color:draw.focus?`red`:`gray`}" title="收藏"
-             @click.stop="collection(draw)"></a>
+          <Checkbox v-if="isSelf" :value="draw" valueKey="id" small color="primary"></Checkbox>
+          <Btn v-if="!isSelf" flat icon :color="draw.focus?`primary`:`default`" @click.stop="collection(draw)" small title="收藏">
+            <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+          </Btn>
         </div>
         <div v-if="!isSelf" class="flex-box info-box">
           <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">

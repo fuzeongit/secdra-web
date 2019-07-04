@@ -7,10 +7,10 @@
                :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
         </nuxt-link>
         <div class="tool">
-          <Checkbox v-if="isSelf" :value="draw" valueKey="id"></Checkbox>
-          <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-             :style="{color:draw.focus?`red`:`gray`}" title="收藏"
-             @click.stop="collection(draw)"></a>
+          <Checkbox small v-if="isSelf" :value="draw" valueKey="id" ></Checkbox>
+          <Btn flat icon :color="draw.focus?`primary`:`default`" @click.stop="collection(draw)" small title="收藏">
+            <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+          </Btn>
         </div>
         <div class="flex-box info-box" v-if="draw.user.id">
           <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
@@ -35,10 +35,9 @@
     <br>
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
     <br>
-    <button v-if="isSelf" class="btn is-suspend" style="position: fixed;right: 50px;bottom: 50px;"
-            @click="unCollection">
+    <Btn icon class="go-top" v-if="isSelf" @click="unCollection">
       <i class="icon s-heart" style="color: red"></i>
-    </button>
+    </Btn>
   </div>
 </template>
 

@@ -6,6 +6,9 @@ module.exports = {
   /*
   ** Headers of the page
   */
+  server: {
+    port: 3000
+  },
   head: {
     title: 'Secdra - 想你所想',
     meta: [

@@ -4,7 +4,7 @@
          :style="{backgroundImage: `url(${$img.back(user.background,`backCard`)})`}">
     </div>
     <div class="flex-box" style="padding:10px">
-      <nuxt-link :to="`/user/${user.id}`" class="head-box">
+      <nuxt-link :to="`/user/${user.id}`" class="head-box" v-ripple>
         <img :src="$img.head(user.head,'small50')">
       </nuxt-link>
       <div class="user-info-box">
@@ -66,6 +66,7 @@
   .head-box {
     display: block;
     position: relative;
+    border-radius: 50%;
     img {
       border-radius: 50%;
       width: @img-size;
