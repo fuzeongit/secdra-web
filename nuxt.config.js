@@ -12,6 +12,9 @@ const env = (function () {
 module.exports = {
   mode: 'universal',
   env,
+  server: {
+    port: 3000
+  },
   head: {
     title: 'Secdra - 想你所想',
     meta: [
