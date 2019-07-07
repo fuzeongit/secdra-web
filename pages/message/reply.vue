@@ -2,18 +2,18 @@
   <div class="list">
     <div class="item card" v-for="item in list" :key="item.id">
       <div class="row">
-        <div class="col-3 head">
-          <nuxt-link :to="`/user/${item.answerer.id}`">
+        <div class="col-3">
+          <nuxt-link :to="`/user/${item.answerer.id}`" class="head-box" v-ripple>
             <img :src="$img.head(item.answerer.head,'small50')">
           </nuxt-link>
         </div>
         <div class="col-27 desc">
           <p class="name">
-            <nuxt-link :to="`/user/${item.answerer.id}`">
+            <nuxt-link :to="`/user/${item.answerer.id}`" class="primary-hover">
               {{item.answerer.name}}
             </nuxt-link>
             <span>回复了我的</span>
-            <nuxt-link :to="`/draw/${item.drawId}`">
+            <nuxt-link :to="`/draw/${item.drawId}`" class="primary-hover">
               评论
             </nuxt-link>
           </p>
@@ -31,13 +31,12 @@
 </template>
 
 <script>
-  import config from "../../assets/script/config";
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
       let type = "reply";
       store.commit('message/MChangeType', {type, reset: true});
-      let {data: result} = await $axios.get(`${config.host}/message/list`, {
+      let {data: result} = await $axios.get(`/message/list`, {
         params: {
           messageType: type.toUpperCase()
         }
@@ -68,7 +67,9 @@
       &:first-child {
         margin-top: 0;
       }
-      .head {
+      .head-box {
+        border-radius: 50%;
+        display: inline-block;
         img {
           border-radius: 50%;
         }

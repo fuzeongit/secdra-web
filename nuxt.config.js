@@ -1,11 +1,17 @@
-const pkg = require('./package');
-
+const env = (function () {
+  return {
+    baseUrl: process.env.NODE_ENV === "development" ? "http://localhost:3000/api" : "http://www.secdra.com/api",
+    qiniuImg: process.env.NODE_ENV === "development" ? "http://secdraimg.secdra.com" : "http://secdraimg.secdra.com",
+    qiniuHead: process.env.NODE_ENV === "development" ? "http://secdrahead.secdra.com" : "http://secdrahead.secdra.com",
+    qiniuBack: process.env.NODE_ENV === "development" ? "http://secdraback.secdra.com" : "http://secdraback.secdra.com",
+    qiniuUploadAddress: process.env.NODE_ENV === "development" ? "http://upload-z2.qiniup.com" : "http://upload-z2.qiniup.com",
+    qiniuSeparator: process.env.NODE_ENV === "development" ? "-" : "-",
+  }
+})();
 
 module.exports = {
   mode: 'universal',
-  /*
-  ** Headers of the page
-  */
+  env,
   head: {
     title: 'Secdra - 想你所想',
     meta: [
@@ -20,37 +26,20 @@ module.exports = {
       {rel: 'stylesheet', type: 'text/css', href: '//at.alicdn.com/t/font_896802_f3v4vbehy3e.css'},
     ]
   },
-  /*
-   ** Global CSS
-   */
   css: [
     {src: '@/assets/style/index.less', lang: 'less'},
   ],
-  /*
-  ** Customize the progress-bar color
-  */
   loading: {
     name: 'nuxt',
     color: '#fb7299',
     background: '#fff'
   },
-
-
-  /*
-  ** Plugins to load before mounting the App
-  */
   plugins: [
     '~/plugins/mixin',
     '~/plugins/route',
     '~/plugins/extend'
   ],
-
-
-  /*
-  ** Nuxt.js modules
-  */
   modules: [
-    // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/proxy',
     '@nuxtjs/axios'
   ],
@@ -65,30 +54,15 @@ module.exports = {
       }
     ]
   ],
-  /*
-  ** Axios module configuration
-  */
   axios: {
-    // See https://github.com/nuxt-community/axios-module#options
+    baseURL: "http://localhost:3000/api"
   },
-
-  /*
-  ** Build configuration
-  */
   build: {
-    /*
-    ** You can extend webpack config here
-    */
     extend(config, ctx) {
 
     },
     optimization: {},
-
-    // optimizeCSS: {}//压缩css
-
-    /**
-     * 打包独立css文件
-     */
+    //打包独立css文件
     extractCSS: true,
   }
 };

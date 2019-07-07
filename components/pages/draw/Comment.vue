@@ -2,26 +2,29 @@
   <div class="card" style="padding: 10px">
     <div class="row send-comment-box">
       <div class="col-23">
-        <input type="text" title="input" class="input block" placeholder="请输入评论" v-model="commentForm.content">
+        <input type="text" title="input" class="input block primary-color" placeholder="请输入评论"
+               v-model="commentForm.content">
       </div>
       <div class="col-3 center">
-        <a class="icon s-laugh"></a>
+        <Btn icon color="white">
+          <i class="icon s-laugh"></i>
+        </Btn>
       </div>
       <div class="col-4 center">
-        <button class="btn block" @click="send" :disabled="commentForm.content===''">发送</button>
+        <Btn block color="primary" @click="send" :disabled="commentForm.content===''">发送</Btn>
       </div>
     </div>
     <div class="comment-box" v-loading="loading">
       <div class="comment-list">
         <div class="comment-item row" v-for="(item,index) in list" :key="index" v-show="!(!isAll&&index>=3)">
-          <div class="col-3 head">
-            <nuxt-link :to="`/user/${item.critic.id}`">
+          <div class="col-3">
+            <nuxt-link :to="`/user/${item.critic.id}`" class="head-box" v-ripple>
               <img :src="$img.head(item.critic.head,'small50')">
             </nuxt-link>
           </div>
           <div class="col-27 desc">
             <p class="name">
-              <nuxt-link :to="`/user/${item.critic.id}`">
+              <nuxt-link :to="`/user/${item.critic.id}`" class="primary-hover">
                 {{item.critic.name}}
               </nuxt-link>
               <i class="icon"
@@ -32,27 +35,32 @@
               {{item.content}}
             </p>
             <p class="tool">
-              <a @click="item.isShowReply = !item.isShowReply"><i class="icon s-pingjia"></i>{{item.isShowReply?'收起':'查看回复'}}</a>
-              <a @click="item.isShowReplyInput=!item.isShowReplyInput"><i class="icon s-bianji"></i>{{item.isShowReplyInput?'收起':'回复'}}</a>
+              <Btn small flat round color="primary" @click="item.isShowReply = !item.isShowReply"><i
+                class="icon s-pingjia"></i>{{item.isShowReply?'收起':'查看回复'}}
+              </Btn>
+              <Btn small flat round color="primary" @click="item.isShowReplyInput=!item.isShowReplyInput"><i
+                class="icon s-bianji"></i>{{item.isShowReplyInput?'收起':'回复'}}
+              </Btn>
             </p>
             <div class="row send-reply-box" v-if="item.isShowReplyInput">
               <div class="col-23">
-                <input type="text" title="input" class="input block" placeholder="请输入评论"
+                <input type="text" title="input" class="input block primary-color" placeholder="请输入回复"
                        v-model="replyForm[item.id].content">
               </div>
               <div class="col-3 center">
-                <a class="icon s-laugh"></a>
+                <Btn icon color="white">
+                  <i class="icon s-laugh"></i>
+                </Btn>
               </div>
               <div class="col-4 center">
-                <button class="btn block" @click="sendReply(item)" :disabled="replyForm[item.id].content===''">发送
-                </button>
+                <Btn block color="primary" @click="sendReply(item)" :disabled="replyForm[item.id].content===''">发送</Btn>
               </div>
             </div>
             <Reply v-if="item.isShowReply" :comment-id="item.id" :draw-id="drawId" :author-id="userId"
                    :critic-id="item.criticId" :ref="item.id" :key="index"></Reply>
           </div>
         </div>
-        <button class="btn block more" v-if="!loading&&!isAll&&list.length>=4" @click="listAll">查看全部</button>
+        <Btn block color="primary" v-if="!loading&&!isAll&&list.length>=4" @click="listAll">查看全部</Btn>
         <p class="is-not" v-if="!loading&&!list.length">
           <img src="../../../assets/image/default/not.png">
         </p>
@@ -110,7 +118,7 @@
         }
         this.replyForm = {};
         this.list = result.data.map(item => {
-          this.$set(this.replyForm,item.id, new ReplyForm("", this.drawId, this.userId));
+          this.$set(this.replyForm, item.id, new ReplyForm("", this.drawId, this.userId));
           return Object.assign(item, {isShowReplyInput: false, isShowReply: false})
         });
         this.loading = false;
@@ -125,7 +133,7 @@
         this.isAll = true;
         this.replyForm = {};
         this.list = result.data.map(item => {
-          this.$set(this.replyForm,item.id, new ReplyForm("", this.drawId, this.userId));
+          this.$set(this.replyForm, item.id, new ReplyForm("", this.drawId, this.userId));
           return Object.assign(item, {isShowReplyInput: false, isShowReply: false})
         });
         this.loading = false;
@@ -138,7 +146,7 @@
           this.$notify({message: result.message});
           return
         }
-        if(item.isShowReply){
+        if (item.isShowReply) {
           let ref = this.$refs[item.id];
           if (!ref) {
             return
@@ -147,11 +155,11 @@
             ref = ref[0]
           }
           ref.listAll()
-        }else{
+        } else {
           item.isShowReply = true;
         }
         item.isShowReplyInput = false;
-        this.$set(this.replyForm,item.id, new ReplyForm("", this.drawId, this.userId));
+        this.$set(this.replyForm, item.id, new ReplyForm("", this.drawId, this.userId));
       }
     }
   }
@@ -162,14 +170,8 @@
   @import "../../../assets/style/config";
   @import "../../../assets/style/mixin";
 
-  .send-comment-box, .send-reply-box {
-    > div {
-      line-height: 35px;
-    }
-    .icon {
-      font-size: 25px;
-      color: @icon-color-dark;
-    }
+  .send-reply-box {
+    margin-top: 8px;
   }
 
   .comment-box {
@@ -182,7 +184,9 @@
         &:first-child {
           border-top: 0;
         }
-        .head {
+        .head-box {
+          border-radius: 50%;
+          display: inline-block;
           img {
             border-radius: 50%;
           }
@@ -228,8 +232,8 @@
         color: @font-color-dark-fade;
         transition: @short-animate-time all;
         &:hover {
-          background-color: darken(@theme-background-color,4%);
-          border-color: darken(@theme-background-color,4%);
+          background-color: darken(@theme-background-color, 4%);
+          border-color: darken(@theme-background-color, 4%);
         }
       }
       .is-not {

@@ -8,9 +8,9 @@
             {{message}}
           </p>
           <div class="btn-group">
-            <button class="btn" @click.stop="close">
+            <Btn flat color="primary" @click="close">
               {{btnDesc}}
-            </button>
+            </Btn>
           </div>
         </div>
       </transition>
@@ -56,15 +56,15 @@
 </script>
 
 <style scoped lang="less" type="text/less">
-  @import "../../../assets/style/color.less";
-  @import "../../../assets/style/config.less";
+  @import "../../../assets/style/color";
+  @import "../../../assets/style/config";
 
   .card {
     width: 450px;
     margin: 0 auto;
     vertical-align: middle;
     display: inline-block;
-    padding:15px;
+    padding: 15px;
     h3 {
       text-align: left;
       line-height: 40px;

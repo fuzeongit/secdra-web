@@ -4,19 +4,18 @@
          :style="{transform: `translateY(${scrollTop*.5}px)`,backgroundImage: `url(${$img.back(user.background)})`}">
       <div class="user-bk-content">
         <div class="tool">
-          <label class="btn is-suspend">
-            <input type="file" style="display: none" @change="uploadBack">
+          <Btn icon big type="file" @change="uploadBack">
             <i class="icon s-upload"></i>
-          </label>
-          <button class="btn is-suspend" style="margin-left: 15px;" @click="isShowEdit = true">
+          </Btn>
+          <Btn icon big style="margin-left: 15px;" @click="isShowEdit = true">
             <i class="icon s-bianji"></i>
-          </button>
+          </Btn>
         </div>
       </div>
     </div>
     <div class="content card">
       <div class="head-box">
-        <label class="upload-head">
+        <label class="upload-head" v-ripple>
           <input type="file" style="display: none" @change="uploadHead">
           <img :src="$img.head(user.head)"
                :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`">
@@ -35,7 +34,7 @@
           </h3>
           <div class="draw-list row">
             <div class="draw-item" v-for="(draw ,index) in worksList" :key="index">
-              <nuxt-link style="width: 100%;height: 230px;" class="flex-box" :to="`/draw/${draw.id}`">
+              <nuxt-link style="width: 100%;height: 230px;" class="flex-box" :to="`/draw/${draw.id}`" v-ripple>
                 <img :src="$img.secdra(draw.url,`specifiedWidth`)"
                      :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
               </nuxt-link>
@@ -52,7 +51,7 @@
           </h3>
           <div class="draw-list row">
             <div class="draw-item" v-for="(draw ,index) in collectionList" :key="index">
-              <nuxt-link style="width: 100%;height: 230px;" class="flex-box" :to="`/draw/${draw.id}`">
+              <nuxt-link style="width: 100%;height: 230px;" class="flex-box" :to="`/draw/${draw.id}`" v-ripple>
                 <img :src="$img.secdra(draw.url,`specifiedWidth`)"
                      :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
               </nuxt-link>
@@ -70,20 +69,20 @@
       <div class="edit-dialog-content" style="width: 500px;height: 50vh">
         <img :src="tailoringHeadImage" ref="tailoringHeadImage">
       </div>
-      <button class="btn block" @click="saveHead">保存</button>
+      <Btn block color="primary" @click="saveHead">保存</Btn>
     </Dialog>
     <Dialog v-model="isShowTailoringBack" title="剪切" v-loading="uploadBackLoading">
       <div class="edit-dialog-content" style="width: 700px;height: 70vh">
         <img :src="tailoringBackImage" ref="tailoringBackImage">
       </div>
-      <button class="btn block" @click="saveBack">保存</button>
+      <Btn block color="primary" @click="saveBack">保存</Btn>
     </Dialog>
     <Dialog v-model="isShowEdit" title="编辑" v-loading="editLoading">
       <div class="edit-dialog-content" style="width: 500px;height: 400px;overflow: auto">
         <div>
           <div class="input-group">
             <h5 class="sub-name">名称：</h5>
-            <input type="text" title="name" v-model="userForm.name" class="input block">
+            <input type="text" title="name" v-model="userForm.name" class="input block primary-color">
           </div>
           <div class="input-group">
             <h5 class="sub-name">简介：</h5>
@@ -98,7 +97,7 @@
           </div>
         </div>
       </div>
-      <button class="btn block" @click="update">保存</button>
+      <Btn block color="primary" @click="update">保存</Btn>
     </Dialog>
   </div>
 </template>
@@ -106,9 +105,8 @@
 <script>
   import Cropper from "cropperjs"
   import ioUtil from '../../../assets/script/util/ioUtil'
-  import {mapState, mapMutations, mapActions} from "vuex"
+  import {mapActions, mapMutations, mapState} from "vuex"
   import {Pageable, Result} from "../../../assets/script/model/base";
-  import config from "../../../assets/script/config";
 
   export default {
     data() {
@@ -234,7 +232,7 @@
       },
       async saveBack() {
         let file = ioUtil.dataURLtoFile(this.backCropper.getCroppedCanvas().toDataURL());
-        this.MSetUserInfoAttr({attr: "background",value:URL.createObjectURL(file)});
+        this.MSetUserInfoAttr({attr: "background", value: URL.createObjectURL(file)});
         this.uploadBackLoading = true;
         let result = await this.upload(file, "back");
         this.uploadBackLoading = false;
@@ -250,7 +248,7 @@
         form.append("file", file);
         let qiniuResult;
         try {
-          qiniuResult = (await this.$axios.post(config.qiniuUploadAddress, form, {
+          qiniuResult = (await this.$axios.post(process.env.qiniuUploadAddress, form, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
@@ -304,14 +302,10 @@
         right: 100px;
         text-align: right;
         .btn {
-          line-height: 45px;
-          border: none;
           background-color: rgba(0, 0, 0, .3);
-          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
           i {
             color: white;
             opacity: .7;
-            vertical-align: middle;
           }
         }
       }
@@ -353,6 +347,7 @@
         margin-top: -(@head-img-height+@head-img-border)/2;
         display: inline-block;
         position: absolute;
+        border-radius: 50%;
         img {
           height: @head-img-height;
           width: @head-img-height;

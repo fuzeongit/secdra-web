@@ -4,11 +4,8 @@
       <div class="card upload-card" @dragover.prevent="_=>{}" @drop.prevent="upload($event,'drop')">
         <div class="image-box flex-box">
           <div class="upload-box" v-if="!drawUrl">
-            <label class="btn">
-              上传图片
-              <input type="file" style="display: none" @change="upload($event,'button')">
-            </label>
-            <h3 style="">拖拽一个图片到这里上传</h3>
+            <Btn type="file" color="primary" @change="upload($event,'button')">上传图片</Btn>
+            <h3>拖拽一个图片到这里上传</h3>
             <p>支持jpg、png、jpeg格式</p>
           </div>
           <div class="view-box" v-if="drawUrl">
@@ -23,34 +20,33 @@
     <div class="card form-content">
       <div class="input-group">
         <h5 class="sub-name">名称：</h5>
-        <input type="text" class="input  block" v-model="form.name" title="name">
+        <input type="text" class="input block primary-color" v-model="form.name" title="name">
       </div>
       <div class="input-group">
         <h5 class="sub-name">描述：</h5>
-        <textarea v-model="form.introduction" class="input block" title="introduction" rows="3"></textarea>
+        <textarea v-model="form.introduction" class="input block primary-color" title="introduction" rows="3"></textarea>
       </div>
       <div class="input-group">
         <h5 class="sub-name">私密：</h5>
-        <Checkbox v-model="form.isPrivate" style="line-height: 14px;"></Checkbox>
+        <Checkbox v-model="form.isPrivate" color="primary"></Checkbox>
       </div>
       <div class="input-group">
         <h5 class="sub-name">添加标签：</h5>
-        <input type="text" title="name" v-model="inputTag" class="input block" @keyup.enter="addTag">
+        <input type="text" title="name" v-model="inputTag" class="input block primary-color" @keyup.enter="addTag">
         <h5 class="sub-name">*回车添加一个标签</h5>
       </div>
       <div style="margin-bottom: 10px">
-        <Tag v-for="(tagName,index) in form.tagList" @close="removeTag" :content="tagName" :key="tagName"
+        <Tag v-for="(tagName,index) in form.tagList" @close="removeTag" :content="tagName" :key="tagName" color="primary"
              :value="index"></Tag>
       </div>
       <div style="margin-bottom: 10px;text-align: right">
-        <button class="btn" @click="send" :disabled="!drawUrl">发送</button>
+        <Btn color="primary" @click="send" :disabled="!drawUrl">发送</Btn>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import config from "../assets/script/config";
   import ioUtil from "../assets/script/util/ioUtil";
   import {mapState, mapActions} from "vuex"
 
@@ -58,7 +54,7 @@
     name: "upload",
     async asyncData({store, req, redirect, route, $axios}) {
       store.commit('menu/MChangeName', "upload");
-      let res = await $axios.get(`${config.host}/qiniu/getUploadToken`);
+      let res = await $axios.get(`/qiniu/getUploadToken`);
       let result = res.data || {};
       if (result.status !== 200) {
         throw new Error(result)
@@ -145,7 +141,7 @@
         let loading = this.$loading();
         let qiniuResult;
         try {
-          qiniuResult = (await this.$axios.post(config.qiniuUploadAddress, form, {
+          qiniuResult = (await this.$axios.post(process.env.qiniuUploadAddress, form, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }

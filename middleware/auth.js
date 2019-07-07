@@ -1,26 +1,4 @@
 import {Result} from "../assets/script/model/base";
-import config from "../assets/script/config";
-
-//快速，通过cookie
-// export default async ({store, req, redirect, route}) => {
-//   let cookies = {};
-//   try {
-//     cookies = CookieParser.parse(process.server ? req.headers.cookie || "" : document.cookie);
-//   } catch (e) {
-//     redirect("/login");
-//     return false;
-//   }
-//   if (route.fullPath !== "/login") {
-//     if (!cookies.token) {
-//       redirect("/login")
-//     }
-//   }else{
-//     if(cookies.token){
-//       redirect("/")
-//     }
-//   }
-// }
-
 
 //严谨，通过验证接口
 export default async ({store, req, redirect, route, $axios}) => {
@@ -29,9 +7,9 @@ export default async ({store, req, redirect, route, $axios}) => {
   try {
     let responses = {};
     if (user.id) {
-      responses = await $axios.post(`${config.host}/user/checkLogin`);
+      responses = await $axios.post(`user/checkLogin`);
     } else {
-      responses = await $axios.get(`${config.host}/user/getInfo`);
+      responses = await $axios.get(`/user/getInfo`);
     }
     result = responses.data;
   } catch (e) {

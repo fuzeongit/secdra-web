@@ -23,8 +23,8 @@
                      v-ripple>
             <span class="message-count" v-if="messageCount">{{messageCount|toMore}}</span>
           </nuxt-link>
-          <div class="head-img-box" v-ripple>
-            <nuxt-link :to="`/user/${user.id||''}`">
+          <template>
+            <nuxt-link :to="`/user/${user.id||''}`" class="head-box" v-ripple>
               <img :src="$img.head(user.head,'small50')" width="30" height="30" v-popover:popover
                    :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`"
                    style="border-radius: 50%">
@@ -73,7 +73,7 @@
                 </div>
               </div>
             </Popper>
-          </div>
+          </template>
         </div>
       </template>
     </nav>
@@ -161,9 +161,9 @@
 </script>
 
 <style type="text/less" lang="less" scoped>
-  @import "../../../assets/style/color.less";
-  @import "../../../assets/style/config.less";
-  @import "../../../assets/style/mixin.less";
+  @import "../../../assets/style/color";
+  @import "../../../assets/style/config";
+  @import "../../../assets/style/mixin";
 
   header {
     height: @herder-height;
@@ -209,8 +209,8 @@
           padding: 0 5px;
           border-radius: @default-font-size / 2;
           position: absolute;
-          top: -10px;
-          right: -12px;
+          top: 4px;
+          right: 4px;
         }
         .link {
           display: inline-block;
@@ -221,7 +221,7 @@
             color: @theme-color;
           }
         }
-        .head-img-box {
+        .head-box {
           vertical-align: top;
           display: inline-block;
           position: relative;

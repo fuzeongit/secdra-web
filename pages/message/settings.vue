@@ -23,12 +23,11 @@
 </template>
 <script>
   import {mapActions} from "vuex"
-  import config from "../../assets/script/config";
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
       store.commit('message/MChangeType', {type: "settings", reset: false});
-      let {data: result} = await $axios.get(`${config.host}/message/getSettings`);
+      let {data: result} = await $axios.get(`/message/getSettings`);
       let settingsForm = {
         id: result.data.id,
         commentStatus: result.data.commentStatus,

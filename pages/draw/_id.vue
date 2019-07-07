@@ -21,7 +21,7 @@
               </nuxt-link>
               <div class="user-info-box">
                 <p class="nickname">
-                  <Btn block flat small :to="`/user/${draw.user.id}`">{{draw.user.name}}</Btn>
+                  <nuxt-link :to="`/user/${draw.user.id}`" class="primary-hover">{{draw.user.name}}</nuxt-link>
                 </p>
                 <p class="introduction" :title="draw.user.introduction">
                   {{draw.user.introduction}}
@@ -62,7 +62,7 @@
             <Popper trigger="hover" placement="top" @show="showTagPopper(tag.id)" v-for="tag in draw.tagList"
                     :key="tag.id">
               <TagCard :ref="tag.id" :tag="tag.name"></TagCard>
-              <Btn outline small color="primary" :to="`/draw/search/${tag.name}`" slot="reference" class="tag">
+              <Btn outline small color="primary" :to="`/draw/search/${tag.name}`" slot="reference">
                 {{tag.name}}
               </Btn>
             </Popper>
@@ -75,7 +75,7 @@
         <div>
           <div class="input-group">
             <h5 class="sub-name">名称：</h5>
-            <input type="text" title="name" v-model="drawForm.name" class="input block">
+            <input type="text" title="name" v-model="drawForm.name" class="input block primary-color">
           </div>
           <div class="input-group">
             <h5 class="sub-name">简介：</h5>
@@ -84,31 +84,30 @@
           <div class="input-group">
             <h5 class="sub-name">私密：</h5>
             <RadioGroup v-model="drawForm.isPrivate">
-              <Radio :value="true" label="隐藏"></Radio>
-              <Radio :value="false" label="显示" style="margin-left: 10px"></Radio>
+              <Radio :value="true" label="隐藏" color="primary"></Radio>
+              <Radio :value="false" label="显示" color="primary" style="margin-left: 10px"></Radio>
             </RadioGroup>
           </div>
           <div class="input-group">
             <h5 class="sub-name">标签：</h5>
-            <input type="text" title="name" v-model="inputTag" class="input block" @keyup.enter="addTag">
+            <input type="text" title="name" v-model="inputTag" class="input block primary-color" @keyup.enter="addTag">
             <h5 class="sub-name">*回车添加一个标签</h5>
           </div>
           <div style="margin-bottom: 10px">
-            <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName"
+            <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName" color="primary"
                  :value="index"></Tag>
           </div>
         </div>
       </div>
       <div class="input-group" style="text-align: center;">
-        <button class="btn" @click="save">保存</button>
-        <button class="btn is-plain" @click="reset">重置</button>
+        <Btn color="primary"  @click="save">保存</Btn>
+        <Btn outline color="primary"  @click="reset">重置</Btn>
       </div>
     </Dialog>
   </div>
 </template>
 
 <script>
-  import config from "../../assets/script/config";
   import TagCard from "../../components/pages/shared/TagCard";
   import Comment from "../../components/pages/draw/Comment";
   import {mapState, mapActions} from "vuex"
@@ -118,7 +117,7 @@
     async asyncData({store, req, redirect, route, $axios}) {
       store.commit('menu/MChangeName', "");
       let id = route.params.id;
-      let res = await $axios.get(`${config.host}/draw/get`, {
+      let res = await $axios.get(`/draw/get`, {
         params: {id}
       });
       let result = res.data;
@@ -311,7 +310,7 @@
 
         .tag-list {
           margin-bottom: -@spacing;
-          .tag {
+          .btn {
             margin-right: @spacing;
             margin-bottom: @spacing;
           }

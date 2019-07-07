@@ -23,9 +23,9 @@
 
 
 <style scoped lang="less" type="text/less">
-  @import "../../../assets/style/color.less";
-  @import "../../../assets/style/config.less";
-  @import "../../../assets/style/mixin.less";
+  @import "../../../assets/style/color";
+  @import "../../../assets/style/config";
+  @import "../../../assets/style/mixin";
 
   .loading-mack {
     position: absolute;

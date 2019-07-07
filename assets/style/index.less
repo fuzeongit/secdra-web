@@ -21,7 +21,7 @@
 
 *::-webkit-scrollbar {
   display: block;
-  width: 4px;
+  width: 5px;
   height: 1px;
 }
 
@@ -52,6 +52,12 @@ h4, h5, h6 {
 
 a {
   cursor: pointer;
+  &:hover{
+    &.primary-hover{
+      text-decoration: underline;
+      color:@theme-color;
+    }
+  }
 }
 
 img {

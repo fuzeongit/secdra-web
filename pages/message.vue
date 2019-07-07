@@ -5,7 +5,7 @@
         <h4 class="title"><strong><i class="icon s-xinxizhongxin"></i>消息中心</strong></h4>
         <ul class="list">
           <li @click="$router.push(key)" :class="{active:(type===key),settings:(key===`settings`)}"
-              v-for="(item,key) in menuList" :key="key">
+              v-for="(item,key) in menuList" :key="key" v-ripple>
             <i class="icon s-shezhi" v-if="key===`settings`"></i>
             {{item}}
             <span class="message-count" v-if="key!==`settings`&&$store.state.message[key+`Count`]">
@@ -88,8 +88,8 @@
         }
       }
       .list {
-        padding-left: 20px;
         li {
+          padding-left: 20px;
           user-select: none;
           font-size: @small-font-size;
           color: @font-color-dark;
@@ -116,7 +116,6 @@
           &.settings {
             padding-left: 18px;
             border-top: 1px solid white;
-            margin-left: -20px;
             &:before {
               display: none;
             }

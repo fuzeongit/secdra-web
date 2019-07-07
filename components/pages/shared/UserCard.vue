@@ -4,14 +4,12 @@
          :style="{backgroundImage: `url(${$img.back(user.background,`backCard`)})`}">
     </div>
     <div class="flex-box" style="padding:10px">
-      <nuxt-link :to="`/user/${user.id}`" class="head-box">
+      <nuxt-link :to="`/user/${user.id}`" class="head-box" v-ripple>
         <img :src="$img.head(user.head,'small50')">
       </nuxt-link>
       <div class="user-info-box">
         <p class="nickname">
-          <nuxt-link :to="`/user/${user.id}`">
-            {{user.name}}
-          </nuxt-link>
+          <nuxt-link :to="`/user/${user.id}`" class="primary-hover">{{user.name}}</nuxt-link>
         </p>
         <p class="introduction" :title="user.introduction">
           {{user.introduction}}
@@ -47,9 +45,9 @@
 </script>
 
 <style type="text/less" lang="less" scoped>
-  @import "../../../assets/style/color.less";
-  @import "../../../assets/style/config.less";
-  @import "../../../assets/style/mixin.less";
+  @import "../../../assets/style/color";
+  @import "../../../assets/style/config";
+  @import "../../../assets/style/mixin";
 
   @size: 300px;
   @img-size: 60px;
@@ -66,6 +64,7 @@
   .head-box {
     display: block;
     position: relative;
+    border-radius: 50%;
     img {
       border-radius: 50%;
       width: @img-size;

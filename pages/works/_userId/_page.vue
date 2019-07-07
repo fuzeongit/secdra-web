@@ -2,18 +2,18 @@
   <div class="page">
     <CheckboxGroup class="content row" v-model="selectList">
       <div class="card " v-for="(draw,index) in list" :key="index">
-        <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box">
+        <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box" v-ripple>
           <img :src="$img.secdra(draw.url,`specifiedWidth`)"
                :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
         </nuxt-link>
         <div class="tool">
-          <Checkbox v-if="isSelf" :value="draw" valueKey="id" color="primary"></Checkbox>
-          <a v-if="!isSelf" class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-             :style="{color:draw.focus?`red`:`gray`}" title="收藏"
-             @click.stop="collection(draw)"></a>
+          <Checkbox v-if="isSelf" :value="draw" valueKey="id" small color="primary"></Checkbox>
+          <Btn flat icon :color="draw.focus?`primary`:`default`" @click.stop="collection(draw)" small title="收藏">
+            <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+          </Btn>
         </div>
         <div v-if="!isSelf" class="flex-box info-box">
-          <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
+          <nuxt-link :to="`/user/${draw.user.id}`" class="head-box" v-ripple>
             <img :src="$img.head(draw.user.head,'small50')" :title="draw.user.name">
           </nuxt-link>
           <div class="user-info-box">
@@ -25,62 +25,61 @@
             </p>
           </div>
           <div class="follow-box flex-box">
-            <button class="btn block" @click="follow(draw.user.id)" :disabled="draw.user.focus===null">
+            <Btn block color="primary" @click="follow(draw.user.id)" :disabled="draw.user.focus===null">
               {{draw.user.focus?`已关注`:`关注`}}
-            </button>
+            </Btn>
           </div>
         </div>
       </div>
     </CheckboxGroup>
     <br>
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
-    <button v-if="isSelf" class="btn is-suspend edit-btn"
-            @click="isShowEdit = true"
-            :disabled="selectList.isEmpty()"><i class="icon s-bianji"></i></button>
+    <Btn icon big shadow color="white" v-if="isSelf" class="edit-btn" @click="isShowEdit = true" :disabled="selectList.isEmpty()">
+      <i class="icon s-bianji"></i>
+    </Btn>
     <Dialog v-if="isSelf" v-model="isShowEdit" title="批量操作" v-loading="editLoading">
       <div class="edit-dialog-content">
         <div style="margin-bottom: 10px">
-          <Tag v-for="(draw,index) in selectList" :content="draw.name" @close="removeSelectDraw" :key="draw.id"
+          <Tag v-for="(draw,index) in selectList" :content="draw.name" @close="removeSelectDraw" :key="draw.id" color="primary"
                :value="index"></Tag>
         </div>
         <div>
           <div class="input-group">
             <h5 class="sub-name">名称：</h5>
-            <input type="text" title="name" v-model="drawForm.name" class="input block">
+            <input type="text" title="name" v-model="drawForm.name" class="input block primary-color">
           </div>
           <div class="input-group">
             <h5 class="sub-name">简介：</h5>
-            <textarea v-model="drawForm.introduction" class="input block" title="introduction" rows="3"></textarea>
+            <textarea v-model="drawForm.introduction" class="input block primary-color" title="introduction" rows="3"></textarea>
           </div>
           <div class="input-group">
             <h5 class="sub-name">私密：</h5>
             <RadioGroup v-model="drawForm.isPrivate">
-              <Radio :value="true" label="隐藏"></Radio>
-              <Radio :value="false" label="显示" style="margin-left: 10px"></Radio>
-              <Radio :value="null" label="不作修改" style="margin-left: 10px"></Radio>
+              <Radio :value="true" label="隐藏" color="primary"></Radio>
+              <Radio :value="false" label="显示" color="primary" style="margin-left: 10px"></Radio>
+              <Radio :value="null" label="不作修改" color="primary" style="margin-left: 10px"></Radio>
             </RadioGroup>
           </div>
           <div class="input-group">
             <h5 class="sub-name">添加标签：</h5>
-            <input type="text" title="name" v-model="inputTag" class="input block" @keyup.enter="addTag">
+            <input type="text" title="name" v-model="inputTag" class="input block primary-color" @keyup.enter="addTag">
             <h5 class="sub-name">*回车添加一个标签</h5>
           </div>
           <div style="margin-bottom: 10px">
-            <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName"
+            <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName" color="primary"
                  :value="index"></Tag>
           </div>
         </div>
       </div>
       <div class="input-group" style="text-align: center;">
-        <button class="btn" @click="save">保存</button>
-        <button class="btn is-plain" @click="reset">清空</button>
+        <Btn color="primary" @click="save">保存</Btn>
+        <Btn outline color="primary" @click="reset">重置</Btn>
       </div>
     </Dialog>
   </div>
 </template>
 
 <script>
-  import config from "../../../assets/script/config";
   import {DrawForm, Pageable} from "../../../assets/script/model/base";
   import {mapActions} from "vuex"
 
@@ -91,7 +90,7 @@
       pageable.size = 16;
       pageable.page = route.params.page * 1 || 0;
       pageable.sort = "createDate,desc";
-      let {data: result} = await $axios.get(`${config.host}/draw/pagingByUserId`, {
+      let {data: result} = await $axios.get(`/draw/pagingByUserId`, {
         params: Object.assign({
           id: route.params.userId
         }, pageable)
@@ -259,6 +258,7 @@
         .head-box {
           display: block;
           position: relative;
+          border-radius: 50%;
           transition: @default-animate-time;
           img {
             border-radius: 50%;
@@ -298,8 +298,8 @@
     position: fixed;
     right: 50px;
     bottom: 50px;
-    i{
-      color:@font-color-dark;
+    i {
+      color: @font-color-dark;
     }
   }
 

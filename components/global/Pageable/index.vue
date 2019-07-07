@@ -1,15 +1,17 @@
 <template>
   <div class="pageable-content center" v-show="!((isFirst&&isLast)||(totalPage===0))">
-    <a v-show="!isFirst" @click="go(currPage)">
+    <Btn round flat small color="primary" v-show="!isFirst" @click="go(currPage)">
       上一页
-    </a>
+    </Btn>
     <template v-for="(i,index) in showPageBtn">
-      <a v-if="i" :key="index" @click="go(i)" :style="{color:i-1===currPage?`#AAA`:`#000`}">{{i}}</a>
+      <Btn round :flat="i-1!==currPage" small color="primary" v-if="i" :key="index" @click="go(i)" class="page-btn">
+        {{i}}
+      </Btn>
       <span v-else :key="index">···</span>
     </template>
-    <a v-show="!isLast" @click="go(currPage+2)">
+    <Btn round flat small color="primary" v-show="!isLast" @click="go(currPage+2)">
       下一页
-    </a>
+    </Btn>
   </div>
 </template>
 
@@ -63,15 +65,20 @@
 </script>
 
 <style scoped lang="less" type="text/less">
-  @import "../../../assets/style/color.less";
-  @import "../../../assets/style/config.less";
+  @import "../../../assets/style/color";
+  @import "../../../assets/style/config";
 
   .pageable-content {
     user-select: none;
     margin-bottom: 10px;
     font-weight: 500;
-    a, span {
+    .page-btn{
+      margin: 0 5px;
+      padding: 0 1em;
+    }
+    span {
       display: inline-block;
+      line-height: @small-input-line-height;
       padding: 0 10px;
     }
   }

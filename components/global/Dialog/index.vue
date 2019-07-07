@@ -8,7 +8,9 @@
               {{title}}
             </h3>
             <div>
-              <a class="icon s-close" @click="close"></a>
+              <Btn flat icon small @click.stop="close">
+                <i class="icon s-close"></i>
+              </Btn>
             </div>
           </div>
           <div class="dialog-body">
@@ -75,9 +77,9 @@
 </script>
 
 <style scoped lang="less" type="text/less">
-  @import "../../../assets/style/color.less";
-  @import "../../../assets/style/config.less";
-  @import "../../../assets/style/mixin.less";
+  @import "../../../assets/style/color";
+  @import "../../../assets/style/config";
+  @import "../../../assets/style/mixin";
 
   .card {
     margin: 0 auto;

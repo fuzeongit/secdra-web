@@ -4,9 +4,9 @@
          :style="{transform: `translateY(${scrollTop*.5}px)`,backgroundImage: `url(${$img.back(user.background)})`}">
       <div class="user-bk-content">
         <div class="tool">
-          <button class="btn" @click="$emit('follow')">
-            <span>{{user.focus?"已关注":"关注"}}</span>
-          </button>
+          <Btn big round @click="$emit('follow')">
+            <span style="min-width: 4em"> {{user.focus?"已关注":"关注"}}</span>
+          </Btn>
         </div>
       </div>
     </div>
@@ -28,7 +28,7 @@
           </h3>
           <div class="draw-list row">
             <div class="draw-item" v-for="(draw ,index) in worksList" :key="index">
-              <nuxt-link style="width: 100%;height: 230px;" class="flex-box" :to="`/draw/${draw.id}`">
+              <nuxt-link style="width: 100%;height: 230px;" class="flex-box" :to="`/draw/${draw.id}`" v-ripple>
                 <img :src="$img.secdra(draw.url,`specifiedWidth`)"
                      :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
               </nuxt-link>
@@ -45,7 +45,7 @@
           </h3>
           <div class="draw-list row">
             <div class="draw-item" v-for="(draw ,index) in collectionList" :key="index">
-              <nuxt-link style="width: 100%;height: 230px;" class="flex-box" :to="`/draw/${draw.id}`">
+              <nuxt-link style="width: 100%;height: 230px;" class="flex-box" :to="`/draw/${draw.id}`" v-ripple>
                 <img :src="$img.secdra(draw.url,`specifiedWidth`)"
                      :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
               </nuxt-link>
@@ -66,8 +66,8 @@
               <div class="cover"
                    :style="{backgroundImage: `url(${$img.back(item.background,`backCard`)})`}">
               </div>
-              <div class="center">
-                <nuxt-link :to="`/user/${item.id}`" class="following-head-box">
+              <div class="center" style="padding: 10px;">
+                <nuxt-link :to="`/user/${item.id}`" class="following-head-box" v-ripple>
                   <img :src="$img.head(item.head,'small200')">
                 </nuxt-link>
               </div>
@@ -82,7 +82,7 @@
             </div>
           </div>
           <p class="move" v-if="followingList.length===8">
-            <nuxt-link :to="`/following/${user.id||''}`">查看更多>></nuxt-link>
+            <Btn round flat small color="primary" :to="`/following/${user.id||''}`">查看更多>></Btn>
           </p>
           <img src="../../../assets/image/default/not.png" class="is-not"
                v-if="!followingLoading&&!followingList.length">
@@ -174,17 +174,9 @@
         position: absolute;
         bottom: 125px;
         right: 100px;
-        text-align: right;
         .btn {
-          line-height: 45px;
-          border: none;
           background-color: rgba(0, 0, 0, .3);
-          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-          border-radius: 30px;
-          width: 100px;
-          text-align: center;
           span {
-            font-size: @default-font-size;
             color: white;
             opacity: .7
           }
@@ -339,13 +331,17 @@
             transition: @default-animate-time;
           }
           .following-head-box {
-            padding: 10px;
-            display: block;
+            @size: 82px;
+            width: @size;
+            height: @size;
+            border: 2px solid white;
+            display: inline-block;
+            border-radius: 50%;
+            transition: @default-animate-time;
             img {
               border-radius: 50%;
-              width: 80px;
-              border: 2px solid white;
-              transition: @default-animate-time;
+              width: 100%;
+              height: 100%;
             }
           }
           .user-info-box {
@@ -365,9 +361,7 @@
               filter: blur(60px);
             }
             .following-head-box {
-              img {
-                transform: translateY(-25px) scale(2);
-              }
+              transform: translateY(-25px) scale(2);
             }
             .user-info-box {
               opacity: 0;

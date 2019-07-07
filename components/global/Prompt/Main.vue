@@ -6,14 +6,14 @@
           <h3>
             {{title}}
           </h3>
-          <input type="text" v-model="input" title="input" class="input block" :placeholder="message">
+          <input type="text" v-model="input" class="input block primary-color" :placeholder="message">
           <div class="btn-group">
-            <button class="btn is-plain" @click.stop="no">
+            <Btn flat color="primary" @click="no">
               {{noDesc}}
-            </button>
-            <button class="btn" @click.stop="ok">
+            </Btn>
+            <Btn flat color="primary" @click="ok">
               {{okDesc}}
-            </button>
+            </Btn>
           </div>
         </div>
       </transition>
@@ -68,8 +68,8 @@
 </script>
 
 <style scoped lang="less" type="text/less">
-  @import "../../../assets/style/color.less";
-  @import "../../../assets/style/config.less";
+  @import "../../../assets/style/color";
+  @import "../../../assets/style/config";
 
   .card {
     width: 450px;

@@ -4,10 +4,10 @@
       <img src="../assets/image/svg/logo.svg">
       <p class="sub-logo">想你所想</p>
       <div class="row input-group">
-        <input type="text" class="input block" title="手机" v-model="form.phone" placeholder="手机号码">
+        <input type="text" class="input block primary-color" title="手机" v-model="form.phone" placeholder="手机号码">
       </div>
       <div class="row input-group">
-        <input type="password" class="input block" title="密码" v-model="form.password" placeholder="密码">
+        <input type="password" class="input block primary-color" title="密码" v-model="form.password" placeholder="密码">
       </div>
       <br>
       <Btn block color="primary" :disabled="loginLoading" type="submit">{{!loginLoading?`登录`:`登录中...`}}</Btn>
@@ -20,7 +20,7 @@
 </template>
 <script>
   import Cookies from 'js-cookie'
-  import {mapActions, mapMutations} from "vuex"
+  import {mapActions} from "vuex"
 
   let layout = 'login';
   export default {

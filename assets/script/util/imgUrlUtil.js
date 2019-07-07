@@ -1,13 +1,11 @@
-import config from "../config"
-
 export default {
   secdra(url, type) {
     if(url){
       if (url.indexOf("blob") === 0 || url.indexOf("http") === 0) return url;
       if (type) {
-        return `${config.qiniu}/${url}${config.qiniuSeparator}${type}`
+        return `${process.env.qiniuImg}/${url}${process.env.qiniuSeparator}${type}`
       } else {
-        return `${config.qiniu}/${url}`
+        return `${process.env.qiniuImg}/${url}`
       }
     }
 
@@ -16,9 +14,9 @@ export default {
    if(url){
      if (url.indexOf("blob") === 0 || url.indexOf("http") === 0) return url;
      if (type) {
-       return `${config.qiniuHead}/${url}${config.qiniuSeparator}${type}`
+       return `${process.env.qiniuHead}/${url}${process.env.qiniuSeparator}${type}`
      } else {
-       return `${config.qiniuHead}/${url}`
+       return `${process.env.qiniuHead}/${url}`
      }
    }
   },
@@ -27,12 +25,12 @@ export default {
       if (url.indexOf("blob") === 0 || url.indexOf("http") === 0) return url;
       if (type) {
         if (is) {
-          return `${config.qiniuBack}/${url}?${type}`
+          return `${process.env.qiniuBack}/${url}?${type}`
         } else {
-          return `${config.qiniuBack}/${url}${config.qiniuSeparator}${type}`
+          return `${process.env.qiniuBack}/${url}${process.env.qiniuSeparator}${type}`
         }
       } else {
-        return `${config.qiniuBack}/${url}`
+        return `${process.env.qiniuBack}/${url}`
       }
     }
   }

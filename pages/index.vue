@@ -13,7 +13,7 @@
         <div class="card image-card ">
           <h3 class="title">
             发现
-            <Btn round flat small color="primary" to="/find"> 更多>></Btn>
+            <Btn round flat small color="primary"  to="/find"> 更多>></Btn>
           </h3>
           <div class="image-grid-row">
             <div v-for="(draw,index) in likeList" class="item" :key="index">
@@ -96,7 +96,6 @@
 </template>
 
 <script>
-  import config from "../assets/script/config";
   import {Pageable} from "../assets/script/model/base";
   import UserCard from "../components/pages/shared/UserCard";
   import {mapState, mapActions} from "vuex"
@@ -106,9 +105,9 @@
     async asyncData({store, req, redirect, route, $axios}) {
       store.commit('menu/MChangeName', "home");
       let taskList = [];
-      taskList.push($axios.get(`${config.host}/tag/listTagOrderByLikeAmount`));
-      taskList.push($axios.get(`${config.host}/draw/pagingByRecommend`, {params: new Pageable(0, 12)}));
-      taskList.push($axios.get(`${config.host}/draw/paging`, {params: new Pageable(0, 12, "createDate,desc")}));
+      taskList.push($axios.get(`/tag/listTagOrderByLikeAmount`));
+      taskList.push($axios.get(`/draw/pagingByRecommend`, {params: new Pageable(0, 12)}));
+      taskList.push($axios.get(`/draw/paging`, {params: new Pageable(0, 12, "createDate,desc")}));
       let resultList = (await Promise.all(taskList)).map(item => item.data);
       return {
         tagList: resultList[0].data,
@@ -222,12 +221,6 @@
             display: block;
             width: 100%;
             height: 100%;
-          }
-          .like {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            margin: 0;
           }
         }
         .draw-name {

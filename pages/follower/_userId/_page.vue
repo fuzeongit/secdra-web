@@ -5,9 +5,11 @@
         <div class="cover"
              :style="{backgroundImage: `url(${$img.back(item.background,`backCard`)})`}">
         </div>
-        <nuxt-link :to="`/user/${item.id}`" class="head-box center">
-          <img :src="$img.head(item.head,'small200')">
-        </nuxt-link>
+        <div style="text-align: center;padding:10px;">
+          <nuxt-link :to="`/user/${item.id}`" class="head-box center" v-ripple>
+            <img :src="$img.head(item.head,'small200')">
+          </nuxt-link>
+        </div>
         <div class="user-info-box center">
           <p class="nickname">
             {{item.name}}
@@ -24,7 +26,6 @@
 </template>
 
 <script>
-  import config from "../../../assets/script/config/index";
   import {Pageable} from "../../../assets/script/model/base";
 
   export default {
@@ -33,7 +34,7 @@
     async asyncData({store, req, redirect, route, $axios}) {
       store.commit('menu/MChangeName', "follower");
       let pageable = new Pageable(route.params.page * 1 || 0,16,"createDate,desc");
-      let {data: result} = await $axios.get(`${config.host}/follower/paging`, {
+      let {data: result} = await $axios.get(`/follower/paging`, {
         params: Object.assign({
           id: route.params.userId
         },pageable)
@@ -80,14 +81,17 @@
         transition: @default-animate-time;
       }
       .head-box {
-        padding: 10px;
-        display: block;
+        width: 80px;
+        height: 80px;
+        display: inline-block;
+        border: 2px solid white;
+        border-radius: 50%;
+        transition: @default-animate-time;
+
         img {
+          width: 100%;
+          height: 100%;
           border-radius: 50%;
-          width: 80px;
-          height: 80px;
-          border: 2px solid white;
-          transition: @default-animate-time;
         }
       }
       .user-info-box {
@@ -107,9 +111,7 @@
           filter: blur(60px);
         }
         .head-box {
-          img {
-            transform: translateY(-25px) scale(2);
-          }
+          transform: translateY(-25px) scale(2);
         }
         .user-info-box {
           opacity: 0;

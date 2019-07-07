@@ -2,18 +2,18 @@
   <div class="page">
     <CheckboxGroup class="content row" v-model="selectList">
       <div class="card " v-for="(draw,index) in list" :key="index">
-        <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box">
+        <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box" v-ripple>
           <img :src="$img.secdra(draw.url,`specifiedWidth`)"
                :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
         </nuxt-link>
         <div class="tool">
-          <Checkbox v-if="isSelf" :value="draw" valueKey="id"></Checkbox>
-          <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-             :style="{color:draw.focus?`red`:`gray`}" title="收藏"
-             @click.stop="collection(draw)"></a>
+          <Checkbox v-if="isSelf" :value="draw" valueKey="id" small color="primary"></Checkbox>
+          <Btn flat icon :color="draw.focus?`primary`:`default`" @click.stop="collection(draw)" small title="收藏">
+            <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+          </Btn>
         </div>
         <div class="flex-box info-box" v-if="draw.user.id">
-          <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
+          <nuxt-link :to="`/user/${draw.user.id}`" class="head-box" v-ripple>
             <img :src="$img.head(draw.user.head,'small50')" :title="draw.user.name">
           </nuxt-link>
           <div class="user-info-box">
@@ -25,9 +25,9 @@
             </p>
           </div>
           <div class="follow-box flex-box">
-            <button class="btn block" @click="follow(draw.user.id)" :disabled="draw.user.focus===null">
+            <Btn block color="primary" :disabled="draw.user.focus===null" @click="follow(draw.user.id)">
               {{draw.user.focus?`已关注`:`关注`}}
-            </button>
+            </Btn>
           </div>
         </div>
       </div>
@@ -35,15 +35,13 @@
     <br>
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
     <br>
-    <button v-if="isSelf" class="btn is-suspend" style="position: fixed;right: 50px;bottom: 50px;"
-            @click="unCollection">
+    <Btn icon big shadow color="white" v-if="isSelf" style="position: fixed;right: 50px;bottom: 50px;" @click="unCollection">
       <i class="icon s-heart" style="color: red"></i>
-    </button>
+    </Btn>
   </div>
 </template>
 
 <script>
-  import config from "../../../assets/script/config";
   import {Pageable} from "../../../assets/script/model/base";
   import {mapActions} from "vuex"
 
@@ -51,7 +49,7 @@
     async asyncData({store, req, redirect, route, $axios}) {
       store.commit('menu/MChangeName', "collection");
       let pageable = new Pageable(route.params.page * 1 || 0, 16, "createDate,desc");
-      let {data: result} = await $axios.get(`${config.host}/collection/paging`, {
+      let {data: result} = await $axios.get(`/collection/paging`, {
         params: Object.assign({
           id: route.params.userId
         }, pageable)
@@ -188,6 +186,7 @@
           display: block;
           position: relative;
           transition: @default-animate-time;
+          border-radius: 50%;
           img {
             border-radius: 50%;
             width: @img-size;

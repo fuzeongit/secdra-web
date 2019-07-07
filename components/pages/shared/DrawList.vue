@@ -2,15 +2,17 @@
   <div class="list-content" :style="{height:`${listContentOffset.height}px`}">
     <div class="item card" :style="{left:`${offset[index].left}px`,top:`${offset[index].top}px`}"
          v-for="(draw,index) in list" :key="index">
-      <nuxt-link :to="`/draw/${draw.id}`" class="img-box">
+      <nuxt-link :to="`/draw/${draw.id}`" class="img-box" v-ripple>
         <img :src="$img.secdra(draw.url,`specifiedWidth`)"
              :style="{width:listConstant.colWidth+`px`,height:getHeight(draw)+`px`}">
       </nuxt-link>
-      <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-         :style="{color:draw.focus?`red`:`gray`}" title="收藏"
-         @click.stop="$emit(`collection`,draw,index)"></a>
+      <Btn flat icon :color="draw.focus?`primary`:`default`" @click.stop="$emit(`collection`,draw,index)" title="收藏"
+           class="like">
+        <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+      </Btn>
+
       <div class="flex-box info-box" :style="{width:listConstant.colWidth+`px`,height:listConstant.infoHeight+`px`}">
-        <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
+        <nuxt-link :to="`/user/${draw.user.id}`" class="head-box" v-ripple>
           <img :src="$img.head(draw.user.head,'small50')" :title="draw.user.name">
         </nuxt-link>
         <div class="user-info-box">
@@ -22,7 +24,9 @@
           </p>
         </div>
         <div class="follow-box flex-box">
-          <Btn block color="primary" @click="$emit(`follow`,draw.user.id)" :disabled="draw.user.focus===null">{{draw.user.focus?`已关注`:`关注`}}</Btn>
+          <Btn block color="primary" @click="$emit(`follow`,draw.user.id)" :disabled="draw.user.focus===null">
+            {{draw.user.focus?`已关注`:`关注`}}
+          </Btn>
         </div>
       </div>
     </div>
@@ -124,8 +128,8 @@
 
 
 <style type="text/less" lang="less" scoped>
-  @import "../../../assets/style/color.less";
-  @import "../../../assets/style/config.less";
+  @import "../../../assets/style/color";
+  @import "../../../assets/style/config";
   @import "../../../assets/style/mixin";
 
   .list-content {
@@ -157,6 +161,7 @@
         right: 5px;
       }
       .img-box {
+        display: block;
         img {
           transition: 0.5s;
           width: 100%
@@ -171,6 +176,7 @@
           display: block;
           position: relative;
           transition: @default-animate-time;
+          border-radius: 50%;
           img {
             border-radius: 50%;
             width: @img-size;
