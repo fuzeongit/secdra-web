@@ -17,7 +17,6 @@ export default {
    * @returns {Promise<>}
    */
   async get(url, params) {
-    // NProgress.start();
     let result = null;
     try {
       let response = await axios.get(url, {
@@ -41,7 +40,6 @@ export default {
    * @returns {Promise<>}
    */
   async post(url, body, params) {
-    // NProgress.start();
     let result = null;
     try {
       let response = await axios.post(url, qs.stringify(body, {
