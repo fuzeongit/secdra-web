@@ -77,7 +77,7 @@
       </div>
       <Btn block color="primary" @click="saveBack">保存</Btn>
     </Dialog>
-    <Dialog v-model="isShowEdit" title="编辑" v-loading="editLoading">
+    <Dialog v-model="isShowEdit" title="编辑" v-loading="editLoading" >
       <div class="edit-dialog-content" style="width: 500px;height: 400px;overflow: auto">
         <div>
           <div class="input-group">

@@ -1,8 +1,10 @@
 <template>
-  <transition name="fade" enter-active-class="fadeIn mask-duration" leave-active-class="fadeOut mask-duration" >
-    <div class="mask " v-show="visible">
-      <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-        <div class="card" v-show="visible">
+  <transition name="fade" enter-active-class="fadeIn mask-duration" leave-active-class="fadeOut  mask-duration">
+    <div class="mask" v-show="visible" @click="onPersistent">
+      <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration"
+                  @after-leave="destroyElement">
+        <div class="card" :class="{bounceIn:persistentAnimate,duration:persistentAnimate}" v-show="visible"
+             @animationend="persistentAnimationend()" @click.stop="_=>{}">
           <h3>
             {{title}}
           </h3>
@@ -10,10 +12,10 @@
             {{message}}
           </p>
           <div class="btn-group">
-            <Btn flat color="primary" @click="no">
+            <Btn flat color="primary" @click.stop="close">
               {{noDesc}}
             </Btn>
-            <Btn flat color="primary" @click="ok">
+            <Btn flat color="primary" @click.stop="ok">
               {{okDesc}}
             </Btn>
           </div>
@@ -24,13 +26,15 @@
 </template>
 
 <script>
+  import dialogMixin from "../../../assets/script/mixin/dialog"
+  import {on} from "../../../assets/script/util/domUtil";
+
   export default {
-    componentName:"Confirm",
+    componentName: "Confirm",
+    mixins: [dialogMixin],
     watch: {
       closed(newVal) {
         if (newVal) {
-          this.$el.firstElementChild.addEventListener('transitionend', this.destroyElement);
-          this.$el.firstElementChild.addEventListener('animationend', this.destroyElement);
           this.visible = false;
         }
       }
@@ -49,20 +53,17 @@
       }
     },
     methods: {
-      destroyElement() {
-        this.$el.firstElementChild.removeEventListener('transitionend', this.destroyElement);
-        this.$el.firstElementChild.removeEventListener('animationend', this.destroyElement);
-        this.$destroy(true);
-        this.$el.parentNode.removeChild(this.$el);
-      },
       ok() {
         this.closed = true;
         this.okCallback && this.okCallback(this)
       },
-      no() {
+      close() {
         this.closed = true;
         this.noCallback && this.noCallback(this)
       }
+    },
+    mounted() {
+      on(document, "keydown", this.onEsc)
     }
   }
 </script>

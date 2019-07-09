@@ -18,7 +18,7 @@
   </span>
 </template>
 <script>
-  import Popper from './vue-popper';
+  import Popper from "../../../assets/script/mixin/popper"
   import {on, off, addClass, removeClass} from '../../../assets/script/util/domUtil';
 
   export default {

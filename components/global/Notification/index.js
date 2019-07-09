@@ -18,7 +18,13 @@ export const Notification = function (notificationOptions = {}) {
   const callback = notificationOptions.callback;
   const position = notificationOptions.position || 'top-right';
 
+  const propsData = {
+    persistent: notificationOptions.persistent
+  };
+  delete notificationOptions.persistent;
+
   instance = new NotificationConstructor({
+    propsData,
     data: notificationOptions
   });
 

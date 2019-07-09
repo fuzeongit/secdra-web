@@ -1,8 +1,10 @@
 <template>
   <transition name="fade" enter-active-class="fadeIn mask-duration" leave-active-class="fadeOut mask-duration">
-    <div class="mask" v-show="visible">
-      <transition name="fade" enter-active-class="fadeInUp duration" leave-active-class="fadeOutDown duration">
-        <div class="card" v-show="visible" :style="{marginTop: `-${offset}vh`}">
+    <div class="mask" v-show="visible" @click="onPersistent">
+      <transition name="fade" enter-active-class="fadeInUp duration" leave-active-class="fadeOutDown duration"
+                  @after-leave="destroyElement">
+        <div class="card" v-show="visible" :style="{marginTop: `-${offset}vh`}" @click.stop="_=>{}"
+             :class="{bounceIn:persistentAnimate,duration:persistentAnimate}" @animationend="persistentAnimationend()">
           <div class="flex-box">
             <h3 class="title">
               {{title}}
@@ -23,8 +25,12 @@
 </template>
 
 <script>
+  import dialogMixin from "../../../assets/script/mixin/dialog"
+  import {on, off} from "../../../assets/script/util/domUtil"
+
   export default {
     componentName: "Dialog",
+    mixins: [dialogMixin],
     props: {
       isShow: {
         type: Boolean,
@@ -46,14 +52,16 @@
     },
     watch: {
       isShow(newVal) {
-        this.visible = newVal
+        this.visible = newVal;
+        if(newVal){
+          this.closed = !newVal;
+          on(document, "keydown", this.onEsc);
+        }
       },
       closed(newVal) {
         if (newVal) {
           this.visible = false;
           this.$emit("change", false);
-          this.$el.firstElementChild.addEventListener('transitionend', this.destroyElement);
-          this.$el.firstElementChild.addEventListener('animationend', this.destroyElement);
         }
       }
     },
@@ -65,9 +73,8 @@
     },
     methods: {
       destroyElement() {
-        this.$el.firstElementChild.removeEventListener('transitionend', this.destroyElement);
-        this.$el.firstElementChild.removeEventListener('animationend', this.destroyElement);
-        this.closed = false;
+        off(document, "keydown", this.onEsc);
+        this.closed = true;
       },
       close() {
         this.closed = true;

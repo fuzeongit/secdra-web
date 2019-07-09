@@ -5,12 +5,17 @@ const PromptConstructor = Vue.extend(PromptComponent);
 
 /**
  * 输入
- * @param {{title?:String},{message:String},{okDesc?:String},{noDesc?:String},{okCallback?:Function},{noCallback?:Function}} promptOption
+ * @param {{title?:String},{message:String},{persistent?:Boolean},{okDesc?:String},{noDesc?:String},{okCallback?:Function},{noCallback?:Function}} option
  * @constructor
  */
-export const Prompt = function (promptOption = {}) {
+export const Prompt = function (option = {}) {
+  const propsData = {
+    persistent: option.persistent
+  };
+  delete option.persistent;
   let instance = new PromptConstructor({
-    data: promptOption
+    data: option,
+    propsData
   });
   instance.vm = instance.$mount();
   document.body.appendChild(instance.vm.$el);

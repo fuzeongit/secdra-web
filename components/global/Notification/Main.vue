@@ -1,5 +1,6 @@
 <template>
-  <transition name="fade" enter-active-class="fadeInRight duration" leave-active-class="fadeOutRight duration">
+  <transition name="fade" enter-active-class="fadeInRight duration" leave-active-class="fadeOut duration"
+              @after-leave="destroyElement">
     <div class="card" :style="{top:`${verticalOffset}px`}" v-show="visible">
       <div class="flex-box">
         <div class="title">
@@ -19,18 +20,12 @@
 </template>
 
 <script>
+  import dialogMixin from "../../../assets/script/mixin/dialog"
+  import {on} from "../../../assets/script/util/domUtil";
+
   export default {
     componentName: "Notification",
-    watch: {
-      closed(newVal) {
-        if (newVal) {
-          this.visible = false;
-          this.$el.firstElementChild.addEventListener('transitionend', this.destroyElement);
-          this.$el.firstElementChild.addEventListener('animationend', this.destroyElement);
-
-        }
-      }
-    },
+    mixins: [dialogMixin],
     data() {
       return {
         title: "提示",
@@ -45,6 +40,7 @@
       }
     },
     mounted() {
+      on(document, "keydown", this.onEsc);
       if (this.waitTime) {
         window.setTimeout(() => {
           this.close()
@@ -52,18 +48,12 @@
       }
     },
     methods: {
-      destroyElement() {
-        this.$el.firstElementChild.removeEventListener('transitionend', this.destroyElement);
-        this.$el.firstElementChild.removeEventListener('animationend', this.destroyElement);
-        this.$destroy(true);
-        this.$el.parentNode.removeChild(this.$el);
-      },
       close() {
         this.closed = true;
         window.clearTimeout(this.closeTimeout);
         this.callback && this.callback()
       }
-    }
+    },
   }
 </script>
 

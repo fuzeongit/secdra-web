@@ -16,17 +16,13 @@
 </template>
 
 <script>
+  import dialogMixin from "../../../assets/script/mixin/dialog"
+  import {on} from "../../../assets/script/util/domUtil";
+
   export default {
     componentName: "Message",
-    watch: {
-      closed(newVal) {
-        if (newVal) {
-          this.visible = false;
-          this.$el.firstElementChild.addEventListener('transitionend', this.destroyElement);
-          this.$el.firstElementChild.addEventListener('animationend', this.destroyElement);
-        }
-      }
-    },
+    mixins: [dialogMixin],
+
     data() {
       return {
         closeTimeout: null,
@@ -38,6 +34,7 @@
       }
     },
     mounted() {
+      on(document, "keydown", this.onEsc);
       if (this.waitTime) {
         this.closeTimeout = setTimeout(() => {
           this.close()
@@ -45,12 +42,6 @@
       }
     },
     methods: {
-      destroyElement() {
-        this.$el.firstElementChild.removeEventListener('transitionend', this.destroyElement);
-        this.$el.firstElementChild.removeEventListener('animationend', this.destroyElement);
-        this.$destroy(true);
-        this.$el.parentNode.removeChild(this.$el);
-      },
       close() {
         this.closed = true;
         window.clearTimeout(this.closeTimeout);
