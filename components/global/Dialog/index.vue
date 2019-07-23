@@ -1,11 +1,11 @@
 <template>
   <transition name="fade" enter-active-class="fadeIn mask-duration" leave-active-class="fadeOut mask-duration">
     <div class="mask" v-show="visible" @click="onPersistent">
-      <transition name="fade" enter-active-class="fadeInUp duration" leave-active-class="fadeOutDown duration"
+      <transition :enter-active-class="enterActiveClass" :leave-active-class="leaveActiveClass"
                   @after-leave="destroyElement">
-        <div class="card" v-show="visible" :style="{marginTop: `-${offset}vh`}" @click.stop="_=>{}"
-             :class="{bounceIn:persistentAnimate,duration:persistentAnimate}" @animationend="persistentAnimationend()">
-          <div class="flex-box">
+        <div class="card duration" v-show="visible" :style="{marginTop: `-${offset}vh`}" @click.stop="_=>{}"
+             :class="{bounceIn:persistentAnimate,duration:persistentAnimate,padding}" @animationend="persistentAnimationend()">
+          <div class="flex-box" v-if="title">
             <h3 class="title">
               {{title}}
             </h3>
@@ -44,6 +44,18 @@
       offset: {
         type: Number,
         default: 0
+      },
+      enterActiveClass: {
+        type: String,
+        default: "fadeInUp"
+      },
+      leaveActiveClass: {
+        type: String,
+        default: "fadeOutDown"
+      },
+      padding:{
+        type: Boolean,
+        default: true
       }
     },
     model: {
@@ -53,7 +65,7 @@
     watch: {
       isShow(newVal) {
         this.visible = newVal;
-        if(newVal){
+        if (newVal) {
           this.closed = !newVal;
           on(document, "keydown", this.onEsc);
         }
@@ -92,7 +104,9 @@
     margin: 0 auto;
     vertical-align: middle;
     display: inline-block;
-    padding: 15px;
+    &.padding{
+      padding: 15px;
+    }
     .title {
       .ellipsis();
       text-align: left;

@@ -3,6 +3,7 @@ import Vue from 'vue'
 import {Alert, Confirm, Message, Prompt,Notification,Loading} from '../components/global'
 import Popper from "../components/global/Popper";
 import Dialog from "../components/global/Dialog";
+import DatePicker from "../components/global/DatePicker/Main";
 import Tag from "../components/global/Tag";
 import Pageable from "../components/global/Pageable";
 import CheckboxGroup from "../components/form/CheckboxGroup";
@@ -25,6 +26,7 @@ Vue.prototype.$notify = Notification;
 Vue.prototype.$loading = Loading;
 Vue.component("Popper",Popper);
 Vue.component("Dialog",Dialog);
+Vue.component("DatePicker",DatePicker);
 Vue.component("Tag",Tag);
 Vue.component("Pageable",Pageable);
 Vue.component("CheckboxGroup",CheckboxGroup);
@@ -33,6 +35,7 @@ Vue.component("RadioGroup",RadioGroup);
 Vue.component("Radio",Radio);
 Vue.component("SSwitch",Switch);
 Vue.component("Btn",Btn);
+
 // import vueSocketIO from 'vue-socket.io'
 // import io from 'socket.io-client'
 // Vue.use(vueSocketIO,io("http://47.107.131.24:8089"));

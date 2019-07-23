@@ -44,7 +44,7 @@
     },
     model: {
       prop: "input",
-      eventL: "input"
+      event: "input"
     },
     data() {
       return {
