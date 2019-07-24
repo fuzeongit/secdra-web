@@ -103,11 +103,17 @@ export default {
       }
 
       options.placement = this.currentPlacement;
-      options.offset = this.offset;
+      // options.offset = this.offset;
       options.arrowOffset = this.arrowOffset;
+      options.modifiers = {
+        offset: {
+          offset: this.offset
+        }
+      };
       //创建popper
       this.popperJS = new PopperJS(reference, popper, options);
 
+      console.log(this.popperJS);
       this.$emit('created', this);
       this.resetTransformOrigin();
       this.$nextTick(this.updatePopper);

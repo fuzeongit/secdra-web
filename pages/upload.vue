@@ -24,7 +24,7 @@
       </div>
       <div class="input-group">
         <h5 class="sub-name">描述：</h5>
-        <textarea v-model="form.introduction" class="input block primary-color" title="introduction" rows="3"></textarea>
+        <textarea v-model="form.introduction" class="input block textarea primary-color" title="introduction" rows="3"></textarea>
       </div>
       <div class="input-group">
         <h5 class="sub-name">私密：</h5>

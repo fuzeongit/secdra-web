@@ -5,10 +5,6 @@
       <div v-for="item in weekDescList" :key="item" class="week-item">{{item}}</div>
       <div v-for="(item,index) in calendarDataList" :key="index" class="calendar-item"
            :style="!index?{gridColumnStart:firstDayDate.getDay()+1,gridColumnEnd:firstDayDate.getDay()+2}:{}">
-        <!--<Btn class="date" :flat="!(item.year === year&&item.month === month&&item.day === day)"-->
-        <!--:color="(item.year === year&&item.month === month&&item.day === day)?`primary`:`default`">-->
-        <!--{{item.day}}-->
-        <!--</Btn>-->
         <Btn class="date" :flat="!item.active" :color="item.active?`primary`:`default`" @click="changeDate(item.day)">
           {{item.day}}
         </Btn>

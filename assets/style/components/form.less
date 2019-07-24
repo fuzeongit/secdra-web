@@ -3,14 +3,14 @@
 @import "../mixin";
 
 .input-group {
-  line-height: @input-line-height + @input-border-size + @input-border-size;
+  line-height: @input-line-height;
   font-size: @small-font-size;
   margin-bottom: 15px;
   &.big {
-    line-height: @big-input-line-height + @input-border-size + @input-border-size;
+    line-height: @big-input-line-height;
   }
   &.small {
-    line-height: @small-input-line-height + @input-border-size + @input-border-size;
+    line-height: @small-input-line-height;
   }
 }
 
@@ -26,7 +26,7 @@
   user-select: none;
   border-radius: @smallest-border-radius;
   font-size: @small-font-size;
-  line-height: @input-line-height;
+  height: @input-line-height;
   border: 0 solid;
   margin: 0;
   padding: 0 1.5em;
@@ -62,10 +62,10 @@
     position: absolute;
     left: 0;
     top: 0;
-    height: 100%;
     opacity: 0.12;
     transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
     width: 100%;
+    height: 100%;
   }
   &:hover:before {
     background-color: currentColor;
@@ -76,12 +76,12 @@
     width: 100%;
   }
   &.big {
-    line-height: @big-input-line-height;
+    height: @big-input-line-height;
     font-size: @default-font-size;
     padding: 0 2em;
   }
   &.small {
-    line-height: @small-input-line-height;
+    height: @small-input-line-height;
     font-size: @smallest-font-size;
     padding: 0 1em;
   }
@@ -116,45 +116,19 @@
       width: @small-input-line-height;
       height: @small-input-line-height;
     }
-    &.outline {
-      height: @input-line-height - @input-border-size - @input-border-size;
-      width: @input-line-height - @input-border-size - @input-border-size;
-      border-width: @input-border-size;
-      &.big {
-        height: @big-input-line-height - @input-border-size - @input-border-size;
-        width: @big-input-line-height - @input-border-size - @input-border-size;
-      }
-      &.small {
-        height: @small-input-line-height - @input-border-size - @input-border-size;
-        width: @small-input-line-height - @input-border-size - @input-border-size;
-      }
-    }
+
   }
   &.outline {
-    line-height: @input-line-height - @input-border-size - @input-border-size;
     border-width: @input-border-size;
-    &.big {
-      line-height: @big-input-line-height - @input-border-size - @input-border-size;
-    }
-    &.small {
-      line-height: @small-input-line-height - @input-border-size - @input-border-size;
-    }
     &.disabled {
-      line-height: @input-line-height;
       border-width: 0;
-      &.big {
-        line-height: @big-input-line-height;
-      }
-      &.small {
-        line-height: @small-input-line-height;
-      }
     }
   }
-  &.shadow{
+  &.shadow {
     .card-box-shadow()
   }
 
-  &:hover{
+  &:hover {
     text-decoration: none;
   }
 
@@ -175,7 +149,6 @@
     }
   }
 
-
   .content {
     align-items: center;
     border-radius: inherit;
@@ -188,6 +161,7 @@
     transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
     white-space: nowrap;
     width: inherit;
+    height: inherit;
     .ellipsis();
     [type=file] {
       display: none;
@@ -207,7 +181,7 @@
   user-select: none;
   border-radius: @smallest-border-radius;
   font-size: @small-font-size;
-  line-height: @input-line-height - @input-border-size - @input-border-size;
+  height: @input-line-height;
   border: @input-border-size solid @font-color-dark-line;
   margin: 0;
   .color(@color,@font-color) {
@@ -220,14 +194,7 @@
     &.disabled {
       background-color: @font-color-dark-line;
       color: @font-color-dark-disabled;
-      line-height: @input-line-height;
       border-width: 0;
-      &.big {
-        line-height: @big-input-line-height;
-      }
-      &.small {
-        line-height: @small-input-line-height;
-      }
       cursor: not-allowed;
     }
   }
@@ -236,12 +203,12 @@
     width: 100%;
   }
   &.big {
-    line-height: @big-input-line-height - @input-border-size - @input-border-size;
+    height: @big-input-line-height;
     font-size: @default-font-size;
     padding: 0 2em;
   }
   &.small {
-    line-height: @small-input-line-height - @input-border-size - @input-border-size;
+    height: @small-input-line-height;
     font-size: @smallest-font-size;
     padding: 0 1em;
   }
@@ -251,22 +218,38 @@
   &.primary-color {
     .color(@theme-color, @font-color-dark)
   }
-
-}
-
-textarea {
-  resize: vertical;
-  white-space: inherit !important;
+  &.textarea {
+    resize: vertical;
+    white-space: inherit !important;
+    line-height: @input-line-height;
+    height: auto;
+    &.big {
+      line-height: @big-input-line-height;
+    }
+    &.small {
+      line-height: @small-input-line-height;
+    }
+  }
 }
 
 .checkbox {
   display: inline-block;
-  vertical-align: baseline;
+  vertical-align: top;
   cursor: pointer;
   user-select: none;
-  line-height: @input-line-height;
+  height: @input-line-height;
   .color(@font-color) {
     color: @font-color;
+    .switch-box.active{
+      &:before{
+        background-color: @font-color;
+      }
+      .checkbox-inner{
+        .icon{
+          background-color: @font-color;
+        }
+      }
+    }
     &.disabled {
       cursor: not-allowed;
       color: @font-color-dark-disabled;
@@ -278,7 +261,8 @@ textarea {
   &.primary-color {
     .color(@theme-color)
   }
-  .checkbox-inner {
+
+  .checkbox-inner{
     display: inline-block;
     width: @input-line-height;
     height: @input-line-height;
@@ -298,26 +282,110 @@ textarea {
       transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
       white-space: nowrap;
       width: inherit;
+      height: inherit;
       .ellipsis()
     }
   }
+
+  .switch-box(@height) {
+    @width: @height * 1.5;
+    width: @width;
+    &:before {
+      height: @width / 4;
+      width: @width / 2;
+      border-radius: @height;
+    }
+    .checkbox-inner {
+      .icon {
+        width: @height / 2;
+        height: @height / 2;
+        .card-box-shadow()
+      }
+    }
+    &.active{
+      .checkbox-inner{
+        transform: translateX(@width - @height);
+      }
+    }
+  }
+  .switch-box {
+    position: relative;
+    height: inherit;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    .switch-box(@input-line-height);
+    &:before {
+      content: " ";
+      background-color: @font-color-dark-fade;
+      opacity: .7;
+    }
+    .checkbox-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: auto;
+      transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+      .icon {
+        border-radius: 50%;
+        background-color: white;
+        .card-box-shadow()
+      }
+    }
+  }
+  &.disabled {
+    .switch-box{
+      &:after{
+        content: " ";
+        background-color: @font-color-light-disabled;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+    }
+  }
+
   .checkbox-label {
-    vertical-align: 2px;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: inherit;
+    height: inherit;
+    padding-right: @input-line-height / 3;
   }
   &.big {
-    line-height: @big-input-line-height;
+    height: @big-input-line-height;
     font-size: @default-font-size;
     .checkbox-inner {
       width: @big-input-line-height;
       height: @big-input-line-height;
+      .icon {
+        font-size: @big-font-size;
+      }
+    }
+    .checkbox-label {
+      padding-right: @big-input-line-height / 3;
+    }
+    .switch-box {
+      .switch-box(@big-input-line-height);
     }
   }
   &.small {
-    line-height: @small-input-line-height;
+    height: @small-input-line-height;
     font-size: @smallest-font-size;
     .checkbox-inner {
       width: @small-input-line-height;
       height: @small-input-line-height;
+      .icon {
+        font-size: @default-font-size;
+      }
+    }
+    .checkbox-label {
+      padding-right: @small-input-line-height / 3;
+    }
+    .switch-box {
+      .switch-box(@small-input-line-height);
     }
   }
   .checkbox-original {
@@ -327,10 +395,10 @@ textarea {
 
 .radio {
   display: inline-block;
-  vertical-align: baseline;
+  vertical-align: top;
   cursor: pointer;
   user-select: none;
-  line-height: @input-line-height;
+  height: @input-line-height;
   .color(@font-color) {
     color: @font-color;
     &.disabled {
@@ -354,36 +422,53 @@ textarea {
     }
     .content {
       align-items: center;
-      border-radius: inherit;
-      color: inherit;
       display: flex;
       flex: 1 0 auto;
       justify-content: center;
+      border-radius: inherit;
+      color: inherit;
       margin: 0 auto;
       position: relative;
       transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
       white-space: nowrap;
       width: inherit;
+      height: inherit;
       .ellipsis()
     }
   }
   .radio-label {
-    vertical-align: 2px;
+    height: inherit;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: inherit;
+    padding-right: @input-line-height / 3;
   }
   &.big {
-    line-height: @big-input-line-height;
+    height: @big-input-line-height;
     font-size: @default-font-size;
     .radio-inner {
       width: @big-input-line-height;
       height: @big-input-line-height;
+      .icon {
+        font-size: @big-font-size;
+      }
+    }
+    .radio-label {
+      padding-right: @big-input-line-height / 3;
     }
   }
   &.small {
-    line-height: @small-input-line-height;
+    height: @small-input-line-height;
     font-size: @smallest-font-size;
     .radio-inner {
       width: @small-input-line-height;
       height: @small-input-line-height;
+      .icon {
+        font-size: @default-font-size;
+      }
+    }
+    .radio-label {
+      padding-right: @small-input-line-height / 3;
     }
   }
   .radio-original {

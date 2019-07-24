@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-import {Alert, Confirm, Message, Prompt,Notification,Loading} from '../components/global'
+import {Alert, Confirm, Loading, Message, Notification, Prompt} from '../components/global'
 import Popper from "../components/global/Popper";
 import Dialog from "../components/global/Dialog";
 import DatePicker from "../components/global/DatePicker/Main";
@@ -10,8 +10,8 @@ import CheckboxGroup from "../components/form/CheckboxGroup";
 import Checkbox from "../components/form/Checkbox";
 import RadioGroup from "../components/form/RadioGroup";
 import Radio from "../components/form/Radio";
-import Switch from "../components/form/Switch";
 import Btn from "../components/form/Btn";
+import DateInput from "../components/form/DateInput";
 
 import Http from '../assets/script/util/httpUtil'
 import Img from '../assets/script/util/imgUrlUtil'
@@ -33,8 +33,8 @@ Vue.component("CheckboxGroup",CheckboxGroup);
 Vue.component("Checkbox",Checkbox);
 Vue.component("RadioGroup",RadioGroup);
 Vue.component("Radio",Radio);
-Vue.component("SSwitch",Switch);
 Vue.component("Btn",Btn);
+Vue.component("DateInput",DateInput);
 
 // import vueSocketIO from 'vue-socket.io'
 // import io from 'socket.io-client'

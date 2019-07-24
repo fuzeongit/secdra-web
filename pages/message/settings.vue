@@ -4,19 +4,19 @@
     <div class="row">
       <div class="col-10">评论我的</div>
       <div class="col-20">
-        <SSwitch v-model="settingsForm.commentStatus"></SSwitch>
+        <Checkbox v-model="settingsForm.commentStatus" is-switch color="primary"></Checkbox>
       </div>
     </div>
     <div class="row">
       <div class="col-10">回复我的</div>
       <div class="col-20">
-        <SSwitch v-model="settingsForm.replyStatus"></SSwitch>
+        <Checkbox v-model="settingsForm.replyStatus" is-switch color="primary"></Checkbox>
       </div>
     </div>
     <div class="row">
       <div class="col-10">关注我的</div>
       <div class="col-20">
-        <SSwitch v-model="settingsForm.followStatus"></SSwitch>
+        <Checkbox v-model="settingsForm.followStatus" is-switch color="primary"></Checkbox>
       </div>
     </div>
   </div>

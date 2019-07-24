@@ -1,11 +1,33 @@
 <template>
-  <label class="checkbox" :class="classObject">
+  <!--<label class="checkbox" :class="classObject">-->
+  <!--<slot>-->
+  <!--<div class="checkbox-inner" v-ripple="{class:`${color}-text`}" :class="{'dark-fade-text':!model}">-->
+  <!--<div class="content">-->
+  <!--<i class="icon" :class="{'s-checkboxoutlineblank':!model,'s-check-box':model}"></i>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</slot>-->
+  <!--<span class="checkbox-label" v-if="label!==null" :class="{'dark-text':!model}">{{label}}</span>-->
+  <!--<input type="checkbox" class="checkbox-original" :disabled="disabled" v-model="model">-->
+  <!--</label>-->
+  <label class="checkbox switch" :class="classObject">
     <slot>
-      <div class="checkbox-inner" v-ripple="{class:`${color}-text`}" :class="{'dark-fade-text':!model}">
-        <div class="content">
-          <i class="icon" :class="{'s-checkboxoutlineblank':!model,'s-check-box':model}"></i>
+      <template v-if="isSwitch">
+        <div class="switch-box" :class="{'active':model}">
+          <div class="checkbox-inner" v-ripple="!disabled&&{class:`${color}-text`}" :class="{'dark-fade-text':!model}">
+            <div class="content">
+              <i class="icon"></i>
+            </div>
+          </div>
         </div>
-      </div>
+      </template>
+     <template v-else>
+       <div class="checkbox-inner" v-ripple="{class:`${color}-text`}" :class="{'dark-fade-text':!model}">
+         <div class="content">
+           <i class="icon" :class="{'s-checkboxoutlineblank':!model,'s-check-box':model}"></i>
+         </div>
+       </div>
+     </template>
     </slot>
     <span class="checkbox-label" v-if="label!==null" :class="{'dark-text':!model}">{{label}}</span>
     <input type="checkbox" class="checkbox-original" :disabled="disabled" v-model="model">
@@ -32,7 +54,15 @@
         type: String,
         default: 'default'
       },
+      big: {
+        type: Boolean,
+        default: false
+      },
       small: {
+        type: Boolean,
+        default: false
+      },
+      isSwitch: {
         type: Boolean,
         default: false
       },
@@ -89,6 +119,7 @@
         let classObject = {};
         classObject[this.color + "-color"] = true;
         classObject["small"] = this.small;
+        classObject["big"] = this.big;
         classObject["disabled"] = this.disabled;
         return classObject
       }
@@ -97,4 +128,5 @@
 </script>
 
 <style type="text/less" lang="less" scoped>
+
 </style>

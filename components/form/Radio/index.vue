@@ -1,7 +1,7 @@
 <template>
   <label class="radio" :class="classObject">
     <slot>
-      <div class="radio-inner" v-ripple="{class:`${color}-text`}" :class="{'dark-fade-text':!model}">
+      <div class="radio-inner" v-ripple="!disabled&&{class:`${color}-text`}" :class="{'dark-fade-text':!model}">
          <div class="content">
           <i class="icon" :class="{'s-md-radio-button-off':!model,'s-md-radio-button-on':model}"></i>
         </div>
@@ -28,6 +28,10 @@
       color: {
         type: String,
         default: 'default'
+      },
+      big: {
+        type: Boolean,
+        default: false
       },
       small: {
         type: Boolean,
@@ -88,6 +92,7 @@
         let classObject = {};
         classObject[this.color + "-color"] = true;
         classObject["small"] = this.small;
+        classObject["big"] = this.big;
         classObject["disabled"] = this.disabled;
         return classObject
       }

@@ -79,7 +79,7 @@
           </div>
           <div class="input-group">
             <h5 class="sub-name">简介：</h5>
-            <textarea v-model="drawForm.introduction" class="input block" title="introduction" rows="3"></textarea>
+            <textarea v-model="drawForm.introduction" class="input block textarea primary-color" title="introduction" rows="3"></textarea>
           </div>
           <div class="input-group">
             <h5 class="sub-name">私密：</h5>

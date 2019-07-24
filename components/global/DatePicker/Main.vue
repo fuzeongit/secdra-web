@@ -161,6 +161,7 @@
   .date-picker {
     background-color: white;
     display: inline-block;
+    vertical-align: middle;
     @padding: 5px;
     .tool-box {
       display: grid;
