@@ -21,13 +21,13 @@
           </div>
         </div>
       </template>
-     <template v-else>
-       <div class="checkbox-inner" v-ripple="{class:`${color}-text`}" :class="{'dark-fade-text':!model}">
-         <div class="content">
-           <i class="icon" :class="{'s-checkboxoutlineblank':!model,'s-check-box':model}"></i>
-         </div>
-       </div>
-     </template>
+      <template v-else>
+        <div class="checkbox-inner" v-ripple="{class:`${color}-text`}" :class="{'dark-fade-text':!model}">
+          <div class="content">
+            <i class="icon" :class="{'s-checkboxoutlineblank':!model,'s-check-box':model}"></i>
+          </div>
+        </div>
+      </template>
     </slot>
     <span class="checkbox-label" v-if="label!==null" :class="{'dark-text':!model}">{{label}}</span>
     <input type="checkbox" class="checkbox-original" :disabled="disabled" v-model="model">
@@ -68,13 +68,19 @@
       },
       //如果value是Object的话valueKey必填
       value: {
-        type: String | Number | Object
+        type: String | Number | Object | Boolean,
+        default: true
       },
       valueKey: String | Number
     },
     model: {
       prop: "input",
       event: "input"
+    },
+    watch: {
+      input(newVal) {
+        this.selfModel = newVal
+      }
     },
     data() {
       return {
@@ -91,8 +97,13 @@
             } else {
               return this.checkboxGroup.getIndex(this.value) !== -1
             }
+          } else {
+            if (typeof this.value === "object") {
+              return this.selfModel[this.valueKey] === this.value[this.valueKey]
+            } else {
+              return this.selfModel === this.value
+            }
           }
-          return this.selfModel
         },
         set(val) {
           if (this.isGroup) {

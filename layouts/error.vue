@@ -63,13 +63,13 @@
       <Btn disabled icon small>45</Btn>
       <Btn flat icon small>45</Btn>
       <Btn flat disabled icon small>45</Btn>
-      <Btn outline icon small>45</Btn>
+      <Btn outline icon small @click="d=new Date('2018/08/08')">45</Btn>
       <Btn outline disabled icon small>45</Btn>
 
     </div>
 
-    <div style="padding:100px">
-    <DateInput></DateInput>
+    <div style="padding:300px">
+    <DateInput v-model="d" color="primary"></DateInput>
   </div>
     <div>
       <DateInput></DateInput>
@@ -84,7 +84,8 @@
     name: "error",
     data(){
       return {
-        c:true
+        c:true,
+        d:new Date()
       }
     },
     mounted(){

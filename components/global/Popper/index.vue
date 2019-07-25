@@ -5,7 +5,7 @@
       @after-enter="handleAfterEnter"
       @after-leave="handleAfterLeave">
       <div
-        class="card"
+        class="card popper"
         ref="popper"
         v-show="showPopper"
         :style="{ width: width + 'px' }"
@@ -38,11 +38,11 @@
       reference: {},
       width: {},
       visibleArrow: {
-        default: true
+        default: false
       },
       arrowOffset: {
         type: Number,
-        default: 0
+        default: 150
       }
     },
 

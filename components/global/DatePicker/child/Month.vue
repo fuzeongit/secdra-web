@@ -33,7 +33,8 @@
     },
     methods: {
       changeDate(month) {
-        this.clickFunction && this.clickFunction(new Date(this.calendar.getFullYear(), month, 1), `month`)
+        this.date = new Date(this.calendar.getFullYear(), month, 1);
+        this.clickFunction && this.clickFunction(this.date, `month`)
       }
     }
   }

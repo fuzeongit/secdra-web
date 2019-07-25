@@ -26,12 +26,14 @@
         for (let i = Math.floor(thisYear / 10) * 10; i < Math.floor(thisYear / 10) * 10 + 10; i++) {
           yearList.push(new Year(i,i===this.date.getFullYear()))
         }
+        console.log(yearList);
         return yearList
       }
     },
     methods: {
       changeDate(year) {
-        this.clickFunction && this.clickFunction(new Date(year, this.calendar.getMonth(), 1), `year`)
+        this.date = new Date(year, this.calendar.getMonth(), 1);
+        this.clickFunction && this.clickFunction(this.date, `year`)
       }
     }
   }

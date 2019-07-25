@@ -2,7 +2,7 @@
   <label class="radio" :class="classObject">
     <slot>
       <div class="radio-inner" v-ripple="!disabled&&{class:`${color}-text`}" :class="{'dark-fade-text':!model}">
-         <div class="content">
+        <div class="content">
           <i class="icon" :class="{'s-md-radio-button-off':!model,'s-md-radio-button-on':model}"></i>
         </div>
       </div>
@@ -38,12 +38,20 @@
         default: false
       },
       //如果value是Object的话valueKey必填
-      value: {},
+      value: {
+        type: String | Number | Object | Boolean,
+        default: true
+      },
       valueKey: String | Number
     },
     model: {
       prop: "input",
       event: "input"
+    },
+    watch: {
+      input(newVal) {
+        this.selfModel = newVal
+      }
     },
     data() {
       return {

@@ -15,6 +15,7 @@ export default {
       type: [Boolean, String],
       default: true
     },
+    //出现方位
     placement: {
       type: String,
       default: 'bottom'
@@ -103,8 +104,7 @@ export default {
       }
 
       options.placement = this.currentPlacement;
-      // options.offset = this.offset;
-      options.arrowOffset = this.arrowOffset;
+      // options.arrowOffset = this.arrowOffset;
       options.modifiers = {
         offset: {
           offset: this.offset
@@ -112,8 +112,6 @@ export default {
       };
       //创建popper
       this.popperJS = new PopperJS(reference, popper, options);
-
-      console.log(this.popperJS);
       this.$emit('created', this);
       this.resetTransformOrigin();
       this.$nextTick(this.updatePopper);

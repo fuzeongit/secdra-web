@@ -53,7 +53,12 @@
       },
       format: {
         type: String,
-        default: "",
+        default: "YYYY-MM-DD",
+      },
+      type: {
+        type: String,
+        default: 'day',
+        validator: value => ['year', 'month', 'day'].indexOf(value) > -1
       }
     },
     model: {
@@ -74,6 +79,17 @@
     computed: {
       normalizedDate() {
         return new Date(this.date)
+      }
+    },
+    watch:{
+      date(newVal){
+        this.calendar = new Date(newVal);
+        this.yearInstance.date = this.calendar;
+        this.yearInstance.calendar = this.calendar;
+        this.monthInstance.date = this.calendar;
+        this.monthInstance.calendar = this.calendar;
+        this.calendarInstance.date = this.calendar;
+        this.calendarInstance.calendar = this.calendar;
       }
     },
     methods: {
@@ -132,9 +148,9 @@
       changeDate(date, step) {
         this.calendar = date;
         let stepNext = ["month", "day", "day"];
-        if (this.stepList.indexOf(step) === 2) {
-          console.log(dateUtil.format(date, this.format));
-          this.$emit("change", dateUtil.format(date, this.format))
+        if (step === this.type) {
+          this.$emit("change", dateUtil.format(date, this.format));
+          return
         }
         this.step = stepNext[this.stepList.indexOf(this.step)]
       },
@@ -148,7 +164,7 @@
       }
     },
     mounted() {
-      this.step = "day"
+      this.step = this.type
     }
   }
 </script>
@@ -184,8 +200,8 @@
             &:before {
               display: none !important;
             }
-            &:hover{
-              color:@theme-color;
+            &:hover {
+              color: @theme-color;
             }
           }
         }
