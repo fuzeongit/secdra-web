@@ -59,7 +59,7 @@
       if (!reference && this.$slots.reference && this.$slots.reference[0]) {
         reference = this.referenceElm = this.$slots.reference[0].elm;
       }
-
+      on(document, "keydown", this.handleKeydown);
       if (this.trigger === 'click') {
         on(reference, 'click', this.doToggle);
         on(document, 'click', this.handleDocumentClick);
@@ -157,6 +157,7 @@
       off(reference, 'mouseleave', this.handleMouseLeave);
       off(reference, 'mouseenter', this.handleMouseEnter);
       off(document, 'click', this.handleDocumentClick);
+      off(document, "keydown", this.handleKeydown);
     }
   };
 </script>

@@ -2,20 +2,22 @@
   <div class="page">
     <SelfHome v-if="isSelf"></SelfHome>
     <OtherHome v-else :user="user" @follow="follow"></OtherHome>
-    <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <Btn icon big shadow v-goTop v-show="scrollTop>150" class="go-top">
-        <i class="icon s-up"></i>
-      </Btn>
-    </transition>
+    <GoTop></GoTop>
   </div>
 </template>
 
 <script>
   import SelfHome from "../../components/pages/user/SelfHome";
   import OtherHome from "../../components/pages/user/OtherHome";
-  import {mapState, mapActions} from "vuex"
+  import GoTop from "../../components/pages/shared/GoTop";
+  import {mapActions} from "vuex"
 
   export default {
+    components: {
+      SelfHome,
+      OtherHome,
+      GoTop
+    },
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
     async asyncData({store, req, redirect, route, $axios}) {
@@ -42,15 +44,7 @@
         user
       }
     },
-    data() {
-      return {}
-    },
-    components: {
-      SelfHome,
-      OtherHome
-    },
     computed: {
-      ...mapState('window', ['scrollTop']),
       isSelf() {
         return this.$store.state.user.user.id === this.$route.params.id
       }

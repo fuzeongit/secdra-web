@@ -65,7 +65,6 @@ export default {
       throw new Error("not File")
     }
     if (file.type.indexOf("image/") === -1) {
-      console.log("indexOf" + file.type);
       return false
     }
     if (!suffixList.isEmpty()) {

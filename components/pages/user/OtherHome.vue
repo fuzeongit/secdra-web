@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="user-bk cover"
-         :style="{transform: `translateY(${scrollTop*.5}px)`,backgroundImage: `url(${$img.back(user.background)})`}">
+         :style="{backgroundImage: `url(${$img.back(user.background)})`}">
       <div class="user-bk-content">
         <div class="tool">
           <Btn big round @click="$emit('follow')">
@@ -108,9 +108,7 @@
         followingList: []
       }
     },
-    computed: {
-      ...mapState('window', ['scrollTop']),
-    }, mounted() {
+    mounted() {
       this.pagingWorks();
       this.pagingCollection();
       this.pagingFollower();

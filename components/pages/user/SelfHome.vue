@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="user-bk cover"
-         :style="{transform: `translateY(${scrollTop*.5}px)`,backgroundImage: `url(${$img.back(user.background)})`}">
+         :style="{backgroundImage: `url(${$img.back(user.background)})`}">
       <div class="user-bk-content">
         <div class="tool">
           <Btn icon big type="file" @change="uploadBack">
@@ -77,8 +77,8 @@
       </div>
       <Btn block color="primary" @click="saveBack">保存</Btn>
     </Dialog>
-    <Dialog v-model="isShowEdit" title="编辑" v-loading="editLoading" >
-      <div class="edit-dialog-content" style="width: 500px;height: 400px;overflow: auto">
+    <Dialog v-model="isShowEdit" title="编辑" v-loading="editLoading">
+      <div class="edit-dialog-content" style="width: 500px;height: 450px;overflow: auto">
         <div>
           <div class="input-group">
             <h5 class="sub-name">名称：</h5>
@@ -86,7 +86,8 @@
           </div>
           <div class="input-group">
             <h5 class="sub-name">简介：</h5>
-            <textarea v-model="userForm.introduction" class="input block textarea primary-color" title="introduction" rows="3"></textarea>
+            <textarea v-model="userForm.introduction" class="input block textarea primary-color" title="introduction"
+                      rows="3"></textarea>
           </div>
           <div class="input-group">
             <h5 class="sub-name">性别：</h5>
@@ -94,6 +95,10 @@
               <Radio value="MALE" label="男孩" color="primary"></Radio>
               <Radio value="FEMALE" label="女孩" color="primary" style="margin-left: 10px"></Radio>
             </RadioGroup>
+          </div>
+          <div class="input-group">
+            <h5 class="sub-name">生日：</h5>
+            <DateInput v-model="userForm.birthday" block color="primary"></DateInput>
           </div>
         </div>
       </div>
@@ -143,8 +148,7 @@
       }
     },
     computed: {
-      ...mapState('user', ['user', 'uploadToken']),
-      ...mapState('window', ['scrollTop']),
+      ...mapState('user', ['user', 'uploadToken'])
     },
     mounted() {
       this.headCropper = new Cropper(this.$refs["tailoringHeadImage"]._isVue ? this.$refs["tailoringHeadImage"].$el : this.$refs["tailoringHeadImage"], {

@@ -1,7 +1,7 @@
 <template>
   <div class="list-content" :style="{height:`${listContentOffset.height}px`}">
     <div class="item card" :style="{left:`${offset[index].left}px`,top:`${offset[index].top}px`}"
-         v-for="(draw,index) in list" :key="index">
+         v-for="(draw,index) in list" :key="draw.id" >
       <nuxt-link :to="`/draw/${draw.id}`" class="img-box" v-ripple>
         <img :src="$img.secdra(draw.url,`specifiedWidth`)"
              :style="{width:listConstant.colWidth+`px`,height:getHeight(draw)+`px`}">
@@ -39,10 +39,11 @@
 
 <script>
   import {ListConstant} from "../../../assets/script/constant/base";
-  import {mapState} from 'vuex'
+  import windowMixin from "../../../assets/script/mixin/window"
 
   export default {
     componentName: "DrawList",
+    mixins: [windowMixin],
     props: {
       page: Object,
       list: {
@@ -71,7 +72,6 @@
       },
     },
     computed: {
-      ...mapState('window', ['scrollTop', 'scrollBottom']),
       //计算偏移
       offset() {
         let o = [];

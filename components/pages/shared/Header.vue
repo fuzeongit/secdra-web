@@ -83,9 +83,11 @@
 <script>
   import Cookie from 'js-cookie'
   import {mapState, mapMutations, mapActions} from "vuex"
+  import windowMixin from "../../../assets/script/mixin/window";
 
   export default {
     componentName: "Header",
+    mixins: [windowMixin],
     props: {
       offset: {
         type: Number,
@@ -106,7 +108,6 @@
     computed: {
       ...mapState('menu', {activeName: 'name'}),
       ...mapState('user', ['user']),
-      ...mapState('window', ['scrollTop']),
       isShow() {
         let isShow = this.scrollTop < this.offset;
         if (!isShow && !this.hid) {
@@ -120,20 +121,10 @@
     },
     mounted() {
       this.countUnread();
-      document.addEventListener('scroll', this.documentScroll);
-    },
-    beforeDestroy() {
-      document.removeEventListener('scroll', this.documentScroll);
     },
     methods: {
-      ...mapMutations("window", ["MChangesScroll"]),
       ...mapMutations("message", ["MChangeCount"]),
       ...mapActions("message", ["ACount"]),
-      documentScroll(event) {
-        let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-        let scrollBottom = document.body.scrollHeight - this.scrollTop - event.target.documentElement.clientHeight;
-        this.MChangesScroll({scrollTop, scrollBottom})
-      },
       search() {
         this.$router.push(`/draw/search/${this.tag}`)
       },

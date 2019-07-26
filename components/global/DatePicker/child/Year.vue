@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import datePickerMixin from "./datePickerMixin"
+  import datePickerMixin from "../../../../assets/script/mixin/datePicker"
   class Year{
     constructor(value,active){
       this.value = value;

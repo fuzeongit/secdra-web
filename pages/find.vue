@@ -2,22 +2,20 @@
   <div class="page">
     <DrawList :page="page" :list="list" :pageLoading="pageLoading" @paging="paging" @collection="collection"
               @follow="follow"></DrawList>
-    <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <Btn icon big shadow v-goTop v-show="showGoTop" class="go-top">
-        <i class="icon s-up"></i>
-      </Btn>
-    </transition>
+    <GoTop></GoTop>
   </div>
 </template>
 
 <script>
   import {Pageable} from "../assets/script/model/base";
-  import {mapState, mapActions} from "vuex"
+  import {mapActions} from "vuex"
   import DrawList from "../components/pages/shared/DrawList"
+  import GoTop from "../components/pages/shared/GoTop"
 
   export default {
     components: {
-      DrawList
+      DrawList,
+      GoTop
     },
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
@@ -41,26 +39,8 @@
     },
     data() {
       return {
-        pageLoading: false,
-        showGoTop: false
+        pageLoading: false
       }
-    },
-    watch: {
-      /**
-       * 如果直接用计算属性计算showGoTop的话，
-       * 可能会导致渲染过度，导致页面卡顿
-       */
-      scrollTop(newVal, oldVal) {
-        let threshold = 150;
-        if (newVal > threshold && oldVal <= threshold) {
-          this.showGoTop = true
-        } else if (newVal <= threshold && oldVal > threshold) {
-          this.showGoTop = false
-        }
-      }
-    },
-    computed: {
-      ...mapState('window', ['scrollTop'])
     },
     mounted() {
       this.$notify({message: `现在暂时先随机出`, waitTime: 4000});

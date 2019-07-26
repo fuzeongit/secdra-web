@@ -3,14 +3,14 @@
     <div class="mask" v-show="visible" @click="onPersistent">
       <transition :enter-active-class="enterActiveClass" :leave-active-class="leaveActiveClass"
                   @after-leave="destroyElement">
-        <div class="card duration" v-show="visible" :style="{marginTop: `-${offset}vh`}" @click.stop="_=>{}"
+        <div class="card duration" v-show="visible" :style="{marginTop: `-${offset}vh`}"
              :class="{bounceIn:persistentAnimate,duration:persistentAnimate,padding}" @animationend="persistentAnimationend()">
           <div class="flex-box" v-if="title">
             <h3 class="title">
               {{title}}
             </h3>
             <div>
-              <Btn flat icon small @click.stop="close">
+              <Btn flat icon small @click="close">
                 <i class="icon s-close"></i>
               </Btn>
             </div>

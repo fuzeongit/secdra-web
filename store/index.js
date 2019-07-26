@@ -1,12 +1,5 @@
 import Vue from 'vue'
-import vuex, {Store} from 'vuex'
-import menu from './menu'
-import user from './user'
-import draw from './draw'
-import comment from './comment'
-import reply from './reply'
-import message from './message'
-import window from './window'
+import vuex from 'vuex'
 
 /**
  * vuex仓库入口

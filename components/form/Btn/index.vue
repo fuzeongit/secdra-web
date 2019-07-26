@@ -1,19 +1,19 @@
 <template>
   <nuxt-link v-if="to" :to="to" class="btn"
-             :class="classObject" v-ripple @click.stop="_click" :target="target">
+             :class="classObject" v-ripple @click="_click" :target="target">
     <div class="content">
       <slot></slot>
     </div>
   </nuxt-link>
   <label v-else-if="!to&&type===`file`" class="btn"
-         :class="classObject" v-ripple @click.stop="_click">
+         :class="classObject" v-ripple @clickx="_click">
     <div class="content">
       <input type="file" @change="_change">
       <slot></slot>
     </div>
   </label>
   <button v-else class="btn"
-          :class="classObject" v-ripple :disabled="disabled" :type="type" @click.stop="_click">
+          :class="classObject" v-ripple :disabled="disabled" :type="type" @click="_click">
     <div class="content">
       <slot></slot>
     </div>

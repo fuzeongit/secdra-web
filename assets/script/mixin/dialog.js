@@ -1,4 +1,4 @@
-import {on, off} from "../../../assets/script/util/domUtil"
+import {off} from "../../../assets/script/util/domUtil"
 
 export default {
   props: {
@@ -31,10 +31,13 @@ export default {
         this.onPersistent()
       }
     },
-    onPersistent() {
+    onPersistent(event) {
+      if (event && event.target.className.indexOf("mask") === -1) {
+        return
+      }
       if (this.persistent) {
         this.persistentAnimate = true;
-        return false
+        return
       }
       this.close()
     },
