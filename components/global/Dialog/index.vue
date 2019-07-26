@@ -26,7 +26,7 @@
 
 <script>
   import dialogMixin from "../../../assets/script/mixin/dialog"
-  import {on, off} from "../../../assets/script/util/domUtil"
+  import {on, off,addClass, removeClass} from "../../../assets/script/util/domUtil"
 
   export default {
     componentName: "Dialog",
@@ -68,12 +68,7 @@
         if (newVal) {
           this.closed = !newVal;
           on(document, "keydown", this.onEsc);
-        }
-      },
-      closed(newVal) {
-        if (newVal) {
-          this.visible = false;
-          this.$emit("change", false);
+          addClass(document.body,"not-scroll");
         }
       }
     },
@@ -86,6 +81,7 @@
     methods: {
       destroyElement() {
         off(document, "keydown", this.onEsc);
+        removeClass(document.body,"not-scroll");
         this.closed = true;
       },
       close() {

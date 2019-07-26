@@ -1,7 +1,7 @@
 <template>
   <div class="list-content" :style="{height:`${listContentOffset.height}px`}">
     <div class="item card" :style="{left:`${offset[index].left}px`,top:`${offset[index].top}px`}"
-         v-for="(draw,index) in list" :key="draw.id" >
+         v-for="(draw,index) in list" :key="index" >
       <nuxt-link :to="`/draw/${draw.id}`" class="img-box" v-ripple>
         <img :src="$img.secdra(draw.url,`specifiedWidth`)"
              :style="{width:listConstant.colWidth+`px`,height:getHeight(draw)+`px`}">

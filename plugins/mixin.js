@@ -37,11 +37,9 @@ Vue.component("Btn",Btn);
 Vue.component("DateInput",DateInput);
 
 // import vueSocketIO from 'vue-socket.io'
-// import io from 'socket.io-client'
-// Vue.use(vueSocketIO,io("http://47.107.131.24:8089"));
+// Vue.use(vueSocketIO,io("http://localhost:8089"));
 
 Vue.prototype.$http = Http;
-
 Vue.prototype.$img = Img;
 
 Vue.prototype.$filter = filters;

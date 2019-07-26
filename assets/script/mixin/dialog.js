@@ -1,4 +1,4 @@
-import {off} from "../../../assets/script/util/domUtil"
+import {off, removeClass} from "../../../assets/script/util/domUtil"
 
 export default {
   props: {
@@ -11,6 +11,7 @@ export default {
     closed(newVal) {
       if (newVal) {
         this.visible = false;
+        removeClass(document.body,"not-scroll");
         this.$emit("change", false);
       }
     }

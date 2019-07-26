@@ -79,7 +79,8 @@
           </div>
           <div class="input-group">
             <h5 class="sub-name">简介：</h5>
-            <textarea v-model="drawForm.introduction" class="input block textarea primary-color" title="introduction" rows="3"></textarea>
+            <textarea v-model="drawForm.introduction" class="input block textarea primary-color" title="introduction"
+                      rows="3"></textarea>
           </div>
           <div class="input-group">
             <h5 class="sub-name">私密：</h5>
@@ -94,14 +95,15 @@
             <h5 class="sub-name">*回车添加一个标签</h5>
           </div>
           <div style="margin-bottom: 10px">
-            <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName" color="primary"
+            <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName"
+                 color="primary"
                  :value="index"></Tag>
           </div>
         </div>
       </div>
       <div class="input-group" style="text-align: center;">
-        <Btn color="primary"  @click="save">保存</Btn>
-        <Btn outline color="primary"  @click="reset">重置</Btn>
+        <Btn color="primary" @click="save">保存</Btn>
+        <Btn outline color="primary" @click="reset">重置</Btn>
       </div>
     </Dialog>
   </div>
@@ -149,8 +151,6 @@
       proportion() {
         return this.draw.height / this.draw.width
       }
-    },
-    mounted() {
     },
     methods: {
       ...mapActions("draw", ["ACollection", "AUpdate"]),

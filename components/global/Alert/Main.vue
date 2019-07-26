@@ -22,7 +22,7 @@
 
 <script>
   import dialogMixin from "../../../assets/script/mixin/dialog"
-  import {on} from "../../../assets/script/util/domUtil";
+  import {on,addClass} from "../../../assets/script/util/domUtil";
 
   export default {
     componentName: "Alert",
@@ -45,7 +45,8 @@
       }
     },
     mounted() {
-      on(document, "keydown", this.onEsc)
+      on(document, "keydown", this.onEsc);
+      addClass(document.body,"not-scroll");
     }
   }
 </script>

@@ -8,14 +8,14 @@
 
 <script>
   import windowMixin from "../../../assets/script/mixin/window"
-  import {addClass} from "../../../assets/script/util/domUtil";
 
   export default {
     componentName: "GoTop",
     mixins: [windowMixin],
     methods: {
       goTop() {
-        document.body.scrollIntoView({
+        window.scrollTo({
+          top: 0,
           behavior: "smooth"
         });
       }

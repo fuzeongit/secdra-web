@@ -99,10 +99,14 @@
   import {Pageable} from "../assets/script/model/base";
   import UserCard from "../components/pages/shared/UserCard";
   import {mapState, mapActions} from "vuex"
-
+  import io from "~/plugins/io"
   export default {
     //在这里不能使用httpUtil
     async asyncData({store, req, redirect, route, $axios}) {
+      io.emit("messageEvent","13")
+      io.on("messageEvent",(e)=>{
+        console.log(e);
+      })
       store.commit('menu/MChangeName', "home");
       let taskList = [];
       taskList.push($axios.get(`/tag/listTagOrderByLikeAmount`));
@@ -125,6 +129,7 @@
       ...mapState('user', ['user'])
     },
     mounted() {
+
     },
     methods: {
       ...mapActions("draw", ["ACollection"]),
