@@ -19,12 +19,12 @@
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "moment": "^2.24.0",
+    "net": "^1.0.2",
     "nuxt": "^2.7.1",
     "popper.js": "^1.15.0",
     "qs": "^6.7.0",
-    "socket.io": "^2.2.0",
-    "socket.io-client": "^2.2.0",
-    "vue-socket.io": "^2.1.1",
+    "sockjs-client": "^1.3.0",
+    "stompjs": "^2.3.3",
     "vue2-animate": "^2.1.0"
   },
   "devDependencies": {

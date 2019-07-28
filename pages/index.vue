@@ -3,7 +3,8 @@
     <div class="user-bk cover flex-box"
          :style="{backgroundImage: `url(${$img.back(user.background)})`}">
       <div class="user-bk-content">
-        <input type="search" title="搜索" class="input primary-color" placeholder="请输入标签搜索" @search="search" v-model="tag">
+        <input type="search" title="搜索" class="input primary-color" placeholder="请输入标签搜索" @search="search"
+               v-model="tag">
         <Btn color="primary" class="btn" @click="search">搜&nbsp;&nbsp;&nbsp;&nbsp;索</Btn>
       </div>
     </div>
@@ -13,7 +14,7 @@
         <div class="card image-card ">
           <h3 class="title">
             发现
-            <Btn round flat small color="primary"  to="/find"> 更多>></Btn>
+            <Btn round flat small color="primary" to="/find"> 更多>></Btn>
           </h3>
           <div class="image-grid-row">
             <div v-for="(draw,index) in likeList" class="item" :key="index">
@@ -98,15 +99,11 @@
 <script>
   import {Pageable} from "../assets/script/model/base";
   import UserCard from "../components/pages/shared/UserCard";
-  import {mapState, mapActions} from "vuex"
-  import io from "~/plugins/io"
+  import {mapActions, mapState} from "vuex"
+
   export default {
     //在这里不能使用httpUtil
     async asyncData({store, req, redirect, route, $axios}) {
-      io.emit("messageEvent","13")
-      io.on("messageEvent",(e)=>{
-        console.log(e);
-      })
       store.commit('menu/MChangeName', "home");
       let taskList = [];
       taskList.push($axios.get(`/tag/listTagOrderByLikeAmount`));
@@ -123,13 +120,8 @@
     components: {
       UserCard
     },
-    data() {
-    },
     computed: {
       ...mapState('user', ['user'])
-    },
-    mounted() {
-
     },
     methods: {
       ...mapActions("draw", ["ACollection"]),
@@ -155,7 +147,7 @@
           }
         }
       },
-      search() {
+      async search() {
         this.$router.push(`/draw/search/${this.tag}`)
       }
     }
