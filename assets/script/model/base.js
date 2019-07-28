@@ -6,33 +6,9 @@ export class Result {
    * @param {String}message
    */
   constructor(status, data, message) {
-    this._status = status;
-    this._data = data;
-    this._message = message;
-  }
-
-  get status() {
-    return this._status;
-  }
-
-  set status(value) {
-    this._status = value;
-  }
-
-  get data() {
-    return this._data;
-  }
-
-  set data(value) {
-    this._data = value;
-  }
-
-  get message() {
-    return this._message;
-  }
-
-  set message(value) {
-    this._message = value;
+    this.status = status;
+    this.data = data;
+    this.message = message;
   }
 }
 
@@ -44,34 +20,11 @@ export class Pageable {
    * @param {String}sort
    */
   constructor(page = 0, size = 20, sort = "") {
-    this._page = page;
-    this._size = size;
-    this._sort = sort;
+    this.page = page;
+    this.size = size;
+    this.sort = sort;
   }
 
-  get page() {
-    return this._page;
-  }
-
-  set page(value) {
-    this._page = value;
-  }
-
-  get size() {
-    return this._size;
-  }
-
-  set size(value) {
-    this._size = value;
-  }
-
-  get sort() {
-    return this._sort;
-  }
-
-  set sort(value) {
-    this._sort = value;
-  }
 }
 
 export class DrawForm {

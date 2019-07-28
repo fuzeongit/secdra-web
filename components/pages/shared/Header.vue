@@ -82,7 +82,7 @@
 
 <script>
   import Cookie from 'js-cookie'
-  import {mapState, mapMutations, mapActions} from "vuex"
+  import {mapState} from "vuex"
   import windowMixin from "../../../assets/script/mixin/window";
 
   export default {
@@ -119,12 +119,8 @@
         return (this.$store.state.message.commentCount + this.$store.state.message.replyCount + this.$store.state.message.followCount + this.$store.state.message.systemCount)
       }
     },
-    mounted() {
-      this.countUnread();
-    },
+
     methods: {
-      ...mapMutations("message", ["MChangeCount"]),
-      ...mapActions("message", ["ACount"]),
       search() {
         this.$router.push(`/draw/search/${this.tag}`)
       },
@@ -136,16 +132,6 @@
             this.$router.replace("/login")
           }
         });
-      },
-      async countUnread() {
-        let result = await this.ACount();
-        if (result.status !== 200) {
-          return
-        }
-        this.MChangeCount({type: 'comment', count: result.data.COMMENT});
-        this.MChangeCount({type: 'reply', count: result.data.REPLY});
-        this.MChangeCount({type: 'follow', count: result.data.FOLLOW});
-        this.MChangeCount({type: 'system', count: result.data.SYSTEM});
       }
     }
   }

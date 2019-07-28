@@ -4,46 +4,51 @@ import Vue from 'vue';
 import Cookies from "js-cookie";
 
 const isServer = Vue.prototype.$isServer;
-let socket = null;
-let client = null;
 
 export default {
+  socket: null,
+  client: null,
   connect() {
     return new Promise((resolve, reject) => {
         if (isServer) {
           reject("service")
         } else {
           //是否初始化了
-          if (!client) {
-            if(socket){
-              socket.close();
-              socket = null;
+          if (!this.client) {
+            if (this.socket) {
+              this.socket.close();
+              this.socket = null;
             }
-            socket = new SockJS(process.env.baseUrl + "/webSocket");
-            client = Stomp.over(socket);
-            client.debug = false
+            this.socket = new SockJS(process.env.baseUrl + "/webSocket");
+            this.client = Stomp.over(this.socket);
+            this.client.debug = false
           }
           //是否连接中
-          if (!client.connected) {
-            client.connect({token: Cookies.get('token') || ""}, () => {
-              resolve(client)
-            })
+          if (!this.client.connected) {
+            this.client.connect({token: Cookies.get('token') || ""}, () => {
+              resolve(this.client)
+            });
           }
           else {
-            resolve(client)
+            resolve(this.client)
           }
         }
       }
     )
   },
   unsubscribeAll() {
-    for (let sub in client.subscriptions) {
-      if (client.subscriptions.hasOwnProperty(sub)) {
-        client.unsubscribe(sub);
+    for (let sub in this.client.subscriptions) {
+      if (this.client.subscriptions.hasOwnProperty(sub)) {
+        this.client.unsubscribe(sub);
       }
     }
   },
   send(eventName, params, header = {}) {
-    client.send(eventName, header,JSON.stringify(params))
+    this.client.send(eventName, header, JSON.stringify(params))
+  },
+  disconnect(header = {}) {
+    this.client.disconnect(header, function () {
+      console.log('断开连接');
+    });
   }
 }

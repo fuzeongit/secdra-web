@@ -26,7 +26,6 @@
         for (let i = Math.floor(thisYear / 10) * 10; i < Math.floor(thisYear / 10) * 10 + 10; i++) {
           yearList.push(new Year(i,i===this.date.getFullYear()))
         }
-        console.log(yearList);
         return yearList
       }
     },

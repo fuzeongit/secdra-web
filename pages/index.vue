@@ -97,10 +97,10 @@
 </template>
 
 <script>
-  import {Pageable} from "../assets/script/model/base";
+  import {Pageable, SocketEvent} from "../assets/script/model/base";
   import UserCard from "../components/pages/shared/UserCard";
   import {mapActions, mapState} from "vuex"
-
+  import socket from "../assets/script/mixin/socket";
   export default {
     //在这里不能使用httpUtil
     async asyncData({store, req, redirect, route, $axios}) {
@@ -117,6 +117,7 @@
         tag: ''
       }
     },
+    mixins: [socket],
     components: {
       UserCard
     },
@@ -149,7 +150,12 @@
       },
       async search() {
         this.$router.push(`/draw/search/${this.tag}`)
-      }
+      },
+      socketEvent() {
+        return [new SocketEvent("/broadcast", (result) => {
+          console.log(result);
+        })]
+      },
     }
   }
 </script>
