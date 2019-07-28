@@ -46,9 +46,15 @@ export default {
   send(eventName, params, header = {}) {
     this.client.send(eventName, header, JSON.stringify(params))
   },
-  disconnect(header = {}) {
-    this.client.disconnect(header, function () {
-      console.log('断开连接');
-    });
+  async disconnect(header = {}) {
+    return new Promise((resolve, reject) => {
+      this.socket.close();
+      this.client = null;
+      this.socket = null;
+      resolve();
+      this.client.disconnect(function () {
+        console.log(1);
+      }, header);
+    })
   }
 }

@@ -13,7 +13,6 @@
   import socket from "../assets/script/mixin/socket";
   import {SocketEvent} from "../assets/script/model/base";
   import {mapMutations, mapActions} from "vuex"
-  import stompUtil from "../assets/script/util/stompUtil";
 
   export default {
     middleware: ['auth', 'messageRedirect'],
@@ -23,14 +22,12 @@
     },
     async mounted() {
       this.countUnread();
-      await stompUtil.connect();
-      this.MSetStatus(true);
-      this.socketConnect();
+      await this.ASocketConnect();
     },
     methods: {
       ...mapMutations("message", ["MChangeCount"]),
-      ...mapMutations("socket", ["MSetStatus"]),
       ...mapActions("message", ["ACount"]),
+      ...mapActions("socket", ["ASocketConnect"]),
       socketEvent() {
         return [new SocketEvent("/user/following/focus", (result) => {
           if (result.message) this.$notify({message: result.message});

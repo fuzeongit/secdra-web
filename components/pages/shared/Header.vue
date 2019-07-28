@@ -82,8 +82,9 @@
 
 <script>
   import Cookie from 'js-cookie'
-  import {mapState} from "vuex"
+  import {mapState, mapActions} from "vuex"
   import windowMixin from "../../../assets/script/mixin/window";
+  import stompUtil from "../../../assets/script/util/stompUtil";
 
   export default {
     componentName: "Header",
@@ -121,13 +122,15 @@
     },
 
     methods: {
+      ...mapActions("socket", ["ASocketDisconnect"]),
       search() {
         this.$router.push(`/draw/search/${this.tag}`)
       },
       logout() {
         this.$confirm({
           message: `你确定要退出登录吗？`,
-          okCallback: () => {
+          okCallback: async () => {
+            await this.ASocketDisconnect();
             Cookie.remove("token");
             this.$router.replace("/login")
           }
