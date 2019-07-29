@@ -1,7 +1,7 @@
 const env = (function () {
   return {
     baseUrl: process.env.NODE_ENV === "development" ? "http://localhost:3000/api" : "http://www.secdra.com/api",
-    webSocketUrl: process.env.NODE_ENV === "development" ? "http://localhost:3000/api/webSocket" : "http://www.secdra.com/api/webSocket",
+    webSocketUrl: process.env.NODE_ENV === "development" ? "http://localhost:3000/webSocket" : "http://www.secdra.com/webSocket",
     qiniuImg: process.env.NODE_ENV === "development" ? "http://secdraimg.secdra.com" : "http://secdraimg.secdra.com",
     qiniuHead: process.env.NODE_ENV === "development" ? "http://secdrahead.secdra.com" : "http://secdrahead.secdra.com",
     qiniuBack: process.env.NODE_ENV === "development" ? "http://secdraback.secdra.com" : "http://secdraback.secdra.com",
@@ -55,6 +55,16 @@ module.exports = {
         secure: false,
         changeOrigin: true,
         pathRewrite: {'^/api': '/'}
+      }
+    ],
+    [
+      '/webSocket',
+      {
+        target: "http://127.0.0.1:8080/webSocket", // api主机
+        ws:true,
+        secure: false,
+        changeOrigin: true,
+        pathRewrite: {'^/webSocket': '/'}
       }
     ]
   ],
