@@ -1,6 +1,7 @@
 const env = (function () {
   return {
     baseUrl: process.env.NODE_ENV === "development" ? "http://localhost:3000/api" : "http://www.secdra.com/api",
+    webSocketUrl: process.env.NODE_ENV === "development" ? "http://localhost:3000/api/webSocket" : "http://www.secdra.com/api/webSocket",
     qiniuImg: process.env.NODE_ENV === "development" ? "http://secdraimg.secdra.com" : "http://secdraimg.secdra.com",
     qiniuHead: process.env.NODE_ENV === "development" ? "http://secdrahead.secdra.com" : "http://secdrahead.secdra.com",
     qiniuBack: process.env.NODE_ENV === "development" ? "http://secdraback.secdra.com" : "http://secdraback.secdra.com",
