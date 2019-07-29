@@ -42,7 +42,7 @@
 </template>
 
 <script>
-  import {Pageable} from "../../../assets/script/model/base";
+  import {Pageable} from "../../../assets/script/model";
   import {mapActions} from "vuex"
 
   export default {

@@ -47,7 +47,7 @@
 
 <script>
   import {mapActions} from "vuex"
-  import {ReplyForm} from "../../../assets/script/model/base";
+  import {ReplyForm} from "../../../assets/script/model";
 
   export default {
     componentName: "Reply",

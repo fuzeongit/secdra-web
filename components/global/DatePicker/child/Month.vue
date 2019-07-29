@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import datePickerMixin from "../../../../assets/script/mixin/datePicker"
+  import datePickerMixin from "../../../../assets/script/mixin/datePickerMixin"
 
   class Month {
     constructor(value, active) {

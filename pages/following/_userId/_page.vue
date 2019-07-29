@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import {Pageable} from "../../../assets/script/model/base";
+  import {Pageable} from "../../../assets/script/model";
 
   export default {
     //在这里不能使用httpUtil

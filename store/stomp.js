@@ -12,12 +12,12 @@ export const mutations = {
 
 export const actions = {
   //连接socket
-  async ASocketConnect(context, params) {
+  async AStompConnect(context, params) {
     await stompUtil.connect();
     context.commit("MSetStatus", true)
   },
   //断开socket
-  async ASocketDisconnect(context, params) {
+  async AStompDisconnect(context, params) {
     await stompUtil.disconnect();
     context.commit("MSetStatus", false)
   },

@@ -1,4 +1,4 @@
-import {Result} from "../assets/script/model/base";
+import {Result} from "../assets/script/model";
 
 //严谨，通过验证接口
 export default async ({store, req, redirect, route, $axios}) => {

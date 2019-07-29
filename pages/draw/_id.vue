@@ -113,7 +113,7 @@
   import TagCard from "../../components/pages/shared/TagCard";
   import Comment from "../../components/pages/draw/Comment";
   import {mapState, mapActions} from "vuex"
-  import {CommentForm} from "../../assets/script/model/base";
+  import {CommentForm} from "../../assets/script/model";
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {

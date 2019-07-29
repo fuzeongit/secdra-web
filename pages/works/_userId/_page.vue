@@ -80,7 +80,7 @@
 </template>
 
 <script>
-  import {DrawForm, Pageable} from "../../../assets/script/model/base";
+  import {DrawForm, Pageable} from "../../../assets/script/model";
   import {mapActions} from "vuex"
 
   export default {

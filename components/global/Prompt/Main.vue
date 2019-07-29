@@ -24,7 +24,7 @@
 </template>
 
 <script>
-  import dialogMixin from "../../../assets/script/mixin/dialog"
+  import dialogMixin from "../../../assets/script/mixin/dialogMixin"
   import {on, addClass} from "../../../assets/script/util/domUtil";
 
   export default {

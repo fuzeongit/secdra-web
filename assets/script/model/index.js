@@ -54,7 +54,7 @@ export class ReplyForm {
   }
 }
 
-export class SocketEvent {
+export class StompSubscribe {
   /**
    * @param {String}eventName
    * @param {Function}callback

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import windowMixin from "../../../assets/script/mixin/window"
+  import windowMixin from "../../../assets/script/mixin/windowMixin"
 
   export default {
     componentName: "GoTop",

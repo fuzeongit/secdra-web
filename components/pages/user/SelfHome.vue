@@ -111,7 +111,7 @@
   import Cropper from "cropperjs"
   import ioUtil from '../../../assets/script/util/ioUtil'
   import {mapActions, mapMutations, mapState} from "vuex"
-  import {Pageable, Result} from "../../../assets/script/model/base";
+  import {Pageable, Result} from "../../../assets/script/model";
 
   export default {
     data() {

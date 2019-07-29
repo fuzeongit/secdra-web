@@ -15,7 +15,7 @@
 
 <script>
   import dateUtil from "../../../../assets/script/util/dateUtil";
-  import datePickerMixin from "../../../../assets/script/mixin/datePicker"
+  import datePickerMixin from "../../../../assets/script/mixin/datePickerMixin"
 
   class Calendar {
     constructor(year, month, day, date, active) {

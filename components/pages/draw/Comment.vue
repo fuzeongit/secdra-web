@@ -70,7 +70,7 @@
 </template>
 
 <script>
-  import {CommentForm, ReplyForm} from "../../../assets/script/model/base";
+  import {CommentForm, ReplyForm} from "../../../assets/script/model";
   import {mapActions} from "vuex"
   import Reply from "./Reply"
 

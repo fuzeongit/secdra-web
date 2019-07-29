@@ -18,12 +18,12 @@
   </span>
 </template>
 <script>
-  import Popper from "../../../assets/script/mixin/popper"
+  import popperMixin from "../../../assets/script/mixin/popperMixin"
   import {on, off, addClass, removeClass} from '../../../assets/script/util/domUtil';
 
   export default {
     componentName: "Popper",
-    mixins: [Popper],
+    mixins: [popperMixin],
 
     props: {
       trigger: {

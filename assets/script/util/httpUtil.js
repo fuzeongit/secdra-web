@@ -4,7 +4,7 @@
  * @author fjj
  */
 import Cookies from 'js-cookie'
-import {Result} from "../model/base"
+import {Result} from "../model"
 import axios from "axios"
 import qs from "qs"
 // import * as NProgress from "nprogress";

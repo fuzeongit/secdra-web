@@ -94,7 +94,7 @@
 
 <script>
   import {mapState, mapActions} from "vuex"
-  import {Pageable} from "../../../assets/script/model/base";
+  import {Pageable} from "../../../assets/script/model";
 
   export default {
     props: ["user"],

@@ -21,12 +21,16 @@ export default {
             }
             this.socket = new SockJS(process.env.baseUrl + "/webSocket");
             this.client = Stomp.over(this.socket);
-            this.client.debug = false
+            // this.client.debug = false
           }
           //是否连接中
           if (!this.client.connected) {
+            console.log(this.client);
             this.client.connect({token: Cookies.get('token') || ""}, () => {
+              window.$client = this.client;
               resolve(this.client)
+            },(e)=>{
+              console.log(e);
             });
           }
           else {
@@ -48,13 +52,9 @@ export default {
   },
   async disconnect(header = {}) {
     return new Promise((resolve, reject) => {
-      this.socket.close();
-      this.client = null;
-      this.socket = null;
-      resolve();
       this.client.disconnect(function () {
-        console.log(1);
       }, header);
+      resolve();
     })
   }
 }

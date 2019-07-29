@@ -38,8 +38,8 @@
 </template>
 
 <script>
-  import {ListConstant} from "../../../assets/script/constant/base";
-  import windowMixin from "../../../assets/script/mixin/window"
+  import {ListConstant} from "../../../assets/script/constant";
+  import windowMixin from "../../../assets/script/mixin/windowMixin"
 
   export default {
     componentName: "DrawList",

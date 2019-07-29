@@ -10,26 +10,26 @@
 </template>
 <script>
   import Header from "../components/pages/shared/Header"
-  import socket from "../assets/script/mixin/socket";
-  import {SocketEvent} from "../assets/script/model/base";
+  import stompMixin from "../assets/script/mixin/stompMixin";
+  import {StompSubscribe} from "../assets/script/model";
   import {mapMutations, mapActions} from "vuex"
 
   export default {
     middleware: ['auth', 'messageRedirect'],
-    mixins: [socket],
+    mixins: [stompMixin],
     components: {
       Header
     },
     async mounted() {
       this.countUnread();
-      await this.ASocketConnect();
+      await this.AStompConnect();
     },
     methods: {
       ...mapMutations("message", ["MChangeCount"]),
       ...mapActions("message", ["ACount"]),
-      ...mapActions("socket", ["ASocketConnect"]),
-      socketEvent() {
-        return [new SocketEvent("/user/following/focus", (result) => {
+      ...mapActions("stomp", ["AStompConnect"]),
+      stompSubscribeList() {
+        return [new StompSubscribe("/user/following/focus", (result) => {
           if (result.message) this.$notify({message: result.message});
           this.MChangeCount({type: 'follow', count: result.data});
         })]

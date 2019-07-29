@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import {Pageable} from "../assets/script/model/base";
+  import {Pageable} from "../assets/script/model";
   import {mapActions} from "vuex"
   import DrawList from "../components/pages/shared/DrawList"
   import GoTop from "../components/pages/shared/GoTop"
