@@ -29,10 +29,20 @@
       ...mapActions("message", ["ACount"]),
       ...mapActions("stomp", ["AStompConnect"]),
       stompSubscribeList() {
-        return [new StompSubscribe("/user/following/focus", (result) => {
-          if (result.message) this.$notify({message: result.message});
-          this.MChangeCount({type: 'follow', count: result.data});
-        })]
+        return [
+          new StompSubscribe("/user/comment/send", (result) => {
+            if (result.message) this.$notify({message: result.message});
+            this.MChangeCount({type: 'comment', count: result.data});
+          }),
+          new StompSubscribe("/user/reply/send", (result) => {
+            console.log( result.data);
+            if (result.message) this.$notify({message: result.message});
+            this.MChangeCount({type: 'reply', count: result.data});
+          }),
+          new StompSubscribe("/user/following/focus", (result) => {
+            if (result.message) this.$notify({message: result.message});
+            this.MChangeCount({type: 'follow', count: result.data});
+          }),]
       },
       async countUnread() {
         let result = await this.ACount();
