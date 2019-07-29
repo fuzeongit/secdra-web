@@ -70,7 +70,7 @@
         </div>
       </div>
     </div>
-    <Dialog v-model="isShowEdit" title="编辑" v-loading="editLoading">
+    <Dialog v-model="isShowEdit" title="编辑" v-loading="editLoading" persistent>
       <div class="edit-dialog-content">
         <div>
           <div class="input-group">

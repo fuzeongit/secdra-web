@@ -65,19 +65,19 @@
         </div>
       </div>
     </div>
-    <Dialog v-model="isShowTailoringHead" title="剪切" v-loading="uploadHeadLoading">
+    <Dialog v-model="isShowTailoringHead" title="剪切" v-loading="uploadHeadLoading" persistent>
       <div class="edit-dialog-content" style="width: 500px;height: 50vh">
         <img :src="tailoringHeadImage" ref="tailoringHeadImage">
       </div>
       <Btn block color="primary" @click="saveHead">保存</Btn>
     </Dialog>
-    <Dialog v-model="isShowTailoringBack" title="剪切" v-loading="uploadBackLoading">
+    <Dialog v-model="isShowTailoringBack" title="剪切" v-loading="uploadBackLoading" persistent>
       <div class="edit-dialog-content" style="width: 700px;height: 70vh">
         <img :src="tailoringBackImage" ref="tailoringBackImage">
       </div>
       <Btn block color="primary" @click="saveBack">保存</Btn>
     </Dialog>
-    <Dialog v-model="isShowEdit" title="编辑" v-loading="editLoading">
+    <Dialog v-model="isShowEdit" title="编辑" v-loading="editLoading" persistent>
       <div class="edit-dialog-content" style="width: 500px;height: 450px;overflow: auto">
         <div>
           <div class="input-group">

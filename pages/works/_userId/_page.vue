@@ -37,7 +37,7 @@
     <Btn icon big shadow color="white" v-if="isSelf" class="edit-btn" @click="isShowEdit = true" :disabled="selectList.isEmpty()">
       <i class="icon s-bianji"></i>
     </Btn>
-    <Dialog v-if="isSelf" v-model="isShowEdit" title="批量操作" v-loading="editLoading">
+    <Dialog v-if="isSelf" v-model="isShowEdit" title="批量操作" v-loading="editLoading" persistent>
       <div class="edit-dialog-content">
         <div style="margin-bottom: 10px">
           <Tag v-for="(draw,index) in selectList" :content="draw.name" @close="removeSelectDraw" :key="draw.id" color="primary"
