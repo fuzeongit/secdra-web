@@ -1,15 +1,4 @@
 <template>
-  <!--<label class="checkbox" :class="classObject">-->
-  <!--<slot>-->
-  <!--<div class="checkbox-inner" v-ripple="{class:`${color}-text`}" :class="{'dark-fade-text':!model}">-->
-  <!--<div class="content">-->
-  <!--<i class="icon" :class="{'s-checkboxoutlineblank':!model,'s-check-box':model}"></i>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</slot>-->
-  <!--<span class="checkbox-label" v-if="label!==null" :class="{'dark-text':!model}">{{label}}</span>-->
-  <!--<input type="checkbox" class="checkbox-original" :disabled="disabled" v-model="model">-->
-  <!--</label>-->
   <label class="checkbox switch" :class="classObject">
     <slot>
       <template v-if="isSwitch">
