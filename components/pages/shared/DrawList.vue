@@ -24,8 +24,8 @@
           </p>
         </div>
         <div class="follow-box flex-box">
-          <Btn block color="primary" @click="$emit(`follow`,draw.user.id)" :disabled="draw.user.focus===null">
-            {{draw.user.focus?`已关注`:`关注`}}
+          <Btn block color="primary" @click="$emit(`follow`,draw.user.id)" :disabled="draw.user.focus===$enum.FollowState.SElF.key">
+            {{draw.user.focus===$enum.FollowState.CONCERNED.key?`已关注`:`关注`}}
           </Btn>
         </div>
       </div>

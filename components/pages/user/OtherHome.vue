@@ -5,7 +5,7 @@
       <div class="user-bk-content">
         <div class="tool">
           <Btn big round @click="$emit('follow')">
-            <span style="min-width: 4em"> {{user.focus?"已关注":"关注"}}</span>
+            <span style="min-width: 4em"> {{user.focus===$enum.FollowState.CONCERNED.key?"已关注":"关注"}}</span>
           </Btn>
         </div>
       </div>
@@ -15,8 +15,9 @@
         <img :src="$img.head(user.head)"
              :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`">
         <div class="info-box">
-          <p class="name"> {{user.name}} <i class="icon"
-                                            :class="{'s-xingbie-nv':user.gender==='FEMALE','s-xingbie-nan':user.gender==='MALE'}"></i>
+          <p class="name"> {{user.name}}
+            <i class="icon"
+               :class="{'s-xingbie-nv':user.gender===$enum.Gender.FEMALE.key,'s-xingbie-nan':user.gender===$enum.Gender.MALE.key}"></i>
           </p>
           <p class="introduction"> {{user.introduction || "这人很懒，什么都没有留下"}}</p>
         </div>
@@ -24,7 +25,7 @@
       <div class="draw-box">
         <div class="works-box" v-loading="worksLoading">
           <h3 class="line center">
-            <span>{{user.gender==='FEMALE'?"她":"他"}}的作品</span>
+            <span>{{user.gender===$enum.Gender.FEMALE.key?"她":"他"}}的作品</span>
           </h3>
           <div class="draw-list row">
             <div class="draw-item" v-for="(draw ,index) in worksList" :key="index">
@@ -41,7 +42,7 @@
         </div>
         <div class="collection-box" v-loading="collectionLoading">
           <h3 class="line center">
-            <span>{{user.gender==='FEMALE'?"她":"他"}}的收藏</span>
+            <span>{{user.gender===$enum.Gender.FEMALE.key?"她":"他"}}的收藏</span>
           </h3>
           <div class="draw-list row">
             <div class="draw-item" v-for="(draw ,index) in collectionList" :key="index">
@@ -59,7 +60,7 @@
         </div>
         <div class="following-box" v-loading="followingLoading">
           <h3 class="line center">
-            <span>{{user.gender==='FEMALE'?"她":"他"}}的关注</span>
+            <span>{{user.gender===$enum.Gender.FEMALE.key?"她":"他"}}的关注</span>
           </h3>
           <div class="following-list row">
             <div class="card following-item" v-for="(item ,index) in followingList" :key="index">

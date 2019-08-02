@@ -92,7 +92,7 @@
           <div class="input-group">
             <h5 class="sub-name">性别：</h5>
             <RadioGroup v-model="userForm.gender">
-              <Radio :value="item.key" :label="item.value" color="primary" v-for="item in $enum.CollectState" :key="item.key" style="margin-right: 10px"></Radio>
+              <Radio :value="item.key" :label="item.value" color="primary" v-for="item in $enum.Gender" :key="item.key" style="margin-right: 10px"></Radio>
             </RadioGroup>
           </div>
           <div class="input-group">
