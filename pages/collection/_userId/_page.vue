@@ -8,8 +8,8 @@
         </nuxt-link>
         <div class="tool">
           <Checkbox v-if="isSelf" :value="draw" valueKey="id" small color="primary"></Checkbox>
-          <Btn flat icon :color="draw.focus?`primary`:`default`" @click.stop="collection(draw)" small title="收藏">
-            <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+          <Btn flat icon :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`" @click.stop="collection(draw)" small title="收藏">
+            <i class="icon" :class="{'s-heart':draw.focus===$enum.CollectState.CONCERNED.key,'s-hearto':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
           </Btn>
         </div>
         <div class="flex-box info-box" v-if="draw.user.id">
@@ -25,8 +25,8 @@
             </p>
           </div>
           <div class="follow-box flex-box">
-            <Btn block color="primary" :disabled="draw.user.focus===null" @click="follow(draw.user.id)">
-              {{draw.user.focus?`已关注`:`关注`}}
+            <Btn block color="primary" @click="follow(draw.user.id)" :disabled="draw.user.focus===$enum.FollowState.SElF.key">
+              {{draw.user.focus===$enum.FollowState.CONCERNED.key?`已关注`:`关注`}}
             </Btn>
           </div>
         </div>
@@ -104,7 +104,7 @@
               if (!draw) {
                 continue
               }
-              draw.focus = false;
+              draw.focus = this.$enum.CollectState.STRANGE.key;
             }
             this.$notify({message: `取消收藏成功`});
           }

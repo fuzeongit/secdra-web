@@ -88,9 +88,6 @@
           return
         }
         draw.focus = result.data;
-        // if (draw.focus) {
-        //   this.listByRecommend(index)
-        // }
       },
       async follow(id) {
         let result = await this.AFollow({

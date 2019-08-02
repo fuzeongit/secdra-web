@@ -28,7 +28,9 @@
       </div>
       <div class="input-group">
         <h5 class="sub-name">私密：</h5>
-        <Checkbox v-model="form.isPrivate" color="primary"></Checkbox>
+        <RadioGroup v-model="form.privacy">
+          <Radio :value="item.key" :label="item.value" color="primary" v-for="item in $enum.PrivacyState" :key="item.key" style="margin-right: 10px"></Radio>
+        </RadioGroup>
       </div>
       <div class="input-group">
         <h5 class="sub-name">添加标签：</h5>
@@ -48,6 +50,7 @@
 
 <script>
   import ioUtil from "../assets/script/util/ioUtil";
+  import {enumObjectList} from "../assets/script/constant";
   import {mapState, mapActions} from "vuex"
 
   export default {
@@ -72,7 +75,7 @@
           url: "",
           name: '',
           introduction: '',
-          isPrivate: false,
+          privacy: enumObjectList.PrivacyState.PUBLIC.key,
           tagList: [],
         }
       }
@@ -171,7 +174,7 @@
           },
           noCallback: () => {
             this.form.url = "";
-            this.form.isPrivate = false;
+            this.form.privacy = enumObjectList.PrivacyState.PUBLIC.key;
             this.form.name = "";
             this.form.introduction = "";
             this.form.tagList.clear();

@@ -17,6 +17,7 @@ import Http from '../assets/script/util/httpUtil'
 import Img from '../assets/script/util/imgUrlUtil'
 import filters from "../assets/script/filter"
 import directive from "../assets/script/directive"
+import {enumObjectList} from "../assets/script/constant";
 
 Vue.prototype.$alert = Alert;
 Vue.prototype.$confirm = Confirm;
@@ -43,6 +44,7 @@ Vue.prototype.$http = Http;
 Vue.prototype.$img = Img;
 
 Vue.prototype.$filter = filters;
+Vue.prototype.$enum = enumObjectList;
 for (let name in filters) {
   Vue.filter(name, filters[name])
 }

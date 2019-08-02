@@ -35,8 +35,10 @@
                   <i class="icon s-eye"></i>
                 </Btn>
                 <span>{{draw.viewAmount}}</span>
-                <Btn flat icon :color="draw.focus?`primary`:`default`" @click.stop="collection(draw)" small title="收藏">
-                  <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+                <Btn flat icon :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`"
+                     @click.stop="collection(draw)" small title="收藏">
+                  <i class="icon"
+                     :class="{'s-heart':draw.focus===$enum.CollectState.CONCERNED.key,'s-hearto':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
                 </Btn>
                 <span>{{draw.likeAmount}}</span>
               </div>
@@ -67,8 +69,8 @@
                   <i class="icon s-eye"></i>
                 </Btn>
                 <span>{{draw.viewAmount}}</span>
-                <Btn flat icon :color="draw.focus?`primary`:`default`" @click.stop="collection(draw)" small title="收藏">
-                  <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+                <Btn flat icon :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`" @click.stop="collection(draw)" small title="收藏">
+                  <i class="icon" :class="{'s-heart':draw.focus===$enum.CollectState.CONCERNED.key,'s-hearto':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
                 </Btn>
                 <span>{{draw.likeAmount}}</span>
               </div>

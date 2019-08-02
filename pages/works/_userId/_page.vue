@@ -8,8 +8,8 @@
         </nuxt-link>
         <div class="tool">
           <Checkbox v-if="isSelf" :value="draw" valueKey="id" small color="primary"></Checkbox>
-          <Btn flat icon :color="draw.focus?`primary`:`default`" @click.stop="collection(draw)" small title="收藏">
-            <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+          <Btn flat icon :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`" @click.stop="collection(draw)" small title="收藏">
+            <i class="icon" :class="{'s-heart':draw.focus===$enum.CollectState.CONCERNED.key,'s-hearto':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
           </Btn>
         </div>
         <div v-if="!isSelf" class="flex-box info-box">
@@ -25,8 +25,8 @@
             </p>
           </div>
           <div class="follow-box flex-box">
-            <Btn block color="primary" @click="follow(draw.user.id)" :disabled="draw.user.focus===null">
-              {{draw.user.focus?`已关注`:`关注`}}
+            <Btn block color="primary" @click="follow(draw.user.id)" :disabled="draw.user.focus===$enum.FollowState.SElF.key">
+              {{draw.user.focus===$enum.FollowState.CONCERNED.key?`已关注`:`关注`}}
             </Btn>
           </div>
         </div>
@@ -34,13 +34,15 @@
     </CheckboxGroup>
     <br>
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
-    <Btn icon big shadow color="white" v-if="isSelf" class="edit-btn" @click="isShowEdit = true" :disabled="selectList.isEmpty()">
+    <Btn icon big shadow color="white" v-if="isSelf" class="edit-btn" @click="isShowEdit = true"
+         :disabled="selectList.isEmpty()">
       <i class="icon s-bianji"></i>
     </Btn>
     <Dialog v-if="isSelf" v-model="isShowEdit" title="批量操作" v-loading="editLoading" persistent>
       <div class="edit-dialog-content">
         <div style="margin-bottom: 10px">
-          <Tag v-for="(draw,index) in selectList" :content="draw.name" @close="removeSelectDraw" :key="draw.id" color="primary"
+          <Tag v-for="(draw,index) in selectList" :content="draw.name" @close="removeSelectDraw" :key="draw.id"
+               color="primary"
                :value="index"></Tag>
         </div>
         <div>
@@ -50,13 +52,14 @@
           </div>
           <div class="input-group">
             <h5 class="sub-name">简介：</h5>
-            <textarea v-model="drawForm.introduction" class="input block textarea primary-color" title="introduction" rows="3"></textarea>
+            <textarea v-model="drawForm.introduction" class="input block textarea primary-color" title="introduction"
+                      rows="3"></textarea>
           </div>
           <div class="input-group">
             <h5 class="sub-name">私密：</h5>
-            <RadioGroup v-model="drawForm.isPrivate">
-              <Radio :value="true" label="隐藏" color="primary"></Radio>
-              <Radio :value="false" label="显示" color="primary" style="margin-left: 10px"></Radio>
+            <RadioGroup v-model="drawForm.privacy">
+              <Radio :value="item.key" :label="item.value" color="primary" v-for="item in $enum.PrivacyState"
+                     :key="item.key" style="margin-right: 10px"></Radio>
               <Radio :value="null" label="不作修改" color="primary" style="margin-left: 10px"></Radio>
             </RadioGroup>
           </div>
@@ -66,7 +69,8 @@
             <h5 class="sub-name">*回车添加一个标签</h5>
           </div>
           <div style="margin-bottom: 10px">
-            <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName" color="primary"
+            <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName"
+                 color="primary"
                  :value="index"></Tag>
           </div>
         </div>

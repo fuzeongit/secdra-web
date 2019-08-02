@@ -30,7 +30,9 @@
             </div>
             <div style="margin-top: 20px;">
               <Btn block color="primary" v-if="draw.user.id===user.id" @click="isShowEdit=true">编辑</Btn>
-              <Btn block color="primary" v-else @click="follow(draw.user.id)">{{draw.user.focus?`已关注`:`关注`}}</Btn>
+              <Btn block color="primary" v-else @click="follow(draw.user.id)">
+                {{draw.user.focus===$enum.FollowState.CONCERNED.key?`已关注`:`关注`}}
+              </Btn>
             </div>
           </div>
         </div>
@@ -46,8 +48,9 @@
               <span>{{draw.viewAmount}}</span>
             </div>
             <div class="col-15">
-              <Btn flat icon small :color="draw.focus?`primary`:`default`" @click="collection(draw)" title="收藏">
-                <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+              <Btn flat icon small :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`"
+                   @click="collection(draw)" title="收藏">
+                <i class="icon" :class="{'s-heart':draw.focus===$enum.CollectState.CONCERNED.key,'s-hearto':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
               </Btn>
               <span>{{draw.likeAmount}}</span>
             </div>
@@ -84,9 +87,9 @@
           </div>
           <div class="input-group">
             <h5 class="sub-name">私密：</h5>
-            <RadioGroup v-model="drawForm.isPrivate">
-              <Radio :value="true" label="隐藏" color="primary"></Radio>
-              <Radio :value="false" label="显示" color="primary" style="margin-left: 10px"></Radio>
+            <RadioGroup v-model="drawForm.privacy">
+              <Radio :value="item.key" :label="item.value" color="primary" v-for="item in $enum.PrivacyState"
+                     :key="item.key" style="margin-right: 10px"></Radio>
             </RadioGroup>
           </div>
           <div class="input-group">
@@ -128,7 +131,6 @@
       }
       let drawForm = Object.assign({}, result.data);
       drawForm.tagList = drawForm.tagList.map(item => item.name);
-      drawForm.isPrivate = drawForm.private;
       return {
         draw: result.data,
         drawForm,
@@ -222,7 +224,6 @@
       reset() {
         let drawForm = Object.assign({}, this.draw);
         drawForm.tagList = drawForm.tagList.map(item => item.name);
-        drawForm.isPrivate = drawForm.private;
         this.drawForm = drawForm
       }
     }

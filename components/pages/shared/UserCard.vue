@@ -17,7 +17,7 @@
       </div>
     </div>
     <div style="margin-top: -10px;padding: 10px;">
-      <Btn block color="primary" @click="follow" :disabled="user.focus===null">{{user.focus?`已关注`:`关注`}}</Btn>
+      <Btn block color="primary" @click="follow" :disabled="user.focus===$enum.FollowState.SElF.key">{{user.focus===$enum.FollowState.CONCERNED.key?`已关注`:`关注`}}</Btn>
     </div>
   </div>
 </template>

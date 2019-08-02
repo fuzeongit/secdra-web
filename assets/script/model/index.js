@@ -1,3 +1,5 @@
+import {enumObjectList} from "../constant"
+
 export class Result {
   /**
    * 统一返回
@@ -31,7 +33,7 @@ export class DrawForm {
   constructor() {
     this.name = "";
     this.introduction = "";
-    this.isPrivate = null;
+    this.privacy = enumObjectList.PrivacyState.PUBLIC.key;
     this.tagList = [];
   }
 }
@@ -80,5 +82,12 @@ export class StompSubscribe {
 
   set callback(value) {
     this._callback = value;
+  }
+}
+
+export class EnumObject{
+  constructor(eventName, callback) {
+    this._eventName = eventName;
+    this._callback = callback;
   }
 }
