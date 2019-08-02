@@ -1,12 +1,9 @@
 export default {
   enumProxy(object) {
-    return new Proxy(object, {
-      get: function (target, key, receiver) {
-        return {
-          key,
-          value: target[key]
-        };
-      }
-    })
+    let o = {};
+    for (let key of Object.keys(object)) {
+      o[key] = {key: key, value: object[key]}
+    }
+    return o
   }
 }
