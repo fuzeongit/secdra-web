@@ -86,9 +86,9 @@
             热门推荐
           </h3>
           <div class="tag-list">
-            <Btn v-for="(tag,index) in tagList" :to="`/draw/search/${encodeURIComponent(tag.name)}`" color="primary"
+            <Btn v-for="(tag,index) in tagList" :to="`/draw/search/${encodeURIComponent(tag.key)}`" color="primary"
                  outline small
-                 :key="index">{{tag.name}}
+                 :key="index">{{tag.key}}
             </Btn>
           </div>
         </div>
@@ -112,12 +112,12 @@
     async asyncData({store, req, redirect, route, $axios}) {
       store.commit('menu/MChangeName', "home");
       let taskList = [];
-      taskList.push($axios.get(`/tag/listTagOrderByLikeAmount`));
+      taskList.push($axios.get(`/tag/listTagTop30`));
       taskList.push($axios.get(`/draw/pagingByRecommend`, {params: new Pageable(0, 12)}));
       taskList.push($axios.get(`/draw/paging`, {params: new Pageable(0, 12, "createDate,desc")}));
       let resultList = (await Promise.all(taskList)).map(item => item.data);
       return {
-        tagList: resultList[0].data,
+        tagList: resultList[0].data.buckets,
         likeList: resultList[1].data.content,
         newList: resultList[2].data.content,
         tag: ''
