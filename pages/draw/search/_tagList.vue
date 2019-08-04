@@ -26,7 +26,7 @@
       pageable.sort = "likeAmount,desc";
       let {data: result} = await $axios.get(`/draw/paging`, {
         params: Object.assign({
-          tag: route.params.tag
+          tagList: route.params.tagList
         }, pageable)
       });
       if (result.status !== 200) {
@@ -58,7 +58,7 @@
         let sourcePage = ++this.pageable.page;
         this.pageLoading = true;
         let result = await this.APaging(Object.assign({
-            tag: this.$route.params.tag
+            tagList: this.$route.params.tagList
           }, this.pageable)
         );
         this.pageLoading = false;

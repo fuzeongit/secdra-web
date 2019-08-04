@@ -37,10 +37,6 @@ export const actions = {
   async ACountByTag(context,params){
     return await httpUtil.get("/draw/countByTag",params);
   },
-  //按用户获取
-  async APagingByUserId(context,params){
-    return await httpUtil.get("/draw/pagingByUserId",params);
-  },
   //保存图片
   async ASave(context,params){
     return await httpUtil.post("/draw/save",params);

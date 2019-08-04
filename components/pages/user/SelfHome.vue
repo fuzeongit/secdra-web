@@ -169,10 +169,10 @@
     methods: {
       ...mapMutations("user", ["MSetUserInfo", "MSetUserInfoAttr"]),
       ...mapActions("user", ["AUpdateBack", "AUpdateHead", "APagingFollowing", "AUpdate"]),
-      ...mapActions("draw", ["APagingCollection", "APagingByUserId"]),
+      ...mapActions("draw", ["APagingCollection", "APaging"]),
       async pagingWorks() {
         this.worksLoading = true;
-        let result = await this.APagingByUserId(new Pageable(0, 8, "createDate,desc"));
+        let result = await this.APaging(Object.assign(new Pageable(0, 8, "createDate,desc"), {targetId: this.user.id}));
         if (result.status !== 200) {
           this.$notify({message: result.message});
           return

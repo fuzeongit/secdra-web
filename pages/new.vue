@@ -25,9 +25,7 @@
       pageable.size = 16;
       pageable.sort = "createDate,desc";
       let {data: result} = await $axios.get(`/draw/paging`, {
-        params: Object.assign({
-          tag: route.params.tag
-        }, pageable)
+        params: Object.assign({}, pageable)
       });
       if (result.status !== 200) {
         throw new Error(result.message)

@@ -50,7 +50,8 @@
             <div class="col-15">
               <Btn flat icon small :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`"
                    @click="collection(draw)" title="收藏">
-                <i class="icon" :class="{'s-heart':draw.focus===$enum.CollectState.CONCERNED.key,'s-hearto':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
+                <i class="icon"
+                   :class="{'s-heart':draw.focus===$enum.CollectState.CONCERNED.key,'s-hearto':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
               </Btn>
               <span>{{draw.likeAmount}}</span>
             </div>
@@ -62,13 +63,17 @@
         <br>
         <div class="card tag-card">
           <div class="tag-list">
-            <Popper trigger="hover" placement="top" @show="showTagPopper(tag.id)" v-for="tag in draw.tagList"
-                    :key="tag.id">
-              <TagCard :ref="tag.id" :tag="tag.name"></TagCard>
-              <Btn outline small color="primary" :to="`/draw/search/${tag.name}`" slot="reference">
-                {{tag.name}}
-              </Btn>
+            <Popper trigger="hover" placement="top" @show="showTagPopper(`tag-ref-${index}`)" v-for="(tag,index) in draw.tagList"
+            :key="index">
+            <TagCard :ref="`tag-ref-${index}`" :tag="tag"></TagCard>
+            <Btn outline small color="primary" :to="`/draw/search/${encodeURIComponent(tag)}`" slot="reference">
+            {{tag}}
+            </Btn>
             </Popper>
+            <!--&lt;!&ndash;TODO&ndash;&gt;-->
+            <!--<Btn outline small color="primary" :to="`/draw/search/${encodeURIComponent(tag)}`" v-for="(tag,index) in draw.tagList" :key="index">-->
+              <!--{{tag}}-->
+            <!--</Btn>-->
           </div>
         </div>
       </div>
@@ -130,7 +135,6 @@
         throw new Error(result.message)
       }
       let drawForm = Object.assign({}, result.data);
-      drawForm.tagList = drawForm.tagList.map(item => item.name);
       return {
         draw: result.data,
         drawForm,
@@ -222,9 +226,7 @@
         this.reset();
       },
       reset() {
-        let drawForm = Object.assign({}, this.draw);
-        drawForm.tagList = drawForm.tagList.map(item => item.name);
-        this.drawForm = drawForm
+        this.drawForm = Object.assign({}, this.draw)
       }
     }
   }

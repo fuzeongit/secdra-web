@@ -94,9 +94,9 @@
       pageable.size = 16;
       pageable.page = route.params.page * 1 || 0;
       pageable.sort = "createDate,desc";
-      let {data: result} = await $axios.get(`/draw/pagingByUserId`, {
+      let {data: result} = await $axios.get(`/draw/paging`, {
         params: Object.assign({
-          id: route.params.userId
+          targetId: route.params.userId
         }, pageable)
       });
       if (result.status !== 200) {

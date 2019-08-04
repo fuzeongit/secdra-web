@@ -116,13 +116,13 @@
     },
     methods: {
       ...mapActions("user", ["APagingFollowing"]),
-      ...mapActions("draw", ["APagingCollection", "APagingByUserId"]),
+      ...mapActions("draw", ["APagingCollection", "APaging"]),
       getProportion(draw) {
         return draw.height / draw.width
       },
       async pagingWorks() {
         this.worksLoading = true;
-        let result = await this.APagingByUserId(Object.assign(new Pageable(0, 8, "createDate,desc"), {id: this.user.id}));
+        let result = await this.APaging(Object.assign(new Pageable(0, 8, "createDate,desc"), {targetId: this.user.id}));
         if (result.status !== 200) {
           this.$notify({message: result.message});
           return
