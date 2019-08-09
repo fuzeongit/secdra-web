@@ -42,7 +42,7 @@ html, body {
   color: @font-color-dark;
 }
 
-h1, h2, h3,h4, h5, h6  {
+h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
 }
 
@@ -64,7 +64,7 @@ img {
   text-align: center;
 }
 
-.not-scroll{
+.not-scroll {
   overflow: hidden;
 }
 
@@ -147,13 +147,6 @@ img {
   object-fit: cover;
 }
 
-.go-top {
-  position: fixed;
-  bottom: 50px;
-  right: 50px;
-  color: @theme-color !important;
-  background-color: white !important;
-}
 
 /*---------------------------------------*/
 .popper {
@@ -367,4 +360,34 @@ img {
     .col((@number+1), @width)
   }
   .col(1, @grid-column-width);
+}
+
+/*---------------------------------------*/
+@keyframes dialog-persistent-animate {
+  from, 0%, 25%, 50%, 75%, to {
+    animation-timing-function: linear;
+  }
+
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  25% {
+    transform: scale3d(.95, .95, .95);
+  }
+
+  50% {
+    transform: scale3d(1, 1, 1);
+  }
+  75% {
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.dialog-persistent-animate {
+  -webkit-animation-name: dialog-persistent-animate;
+  animation-name: dialog-persistent-animate;
 }

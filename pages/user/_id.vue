@@ -2,21 +2,21 @@
   <div class="page">
     <SelfHome v-if="isSelf"></SelfHome>
     <OtherHome v-else :user="user" @follow="follow"></OtherHome>
-    <GoTop></GoTop>
+    <CornerButtons></CornerButtons>
   </div>
 </template>
 
 <script>
   import SelfHome from "../../components/pages/user/SelfHome";
   import OtherHome from "../../components/pages/user/OtherHome";
-  import GoTop from "../../components/pages/shared/GoTop";
+  import CornerButtons from "../../components/pages/shared/CornerButtons";
   import {mapActions} from "vuex"
 
   export default {
     components: {
       SelfHome,
       OtherHome,
-      GoTop
+      CornerButtons
     },
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了

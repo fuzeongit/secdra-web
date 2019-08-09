@@ -2,7 +2,7 @@
   <div class="page">
     <DrawList :page="page" :list="list" :pageLoading="pageLoading" @paging="paging" @collection="collection"
               @follow="follow"></DrawList>
-    <GoTop></GoTop>
+    <CornerButtons></CornerButtons>
   </div>
 </template>
 
@@ -10,12 +10,12 @@
   import {Pageable} from "../../../assets/script/model";
   import {mapActions} from "vuex"
   import DrawList from "../../../components/pages/shared/DrawList"
-  import GoTop from "../../../components/pages/shared/GoTop"
+  import CornerButtons from "../../../components/pages/shared/CornerButtons"
 
   export default {
     components: {
       DrawList,
-      GoTop
+      CornerButtons
     },
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
@@ -40,8 +40,7 @@
     },
     data() {
       return {
-        pageLoading: false,
-        showGoTop: false
+        pageLoading: false
       }
     },
     methods: {

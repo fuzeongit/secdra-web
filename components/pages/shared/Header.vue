@@ -82,9 +82,8 @@
 
 <script>
   import Cookie from 'js-cookie'
-  import {mapState, mapActions} from "vuex"
+  import {mapActions, mapState} from "vuex"
   import windowMixin from "../../../assets/script/mixin/windowMixin";
-  import stompUtil from "../../../assets/script/util/stompUtil";
 
   export default {
     componentName: "Header",
@@ -99,23 +98,28 @@
       return {
         hid: false,
         tag: "",
+        isShow: true
       }
     },
     watch: {
       $route() {
         window.scrollTo(0, 0)
       },
+      scrollTop(newVal, oldVal) {
+        let line = newVal < this.offset;
+        if (line) {
+          this.isShow = true;
+        } else {
+          if (!this.hid) {
+            this.hid = true;
+          }
+          this.isShow = newVal <= oldVal;
+        }
+      }
     },
     computed: {
       ...mapState('menu', {activeName: 'name'}),
       ...mapState('user', ['user']),
-      isShow() {
-        let isShow = this.scrollTop < this.offset;
-        if (!isShow && !this.hid) {
-          this.hid = true
-        }
-        return isShow
-      },
       messageCount() {
         return (this.$store.state.message.commentCount + this.$store.state.message.replyCount + this.$store.state.message.followCount + this.$store.state.message.systemCount)
       }

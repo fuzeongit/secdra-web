@@ -4,7 +4,7 @@
       <transition :enter-active-class="enterActiveClass" :leave-active-class="leaveActiveClass"
                   @after-leave="destroyElement">
         <div class="card duration" v-show="visible" :style="{marginTop: `-${offset}vh`}"
-             :class="{bounceIn:persistentAnimate,duration:persistentAnimate,padding}" @animationend="persistentAnimationend()">
+             :class="{'dialog-persistent-animate':persistentAnimate,duration:persistentAnimate,padding}" @animationend="persistentAnimationend()">
           <div class="flex-box" v-if="title">
             <h3 class="title">
               {{title}}

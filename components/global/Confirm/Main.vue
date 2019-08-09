@@ -3,7 +3,7 @@
     <div class="mask" v-show="visible" @click="onPersistent">
       <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration"
                   @after-leave="destroyElement">
-        <div class="card" :class="{bounceIn:persistentAnimate,duration:persistentAnimate}" v-show="visible"
+        <div class="card" :class="{'dialog-persistent-animate':persistentAnimate,duration:persistentAnimate}" v-show="visible"
              @animationend="persistentAnimationend()" @click.stop="_=>{}">
           <h3>
             {{title}}
