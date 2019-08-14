@@ -11,7 +11,7 @@ export default {
     closed(newVal) {
       if (newVal) {
         this.visible = false;
-        removeClass(document.body,"not-scroll");
+        removeClass(document.body, "not-scroll");
         this.$emit("change", false);
       }
     }
@@ -19,6 +19,7 @@ export default {
   data() {
     return {
       persistentAnimate: false,
+      maskFlag: false
     };
   },
   methods: {
@@ -36,6 +37,14 @@ export default {
       if (event && event.target.className.indexOf("mask") === -1) {
         return
       }
+      if (event.type === "mousedown") {
+        this.maskFlag = true;
+        return
+      }
+      if (!this.maskFlag) {
+        return
+      }
+      this.maskFlag = false;
       if (this.persistent) {
         this.persistentAnimate = true;
         return

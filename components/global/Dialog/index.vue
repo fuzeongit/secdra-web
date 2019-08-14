@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" enter-active-class="fadeIn mask-duration" leave-active-class="fadeOut mask-duration">
-    <div class="mask" v-show="visible" @click="onPersistent">
+    <div class="mask" v-show="visible" @click="onPersistent" @mousedown="onPersistent">
       <transition :enter-active-class="enterActiveClass" :leave-active-class="leaveActiveClass"
                   @after-leave="destroyElement">
         <div class="card duration" v-show="visible" :style="{marginTop: `-${offset}vh`}"

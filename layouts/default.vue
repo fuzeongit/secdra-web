@@ -1,5 +1,6 @@
 <template>
   <div>
+    <ScrollBar></ScrollBar>
     <section>
       <Header></Header>
       <transition name="fade" enter-active-class="fadeIn duration" leave-active-class="fadeOut duration">
@@ -11,14 +12,16 @@
 <script>
   import Header from "../components/pages/shared/Header"
   import stompMixin from "../assets/script/mixin/stompMixin";
+  import scrollBarMixin from "../assets/script/mixin/scrollBarMixin";
   import {StompSubscribe} from "../assets/script/model";
   import {mapMutations, mapActions} from "vuex"
-
+  import ScrollBar from "../components/global/ScrollBar"
   export default {
     middleware: ['auth', 'messageRedirect'],
-    mixins: [stompMixin],
+    mixins: [stompMixin, scrollBarMixin],
     components: {
-      Header
+      Header,
+      ScrollBar
     },
     async mounted() {
       this.countUnread();
@@ -53,7 +56,7 @@
         this.MChangeCount({type: 'follow', count: result.data.FOLLOW});
         this.MChangeCount({type: 'system', count: result.data.SYSTEM});
       }
-    }
+    },
   }
 </script>
 <style type="text/less" lang="less" scoped>

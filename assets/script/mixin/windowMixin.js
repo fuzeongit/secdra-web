@@ -5,7 +5,7 @@ export default {
     return {
       scrollTop: 0,
       scrollBottom: 0,
-      _requestAnimationFrameTick:false
+      _scrollAnimationFrameTick: false
     }
   },
   mounted() {
@@ -16,13 +16,14 @@ export default {
   },
   methods: {
     documentScroll(event) {
-      if(!this._requestAnimationFrameTick) {
-        requestAnimationFrame(()=>{
-          this.scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-          this.scrollBottom = document.body.scrollHeight - this.scrollTop - event.target.documentElement.clientHeight;
-          this._requestAnimationFrameTick = false;
+      if (!this._scrollAnimationFrameTick) {
+        requestAnimationFrame(() => {
+          let element = event.target instanceof HTMLElement ? event.target : event.target.documentElement;
+          this.scrollTop = element.scrollTop;
+          this.scrollBottom = element.scrollHeight - this.scrollTop - element.clientHeight;
+          this._scrollAnimationFrameTick = false;
         });
-        this._requestAnimationFrameTick = true;
+        this._scrollAnimationFrameTick = true;
       }
     },
   }
