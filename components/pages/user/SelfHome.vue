@@ -82,12 +82,11 @@
         <div>
           <div class="input-group">
             <h5 class="sub-name">名称：</h5>
-            <input type="text" title="name" v-model="userForm.name" class="input block primary-color">
+            <Field block color="primary" v-model="userForm.name"></Field>
           </div>
           <div class="input-group">
             <h5 class="sub-name">简介：</h5>
-            <textarea v-model="userForm.introduction" class="input block textarea primary-color" title="introduction"
-                      rows="3"></textarea>
+            <Field block color="primary" type="textarea" v-model="userForm.introduction"></Field>
           </div>
           <div class="input-group">
             <h5 class="sub-name">性别：</h5>

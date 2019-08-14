@@ -140,7 +140,7 @@
     .item {
       @info-box-height: 80px;
       position: absolute;
-      transition: 0.5s;
+      transition: @short-animate-time;
 
       &:hover {
         transform: translateY(-1px);

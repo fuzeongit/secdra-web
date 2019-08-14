@@ -48,12 +48,11 @@
         <div>
           <div class="input-group">
             <h5 class="sub-name">名称：</h5>
-            <input type="text" title="name" v-model="drawForm.name" class="input block primary-color">
+            <Field block color="primary" v-model="drawForm.name"></Field>
           </div>
           <div class="input-group">
             <h5 class="sub-name">简介：</h5>
-            <textarea v-model="drawForm.introduction" class="input block textarea primary-color" title="introduction"
-                      rows="3"></textarea>
+            <Field block color="primary" type="textarea" v-model="drawForm.introduction"></Field>
           </div>
           <div class="input-group">
             <h5 class="sub-name">私密：</h5>
@@ -65,13 +64,8 @@
           </div>
           <div class="input-group">
             <h5 class="sub-name">添加标签：</h5>
-            <input type="text" title="name" v-model="inputTag" class="input block primary-color" @keyup.enter="addTag">
-            <h5 class="sub-name">*回车添加一个标签</h5>
-          </div>
-          <div style="margin-bottom: 10px">
-            <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName"
-                 color="primary"
-                 :value="index"></Tag>
+            <Field block color="primary" v-model="inputTag"></Field>
+            <h5 class="sub-name">*标签以空格分隔为一个</h5>
           </div>
         </div>
       </div>
@@ -164,24 +158,6 @@
       removeSelectDraw({value}) {
         this.selectList.removeIndex(value)
       },
-      addTag() {
-        if (this.inputTag === null || this.inputTag === "") {
-          this.inputTag = "";
-          return
-        }
-        if (this.drawForm.tagList.indexOf(this.inputTag) !== -1) {
-          this.inputTag = "";
-          this.$message({
-            message: "不能重复添加"
-          });
-          return
-        }
-        this.drawForm.tagList.push(this.inputTag);
-        this.inputTag = "";
-      },
-      removeTag({value}) {
-        this.drawForm.tagList.removeIndex(value)
-      },
       reset() {
         this.inputTag = "";
         this.drawForm = new DrawForm();
@@ -189,6 +165,8 @@
       async save() {
         let form = this.drawForm;
         form.idList = this.selectList.map(item => item.id);
+        let tagList = this.inputTag.split(" ").filter(item => item !== "");
+        form.tagList = [...new Set(tagList)];
         this.editLoading = true;
         let result = await this.ABatchUpdate(form);
         this.editLoading = false;

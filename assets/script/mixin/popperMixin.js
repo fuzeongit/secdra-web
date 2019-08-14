@@ -20,6 +20,10 @@ export default {
       type: String,
       default: 'bottom'
     },
+    positionFixed: {
+      type: Boolean,
+      default: false
+    },
     boundariesPadding: {
       type: Number,
       default: 5
@@ -104,6 +108,7 @@ export default {
       }
 
       options.placement = this.currentPlacement;
+      options.positionFixed = this.positionFixed;
       // options.arrowOffset = this.arrowOffset;
       options.modifiers = {
         offset: {

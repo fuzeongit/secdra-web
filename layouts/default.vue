@@ -35,7 +35,6 @@
             this.MChangeCount({type: 'comment', count: result.data});
           }),
           new StompSubscribe("/user/reply/send", (result) => {
-            console.log( result.data);
             if (result.message) this.$notify({message: result.message});
             this.MChangeCount({type: 'reply', count: result.data});
           }),

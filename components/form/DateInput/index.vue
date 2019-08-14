@@ -1,7 +1,8 @@
 <template>
   <Popper trigger="click" placement="bottom-start" ref="popper">
     <DatePicker v-model="normalizedDate" v-if="!disabled" :type="type" :format="format"></DatePicker>
-    <input class="input" slot="reference" v-model="normalizedDate" readonly :class="classObject">
+    <Field v-model="normalizedDate" slot="reference" :color="color" :small="small" :big="big" :block="block"
+           :disabled="disabled" :placeholder="placeholder" readonly></Field>
   </Popper>
 </template>
 
@@ -39,7 +40,10 @@
       disabled: {
         type: Boolean,
         default: false
-      }
+      },
+      placeholder: {
+        default: ""
+      },
     },
     model: {
       prop: "date",

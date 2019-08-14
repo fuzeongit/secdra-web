@@ -3,17 +3,6 @@
     <DrawList :page="page" :list="list" :pageLoading="pageLoading" @paging="paging" @collection="collection"
               @follow="follow"></DrawList>
     <CornerButtons>
-      <Popper placement="left" trigger="click" offset="0,20px" >
-        <div class="fliter-box">
-          <div class="input-group">
-            <h5 class="sub-name">名称：</h5>
-            <input type="text" title="name"  class="input block primary-color">
-          </div>
-        </div>
-        <Btn icon big shadow color="white" slot="reference">
-          <i class="icon s-filter"></i>
-        </Btn>
-      </Popper>
     </CornerButtons>
   </div>
 </template>
@@ -123,8 +112,4 @@
   @import "../assets/style/color";
   @import "../assets/style/config";
   @import "../assets/style/mixin";
-  .fliter-box{
-    width: 400px;
-    padding: 15px;
-  }
 </style>

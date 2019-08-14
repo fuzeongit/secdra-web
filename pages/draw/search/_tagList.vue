@@ -2,12 +2,32 @@
   <div class="page">
     <DrawList :page="page" :list="list" :pageLoading="pageLoading" @paging="paging" @collection="collection"
               @follow="follow"></DrawList>
-    <CornerButtons></CornerButtons>
+    <CornerButtons>
+      <Popper placement="top-end" trigger="click" offset="0,20px" positionFixed>
+        <div class="fliter-box">
+          <div class="input-group">
+            <h5 class="sub-name">精准搜索：</h5>
+            <Checkbox is-switch v-model="fliterForm.precise"  color="primary"></Checkbox>
+          </div>
+          <div class="input-group">
+            <h5 class="sub-name">名称：</h5>
+            <Field block color="primary" v-model="fliterForm.name"></Field>
+          </div>
+          <div class="input-group center">
+            <Btn @click="fliter" color="primary">筛选</Btn>
+            <Btn @click="reset" color="primary">重置</Btn>
+          </div>
+        </div>
+        <Btn icon big shadow color="white" slot="reference">
+          <i class="icon s-filter"></i>
+        </Btn>
+      </Popper>
+    </CornerButtons>
   </div>
 </template>
 
 <script>
-  import {Pageable} from "../../../assets/script/model";
+  import {FliterForm, Pageable} from "../../../assets/script/model";
   import {mapActions} from "vuex"
   import DrawList from "../../../components/pages/shared/DrawList"
   import CornerButtons from "../../../components/pages/shared/CornerButtons"
@@ -17,6 +37,7 @@
       DrawList,
       CornerButtons
     },
+    watchQuery: true,
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
     async asyncData({store, req, redirect, route, $axios}) {
@@ -24,10 +45,16 @@
       let pageable = new Pageable();
       pageable.size = 16;
       pageable.sort = "likeAmount,desc";
+      let fliterForm = new FliterForm(
+        !!route.query.precise,
+        route.query.name,
+        route.query.startDate,
+        route.query.endDate,
+      );
       let {data: result} = await $axios.get(`/draw/paging`, {
         params: Object.assign({
           tagList: route.params.tagList
-        }, pageable)
+        }, pageable, fliterForm)
       });
       if (result.status !== 200) {
         throw new Error(result.message)
@@ -35,7 +62,8 @@
       return {
         page: result.data,
         list: result.data.content,
-        pageable
+        pageable,
+        fliterForm
       }
     },
     data() {
@@ -58,7 +86,7 @@
         this.pageLoading = true;
         let result = await this.APaging(Object.assign({
             tagList: this.$route.params.tagList
-          }, this.pageable)
+          }, this.pageable, this.fliterForm)
         );
         this.pageLoading = false;
         let data = result.data;
@@ -93,6 +121,19 @@
             draw.user.focus = result.data
           }
         }
+      },
+      async fliter() {
+        this.$router.replace({
+          path: `/draw/search/${encodeURIComponent(this.$route.params.tagList)}`, query: {
+            precise: this.fliterForm.precise ? 1 : null,
+            name: this.fliterForm.name,
+            startDate: this.fliterForm.startDate,
+            endDate: this.fliterForm.endDate
+          }
+        });
+      },
+      reset() {
+        this.$router.replace(`/draw/search/${encodeURIComponent(this.$route.params.tagList)}`);
       }
     }
   }
@@ -102,4 +143,9 @@
   @import "../../../assets/style/color";
   @import "../../../assets/style/config";
   @import "../../../assets/style/mixin";
+
+  .fliter-box {
+    width: 300px;
+    padding: 15px;
+  }
 </style>

@@ -4,10 +4,10 @@
       <img src="../assets/image/svg/logo.svg">
       <p class="sub-logo">想你所想</p>
       <div class="row input-group">
-        <input type="text" class="input block primary-color" title="手机" v-model="form.phone" placeholder="手机号码">
+        <Field block color="primary" v-model="form.phone" placeholder="手机号码"></Field>
       </div>
       <div class="row input-group">
-        <input type="password" class="input block primary-color" title="密码" v-model="form.password" placeholder="密码">
+        <Field block color="primary" v-model="form.password" placeholder="密码" type="password"></Field>
       </div>
       <br>
       <Btn block color="primary" :disabled="loginLoading" type="submit">{{!loginLoading?`登录`:`登录中...`}}</Btn>

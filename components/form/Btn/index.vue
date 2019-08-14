@@ -6,7 +6,7 @@
     </div>
   </nuxt-link>
   <label v-else-if="!to&&type===`file`" class="btn"
-         :class="classObject" v-ripple @clickx="_click">
+         :class="classObject" v-ripple @click="_click">
     <div class="content">
       <input type="file" @change="_change">
       <slot></slot>
@@ -69,7 +69,8 @@
       },
       type: {
         type: String,
-        default: "button"
+        default: "button",
+        validator: value => ['button', 'submit', 'reset', 'file'].indexOf(value) > -1
       },
       target: {
         type: String,

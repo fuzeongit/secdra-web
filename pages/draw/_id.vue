@@ -63,16 +63,17 @@
         <br>
         <div class="card tag-card">
           <div class="tag-list">
-            <Popper trigger="hover" placement="top" @show="showTagPopper(`tag-ref-${index}`)" v-for="(tag,index) in draw.tagList"
-            :key="index">
-            <TagCard :ref="`tag-ref-${index}`" :tag="tag"></TagCard>
-            <Btn outline small color="primary" :to="`/draw/search/${encodeURIComponent(tag)}`" slot="reference">
-            {{tag}}
-            </Btn>
+            <Popper trigger="hover" placement="top" @show="showTagPopper(`tag-ref-${index}`)"
+                    v-for="(tag,index) in draw.tagList"
+                    :key="index">
+              <TagCard :ref="`tag-ref-${index}`" :tag="tag"></TagCard>
+              <Btn outline small color="primary" :to="`/draw/search/${encodeURIComponent(tag)}`" slot="reference">
+                {{tag}}
+              </Btn>
             </Popper>
             <!--&lt;!&ndash;TODO&ndash;&gt;-->
             <!--<Btn outline small color="primary" :to="`/draw/search/${encodeURIComponent(tag)}`" v-for="(tag,index) in draw.tagList" :key="index">-->
-              <!--{{tag}}-->
+            <!--{{tag}}-->
             <!--</Btn>-->
           </div>
         </div>
@@ -83,12 +84,11 @@
         <div>
           <div class="input-group">
             <h5 class="sub-name">名称：</h5>
-            <input type="text" title="name" v-model="drawForm.name" class="input block primary-color">
+            <Field block color="primary" v-model="drawForm.name"></Field>
           </div>
           <div class="input-group">
             <h5 class="sub-name">简介：</h5>
-            <textarea v-model="drawForm.introduction" class="input block textarea primary-color" title="introduction"
-                      rows="3"></textarea>
+            <Field block color="primary" type="textarea" v-model="drawForm.introduction"></Field>
           </div>
           <div class="input-group">
             <h5 class="sub-name">私密：</h5>
@@ -99,13 +99,8 @@
           </div>
           <div class="input-group">
             <h5 class="sub-name">标签：</h5>
-            <input type="text" title="name" v-model="inputTag" class="input block primary-color" @keyup.enter="addTag">
-            <h5 class="sub-name">*回车添加一个标签</h5>
-          </div>
-          <div style="margin-bottom: 10px">
-            <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName"
-                 color="primary"
-                 :value="index"></Tag>
+            <Field block color="primary" v-model="inputTag"></Field>
+            <h5 class="sub-name">*标签以空格分隔为一个</h5>
           </div>
         </div>
       </div>
@@ -135,9 +130,12 @@
         throw new Error(result.message)
       }
       let drawForm = Object.assign({}, result.data);
+
+      let inputTag = drawForm.tagList.join(" ");
       return {
         draw: result.data,
         drawForm,
+        inputTag,
         commentForm: new CommentForm(result.data.user.id, result.data.id)
       }
     },
@@ -145,7 +143,6 @@
       return {
         isShowEdit: false,
         editLoading: false,
-        inputTag: "",
       }
     },
     components: {
@@ -194,26 +191,10 @@
         }
         this.draw.user.focus = result.data
       },
-      addTag() {
-        if (this.inputTag === null || this.inputTag === "") {
-          this.inputTag = "";
-          return
-        }
-        if (this.drawForm.tagList.indexOf(this.inputTag) !== -1) {
-          this.inputTag = "";
-          this.$message({
-            message: "不能重复添加"
-          });
-          return
-        }
-        this.drawForm.tagList.push(this.inputTag);
-        this.inputTag = "";
-      },
-      removeTag({value}) {
-        this.drawForm.tagList.removeIndex(value)
-      },
       async save() {
         this.editLoading = true;
+        let tagList = this.inputTag.split(" ").filter(item => item !== "");
+        this.drawForm.tagList = [...new Set(tagList)];
         let result = await this.AUpdate(this.drawForm);
         this.editLoading = false;
         if (result.status !== 200) {

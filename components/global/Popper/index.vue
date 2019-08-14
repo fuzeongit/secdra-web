@@ -43,6 +43,10 @@
       arrowOffset: {
         type: Number,
         default: 150
+      },
+      clickReferenceKeep: {
+        type: Boolean,
+        default: false
       }
     },
 
@@ -61,7 +65,7 @@
       }
       on(document, "keydown", this.handleKeydown);
       if (this.trigger === 'click') {
-        on(reference, 'click', this.doToggle);
+        on(reference, 'click', this.clickReferenceKeep ? this.doShow : this.doToggle);
         on(document, 'click', this.handleDocumentClick);
       } else if (this.trigger === 'hover') {
         on(reference, 'mouseenter', this.handleMouseEnter);
@@ -147,7 +151,7 @@
 
     destroyed() {
       const reference = this.reference;
-      off(reference, 'click', this.doToggle);
+      off(reference, 'click', this.clickReferenceKeep ? this.doShow : this.doToggle);
       off(reference, 'mouseup', this.doClose);
       off(reference, 'mousedown', this.doShow);
       off(reference, 'focusin', this.doShow);

@@ -8,7 +8,7 @@
           <h3>
             {{title}}
           </h3>
-          <input type="text" v-model="input" class="input block primary-color" :placeholder="message">
+          <Field block color="primary" v-model="input" :placeholder="message"></Field>
           <div class="btn-group">
             <Btn flat color="primary" @click="close">
               {{noDesc}}

@@ -177,25 +177,36 @@
   outline: none;
   transition: .1s;
   font-weight: 500;
-  padding: 0 1.5em;
   user-select: none;
   border-radius: @smallest-border-radius;
   font-size: @small-font-size;
-  height: @input-line-height;
-  border: @input-border-size solid @font-color-dark-line;
   margin: 0;
-  .color(@color,@font-color) {
+  height: @input-line-height;
+  vertical-align: top;
+  .input-inner {
+    transition: .1s;
+    height: 100%;
+    width: 100%;
+    display: block;
+    padding: 0 1em;
+    border: @input-border-size solid @font-color-dark-line;
     background-color: white;
-    border-color: @font-color-dark-line;
-    color: @font-color;
-    &:focus {
-      border-color: @color
-    }
-    &.disabled {
+  }
+  &.disabled {
+    .input-inner {
       background-color: @font-color-dark-line;
       color: @font-color-dark-disabled;
       border-width: 0;
       cursor: not-allowed;
+    }
+  }
+  .color(@color,@font-color) {
+    .input-inner {
+      border-color: @font-color-dark-line;
+      color: @font-color;
+      &:focus {
+        border-color: @color
+      }
     }
   }
   &.block {
@@ -205,12 +216,16 @@
   &.big {
     height: @big-input-line-height;
     font-size: @default-font-size;
-    padding: 0 2em;
+    .input-inner {
+      padding: 0 1.2em;
+    }
   }
   &.small {
     height: @small-input-line-height;
     font-size: @smallest-font-size;
-    padding: 0 1em;
+    .input-inner {
+      padding: 0 .8em;
+    }
   }
   &.default-color {
     .color(@font-color-dark-line, @font-color-dark);
@@ -219,10 +234,12 @@
     .color(@theme-color, @font-color-dark)
   }
   &.textarea {
-    resize: vertical;
     white-space: inherit !important;
-    line-height: @input-line-height;
     height: auto;
+    .input-inner {
+      line-height: @input-line-height;
+      resize: vertical;
+    }
     &.big {
       line-height: @big-input-line-height;
     }
@@ -240,12 +257,12 @@
   height: @input-line-height;
   .color(@font-color) {
     color: @font-color;
-    .switch-box.active{
-      &:before{
+    .switch-box.active {
+      &:before {
         background-color: @font-color;
       }
-      .checkbox-inner{
-        .icon{
+      .checkbox-inner {
+        .icon {
           background-color: @font-color;
         }
       }
@@ -262,7 +279,7 @@
     .color(@theme-color)
   }
 
-  .checkbox-inner{
+  .checkbox-inner {
     display: inline-block;
     width: @input-line-height;
     height: @input-line-height;
@@ -302,8 +319,8 @@
         .card-box-shadow()
       }
     }
-    &.active{
-      .checkbox-inner{
+    &.active {
+      .checkbox-inner {
         transform: translateX(@width - @height);
       }
     }
@@ -334,8 +351,8 @@
     }
   }
   &.disabled {
-    .switch-box{
-      &:after{
+    .switch-box {
+      &:after {
         content: " ";
         background-color: @font-color-light-disabled;
         position: absolute;

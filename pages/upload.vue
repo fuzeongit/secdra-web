@@ -20,26 +20,23 @@
     <div class="card form-content">
       <div class="input-group">
         <h5 class="sub-name">名称：</h5>
-        <input type="text" class="input block primary-color" v-model="form.name" title="name">
+        <Field block color="primary" v-model="form.name"></Field>
       </div>
       <div class="input-group">
         <h5 class="sub-name">描述：</h5>
-        <textarea v-model="form.introduction" class="input block textarea primary-color" title="introduction" rows="3"></textarea>
+        <Field block color="primary" type="textarea" v-model="form.introduction" :rows="3"></Field>
       </div>
       <div class="input-group">
         <h5 class="sub-name">私密：</h5>
         <RadioGroup v-model="form.privacy">
-          <Radio :value="item.key" :label="item.value" color="primary" v-for="item in $enum.PrivacyState" :key="item.key" style="margin-right: 10px"></Radio>
+          <Radio :value="item.key" :label="item.value" color="primary" v-for="item in $enum.PrivacyState"
+                 :key="item.key" style="margin-right: 10px"></Radio>
         </RadioGroup>
       </div>
       <div class="input-group">
         <h5 class="sub-name">添加标签：</h5>
-        <input type="text" title="name" v-model="inputTag" class="input block primary-color" @keyup.enter="addTag">
-        <h5 class="sub-name">*回车添加一个标签</h5>
-      </div>
-      <div style="margin-bottom: 10px">
-        <Tag v-for="(tagName,index) in form.tagList" @close="removeTag" :content="tagName" :key="tagName" color="primary"
-             :value="index"></Tag>
+        <Field block color="primary" v-model="inputTag"></Field>
+        <h5 class="sub-name">*标签以空格分隔为一个</h5>
       </div>
       <div style="margin-bottom: 10px;text-align: right">
         <Btn color="primary" @click="send" :disabled="!drawUrl">发送</Btn>
@@ -93,29 +90,8 @@
         return this.height / this.width
       }
     },
-    mounted() {
-
-    },
     methods: {
       ...mapActions("draw", ["ASave"]),
-      addTag() {
-        if (this.inputTag === null || this.inputTag === "") {
-          this.inputTag = "";
-          return
-        }
-        if (this.form.tagList.indexOf(this.inputTag) !== -1) {
-          this.inputTag = "";
-          this.$message({
-            message: "不能重复添加"
-          });
-          return
-        }
-        this.form.tagList.push(this.inputTag);
-        this.inputTag = "";
-      },
-      removeTag({value}) {
-        this.form.tagList.removeIndex(value)
-      },
       async upload($event, type) {
         let file;
         if (type === "button") {
@@ -160,6 +136,8 @@
           return;
         }
         this.form.url = qiniuResult.hash;
+        let tagList = this.inputTag.split(" ").filter(item => item !== "");
+        this.form.tagList = [...new Set(tagList)];
         let result = await this.ASave(this.form);
         loading.close();
         if (result.status !== 200) {

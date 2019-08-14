@@ -25,8 +25,7 @@
         </p>
         <div class="row send-reply-box" v-if="item.isShowReplyInput">
           <div class="col-23">
-            <input type="text" title="input" class="input block primary-color" placeholder="请输入回复"
-                   v-model="replyForm[item.id].content">
+            <Field block color="primary"  v-model="replyForm[item.id].content" placeholder="请输入回复"></Field>
           </div>
           <div class="col-3 center">
             <Btn icon color="white">

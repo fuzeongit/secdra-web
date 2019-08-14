@@ -1,8 +1,16 @@
 import httpUtil from "../assets/script/util/httpUtil";
+import {FliterForm} from "../assets/script/model";
 
-export const state = () => ({});
 
-export const mutations = {};
+export const state = () => ({
+  fliterForm:new FliterForm()
+});
+
+export const mutations = {
+  MChangeFliterForm(state, fliterForm) {
+    state.fliterForm = fliterForm;
+  }
+};
 
 export const actions = {
   //分页获取数据

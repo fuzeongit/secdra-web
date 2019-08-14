@@ -85,7 +85,16 @@ export class StompSubscribe {
   }
 }
 
-export class EnumObject{
+export class FliterForm {
+  constructor(precise, name, startDate, endDate) {
+    this.precise = precise;
+    this.name = name;
+    this.startDate = startDate;
+    this.endDate = endDate
+  }
+}
+
+export class EnumObject {
   constructor(eventName, callback) {
     this._eventName = eventName;
     this._callback = callback;

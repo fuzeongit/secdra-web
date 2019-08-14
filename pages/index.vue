@@ -2,11 +2,7 @@
   <div class="page">
     <div class="user-bk cover flex-box"
          :style="{backgroundImage: `url(${$img.back(user.background)})`}">
-      <div class="user-bk-content">
-        <input type="search" title="搜索" class="input primary-color" placeholder="请输入标签搜索" @search="search"
-               v-model="tag">
-        <Btn color="primary" class="btn" @click="search">搜&nbsp;&nbsp;&nbsp;&nbsp;索</Btn>
-      </div>
+      <SearchBox></SearchBox>
     </div>
     <br>
     <div class="content-grid">
@@ -104,6 +100,7 @@
 <script>
   import {Pageable} from "../assets/script/model";
   import UserCard from "../components/pages/shared/UserCard";
+  import SearchBox from "../components/pages/shared/SearchBox";
   import {mapActions, mapState} from "vuex"
   import stompMixin from "../assets/script/mixin/stompMixin";
 
@@ -120,11 +117,11 @@
         tagList: resultList[0].data.buckets,
         likeList: resultList[1].data.content,
         newList: resultList[2].data.content,
-        tag: ''
       }
     },
     mixins: [stompMixin],
     components: {
+      SearchBox,
       UserCard
     },
     computed: {
@@ -153,9 +150,6 @@
             draw.user.focus = focus;
           }
         }
-      },
-      async search() {
-        this.$router.push(`/draw/search/${encodeURIComponent(this.tag)}`)
       }
     }
   }
@@ -170,21 +164,6 @@
     width: 100%;
     margin-top: -@herder-height;
     height: @window-min-width / 2;
-    .user-bk-content {
-      font-size: 0;
-      .input {
-        width: 350px;
-        font-size: @small-font-size;
-        border-bottom-right-radius: 0;
-        border-top-right-radius: 0;
-        border-right: 0;
-      }
-      .btn {
-        border-bottom-left-radius: 0;
-        border-top-left-radius: 0;
-        font-size: @small-font-size;
-      }
-    }
   }
 
   .content-grid {

@@ -83,6 +83,14 @@ Array.prototype.clear = function () {
  * 判断数组是否为空
  * @returns {boolean}
  */
-Array.prototype.isEmpty = function(){
+Array.prototype.isEmpty = function () {
   return this.length === 0;
+};
+
+/**
+ * 克隆数组
+ * @returns {*[]}
+ */
+Array.prototype.clone = function () {
+  return [].concat(this);
 };

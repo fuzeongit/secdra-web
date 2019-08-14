@@ -11,6 +11,7 @@ import Checkbox from "../components/form/Checkbox";
 import RadioGroup from "../components/form/RadioGroup";
 import Radio from "../components/form/Radio";
 import Btn from "../components/form/Btn";
+import Field from "../components/form/Field";
 import DateInput from "../components/form/DateInput";
 
 import Http from '../assets/script/util/httpUtil'
@@ -35,6 +36,7 @@ Vue.component("Checkbox",Checkbox);
 Vue.component("RadioGroup",RadioGroup);
 Vue.component("Radio",Radio);
 Vue.component("Btn",Btn);
+Vue.component("Field",Field);
 Vue.component("DateInput",DateInput);
 
 // import vueSocketIO from 'vue-socket.io'
