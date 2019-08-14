@@ -13,6 +13,7 @@
 
 <script>
   import windowMixin from "../../../assets/script/mixin/windowMixin"
+  import {scrollToBySmooth} from "../../../assets/script/util/domUtil";
 
   export default {
     componentName: "CornerButtons",
@@ -25,10 +26,7 @@
     mixins: [windowMixin],
     methods: {
       goTop() {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
+        scrollToBySmooth(window, 0)
       }
     }
   }

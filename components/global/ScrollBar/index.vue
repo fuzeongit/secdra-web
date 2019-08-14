@@ -1,10 +1,11 @@
 <template>
-  <div class="scroll-bar-box">
+  <div class="scroll-bar-box" @click="scrollTo" @mouseenter="showScrollBar = true"
+       @mouseleave="showScrollBar = false">
     <transition
       name="fade" enter-active-class="fadeIn short-duration" leave-active-class="fadeOut short-duration">
-      <div class="scroll-bar" v-show="init"
-           :style="{height:(clientHeight/scrollHeight  * 100) + '%',transform: `translateY(${translate}%)`}"
-           @mousedown.stop="start"
+      <div class="scroll-bar" :class="{active:scrollBarActive}" v-show="showScrollBar||scrollBarActive"
+           :style="{height:height+`%`,transform: `translateY(${coordinate}%)`}"
+           @mousedown.stop="scrollStart" @click.stop="_=>{}"
       ></div>
     </transition>
   </div>
@@ -12,67 +13,82 @@
 
 <script>
   import windowMixin from "../../../assets/script/mixin/windowMixin"
-  import {on} from "../../../assets/script/util/domUtil";
+  import {off, on, scrollToBySmooth} from "../../../assets/script/util/domUtil";
 
   export default {
     mixins: [windowMixin],
     data() {
       return {
-        init: false,
         scrollHeight: 0,
         clientHeight: 0,
-        flag: false,
         startY: 0,
         startScrollTop: 0,
         _mutationObserverFrameTick: false,
-        _mousemoveFrameTick: false,
-        _mutationObserver: null
+        scrollIngFrameTick: false,
+        mutationObserver: null,
+        showScrollBar: false,
+        scrollBarActive: false
       }
     },
     computed: {
-      translate() {
+      height() {
+        return this.clientHeight / this.scrollHeight * 100
+      },
+      coordinate() {
         return (this.scrollTop / this.scrollHeight * this.scrollHeight / this.clientHeight * 100)
       }
     },
     mounted() {
-      this._mutationObserver = new MutationObserver((mutations, _observer) => {
+      this.getHeight();
+      this.mutationObserver = new MutationObserver((mutations, _observer) => {
         if (!this._mutationObserverFrameTick) {
           requestAnimationFrame(() => {
-            this.scrollHeight = document.documentElement.scrollHeight;
-            this.clientHeight = document.documentElement.clientHeight;
-            this.init = true;
+            this.getHeight();
             this._mutationObserverFrameTick = false;
           });
           this._mutationObserverFrameTick = true;
         }
       });
-      this._mutationObserver.observe(document.documentElement, {childList: true, subtree: true});
-
-      on(document, "mouseup", () => {
-        this.flag = false
-      });
-      on(document, "mousemove", e => {
-        if (this.flag) {
-          if (!this._mousemoveFrameTick) {
-            requestAnimationFrame(() => {
-              window.scrollTo(0, ((e.clientY - this.startY) / this.scrollHeight * this.clientHeight) + this.startScrollTop);
-              this._mousemoveFrameTick = false;
-            });
-            this._mousemoveFrameTick = true;
-          }
-        }
-      })
+      this.mutationObserver.observe(document.documentElement, {childList: true, subtree: true});
+      on(document, "mouseup", this.scrollEnd);
     },
     beforeDestroy() {
-      this._mutationObserver.disconnect()
+      this.mutationObserver.disconnect();
+      off(document, "mouseup", this.scrollEnd);
+      off(document, "mousemove", this.scrollIng)
     },
     methods: {
-      start(e) {
-        this.startY = e.clientY;
+      scrollStart(event) {
+        this.startY = event.clientY;
         this.startScrollTop = this.scrollTop;
-        console.log(this.scrollTop);
-        this.flag = true
-      }
+        this.scrollBarActive = true;
+        on(document, "mousemove", this.scrollIng)
+      },
+      scrollEnd(event) {
+        off(document, "mousemove", this.scrollIng);
+        //必须等待一帧后再重置
+        requestAnimationFrame(() => {
+          this.startY = 0;
+          this.startScrollTop = 0;
+          this.scrollBarActive = false;
+        });
+      },
+      scrollIng(event) {
+        if (!this.scrollIngFrameTick) {
+          requestAnimationFrame(() => {
+            window.scrollTo(0, ((event.clientY - this.startY) / this.clientHeight * this.scrollHeight) + this.startScrollTop);
+            this.scrollIngFrameTick = false;
+          });
+          this.scrollIngFrameTick = true;
+        }
+      },
+      getHeight() {
+        this.scrollHeight = document.documentElement.scrollHeight;
+        this.clientHeight = document.documentElement.clientHeight;
+      },
+      scrollTo(event) {
+        scrollToBySmooth(window, event.clientY / this.clientHeight * this.scrollHeight / this.scrollTop > 1 ? this.scrollTop + this.clientHeight : this.scrollTop - this.clientHeight)
+      },
     }
   }
 </script>
@@ -93,8 +109,13 @@
       touch-action: none;
       position: relative;
       border-radius: 10px;
-      background-color: #bbb;
+      background-color: @font-color-dark-disabled;
       cursor: pointer;
+      display: block;
+      transition: background-color 0.1s;
+      &.active, &:hover {
+        background-color: @font-color-dark-fade
+      }
     }
   }
 </style>

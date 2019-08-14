@@ -2,15 +2,15 @@ import Vue from 'vue';
 
 const isServer = Vue.prototype.$isServer;
 /* istanbul ignore next */
-export const on = (function() {
+export const on = (function () {
   if (!isServer && document.addEventListener) {
-    return function(element, event, handler) {
+    return function (element, event, handler) {
       if (element && event && handler) {
         element.addEventListener(event, handler, false);
       }
     };
   } else {
-    return function(element, event, handler) {
+    return function (element, event, handler) {
       if (element && event && handler) {
         element.attachEvent('on' + event, handler);
       }
@@ -19,15 +19,15 @@ export const on = (function() {
 })();
 
 /* istanbul ignore next */
-export const off = (function() {
+export const off = (function () {
   if (!isServer && document.removeEventListener) {
-    return function(element, event, handler) {
+    return function (element, event, handler) {
       if (element && event) {
         element.removeEventListener(event, handler, false);
       }
     };
   } else {
-    return function(element, event, handler) {
+    return function (element, event, handler) {
       if (element && event) {
         element.detachEvent('on' + event, handler);
       }
@@ -85,4 +85,19 @@ export function removeClass(el, cls) {
   if (!el.classList) {
     el.className = trim(curClass);
   }
-};
+}
+
+export function scrollToBySmooth(dom, targetTop, number = 10) {
+  dom = dom instanceof Window ? dom.document.documentElement : (dom instanceof Document ? dom.documentElement : dom);
+
+  function intervalFun(dom, distance, number) {
+    dom.scrollTo(0, dom.scrollTop + distance);
+    requestAnimationFrame(() => {
+      if (number) {
+        intervalFun(dom, distance, number - 1)
+      }
+    });
+  }
+
+  intervalFun(dom, (targetTop - dom.scrollTop) / number, number)
+}

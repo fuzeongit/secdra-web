@@ -9,6 +9,7 @@ export default {
     }
   },
   mounted() {
+    this.getScroll();
     on(document, 'scroll', this.documentScroll)
   },
   beforeDestroy() {
@@ -19,12 +20,15 @@ export default {
       if (!this._scrollAnimationFrameTick) {
         requestAnimationFrame(() => {
           let element = event.target instanceof HTMLElement ? event.target : event.target.documentElement;
-          this.scrollTop = element.scrollTop;
-          this.scrollBottom = element.scrollHeight - this.scrollTop - element.clientHeight;
+          this.getScroll(element);
           this._scrollAnimationFrameTick = false;
         });
         this._scrollAnimationFrameTick = true;
       }
     },
+    getScroll(element = document.documentElement) {
+      this.scrollTop = element.scrollTop;
+      this.scrollBottom = element.scrollHeight - this.scrollTop - element.clientHeight;
+    }
   }
 }
