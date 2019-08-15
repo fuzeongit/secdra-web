@@ -11,14 +11,14 @@
 </template>
 <script>
   import Header from "../components/pages/shared/Header"
+  import ScrollBar from "../components/global/ScrollBar"
   import stompMixin from "../assets/script/mixin/stompMixin";
-  import scrollBarMixin from "../assets/script/mixin/scrollBarMixin";
   import {StompSubscribe} from "../assets/script/model";
   import {mapMutations, mapActions} from "vuex"
-  import ScrollBar from "../components/global/ScrollBar"
+
   export default {
     middleware: ['auth', 'messageRedirect'],
-    mixins: [stompMixin, scrollBarMixin],
+    mixins: [stompMixin],
     components: {
       Header,
       ScrollBar

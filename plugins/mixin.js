@@ -19,6 +19,7 @@ import Img from '../assets/script/util/imgUrlUtil'
 import filters from "../assets/script/filter"
 import directive from "../assets/script/directive"
 import {enumObjectList} from "../assets/script/constant";
+import scrollbar from "../assets/script/directive/scrollbar";
 
 Vue.prototype.$alert = Alert;
 Vue.prototype.$confirm = Confirm;
@@ -55,3 +56,4 @@ Vue.directive("goTop", directive.goTop);
 Vue.directive("popover", directive.popover);
 Vue.directive("loading", directive.loading);
 Vue.directive("ripple", directive.ripple);
+Vue.directive("scrollbar", directive.scrollbar);

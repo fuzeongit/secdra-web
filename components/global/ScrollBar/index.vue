@@ -1,9 +1,10 @@
 <template>
-  <div class="scroll-bar-box" @click="scrollTo" @mouseenter="showScrollBar = true"
-       @mouseleave="showScrollBar = false">
+  <div class="scroll-bar-box" @click="scrollTo" @mouseenter="showScrollBar"
+       :style="{transform: `translateY(${scrollTop}px)`}" v-if="height<100"
+       @mouseleave="hideScrollBar">
     <transition
-      name="fade" enter-active-class="fadeIn short-duration" leave-active-class="fadeOut short-duration">
-      <div class="scroll-bar" :class="{active:scrollBarActive}" v-show="showScrollBar||scrollBarActive"
+      name="fade" enter-active-class="fadeIn duration" leave-active-class="fadeOut duration">
+      <div class="scroll-bar" :class="{active:scrollBarActive}" v-show="scrollBarStatus||scrollBarActive"
            :style="{height:height+`%`,transform: `translateY(${coordinate}%)`}"
            @mousedown.stop="scrollStart" @click.stop="_=>{}"
       ></div>
@@ -13,20 +14,22 @@
 
 <script>
   import windowMixin from "../../../assets/script/mixin/windowMixin"
-  import {off, on, scrollToBySmooth} from "../../../assets/script/util/domUtil";
+  import {off, on} from "../../../assets/script/util/domUtil";
 
   export default {
     mixins: [windowMixin],
     data() {
       return {
+        scrollElement: null,
         scrollHeight: 0,
         clientHeight: 0,
         startY: 0,
         startScrollTop: 0,
-        _mutationObserverFrameTick: false,
+        mutationObserverFrameTick: false,
         scrollIngFrameTick: false,
         mutationObserver: null,
-        showScrollBar: false,
+        scrollBarStatusTimeout: null,
+        scrollBarStatus: false,
         scrollBarActive: false
       }
     },
@@ -41,16 +44,29 @@
     mounted() {
       this.getHeight();
       this.mutationObserver = new MutationObserver((mutations, _observer) => {
-        if (!this._mutationObserverFrameTick) {
+        if (!this.mutationObserverFrameTick) {
           requestAnimationFrame(() => {
             this.getHeight();
-            this._mutationObserverFrameTick = false;
+            this.mutationObserverFrameTick = false;
           });
-          this._mutationObserverFrameTick = true;
+          this.mutationObserverFrameTick = true;
         }
       });
-      this.mutationObserver.observe(document.documentElement, {childList: true, subtree: true});
+      this.mutationObserver.observe(document.documentElement, {
+        attributes: true,
+        characterData: true,
+        childList: true,
+        subtree: true,
+      });
       on(document, "mouseup", this.scrollEnd);
+      if(this.scrollElement){
+        on(this.scrollElement,"mouseenter",()=>{
+          this.scrollBarStatus = true;
+        });
+        on(this.scrollElement,"mouseleave",()=>{
+          this.scrollBarStatus = false;
+        })
+      }
     },
     beforeDestroy() {
       this.mutationObserver.disconnect();
@@ -76,19 +92,33 @@
       scrollIng(event) {
         if (!this.scrollIngFrameTick) {
           requestAnimationFrame(() => {
-            window.scrollTo(0, ((event.clientY - this.startY) / this.clientHeight * this.scrollHeight) + this.startScrollTop);
+            let el = this.scrollElement || document.documentElement;
+            el.scrollTo(0, ((event.clientY - this.startY) / this.clientHeight * this.scrollHeight) + this.startScrollTop);
             this.scrollIngFrameTick = false;
           });
           this.scrollIngFrameTick = true;
         }
       },
       getHeight() {
-        this.scrollHeight = document.documentElement.scrollHeight;
-        this.clientHeight = document.documentElement.clientHeight;
+        let el = this.scrollElement || document.documentElement;
+        this.scrollHeight = el ? el.scrollHeight : 0;
+        this.clientHeight = el ? el.clientHeight : 0;
       },
       scrollTo(event) {
-        scrollToBySmooth(window, event.clientY / this.clientHeight * this.scrollHeight / this.scrollTop > 1 ? this.scrollTop + this.clientHeight : this.scrollTop - this.clientHeight)
+        let el = this.scrollElement || document.documentElement;
+        el.scrollTo({
+          top: event.offsetY / this.clientHeight * this.scrollHeight / this.scrollTop > 1 ? this.scrollTop + this.clientHeight : this.scrollTop - this.clientHeight,
+          behavior: "smooth"
+        })
       },
+      showScrollBar() {
+        if (this.scrollElement) return;
+        this.scrollBarStatus = true;
+      },
+      hideScrollBar() {
+        if (this.scrollElement) return;
+        this.scrollBarStatus = false
+      }
     }
   }
 </script>
@@ -98,11 +128,12 @@
   @import "../../../assets/style/mixin";
 
   .scroll-bar-box {
-    position: fixed;
+    position: absolute;
     top: 0;
     right: 0;
-    bottom: 0;
-    width: 10px;
+    height: 100%;
+    /*bottom: 0;*/
+    width: 6px;
     z-index: @mask-index - 2;
     .scroll-bar {
       user-select: none;
@@ -112,7 +143,7 @@
       background-color: @font-color-dark-disabled;
       cursor: pointer;
       display: block;
-      transition: background-color 0.1s;
+      transition: background-color @default-animate-time;
       &.active, &:hover {
         background-color: @font-color-dark-fade
       }

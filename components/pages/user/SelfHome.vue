@@ -78,7 +78,7 @@
       <Btn block color="primary" @click="saveBack">保存</Btn>
     </Dialog>
     <Dialog v-model="isShowEdit" title="编辑" v-loading="editLoading" persistent>
-      <div class="edit-dialog-content" style="width: 500px;height: 450px;overflow: auto">
+      <div class="edit-dialog-content" style="width: 500px;height: 450px;overflow: auto" v-scrollbar>
         <div>
           <div class="input-group">
             <h5 class="sub-name">名称：</h5>

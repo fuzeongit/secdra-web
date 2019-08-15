@@ -3,6 +3,7 @@ import {on, off} from "../../../assets/script/util/domUtil"
 export default {
   data() {
     return {
+      scrollElement: null,
       scrollTop: 0,
       scrollBottom: 0,
       _scrollAnimationFrameTick: false
@@ -10,10 +11,10 @@ export default {
   },
   mounted() {
     this.getScroll();
-    on(document, 'scroll', this.documentScroll)
+    on(this.scrollElement || document, 'scroll', this.documentScroll)
   },
   beforeDestroy() {
-    off(document, 'scroll', this.documentScroll);
+    off(this.scrollElement || document, 'scroll', this.documentScroll);
   },
   methods: {
     documentScroll(event) {
@@ -26,7 +27,7 @@ export default {
         this._scrollAnimationFrameTick = true;
       }
     },
-    getScroll(element = document.documentElement) {
+    getScroll(element = this.scrollElement || document.documentElement) {
       this.scrollTop = element.scrollTop;
       this.scrollBottom = element.scrollHeight - this.scrollTop - element.clientHeight;
     }
