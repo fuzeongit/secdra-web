@@ -80,30 +80,28 @@
       </div>
     </div>
     <Dialog v-model="isShowEdit" title="编辑" v-loading="editLoading" persistent>
-      <div class="edit-dialog-content">
-        <div>
-          <div class="input-group">
-            <h5 class="sub-name">名称：</h5>
-            <Field block color="primary" v-model="drawForm.name"></Field>
-          </div>
-          <div class="input-group">
-            <h5 class="sub-name">简介：</h5>
-            <Field block color="primary" type="textarea" v-model="drawForm.introduction"></Field>
-          </div>
-          <div class="input-group">
-            <h5 class="sub-name">私密：</h5>
-            <RadioGroup v-model="drawForm.privacy">
-              <Radio :value="item.key" :label="item.value" color="primary" v-for="item in $enum.PrivacyState"
-                     :key="item.key" style="margin-right: 10px"></Radio>
-            </RadioGroup>
-          </div>
-          <div class="input-group">
-            <h5 class="sub-name">标签：</h5>
-            <Field block color="primary" v-model="inputTag"></Field>
-            <h5 class="sub-name">*标签以空格分隔为一个</h5>
-          </div>
+      <ScrollBox class="edit-dialog-content">
+        <div class="input-group">
+          <h5 class="sub-name">名称：</h5>
+          <Field block color="primary" v-model="drawForm.name"></Field>
         </div>
-      </div>
+        <div class="input-group">
+          <h5 class="sub-name">简介：</h5>
+          <Field block color="primary" type="textarea" v-model="drawForm.introduction"></Field>
+        </div>
+        <div class="input-group">
+          <h5 class="sub-name">私密：</h5>
+          <RadioGroup v-model="drawForm.privacy">
+            <Radio :value="item.key" :label="item.value" color="primary" v-for="item in $enum.PrivacyState"
+                   :key="item.key" style="margin-right: 10px"></Radio>
+          </RadioGroup>
+        </div>
+        <div class="input-group">
+          <h5 class="sub-name">标签：</h5>
+          <Field block color="primary" v-model="inputTag"></Field>
+          <h5 class="sub-name">*标签以空格分隔为一个</h5>
+        </div>
+      </ScrollBox>
       <div class="input-group" style="text-align: center;">
         <Btn color="primary" @click="save">保存</Btn>
         <Btn outline color="primary" @click="reset">重置</Btn>

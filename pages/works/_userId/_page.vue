@@ -39,7 +39,7 @@
       <i class="icon s-bianji"></i>
     </Btn>
     <Dialog v-if="isSelf" v-model="isShowEdit" title="批量操作" v-loading="editLoading" persistent>
-      <div class="edit-dialog-content">
+      <ScrollBox class="edit-dialog-content">
         <div style="margin-bottom: 10px">
           <Tag v-for="(draw,index) in selectList" :content="draw.name" @close="removeSelectDraw" :key="draw.id"
                color="primary"
@@ -68,7 +68,7 @@
             <h5 class="sub-name">*标签以空格分隔为一个</h5>
           </div>
         </div>
-      </div>
+      </ScrollBox>
       <div class="input-group" style="text-align: center;">
         <Btn color="primary" @click="save">保存</Btn>
         <Btn outline color="primary" @click="reset">重置</Btn>

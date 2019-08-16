@@ -3,18 +3,27 @@ import ScrollBar from '../../../components/global/ScrollBar';
 
 const ScrollBarConstructor = Vue.extend(ScrollBar);
 
-export default {
-  inserted(el, binding, vnode) {
-    let instance = new ScrollBarConstructor({
-      data: {
-        scrollElement: el
-      }
-    });
-    instance.vm = instance.$mount();
-    let elPosition = window.getComputedStyle(el).position;
-    if (elPosition !== "fixed" && elPosition !== "absolute" && elPosition !== "relative") {
-      el.classList.add("scroll-box");
+function scroller(el, binding, vnode) {
+  const _ref = binding.expression ? binding.value : binding.arg;
+  const scrollBox = vnode.context.$refs[_ref];
+  let instance = new ScrollBarConstructor({
+    data: {
+      scrollElement: scrollBox
     }
-    el.appendChild(instance.vm.$el);
+  });
+  instance.vm = instance.$mount();
+  let elPosition = window.getComputedStyle(el).position;
+  if (elPosition !== "fixed" && elPosition !== "absolute" && elPosition !== "relative") {
+    el.classList.add("scroll-box");
+  }
+  el.appendChild(instance.vm.$el);
+}
+
+export default {
+  bind(el, binding, vnode) {
+    scroller(el, binding, vnode);
+  },
+  inserted(el, binding, vnode) {
+    scroller(el, binding, vnode);
   }
 }

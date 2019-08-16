@@ -78,28 +78,26 @@
       <Btn block color="primary" @click="saveBack">保存</Btn>
     </Dialog>
     <Dialog v-model="isShowEdit" title="编辑" v-loading="editLoading" persistent>
-      <div class="edit-dialog-content" style="width: 500px;height: 450px;overflow: auto" v-scrollbar>
-        <div>
-          <div class="input-group">
-            <h5 class="sub-name">名称：</h5>
-            <Field block color="primary" v-model="userForm.name"></Field>
-          </div>
-          <div class="input-group">
-            <h5 class="sub-name">简介：</h5>
-            <Field block color="primary" type="textarea" v-model="userForm.introduction"></Field>
-          </div>
-          <div class="input-group">
-            <h5 class="sub-name">性别：</h5>
-            <RadioGroup v-model="userForm.gender">
-              <Radio :value="item.key" :label="item.value" color="primary" v-for="item in $enum.Gender" :key="item.key" style="margin-right: 10px"></Radio>
-            </RadioGroup>
-          </div>
-          <div class="input-group">
-            <h5 class="sub-name">生日：</h5>
-            <DateInput v-model="userForm.birthday" block color="primary"></DateInput>
-          </div>
+      <ScrollBox class="edit-dialog-content" style="width: 500px;height: 450px;">
+        <div class="input-group">
+          <h5 class="sub-name">名称：</h5>
+          <Field block color="primary" v-model="userForm.name"></Field>
         </div>
-      </div>
+        <div class="input-group">
+          <h5 class="sub-name">简介：</h5>
+          <Field block color="primary" type="textarea" v-model="userForm.introduction"></Field>
+        </div>
+        <div class="input-group">
+          <h5 class="sub-name">性别：</h5>
+          <RadioGroup v-model="userForm.gender">
+            <Radio :value="item.key" :label="item.value" color="primary" v-for="item in $enum.Gender" :key="item.key" style="margin-right: 10px"></Radio>
+          </RadioGroup>
+        </div>
+        <div class="input-group">
+          <h5 class="sub-name">生日：</h5>
+          <DateInput v-model="userForm.birthday" block color="primary"></DateInput>
+        </div>
+      </ScrollBox>
       <Btn block color="primary" @click="update">保存</Btn>
     </Dialog>
   </div>

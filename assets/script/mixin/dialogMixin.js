@@ -30,7 +30,11 @@ export default {
     },
     onEsc(event) {
       if (event.keyCode === 27) {
-        this.onPersistent()
+        if (this.persistent) {
+          this.persistentAnimate = true;
+          return
+        }
+        this.close()
       }
     },
     onPersistent(event) {

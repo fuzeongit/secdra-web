@@ -1,10 +1,9 @@
 <template>
-  <div class="scroll-bar-box" @click="scrollTo" @mouseenter="showScrollBar"
-       :style="{transform: `translateY(${scrollTop}px)`}" v-if="height<100"
-       @mouseleave="hideScrollBar">
+  <div class="scroll-bar-box" @click="scrollTo" @mouseenter="showScrollBar" v-if="height<100"
+       @mouseleave="hideScrollBar" :style="{position}">
     <transition
       name="fade" enter-active-class="fadeIn duration" leave-active-class="fadeOut duration">
-      <div class="scroll-bar" :class="{active:scrollBarActive}" v-show="scrollBarStatus||scrollBarActive"
+      <div class="scroll-bar" :class="{active:scrollBarActive}"
            :style="{height:height+`%`,transform: `translateY(${coordinate}%)`}"
            @mousedown.stop="scrollStart" @click.stop="_=>{}"
       ></div>
@@ -34,6 +33,9 @@
       }
     },
     computed: {
+      position(){
+        return this.scrollElement ? "absolute":"fixed"
+      },
       height() {
         return this.clientHeight / this.scrollHeight * 100
       },
@@ -59,14 +61,14 @@
         subtree: true,
       });
       on(document, "mouseup", this.scrollEnd);
-      if(this.scrollElement){
-        on(this.scrollElement,"mouseenter",()=>{
-          this.scrollBarStatus = true;
-        });
-        on(this.scrollElement,"mouseleave",()=>{
-          this.scrollBarStatus = false;
-        })
-      }
+      // if(this.scrollElement){
+      //   on(this.scrollElement,"mouseenter",()=>{
+      //     this.scrollBarStatus = true;
+      //   });
+      //   on(this.scrollElement,"mouseleave",()=>{
+      //     this.scrollBarStatus = false;
+      //   })
+      // }
     },
     beforeDestroy() {
       this.mutationObserver.disconnect();
@@ -112,11 +114,11 @@
         })
       },
       showScrollBar() {
-        if (this.scrollElement) return;
+        // if (this.scrollElement) return;
         this.scrollBarStatus = true;
       },
       hideScrollBar() {
-        if (this.scrollElement) return;
+        // if (this.scrollElement) return;
         this.scrollBarStatus = false
       }
     }
@@ -128,7 +130,6 @@
   @import "../../../assets/style/mixin";
 
   .scroll-bar-box {
-    position: absolute;
     top: 0;
     right: 0;
     height: 100%;
