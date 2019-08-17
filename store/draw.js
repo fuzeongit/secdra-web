@@ -3,12 +3,12 @@ import {FliterForm} from "../assets/script/model";
 
 
 export const state = () => ({
-  fliterForm:new FliterForm()
+  filterForm:new FliterForm()
 });
 
 export const mutations = {
-  MChangeFliterForm(state, fliterForm) {
-    state.fliterForm = fliterForm;
+  MChangeFliterForm(state, filterForm) {
+    state.filterForm = filterForm;
   }
 };
 

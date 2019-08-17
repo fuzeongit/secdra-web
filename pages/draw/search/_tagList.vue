@@ -4,17 +4,17 @@
               @follow="follow"></DrawList>
     <CornerButtons>
       <Popper placement="top-end" trigger="click" offset="0,20px" positionFixed>
-        <div class="fliter-box">
+        <div class="filter-box">
           <div class="input-group">
             <h5 class="sub-name">精准搜索：</h5>
-            <Checkbox is-switch v-model="fliterForm.precise"  color="primary"></Checkbox>
+            <Checkbox is-switch v-model="filterForm.precise"  color="primary"></Checkbox>
           </div>
           <div class="input-group">
             <h5 class="sub-name">名称：</h5>
-            <Field block color="primary" v-model="fliterForm.name"></Field>
+            <Field block color="primary" v-model="filterForm.name"></Field>
           </div>
           <div class="input-group center">
-            <Btn @click="fliter" color="primary">筛选</Btn>
+            <Btn @click="filter" color="primary">筛选</Btn>
             <Btn @click="reset" color="primary">重置</Btn>
           </div>
         </div>
@@ -45,7 +45,7 @@
       let pageable = new Pageable();
       pageable.size = 16;
       pageable.sort = "likeAmount,desc";
-      let fliterForm = new FliterForm(
+      let filterForm = new FliterForm(
         !!route.query.precise,
         route.query.name,
         route.query.startDate,
@@ -54,7 +54,7 @@
       let {data: result} = await $axios.get(`/draw/paging`, {
         params: Object.assign({
           tagList: route.params.tagList
-        }, pageable, fliterForm)
+        }, pageable, filterForm)
       });
       if (result.status !== 200) {
         throw new Error(result.message)
@@ -63,7 +63,7 @@
         page: result.data,
         list: result.data.content,
         pageable,
-        fliterForm
+        filterForm
       }
     },
     data() {
@@ -86,7 +86,7 @@
         this.pageLoading = true;
         let result = await this.APaging(Object.assign({
             tagList: this.$route.params.tagList
-          }, this.pageable, this.fliterForm)
+          }, this.pageable, this.filterForm)
         );
         this.pageLoading = false;
         let data = result.data;
@@ -122,13 +122,13 @@
           }
         }
       },
-      async fliter() {
+      async filter() {
         this.$router.replace({
           path: `/draw/search/${encodeURIComponent(this.$route.params.tagList)}`, query: {
-            precise: this.fliterForm.precise ? 1 : null,
-            name: this.fliterForm.name,
-            startDate: this.fliterForm.startDate,
-            endDate: this.fliterForm.endDate
+            precise: this.filterForm.precise ? 1 : undefined,
+            name: this.filterForm.name,
+            startDate: this.filterForm.startDate,
+            endDate: this.filterForm.endDate
           }
         });
       },
@@ -144,7 +144,7 @@
   @import "../../../assets/style/config";
   @import "../../../assets/style/mixin";
 
-  .fliter-box {
+  .filter-box {
     width: 300px;
     padding: 15px;
   }

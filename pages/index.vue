@@ -83,8 +83,7 @@
           </h3>
           <div class="tag-list">
             <Btn v-for="(tag,index) in tagList" :to="`/draw/search/${encodeURIComponent(tag.key)}`" color="primary"
-                 outline small
-                 :key="index">{{tag.key}}
+                 outline small :key="index">{{tag.key}}
             </Btn>
           </div>
         </div>
