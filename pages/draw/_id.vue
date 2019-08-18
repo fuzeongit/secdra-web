@@ -29,7 +29,7 @@
               </div>
             </div>
             <div style="margin-top: 20px;">
-              <Btn block color="primary" v-if="draw.user.id===user.id" @click="isShowEdit=true">编辑</Btn>
+              <Btn block color="primary" v-if="draw.user.focus===$enum.FollowState.SElF.key" @click="isShowEdit=true">编辑</Btn>
               <Btn block color="primary" v-else @click="follow(draw.user.id)">
                 {{draw.user.focus===$enum.FollowState.CONCERNED.key?`已关注`:`关注`}}
               </Btn>

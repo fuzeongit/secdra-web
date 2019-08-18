@@ -35,7 +35,7 @@
     <br>
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
     <br>
-    <Btn icon big shadow color="white" v-if="isSelf" style="position: fixed;right: 50px;bottom: 50px;" @click="unCollection">
+    <Btn icon big shadow color="white" v-if="isSelf" style="position: fixed;right: 50px;bottom: 50px;" @click="unCollection" :disabled="!selectList.length">
       <i class="icon s-heart" style="color: red"></i>
     </Btn>
   </div>

@@ -48,29 +48,10 @@ module.exports = {
     '@nuxtjs/axios'
   ],
   proxy: [
-    // [
-    //   '/api',
-    //   {
-    //     target: "http://127.0.0.1:8080", // api主机
-    //     secure: false,
-    //     changeOrigin: true,
-    //     pathRewrite: {'^/api': '/'}
-    //   }
-    // ],
-    // [
-    //   '/webSocket',
-    //   {
-    //     target: "http://127.0.0.1:8080/webSocket", // api主机
-    //     ws:true,
-    //     secure: false,
-    //     changeOrigin: true,
-    //     pathRewrite: {'^/webSocket': '/'}
-    //   }
-    // ]
     [
       '/api',
       {
-        target: "http://www.secdra.com/api", // api主机
+        target: "http://127.0.0.1:8080", // api主机
         secure: false,
         changeOrigin: true,
         pathRewrite: {'^/api': '/'}
@@ -79,13 +60,32 @@ module.exports = {
     [
       '/webSocket',
       {
-        target: "http://www.secdra.com/api/webSocket", // api主机
+        target: "http://127.0.0.1:8080/webSocket", // api主机
         ws:true,
         secure: false,
         changeOrigin: true,
         pathRewrite: {'^/webSocket': '/'}
       }
     ]
+    // [
+    //   '/api',
+    //   {
+    //     target: "http://www.secdra.com/api", // api主机
+    //     secure: false,
+    //     changeOrigin: true,
+    //     pathRewrite: {'^/api': '/'}
+    //   }
+    // ],
+    // [
+    //   '/webSocket',
+    //   {
+    //     target: "http://www.secdra.com/api/webSocket", // api主机
+    //     ws:true,
+    //     secure: false,
+    //     changeOrigin: true,
+    //     pathRewrite: {'^/webSocket': '/'}
+    //   }
+    // ]
   ],
   axios: {
     baseURL:env.baseUrl
