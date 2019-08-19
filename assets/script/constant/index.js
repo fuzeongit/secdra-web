@@ -28,5 +28,9 @@ export const enumObjectList = {
   PrivacyState: proxyUtil.enumProxy({
     PUBLIC: "公开",
     PRIVATE: "隐藏"
+  }),
+  CollectDrawState: proxyUtil.enumProxy({
+    EMPTY: "不存在",
+    NORMAL: "正常"
   })
 };

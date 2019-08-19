@@ -2,40 +2,66 @@
   <div class="page">
     <CheckboxGroup class="content row" v-model="selectList">
       <div class="card " v-for="(draw,index) in list" :key="index">
-        <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box" v-ripple>
-          <img :src="$img.secdra(draw.url,`specifiedWidth`)"
-               :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
-        </nuxt-link>
-        <div class="tool">
-          <Checkbox v-if="isSelf" :value="draw" valueKey="id" small color="primary"></Checkbox>
-          <Btn flat icon :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`" @click.stop="collection(draw)" small title="收藏">
-            <i class="icon" :class="{'s-heart':draw.focus===$enum.CollectState.CONCERNED.key,'s-hearto':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
-          </Btn>
-        </div>
-        <div class="flex-box info-box" v-if="draw.user.id">
-          <nuxt-link :to="`/user/${draw.user.id}`" class="head-box" v-ripple>
-            <img :src="$img.head(draw.user.head,'small50')" :title="draw.user.name">
+        <template v-if="draw.state===$enum.CollectDrawState.NORMAL.key">
+          <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box" v-ripple>
+            <img :src="$img.secdra(draw.url,`specifiedWidth`)"
+                 :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
           </nuxt-link>
-          <div class="user-info-box">
-            <p class="nickname">
-              {{draw.user.name}}
-            </p>
-            <p class="introduction" :title="draw.user.introduction">
-              {{draw.user.introduction}}
-            </p>
-          </div>
-          <div class="follow-box flex-box">
-            <Btn block color="primary" @click="follow(draw.user.id)" :disabled="draw.user.focus===$enum.FollowState.SElF.key">
-              {{draw.user.focus===$enum.FollowState.CONCERNED.key?`已关注`:`关注`}}
+          <div class="tool">
+            <Checkbox v-if="isSelf" :value="draw" valueKey="id" small color="primary"></Checkbox>
+            <Btn flat icon :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`"
+                 @click.stop="collection(draw)" small title="收藏">
+              <i class="icon"
+                 :class="{'s-heart':draw.focus===$enum.CollectState.CONCERNED.key,'s-hearto':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
             </Btn>
           </div>
-        </div>
+          <div class="flex-box info-box" v-if="draw.user.id">
+            <nuxt-link :to="`/user/${draw.user.id}`" class="head-box" v-ripple>
+              <img :src="$img.head(draw.user.head,'small50')" :title="draw.user.name">
+            </nuxt-link>
+            <div class="user-info-box">
+              <p class="nickname">
+                {{draw.user.name}}
+              </p>
+              <p class="introduction" :title="draw.user.introduction">
+                {{draw.user.introduction}}
+              </p>
+            </div>
+            <div class="follow-box flex-box">
+              <Btn block color="primary" @click="follow(draw.user.id)"
+                   :disabled="draw.user.focus===$enum.FollowState.SElF.key">
+                {{draw.user.focus===$enum.FollowState.CONCERNED.key?`已关注`:`关注`}}
+              </Btn>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <div class="img-box flex-box"></div>
+          <div class="tool">
+            <Checkbox v-if="isSelf" :value="draw" valueKey="id" small color="primary"></Checkbox>
+            <Btn flat icon :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`"
+                 @click.stop="collection(draw)" small title="收藏">
+              <i class="icon"
+                 :class="{'s-heart':draw.focus===$enum.CollectState.CONCERNED.key,'s-hearto':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
+            </Btn>
+          </div>
+          <div class="flex-box info-box">
+            <div class="head-box">
+              <img src="../../../assets/image/default/default-head.jpg">
+            </div>
+            <div class="user-info-box empty">
+              <p class="nickname"></p>
+              <p class="introduction"></p>
+            </div>
+          </div>
+        </template>
       </div>
     </CheckboxGroup>
     <br>
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
     <br>
-    <Btn icon big shadow color="white" v-if="isSelf" style="position: fixed;right: 50px;bottom: 50px;" @click="unCollection" :disabled="!selectList.length">
+    <Btn icon big shadow color="white" v-if="isSelf" style="position: fixed;right: 50px;bottom: 50px;"
+         @click="unCollection" :disabled="!selectList.length">
       <i class="icon s-heart" style="color: red"></i>
     </Btn>
   </div>
@@ -177,10 +203,9 @@
         }
       }
       .info-box {
-        margin-top: -10px;
         @img-size: 50px;
         @padding-size: 15px;
-        padding: @padding-size;
+        padding: 0 @padding-size @padding-size;
         overflow: hidden;
         .head-box {
           display: block;
@@ -204,6 +229,17 @@
             font-size: @smallest-font-size;
             margin-top: 10px;
             .ellipsis()
+          }
+
+          &.empty {
+            .nickname {
+
+            }
+            .introduction {
+              font-size: @smallest-font-size;
+              margin-top: 10px;
+              .ellipsis()
+            }
           }
         }
         .follow-box {
