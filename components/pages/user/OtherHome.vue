@@ -13,7 +13,7 @@
     <div class="content card">
       <div class="head-box">
         <img :src="$img.head(user.head)"
-             :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`">
+             :onerror="`this.src='${require('../../../assets/image/svg/default-head.svg')}'`">
         <div class="info-box">
           <p class="name"> {{user.name}}
             <i class="icon"

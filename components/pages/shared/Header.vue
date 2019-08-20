@@ -26,7 +26,7 @@
           <template>
             <nuxt-link :to="`/user/${user.id||''}`" class="head-box" v-ripple>
               <img :src="$img.head(user.head,'small50')" width="30" height="30" v-popover:popover
-                   :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`"
+                   :onerror="`this.src='${require('../../../assets/image/svg/default-head.svg')}'`"
                    style="border-radius: 50%">
             </nuxt-link>
             <Popper ref="popover"

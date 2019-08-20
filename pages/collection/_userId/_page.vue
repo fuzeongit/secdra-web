@@ -36,7 +36,9 @@
           </div>
         </template>
         <template v-else>
-          <div class="img-box flex-box"></div>
+          <div class="img-box flex-box">
+            <img src="../../../assets/image/svg/default-draw.svg" class="cover" style="width: 100%;height: 100%">
+          </div>
           <div class="tool">
             <Checkbox v-if="isSelf" :value="draw" valueKey="id" small color="primary"></Checkbox>
             <Btn flat icon :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`"
@@ -47,9 +49,9 @@
           </div>
           <div class="flex-box info-box">
             <div class="head-box">
-              <img src="../../../assets/image/default/default-head.jpg">
+              <img src="../../../assets/image/svg/default-head.svg">
             </div>
-            <div class="user-info-box empty">
+            <div class="user-info-box-empty">
               <p class="nickname"></p>
               <p class="introduction"></p>
             </div>
@@ -219,7 +221,7 @@
         }
         .user-info-box {
           width: calc(100% - @img-size);
-          padding: 0 30px;
+          padding: 0 20px;
           transition: @default-animate-time;
 
           .nickname {
@@ -230,15 +232,22 @@
             margin-top: 10px;
             .ellipsis()
           }
-
-          &.empty {
-            .nickname {
-
+        }
+        .user-info-box-empty {
+          .user-info-box();
+          user-select: none;
+          .nickname {
+            &:before {
+              padding:0 40px;
+              background-color: @font-color-dark-line;
+              content: "\20";
             }
-            .introduction {
-              font-size: @smallest-font-size;
-              margin-top: 10px;
-              .ellipsis()
+          }
+          .introduction {
+            &:before {
+              padding:0 60px;
+              background-color: @font-color-dark-line;
+              content: "\20";
             }
           }
         }

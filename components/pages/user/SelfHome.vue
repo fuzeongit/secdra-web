@@ -18,7 +18,7 @@
         <label class="upload-head" v-ripple>
           <input type="file" style="display: none" @change="uploadHead">
           <img :src="$img.head(user.head)"
-               :onerror="`this.src='${require('../../../assets/image/default/default-head.jpg')}'`">
+               :onerror="`this.src='${require('../../../assets/image/svg/default-head.svg')}'`">
         </label>
         <div class="info-box">
           <p class="name"> {{user.name}} <i class="icon"
