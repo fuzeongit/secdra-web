@@ -8,7 +8,7 @@
         </div>
         <div>
           <Btn flat icon small @click.stop="close">
-            <i class="icon s-close"></i>
+            <i class="icon ali-icon-close"></i>
           </Btn>
         </div>
       </div>

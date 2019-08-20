@@ -6,7 +6,7 @@
       </div>
       <div class="col-3 center">
         <Btn icon color="white">
-          <i class="icon s-laugh"></i>
+          <i class="icon ali-icon-emoji"></i>
         </Btn>
       </div>
       <div class="col-4 center">
@@ -27,7 +27,7 @@
                 {{item.critic.name}}
               </nuxt-link>
               <i class="icon"
-                 :class="{'s-xingbie-nv':item.critic.gender==='FEMALE','s-xingbie-nan':item.critic.gender==='MALE'}"></i>
+                 :class="{'ali-icon-female':item.critic.gender==='FEMALE','ali-icon-male':item.critic.gender==='MALE'}"></i>
             </p>
             <p class="time">{{item.createDate}}</p>
             <p class="content">
@@ -35,10 +35,10 @@
             </p>
             <p class="tool">
               <Btn small flat round color="primary" @click="item.isShowReply = !item.isShowReply"><i
-                class="icon s-pingjia"></i>{{item.isShowReply?'收起':'查看回复'}}
+                class="icon ali-icon-message"></i>{{item.isShowReply?'收起':'查看回复'}}
               </Btn>
               <Btn small flat round color="primary" @click="item.isShowReplyInput=!item.isShowReplyInput"><i
-                class="icon s-bianji"></i>{{item.isShowReplyInput?'收起':'回复'}}
+                class="icon ali-icon-edit"></i>{{item.isShowReplyInput?'收起':'回复'}}
               </Btn>
             </p>
             <div class="row send-reply-box" v-if="item.isShowReplyInput">
@@ -47,7 +47,7 @@
               </div>
               <div class="col-3 center">
                 <Btn icon color="white">
-                  <i class="icon s-laugh"></i>
+                  <i class="icon ali-icon-emoji"></i>
                 </Btn>
               </div>
               <div class="col-4 center">
@@ -195,10 +195,10 @@
             font-weight: bold;
             .icon {
               margin-left: 10px;
-              &.s-xingbie-nv {
+              &.ali-icon-female {
                 color: @female-color;
               }
-              &.s-xingbie-nan {
+              &.ali-icon-male {
                 color: @male-color;
               }
             }

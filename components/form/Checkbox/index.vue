@@ -13,7 +13,7 @@
       <template v-else>
         <div class="checkbox-inner" v-ripple="{class:`${color}-text`}" :class="{'dark-fade-text':!model}">
           <div class="content">
-            <i class="icon" :class="{'s-checkboxoutlineblank':!model,'s-check-box':model}"></i>
+            <i class="icon" :class="{'ali-icon-check-box':!model,'ali-icon-check-box-fill':model}"></i>
           </div>
         </div>
       </template>

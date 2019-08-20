@@ -19,7 +19,7 @@
           </div>
         </div>
         <Btn icon big shadow color="white" slot="reference">
-          <i class="icon s-filter"></i>
+          <i class="icon ali-icon-filter"></i>
         </Btn>
       </Popper>
     </CornerButtons>

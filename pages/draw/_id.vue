@@ -43,7 +43,7 @@
           <div class="row" style="margin-top: 5px;">
             <div class="col-15">
               <Btn flat icon small title="浏览">
-                <i class="icon s-eye"></i>
+                <i class="icon ali-icon-attention"></i>
               </Btn>
               <span>{{draw.viewAmount}}</span>
             </div>
@@ -51,7 +51,7 @@
               <Btn flat icon small :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`"
                    @click="collection(draw)" title="收藏">
                 <i class="icon"
-                   :class="{'s-heart':draw.focus===$enum.CollectState.CONCERNED.key,'s-hearto':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
+                   :class="{'ali-icon-likefill':draw.focus===$enum.CollectState.CONCERNED.key,'ali-icon-like':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
               </Btn>
               <span>{{draw.likeAmount}}</span>
             </div>

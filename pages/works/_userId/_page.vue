@@ -9,7 +9,7 @@
         <div class="tool">
           <Checkbox v-if="isSelf" :value="draw" valueKey="id" small color="primary"></Checkbox>
           <Btn flat icon :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`" @click.stop="collection(draw)" small title="收藏">
-            <i class="icon" :class="{'s-heart':draw.focus===$enum.CollectState.CONCERNED.key,'s-hearto':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
+            <i class="icon" :class="{'ali-icon-likefill':draw.focus===$enum.CollectState.CONCERNED.key,'ali-icon-like':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
           </Btn>
         </div>
         <div v-if="!isSelf" class="flex-box info-box">
@@ -36,7 +36,7 @@
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
     <Btn icon big shadow color="white" v-if="isSelf" class="edit-btn" @click="isShowEdit = true"
          :disabled="selectList.isEmpty()">
-      <i class="icon s-bianji"></i>
+      <i class="icon ali-icon-edit"></i>
     </Btn>
     <Dialog v-if="isSelf" v-model="isShowEdit" title="批量操作" v-loading="editLoading" persistent>
       <ScrollBox class="edit-dialog-content">

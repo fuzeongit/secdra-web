@@ -8,7 +8,7 @@
       </nuxt-link>
       <Btn flat icon :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`" @click.stop="$emit(`collection`,draw,index)" title="收藏"
            class="like">
-        <i class="icon" :class="{'s-heart':draw.focus===$enum.CollectState.CONCERNED.key,'s-hearto':!draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
+        <i class="icon" :class="{'ali-icon-likefill':draw.focus===$enum.CollectState.CONCERNED.key,'ali-icon-like':!draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
       </Btn>
 
       <div class="flex-box info-box" :style="{width:listConstant.colWidth+`px`,height:listConstant.infoHeight+`px`}">

@@ -21,7 +21,7 @@
           {{item.content}}
         </p>
         <p class="tool">
-          <Btn small flat round color="primary" @click="item.isShowReplyInput = !item.isShowReplyInput"><i class="icon s-bianji"></i>{{item.isShowReplyInput?'收起':'回复'}}</Btn>
+          <Btn small flat round color="primary" @click="item.isShowReplyInput = !item.isShowReplyInput"><i class="icon ali-icon-edit"></i>{{item.isShowReplyInput?'收起':'回复'}}</Btn>
         </p>
         <div class="row send-reply-box" v-if="item.isShowReplyInput">
           <div class="col-23">
@@ -29,7 +29,7 @@
           </div>
           <div class="col-3 center">
             <Btn icon color="white">
-              <i class="icon s-laugh"></i>
+              <i class="icon ali-icon-emoji"></i>
             </Btn>
           </div>
           <div class="col-4 center">
@@ -124,10 +124,10 @@
           font-weight: bold;
           .icon {
             margin-left: 10px;
-            &.s-xingbie-nv {
+            &.ali-icon-female {
               color: @female-color;
             }
-            &.s-xingbie-nan {
+            &.ali-icon-male {
               color: @male-color;
             }
           }

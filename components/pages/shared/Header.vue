@@ -19,7 +19,7 @@
       </nuxt-link>
       <template>
         <div class="right-box">
-          <nuxt-link to="/message/comment" class="link icon s-xinxizhongxin" :class="{active:activeName===`message`}"
+          <nuxt-link to="/message/comment" class="link icon ali-icon-community" :class="{active:activeName===`message`}"
                      v-ripple>
             <span class="message-count" v-if="messageCount">{{messageCount|toMore}}</span>
           </nuxt-link>
@@ -40,35 +40,35 @@
                   <li>
                     <nuxt-link :to="`/follower/${user.id||''}`" :class="{active:activeName===`follower`}"
                                v-ripple>
-                      <i class="icon s-guanzhu1"></i>
+                      <i class="icon ali-icon-friendfavor"></i>
                       我的粉丝
                     </nuxt-link>
                   </li>
                   <li>
                     <nuxt-link :to="`/following/${user.id||''}`" :class="{active:activeName===`following`}"
                                v-ripple>
-                      <i class="icon s-guanzhu1"></i>
+                      <i class="icon ali-icon-friendadd"></i>
                       关注用户
                     </nuxt-link>
                   </li>
                   <li>
                     <nuxt-link to="/footprint" :class="{active:activeName===`footprint`}"
                                v-ripple>
-                      <i class="icon s-zuji"></i>
+                      <i class="icon ali-icon-footprint"></i>
                       我的足迹
                     </nuxt-link>
                   </li>
                   <li>
                     <nuxt-link to="/upload" :class="{active:activeName===`upload`}"
                                v-ripple>
-                      <i class="icon s-upload"></i>
+                      <i class="icon ali-icon-upload"></i>
                       我要上传
                     </nuxt-link>
                   </li>
                 </ul>
                 <div class="footer">
                   <Btn flat icon @click="logout" small title="退出登录">
-                    <i class="icon s-zhuxiao"></i>
+                    <i class="icon ali-icon-logout"></i>
                   </Btn>
                 </div>
               </div>

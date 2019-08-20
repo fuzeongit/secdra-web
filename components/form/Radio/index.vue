@@ -3,7 +3,7 @@
     <slot>
       <div class="radio-inner" v-ripple="!disabled&&{class:`${color}-text`}" :class="{'dark-fade-text':!model}">
         <div class="content">
-          <i class="icon" :class="{'s-md-radio-button-off':!model,'s-md-radio-button-on':model}"></i>
+          <i class="icon" :class="{'ali-icon-radio':!model,'ali-icon-radio-fill':model}"></i>
         </div>
       </div>
     </slot>

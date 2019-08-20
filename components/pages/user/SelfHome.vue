@@ -5,10 +5,10 @@
       <div class="user-bk-content">
         <div class="tool">
           <Btn icon big type="file" @change="uploadBack">
-            <i class="icon s-upload"></i>
+            <i class="icon ali-icon-upload"></i>
           </Btn>
           <Btn icon big style="margin-left: 15px;" @click="isShowEdit = true">
-            <i class="icon s-bianji"></i>
+            <i class="icon ali-icon-edit"></i>
           </Btn>
         </div>
       </div>
@@ -22,7 +22,7 @@
         </label>
         <div class="info-box">
           <p class="name"> {{user.name}} <i class="icon"
-                                            :class="{'s-xingbie-nv':user.gender==='FEMALE','s-xingbie-nan':user.gender==='MALE'}"></i>
+                                            :class="{'ali-icon-female':user.gender==='FEMALE','ali-icon-male':user.gender==='MALE'}"></i>
           </p>
           <p class="introduction"> {{user.introduction || "这人很懒，什么都没有留下"}}</p>
         </div>
@@ -363,10 +363,10 @@
           .icon {
             margin-left: 10px;
             vertical-align: baseline;
-            &.s-xingbie-nv {
+            &.ali-icon-female {
               color: @female-color;
             }
-            &.s-xingbie-nan {
+            &.ali-icon-male {
               color: @male-color;
             }
           }

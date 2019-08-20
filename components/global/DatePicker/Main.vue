@@ -1,7 +1,7 @@
 <template>
   <div class="date-picker">
     <div class="tool-box">
-      <Btn icon flat @click="addCalendar(-1)"><i class="icon s-left"></i></Btn>
+      <Btn icon flat @click="addCalendar(-1)"><i class="icon ali-icon-back"></i></Btn>
       <div class="tool-item">
         <transition enter-active-class="fadeIn" leave-active-class="fadeOut">
           <div class="short-duration" v-show="step===`year`">
@@ -23,7 +23,7 @@
           </div>
         </transition>
       </div>
-      <Btn icon flat @click="addCalendar(1)"><i class="icon s-right"></i></Btn>
+      <Btn icon flat @click="addCalendar(1)"><i class="icon ali-icon-right"></i></Btn>
     </div>
     <div class="content-box">
       <transition enter-active-class="fadeIn" leave-active-class="fadeOut"

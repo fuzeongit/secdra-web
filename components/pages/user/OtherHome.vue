@@ -17,7 +17,7 @@
         <div class="info-box">
           <p class="name"> {{user.name}}
             <i class="icon"
-               :class="{'s-xingbie-nv':user.gender===$enum.Gender.FEMALE.key,'s-xingbie-nan':user.gender===$enum.Gender.MALE.key}"></i>
+               :class="{'ali-icon-female':user.gender===$enum.Gender.FEMALE.key,'ali-icon-male':user.gender===$enum.Gender.MALE.key}"></i>
           </p>
           <p class="introduction"> {{user.introduction || "这人很懒，什么都没有留下"}}</p>
         </div>
@@ -231,10 +231,10 @@
           .icon {
             margin-left: 10px;
             vertical-align: baseline;
-            &.s-xingbie-nv {
+            &.ali-icon-female {
               color: @female-color;
             }
-            &.s-xingbie-nan {
+            &.ali-icon-male {
               color: @male-color;
             }
           }

@@ -2,11 +2,11 @@
   <section class="container bk cover page">
     <div class="content row">
       <div class="left-box">
-        <h4 class="title"><strong><i class="icon s-xinxizhongxin"></i>消息中心</strong></h4>
+        <h4 class="title"><strong><i class="icon ali-icon-community"></i>消息中心</strong></h4>
         <ul class="list">
           <li @click="$router.push(key)" :class="{active:(type===key),settings:(key===`settings`)}"
               v-for="(item,key) in menuList" :key="key" v-ripple>
-            <i class="icon s-shezhi" v-if="key===`settings`"></i>
+            <i class="icon ali-icon-settings" v-if="key===`settings`"></i>
             {{item}}
             <span class="message-count" v-if="key!==`settings`&&$store.state.message[key+`Count`]">
               {{$store.state.message[key+"Count"]|toMore}}

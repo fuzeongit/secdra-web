@@ -5,7 +5,7 @@
     </div>
     <transition name="zoom" enter-active-class="fadeInUp duration" leave-active-class="fadeOutDown duration">
       <Btn icon big shadow v-if="showGoTop" v-show="scrollTop>150" color="white" @click="goTop">
-        <i class="icon s-up"></i>
+        <i class="icon ali-icon-up"></i>
       </Btn>
     </transition>
   </div>

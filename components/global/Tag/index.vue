@@ -2,7 +2,7 @@
  <span class="tag" :class="classObject">
     {{content}}
      <Btn flat icon :color="color" @click="close" class="close">
-        <i class="icon s-close"></i>
+        <i class="icon ali-icon-close"></i>
      </Btn>
   </span>
 </template>

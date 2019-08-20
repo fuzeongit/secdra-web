@@ -12,7 +12,7 @@
             <Btn flat icon :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`"
                  @click.stop="collection(draw)" small title="收藏">
               <i class="icon"
-                 :class="{'s-heart':draw.focus===$enum.CollectState.CONCERNED.key,'s-hearto':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
+                 :class="{'ali-icon-likefill':draw.focus===$enum.CollectState.CONCERNED.key,'ali-icon-like':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
             </Btn>
           </div>
           <div class="flex-box info-box" v-if="draw.user.id">
@@ -42,7 +42,7 @@
             <Btn flat icon :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`"
                  @click.stop="collection(draw)" small title="收藏">
               <i class="icon"
-                 :class="{'s-heart':draw.focus===$enum.CollectState.CONCERNED.key,'s-hearto':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
+                 :class="{'ali-icon-likefill':draw.focus===$enum.CollectState.CONCERNED.key,'ali-icon-like':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
             </Btn>
           </div>
           <div class="flex-box info-box">
@@ -62,7 +62,7 @@
     <br>
     <Btn icon big shadow color="white" v-if="isSelf" style="position: fixed;right: 50px;bottom: 50px;"
          @click="unCollection" :disabled="!selectList.length">
-      <i class="icon s-heart" style="color: red"></i>
+      <i class="icon ali-icon-likefill" style="color: red"></i>
     </Btn>
   </div>
 </template>
