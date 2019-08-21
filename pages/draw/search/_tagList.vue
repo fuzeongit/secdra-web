@@ -80,9 +80,6 @@ export default {
         filterForm
       )
     })
-    if (result.status !== 200) {
-      throw new Error(result.message)
-    }
     return {
       page: result.data,
       list: result.data.content,

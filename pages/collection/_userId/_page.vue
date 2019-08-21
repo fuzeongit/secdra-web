@@ -2,7 +2,12 @@
   <div class="page">
     <CheckboxGroup v-model="selectList" class="content row">
       <div v-for="(draw, index) in list" :key="index" class="card ">
-        <template v-if="draw.state === $enum.CollectDrawState.NORMAL.key">
+        <template
+          v-if="
+            draw.state === $enum.CollectDrawState.NORMAL.key &&
+              draw.privacyState === $enum.PrivacyState.PUBLIC.key
+          "
+        >
           <nuxt-link v-ripple :to="`/draw/${draw.id}`" class="img-box flex-box">
             <img
               :src="$img.secdra(draw.url, `specifiedWidth`)"
@@ -142,7 +147,7 @@
       :disabled="!selectList.length"
       @click="unCollection"
     >
-      <i class="icon ali-icon-likefill" style="color: red"></i>
+      <i class="icon ali-icon-likefill" :class="$style['primary-color']"></i>
     </Btn>
   </div>
 </template>
@@ -172,9 +177,6 @@ export default {
         pageable
       )
     })
-    if (result.status !== 200) {
-      throw new Error(result.message)
-    }
     return {
       pageable,
       page: result.data,
@@ -251,6 +253,7 @@ export default {
 .content {
   width: @visual-width;
   margin: 0 auto;
+
   .card {
     @size: 250px;
     float: left;
@@ -260,51 +263,62 @@ export default {
     transition: @default-animate-time;
     position: relative;
     width: @size;
+
     &:nth-child(4n + 1) {
       margin-left: 24px;
     }
+
     &:hover {
       transform: translateY(-1px);
+
       .info-box {
         .user-info-box {
           opacity: 0;
           transform: translateY(10px);
         }
+
         .follow-box {
           opacity: 1;
           transform: translateY(0);
         }
       }
     }
+
     .img-box {
       width: @size;
       height: @size;
     }
+
     .tool {
       margin: 10px;
       user-select: none;
       padding: 0 10px;
       text-align: right;
+
       .like {
         vertical-align: middle;
         margin-left: 10px;
       }
     }
+
     .info-box {
       @img-size: 50px;
       @padding-size: 15px;
       padding: 0 @padding-size @padding-size;
       overflow: hidden;
+
       .head-box {
         display: block;
         position: relative;
         transition: @default-animate-time;
         border-radius: 50%;
+
         img {
           border-radius: 50%;
           width: @img-size;
         }
       }
+
       .user-info-box {
         width: calc(100% - @img-size);
         padding: 0 20px;
@@ -313,15 +327,18 @@ export default {
         .nickname {
           .ellipsis();
         }
+
         .introduction {
           font-size: @smallest-font-size;
           margin-top: 10px;
           .ellipsis();
         }
       }
+
       .user-info-box-empty {
         .user-info-box();
         user-select: none;
+
         .nickname {
           &:before {
             padding: 0 40px;
@@ -329,6 +346,7 @@ export default {
             content: "\20";
           }
         }
+
         .introduction {
           &:before {
             padding: 0 60px;
@@ -337,6 +355,7 @@ export default {
           }
         }
       }
+
       .follow-box {
         position: absolute;
         height: @info-box-height;
@@ -350,5 +369,12 @@ export default {
       }
     }
   }
+}
+</style>
+<style type="text/less" lang="less" module>
+@import "../../../assets/style/color";
+
+.primary-color {
+  color: @theme-color;
 }
 </style>

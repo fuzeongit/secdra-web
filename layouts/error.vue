@@ -1,9 +1,10 @@
 <template>
   <div class="page flex-box" style="padding: 30px;">
-    <img v-if="error.statusCode === 404" src="../assets/image/error/404.jpg" />
-    <div v-else>
-      {{ error }}
-    </div>
+    {{ error }}
+    <!--    <img v-if="error.statusCode === 404" src="../assets/image/error/404.jpg" />-->
+    <!--    <div v-else>-->
+    <!--      {{ error }}-->
+    <!--    </div>-->
   </div>
 </template>
 
@@ -12,17 +13,10 @@ export default {
   name: "Error",
   props: {
     error: {
-      default: () => {},
-      type: Object
+      type: Object,
+      default: () => {}
     }
-  },
-  data() {
-    return {
-      c: true,
-      d: new Date()
-    }
-  },
-  mounted() {}
+  }
 }
 </script>
 

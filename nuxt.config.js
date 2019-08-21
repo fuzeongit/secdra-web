@@ -35,6 +35,9 @@ module.exports = {
   server: {
     port: 3000
   },
+  router: {
+    fallback: true
+  },
   head: {
     title: "Secdra - 想你所想",
     meta: [

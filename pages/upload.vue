@@ -113,9 +113,6 @@ export default {
     store.commit("menu/MChangeName", "upload")
     const res = await $axios.get(`/qiniu/getUploadToken`)
     const result = res.data || {}
-    if (result.status !== 200) {
-      throw new Error(result)
-    }
     store.commit("user/MSetUploadToken", result.data)
   },
   methods: {

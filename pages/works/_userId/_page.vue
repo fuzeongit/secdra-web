@@ -188,9 +188,6 @@ export default {
         pageable
       )
     })
-    if (result.status !== 200) {
-      throw new Error(result.message)
-    }
     return {
       pageable,
       page: result.data,

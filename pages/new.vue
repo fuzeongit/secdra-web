@@ -38,9 +38,6 @@ export default {
     const { data: result } = await $axios.get(`/draw/paging`, {
       params: Object.assign({}, pageable)
     })
-    if (result.status !== 200) {
-      throw new Error(result.message)
-    }
     return {
       page: result.data,
       list: result.data.content,

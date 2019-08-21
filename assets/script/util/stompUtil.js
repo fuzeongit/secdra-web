@@ -11,7 +11,7 @@ export default {
   connect() {
     return new Promise((resolve, reject) => {
       if (isServer) {
-        reject(new Error("service"))
+        reject(new Error("server"))
       } else {
         // 是否初始化了
         if (!this.client) {

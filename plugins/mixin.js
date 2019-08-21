@@ -58,7 +58,6 @@ Object.keys(filters).forEach((key) => {
   Vue.filter(key, filters[key])
 })
 
-Vue.directive("goTop", directive.goTop)
 Vue.directive("popover", directive.popover)
 Vue.directive("loading", directive.loading)
 Vue.directive("ripple", directive.ripple)
