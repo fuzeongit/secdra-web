@@ -5,39 +5,41 @@
 </template>
 
 <script>
-  export default {
-    componentName: "RadioGroup",
-    props: {
-      input: {}
-    },
-    model: {
-      prop: "input",
-      event: "input"
-    },
-    watch: {
-      input: {
-        handler(val) {
-          this.model = val
-        },
-        deep: true
-      }
-    },
-    data() {
-      return {model: this.input}
-    },
-    methods: {
-      exist(value, valueKey) {
-        if (valueKey) {
-          return this.model[valueKey] === value[valueKey]
-        } else {
-          return this.model === value
-        }
+export default {
+  componentName: "RadioGroup",
+  model: {
+    prop: "input",
+    event: "input"
+  },
+  props: {
+    input: {
+      type: String | Number | Object | Boolean,
+      default: null
+    }
+  },
+  data() {
+    return { model: this.input }
+  },
+  watch: {
+    input: {
+      handler(val) {
+        this.model = val
       },
-      change(value) {
-        this.model = value;
-        this.$emit("input", this.model);
+      deep: true
+    }
+  },
+  methods: {
+    exist(value, valueKey) {
+      if (valueKey) {
+        return this.model[valueKey] === value[valueKey]
+      } else {
+        return this.model === value
       }
+    },
+    change(value) {
+      this.model = value
+      this.$emit("input", this.model)
     }
   }
+}
 </script>
-

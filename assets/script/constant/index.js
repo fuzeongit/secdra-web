@@ -1,12 +1,12 @@
-import proxyUtil from "../util/proxyUtil";
+import proxyUtil from "../util/proxyUtil"
 
 export class ListConstant {
   constructor() {
-    this.colNumber = 4;
-    this.colWidth = 250;
-    this.infoHeight = 80;
-    this.widthOffset = 24;
-    this.heightOffset = 24;
+    this.colNumber = 4
+    this.colWidth = 250
+    this.infoHeight = 80
+    this.widthOffset = 24
+    this.heightOffset = 24
   }
 }
 
@@ -33,4 +33,4 @@ export const enumObjectList = {
     EMPTY: "不存在",
     NORMAL: "正常"
   })
-};
+}

@@ -1,4 +1,4 @@
-import {enumObjectList} from "../constant"
+import { enumObjectList } from "../constant"
 
 export class Result {
   /**
@@ -8,9 +8,9 @@ export class Result {
    * @param {String}message
    */
   constructor(status, data, message) {
-    this.status = status;
-    this.data = data;
-    this.message = message;
+    this.status = status
+    this.data = data
+    this.message = message
   }
 }
 
@@ -22,37 +22,36 @@ export class Pageable {
    * @param {String}sort
    */
   constructor(page = 0, size = 20, sort = "") {
-    this.page = page;
-    this.size = size;
-    this.sort = sort;
+    this.page = page
+    this.size = size
+    this.sort = sort
   }
-
 }
 
 export class DrawForm {
   constructor() {
-    this.name = "";
-    this.introduction = "";
-    this.privacy = enumObjectList.PrivacyState.PUBLIC.key;
-    this.tagList = [];
+    this.name = ""
+    this.introduction = ""
+    this.privacy = enumObjectList.PrivacyState.PUBLIC.key
+    this.tagList = []
   }
 }
 
 export class CommentForm {
   constructor(authorId = "", drawId = "") {
-    this.authorId = authorId;
-    this.drawId = drawId;
-    this.content = "";
+    this.authorId = authorId
+    this.drawId = drawId
+    this.content = ""
   }
 }
 
 export class ReplyForm {
   constructor(commentId = "", drawId = "", authorId = "", criticId = "") {
-    this.commentId = commentId;
-    this.drawId = drawId;
-    this.authorId = authorId;
-    this.criticId = criticId;
-    this.content = "";
+    this.commentId = commentId
+    this.drawId = drawId
+    this.authorId = authorId
+    this.criticId = criticId
+    this.content = ""
   }
 }
 
@@ -62,41 +61,41 @@ export class StompSubscribe {
    * @param {Function}callback
    */
   constructor(eventName, callback) {
-    this._eventName = eventName;
-    this._callback = callback;
+    this._eventName = eventName
+    this._callback = callback
   }
 
   get eventName() {
-    return this._eventName;
+    return this._eventName
   }
 
   set eventName(value) {
-    this._eventName = value;
+    this._eventName = value
   }
 
   get callback() {
     return (response) => {
-      this._callback(JSON.parse(response.body));
+      this._callback(JSON.parse(response.body))
     }
   }
 
   set callback(value) {
-    this._callback = value;
+    this._callback = value
   }
 }
 
 export class FliterForm {
   constructor(precise, name, startDate, endDate) {
-    this.precise = precise;
-    this.name = name;
-    this.startDate = startDate;
+    this.precise = precise
+    this.name = name
+    this.startDate = startDate
     this.endDate = endDate
   }
 }
 
 export class EnumObject {
   constructor(eventName, callback) {
-    this._eventName = eventName;
-    this._callback = callback;
+    this._eventName = eventName
+    this._callback = callback
   }
 }

@@ -1,13 +1,34 @@
 <template>
-  <transition name="fade" enter-active-class="fadeIn mask-duration" leave-active-class="fadeOut mask-duration">
-    <div class="mask" v-show="visible" @click="onPersistent" @mousedown="onPersistent">
-      <transition :enter-active-class="enterActiveClass" :leave-active-class="leaveActiveClass"
-                  @after-leave="destroyElement">
-        <div class="card duration" v-show="visible" :style="{marginTop: `-${offset}vh`}"
-             :class="{'dialog-persistent-animate':persistentAnimate,duration:persistentAnimate,padding}" @animationend="persistentAnimationend()">
-          <div class="flex-box" v-if="title">
+  <transition
+    name="fade"
+    enter-active-class="fadeIn mask-duration"
+    leave-active-class="fadeOut mask-duration"
+  >
+    <div
+      v-show="visible"
+      class="mask"
+      @click="onPersistent"
+      @mousedown="onPersistent"
+    >
+      <transition
+        :enter-active-class="enterActiveClass"
+        :leave-active-class="leaveActiveClass"
+        @after-leave="destroyElement"
+      >
+        <div
+          v-show="visible"
+          class="card duration"
+          :style="{ marginTop: `-${offset}vh` }"
+          :class="{
+            'dialog-persistent-animate': persistentAnimate,
+            duration: persistentAnimate,
+            padding
+          }"
+          @animationend="persistentAnimationend()"
+        >
+          <div v-if="title" class="flex-box">
             <h3 class="title">
-              {{title}}
+              {{ title }}
             </h3>
             <div>
               <Btn flat icon small @click="close">
@@ -25,92 +46,97 @@
 </template>
 
 <script>
-  import dialogMixin from "../../../assets/script/mixin/dialogMixin"
-  import {on, off,addClass, removeClass} from "../../../assets/script/util/domUtil"
+import dialogMixin from "../../../assets/script/mixin/dialogMixin"
+import {
+  on,
+  off,
+  addClass,
+  removeClass
+} from "../../../assets/script/util/domUtil"
 
-  export default {
-    componentName: "Dialog",
-    mixins: [dialogMixin],
-    props: {
-      isShow: {
-        type: Boolean,
-        default: false
-      },
-      title: {
-        type: String | Number,
-        default: ""
-      },
-      //偏移量，用vh为单位
-      offset: {
-        type: Number,
-        default: 0
-      },
-      enterActiveClass: {
-        type: String,
-        default: "fadeInUp"
-      },
-      leaveActiveClass: {
-        type: String,
-        default: "fadeOutDown"
-      },
-      padding:{
-        type: Boolean,
-        default: true
-      }
+export default {
+  componentName: "Dialog",
+  mixins: [dialogMixin],
+  model: {
+    prop: "isShow",
+    event: "change"
+  },
+  props: {
+    isShow: {
+      type: Boolean,
+      default: false
     },
-    model: {
-      prop: 'isShow',
-      event: 'change'
+    title: {
+      type: String | Number,
+      default: ""
     },
-    watch: {
-      isShow(newVal) {
-        this.visible = newVal;
-        if (newVal) {
-          this.closed = !newVal;
-          on(document, "keydown", this.onEsc);
-          addClass(document.body,"not-scroll");
-        }
-      }
+    // 偏移量，用vh为单位
+    offset: {
+      type: Number,
+      default: 0
     },
-    data() {
-      return {
-        visible: false,
-        closed: false,
-      }
+    enterActiveClass: {
+      type: String,
+      default: "fadeInUp"
     },
-    methods: {
-      destroyElement() {
-        off(document, "keydown", this.onEsc);
-        removeClass(document.body,"not-scroll");
-        this.closed = true;
-      },
-      close() {
-        this.closed = true;
+    leaveActiveClass: {
+      type: String,
+      default: "fadeOutDown"
+    },
+    padding: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data() {
+    return {
+      visible: false,
+      closed: false
+    }
+  },
+  watch: {
+    isShow(newVal) {
+      this.visible = newVal
+      if (newVal) {
+        this.closed = !newVal
+        on(document, "keydown", this.onEsc)
+        addClass(document.body, "not-scroll")
       }
     }
+  },
+  methods: {
+    destroyElement() {
+      off(document, "keydown", this.onEsc)
+      removeClass(document.body, "not-scroll")
+      this.closed = true
+    },
+    close() {
+      this.closed = true
+    }
   }
+}
 </script>
 
 <style scoped lang="less" type="text/less">
-  @import "../../../assets/style/color";
-  @import "../../../assets/style/config";
-  @import "../../../assets/style/mixin";
+@import "../../../assets/style/color";
+@import "../../../assets/style/config";
+@import "../../../assets/style/mixin";
 
-  .card {
-    margin: 0 auto;
-    vertical-align: middle;
-    display: inline-block;
-    &.padding{
-      padding: 15px;
-    }
-    .title {
-      .ellipsis();
-      text-align: left;
-      line-height: 35px;
-      width: 100%;
-    }
-    .dialog-body {
-      text-align: left;
-    }
+.card {
+  margin: 0 auto;
+  vertical-align: middle;
+  display: inline-block;
+  &.padding {
+    padding: 15px;
   }
+  .title {
+    .ellipsis();
+    text-align: left;
+    line-height: 35px;
+    width: 100%;
+  }
+  .dialog-body {
+    text-align: left;
+  }
+}
 </style>

@@ -1,15 +1,15 @@
-import httpUtil from "../assets/script/util/httpUtil";
+import httpUtil from "../assets/script/util/httpUtil"
 
-export const state = () => ({});
+export const state = () => ({})
 
-export const mutations = {};
+export const mutations = {}
 
 export const actions = {
-  //发表回复
-  async ASaveReply(context, params) {
-    return await httpUtil.post("/reply/save", params);
+  // 发表回复
+  ASaveReply(context, params) {
+    return httpUtil.post("/reply/save", params)
   },
-  async AList(context, params){
-    return await httpUtil.get("/reply/list", params);
+  AList(context, params) {
+    return httpUtil.get("/reply/list", params)
   }
-};
+}

@@ -1,19 +1,19 @@
-import {Result} from "../assets/script/model";
+import { Result } from "../assets/script/model"
 
-//严谨，通过验证接口
-export default async ({store, req, redirect, route, $axios}) => {
-  let result = {};
-  let user = store.state.user.user || {};
+// 严谨，通过验证接口
+export default async ({ store, req, redirect, route, $axios }) => {
+  let result = {}
+  const user = store.state.user.user || {}
   try {
-    let responses = {};
+    let responses = {}
     if (user.id) {
-      responses = await $axios.post(`user/checkLogin`);
+      responses = await $axios.post(`user/checkLogin`)
     } else {
-      responses = await $axios.get(`/user/getInfo`);
+      responses = await $axios.get(`/user/getInfo`)
     }
-    result = responses.data;
+    result = responses.data
   } catch (e) {
-    result = new Result(401, e, "请登录");
+    result = new Result(401, e, "请登录")
   }
   if (!user.id && result.status === 200) {
     store.state.user.user = result.data

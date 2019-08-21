@@ -3,12 +3,11 @@
  *
  * @author fjj
  */
-import Cookies from 'js-cookie'
-import {Result} from "../model"
+import Cookies from "js-cookie"
 import axios from "axios"
 import qs from "qs"
-// import * as NProgress from "nprogress";
-axios.defaults.baseURL = process.env.baseUrl;
+import { Result } from "../model"
+axios.defaults.baseURL = process.env.baseUrl
 export default {
   /**
    * get 请求
@@ -17,19 +16,18 @@ export default {
    * @returns {Promise<>}
    */
   async get(url, params) {
-    let result = null;
+    let result = null
     try {
-      let response = await axios.get(url, {
-        params: params
-      });
-      this._handleToken(response);
-      result = response.data;
+      const response = await axios.get(url, {
+        params
+      })
+      this._handleToken(response)
+      result = response.data
     } catch (e) {
-      result = await new Result(500, e, "服务器错误");
+      result = await new Result(500, e, "服务器错误")
     } finally {
-
     }
-    return result;
+    return result
   },
 
   /**
@@ -40,21 +38,24 @@ export default {
    * @returns {Promise<>}
    */
   async post(url, body, params) {
-    let result = null;
+    let result = null
     try {
-      let response = await axios.post(url, qs.stringify(body, {
-        arrayFormat: 'repeat'
-      }), {
-        params: params
-      });
-      this._handleToken(response);
-      result = response.data;
+      const response = await axios.post(
+        url,
+        qs.stringify(body, {
+          arrayFormat: "repeat"
+        }),
+        {
+          params
+        }
+      )
+      this._handleToken(response)
+      result = response.data
     } catch (e) {
-      result = await new Result(500, e, "服务器错误");
+      result = await new Result(500, e, "服务器错误")
     } finally {
-
     }
-    return result;
+    return result
   },
 
   _getCookieToken() {
@@ -62,23 +63,23 @@ export default {
       return window.$nuxt.$store.state.user.token
     } else {
       try {
-        return Cookies.get('token');
+        return Cookies.get("token")
       } catch (e) {
         return null
       }
     }
   },
   _handleToken(response = {}) {
-    let headers = response.headers || {};
+    const headers = response.headers || {}
     if (headers.token) {
-      Cookies.set("token", headers.token, {expires: 30})
+      Cookies.set("token", headers.token, { expires: 30 })
     }
     if (response.data.status === 401) {
-      Cookies.remove("token");
+      Cookies.remove("token")
       try {
         window.$nuxt.$router.replace("/login")
       } catch (e) {
-        window.location.href = "/login";
+        window.location.href = "/login"
       }
     }
   }

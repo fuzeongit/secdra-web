@@ -1,11 +1,11 @@
-import {mapState} from "vuex"
-import stompUtil from "../util/stompUtil";
+import { mapState } from "vuex"
+import stompUtil from "../util/stompUtil"
 
 export default {
   data() {
     return {
       _subList: []
-    };
+    }
   },
   watch: {
     status(newVal, oldVal) {
@@ -15,7 +15,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('stomp', ['status'])
+    ...mapState("stomp", ["status"])
   },
   mounted() {
     if (this.status) {
@@ -23,21 +23,19 @@ export default {
     }
   },
   beforeDestroy() {
-    let sub;
+    let sub
     if (this._subList) {
-      while (sub = this._subList.shift()) {
-        sub.unsubscribe();
+      while ((sub = this._subList.shift())) {
+        sub.unsubscribe()
       }
     }
   },
   methods: {
     _subscribe() {
-      let stompSubscribeList = this.stompSubscribeList();
-      let subList = [];
-      for (let stompSubscribe of stompSubscribeList) {
-        subList.push(stompUtil.client.subscribe(stompSubscribe.eventName, stompSubscribe.callback));
-      }
-      this._subList = subList;
+      const stompSubscribeList = this.stompSubscribeList()
+      this._subList = stompSubscribeList.map((item) => {
+        stompUtil.client.subscribe(item.eventName, item.callback)
+      })
     },
     stompSubscribeList() {
       return []

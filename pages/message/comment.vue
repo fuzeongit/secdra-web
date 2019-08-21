@@ -1,95 +1,94 @@
 <template>
   <div class="list">
-    <div class="item card" v-for="item in list" :key="item.id">
+    <div v-for="item in list" :key="item.id" class="item card">
       <div class="row">
         <div class="col-3">
-          <nuxt-link :to="`/user/${item.critic.id}`" class="head-box" v-ripple>
-            <img :src="$img.head(item.critic.head,'small50')">
+          <nuxt-link v-ripple :to="`/user/${item.critic.id}`" class="head-box">
+            <img :src="$img.head(item.critic.head, 'small50')" />
           </nuxt-link>
         </div>
         <div class="col-27 desc">
           <p class="name">
             <nuxt-link :to="`/user/${item.critic.id}`" class="primary-hover">
-              {{item.critic.name}}
+              {{ item.critic.name }}
             </nuxt-link>
             <span>评论了我的</span>
             <nuxt-link :to="`/draw/${item.drawId}`" class="primary-hover">
               作品
             </nuxt-link>
           </p>
-          <p class="time">{{item.createDate}}</p>
+          <p class="time">{{ item.createDate }}</p>
           <p class="content">
-            {{item.content}}
+            {{ item.content }}
           </p>
         </div>
       </div>
     </div>
-    <div class="not card" v-if="!list.length">
-      <img src="../../assets/image/default/not.png">
+    <div v-if="!list.length" class="not card">
+      <img src="../../assets/image/default/not.png" />
     </div>
   </div>
 </template>
 
 <script>
-
-  export default {
-    async asyncData({store, req, redirect, route, $axios}) {
-      let type = "comment";
-      store.commit('message/MChangeType', {type, reset: true});
-      let {data: result} = await $axios.get(`/message/list`, {
-        params: {
-          messageType: type.toUpperCase()
-        }
-      });
-      if (result.status !== 200) {
-        throw new Error(result.message)
+export default {
+  async asyncData({ store, req, redirect, route, $axios }) {
+    const type = "comment"
+    store.commit("message/MChangeType", { type, reset: true })
+    const { data: result } = await $axios.get(`/message/list`, {
+      params: {
+        messageType: type.toUpperCase()
       }
-      return {
-        list: result.data
-      }
+    })
+    if (result.status !== 200) {
+      throw new Error(result.message)
+    }
+    return {
+      list: result.data
     }
   }
+}
 </script>
 
 <style type="text/less" lang="less" scoped>
-  @import "../../assets/style/color";
-  @import "../../assets/style/config";
-  @import "../../assets/style/mixin";
+@import "../../assets/style/color";
+@import "../../assets/style/config";
+@import "../../assets/style/mixin";
 
-  .list {
-    height: 100%;
-    overflow: scroll;
-    .item {
-      margin-top: 10px;
-      padding: 20px 30px;
-      text-align: left;
-      box-shadow: none;
-      &:first-child {
-        margin-top: 0;
-      }
-      .head-box {
+.list {
+  height: 100%;
+  overflow: scroll;
+  .item {
+    margin-top: 10px;
+    padding: 20px 30px;
+    text-align: left;
+    box-shadow: none;
+    &:first-child {
+      margin-top: 0;
+    }
+    .head-box {
+      border-radius: 50%;
+      display: inline-block;
+      img {
         border-radius: 50%;
-        display: inline-block;
-        img {
-          border-radius: 50%;
-        }
-      }
-      .desc {
-        line-height: 25px;
-        .name {
-          a {
-            font-weight: bold;
-            color: @theme-color;
-          }
-        }
-        .time {
-          color: @font-color-dark-fade;
-        }
       }
     }
-    .not {
-      text-align: center;
-      box-shadow: none;
+    .desc {
+      line-height: 25px;
+      .name {
+        a {
+          font-weight: bold;
+          color: @theme-color;
+        }
+      }
+      .time {
+        color: @font-color-dark-fade;
+      }
     }
   }
+  .not {
+    text-align: center;
+    box-shadow: none;
+  }
+}
 </style>

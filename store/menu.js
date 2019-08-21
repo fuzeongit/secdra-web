@@ -5,13 +5,13 @@
  */
 
 export const state = () => ({
-  name: 'home'
-});
+  name: "home"
+})
 
 export const mutations = {
   MChangeName(state, name) {
-    state.name = name;
+    state.name = name
   }
-};
+}
 
-export const actions = {};
+export const actions = {}

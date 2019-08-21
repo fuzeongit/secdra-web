@@ -1,55 +1,121 @@
 <template>
   <div class="page">
-    <CheckboxGroup class="content row" v-model="selectList">
-      <div class="card " v-for="(draw,index) in list" :key="index">
-        <template v-if="draw.state===$enum.CollectDrawState.NORMAL.key">
-          <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box" v-ripple>
-            <img :src="$img.secdra(draw.url,`specifiedWidth`)"
-                 :style="{height:getProportion(draw)>=1?`100%`:`auto`,width:getProportion(draw)<=1?`100%`:`auto`}">
+    <CheckboxGroup v-model="selectList" class="content row">
+      <div v-for="(draw, index) in list" :key="index" class="card ">
+        <template v-if="draw.state === $enum.CollectDrawState.NORMAL.key">
+          <nuxt-link v-ripple :to="`/draw/${draw.id}`" class="img-box flex-box">
+            <img
+              :src="$img.secdra(draw.url, `specifiedWidth`)"
+              :style="{
+                height: getProportion(draw) >= 1 ? `100%` : `auto`,
+                width: getProportion(draw) <= 1 ? `100%` : `auto`
+              }"
+            />
           </nuxt-link>
           <div class="tool">
-            <Checkbox v-if="isSelf" :value="draw" valueKey="id" small color="primary"></Checkbox>
-            <Btn flat icon :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`"
-                 @click.stop="collection(draw)" small title="收藏">
-              <i class="icon"
-                 :class="{'ali-icon-likefill':draw.focus===$enum.CollectState.CONCERNED.key,'ali-icon-like':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
+            <Checkbox
+              v-if="isSelf"
+              :value="draw"
+              value-key="id"
+              small
+              color="primary"
+            ></Checkbox>
+            <Btn
+              flat
+              icon
+              :color="
+                draw.focus === $enum.CollectState.CONCERNED.key
+                  ? `primary`
+                  : `default`
+              "
+              small
+              title="收藏"
+              @click.stop="collection(draw)"
+            >
+              <i
+                class="icon"
+                :class="{
+                  'ali-icon-likefill':
+                    draw.focus === $enum.CollectState.CONCERNED.key,
+                  'ali-icon-like':
+                    draw.focus !== $enum.CollectState.CONCERNED.key
+                }"
+              ></i>
             </Btn>
           </div>
-          <div class="flex-box info-box" v-if="draw.user.id">
-            <nuxt-link :to="`/user/${draw.user.id}`" class="head-box" v-ripple>
-              <img :src="$img.head(draw.user.head,'small50')" :title="draw.user.name">
+          <div v-if="draw.user.id" class="flex-box info-box">
+            <nuxt-link v-ripple :to="`/user/${draw.user.id}`" class="head-box">
+              <img
+                :src="$img.head(draw.user.head, 'small50')"
+                :title="draw.user.name"
+              />
             </nuxt-link>
             <div class="user-info-box">
               <p class="nickname">
-                {{draw.user.name}}
+                {{ draw.user.name }}
               </p>
               <p class="introduction" :title="draw.user.introduction">
-                {{draw.user.introduction}}
+                {{ draw.user.introduction }}
               </p>
             </div>
             <div class="follow-box flex-box">
-              <Btn block color="primary" @click="follow(draw.user.id)"
-                   :disabled="draw.user.focus===$enum.FollowState.SElF.key">
-                {{draw.user.focus===$enum.FollowState.CONCERNED.key?`已关注`:`关注`}}
+              <Btn
+                block
+                color="primary"
+                :disabled="draw.user.focus === $enum.FollowState.SElF.key"
+                @click="follow(draw.user.id)"
+              >
+                {{
+                  draw.user.focus === $enum.FollowState.CONCERNED.key
+                    ? `已关注`
+                    : `关注`
+                }}
               </Btn>
             </div>
           </div>
         </template>
         <template v-else>
           <div class="img-box flex-box">
-            <img src="../../../assets/image/svg/default-draw.svg" class="cover" style="width: 100%;height: 100%">
+            <img
+              src="../../../assets/image/svg/default-draw.svg"
+              class="cover"
+              style="width: 100%;height: 100%"
+            />
           </div>
           <div class="tool">
-            <Checkbox v-if="isSelf" :value="draw" valueKey="id" small color="primary"></Checkbox>
-            <Btn flat icon :color="draw.focus===$enum.CollectState.CONCERNED.key?`primary`:`default`"
-                 @click.stop="collection(draw)" small title="收藏">
-              <i class="icon"
-                 :class="{'ali-icon-likefill':draw.focus===$enum.CollectState.CONCERNED.key,'ali-icon-like':draw.focus!==$enum.CollectState.CONCERNED.key}"></i>
+            <Checkbox
+              v-if="isSelf"
+              :value="draw"
+              value-key="id"
+              small
+              color="primary"
+            ></Checkbox>
+            <Btn
+              flat
+              icon
+              :color="
+                draw.focus === $enum.CollectState.CONCERNED.key
+                  ? `primary`
+                  : `default`
+              "
+              small
+              title="收藏"
+              @click.stop="collection(draw)"
+            >
+              <i
+                class="icon"
+                :class="{
+                  'ali-icon-likefill':
+                    draw.focus === $enum.CollectState.CONCERNED.key,
+                  'ali-icon-like':
+                    draw.focus !== $enum.CollectState.CONCERNED.key
+                }"
+              ></i>
             </Btn>
           </div>
           <div class="flex-box info-box">
             <div class="head-box">
-              <img src="../../../assets/image/svg/default-head.svg">
+              <img src="../../../assets/image/svg/default-head.svg" />
             </div>
             <div class="user-info-box-empty">
               <p class="nickname"></p>
@@ -59,210 +125,230 @@
         </template>
       </div>
     </CheckboxGroup>
-    <br>
-    <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
-    <br>
-    <Btn icon big shadow color="white" v-if="isSelf" style="position: fixed;right: 50px;bottom: 50px;"
-         @click="unCollection" :disabled="!selectList.length">
+    <br />
+    <Pageable
+      :total-page="page.totalPages"
+      :curr-page="pageable.page"
+      @go="paging"
+    ></Pageable>
+    <br />
+    <Btn
+      v-if="isSelf"
+      icon
+      big
+      shadow
+      color="white"
+      style="position: fixed;right: 50px;bottom: 50px;"
+      :disabled="!selectList.length"
+      @click="unCollection"
+    >
       <i class="icon ali-icon-likefill" style="color: red"></i>
     </Btn>
   </div>
 </template>
 
 <script>
-  import {Pageable} from "../../../assets/script/model";
-  import {mapActions} from "vuex"
+import { mapActions } from "vuex"
+import { Pageable } from "../../../assets/script/model"
 
-  export default {
-    async asyncData({store, req, redirect, route, $axios}) {
-      store.commit('menu/MChangeName', "collection");
-      let pageable = new Pageable(route.params.page * 1 || 0, 16, "createDate,desc");
-      let {data: result} = await $axios.get(`/collection/paging`, {
-        params: Object.assign({
+export default {
+  computed: {
+    isSelf() {
+      return this.$store.state.user.user.id === this.$route.params.userId
+    }
+  },
+  async asyncData({ store, req, redirect, route, $axios }) {
+    store.commit("menu/MChangeName", "collection")
+    const pageable = new Pageable(
+      route.params.page * 1 || 0,
+      16,
+      "createDate,desc"
+    )
+    const { data: result } = await $axios.get(`/collection/paging`, {
+      params: Object.assign(
+        {
           id: route.params.userId
-        }, pageable)
-      });
+        },
+        pageable
+      )
+    })
+    if (result.status !== 200) {
+      throw new Error(result.message)
+    }
+    return {
+      pageable,
+      page: result.data,
+      list: result.data.content,
+      selectList: []
+    }
+  },
+  methods: {
+    ...mapActions("draw", ["ACollection", "AUnCollection"]),
+    ...mapActions("user", ["AFollow"]),
+    getProportion(draw) {
+      return draw.height / draw.width
+    },
+    paging(page) {
+      this.$router.push(`/collection/${this.$route.params.userId}/${page}`)
+    },
+    async collection(draw) {
+      const result = await this.ACollection({
+        drawId: draw.id
+      })
       if (result.status !== 200) {
-        throw new Error(result.message)
+        this.$notify({ message: result.message })
+        return
       }
-      return {
-        pageable,
-        page: result.data,
-        list: result.data.content,
-        selectList: [],
-      }
+      draw.focus = result.data
     },
-    computed: {
-      isSelf() {
-        return this.$store.state.user.user.id === this.$route.params.userId
-      }
+    unCollection() {
+      this.$confirm({
+        message: `你确定要取消选中的收藏吗？`,
+        okCallback: async () => {
+          const result = await this.AUnCollection({
+            drawIdList: this.selectList.map((item) => item.id)
+          })
+          if (result.status !== 200) {
+            this.$notify({ message: result.message })
+            return
+          }
+          // eslint-disable-next-line no-unused-vars
+          for (const id of result.data) {
+            const draw = this.list.find((item) => item.id === id)
+            if (!draw) {
+              continue
+            }
+            draw.focus = this.$enum.CollectState.STRANGE.key
+          }
+          this.$notify({ message: `取消收藏成功` })
+        }
+      })
     },
-    methods: {
-      ...mapActions("draw", ["ACollection", "AUnCollection"]),
-      ...mapActions("user", ["AFollow"]),
-      getProportion(draw) {
-        return draw.height / draw.width
-      },
-      paging(page) {
-        this.$router.push(`/collection/${this.$route.params.userId}/${page}`);
-      },
-      async collection(draw) {
-        let result = await this.ACollection({
-          drawId: draw.id
-        });
-        if (result.status !== 200) {
-          this.$notify({message: result.message});
-          return
-        }
-        draw.focus = result.data;
-      },
-      unCollection() {
-        this.$confirm({
-          message: `你确定要取消选中的收藏吗？`,
-          okCallback: async () => {
-            let result = await this.AUnCollection({
-              drawIdList: this.selectList.map(item => item.id)
-            });
-            if (result.status !== 200) {
-              this.$notify({message: result.message});
-              return
-            }
-            for (let id of result.data) {
-              let draw = this.list.find(item => item.id === id);
-              if (!draw) {
-                continue
-              }
-              draw.focus = this.$enum.CollectState.STRANGE.key;
-            }
-            this.$notify({message: `取消收藏成功`});
-          }
-        });
-      },
-      async follow(id) {
-        let result = await this.AFollow({
-          followingId: id
-        });
-        if (result.status !== 200) {
-          this.$notify({message: result.message});
-          return
-        }
-        for (let draw of this.list) {
-          if (draw.user.id === id) {
-            draw.user.focus = result.data
-          }
-        }
+    async follow(id) {
+      const result = await this.AFollow({
+        followingId: id
+      })
+      if (result.status !== 200) {
+        this.$notify({ message: result.message })
+        return
       }
+      this.list.forEach((item) => {
+        if (item.user.id === id) {
+          item.user.focus = result.data
+        }
+      })
     }
   }
+}
 </script>
 
 <style type="text/less" lang="less" scoped>
-  @import "../../../assets/style/color";
-  @import "../../../assets/style/config";
-  @import "../../../assets/style/mixin";
+@import "../../../assets/style/color";
+@import "../../../assets/style/config";
+@import "../../../assets/style/mixin";
 
-  @info-box-height: 80px;
-  .content {
-    width: @visual-width;
-    margin: 0 auto;
-    .card {
-      @size: 250px;
-      float: left;
-      margin-top: 24px;
-      margin-right: 24px;
-      overflow: hidden;
-      transition: @default-animate-time;
-      position: relative;
-      width: @size;
-      &:nth-child(4n+1) {
-        margin-left: 24px;
-      }
-      &:hover {
-        transform: translateY(-1px);
-        .info-box {
-          .user-info-box {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          .follow-box {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      }
-      .img-box {
-        width: @size;
-        height: @size;
-      }
-      .tool {
-        margin: 10px;
-        user-select: none;
-        padding: 0 10px;
-        text-align: right;
-        .like {
-          vertical-align: middle;
-          margin-left: 10px;
-        }
-      }
+@info-box-height: 80px;
+.content {
+  width: @visual-width;
+  margin: 0 auto;
+  .card {
+    @size: 250px;
+    float: left;
+    margin-top: 24px;
+    margin-right: 24px;
+    overflow: hidden;
+    transition: @default-animate-time;
+    position: relative;
+    width: @size;
+    &:nth-child(4n + 1) {
+      margin-left: 24px;
+    }
+    &:hover {
+      transform: translateY(-1px);
       .info-box {
-        @img-size: 50px;
-        @padding-size: 15px;
-        padding: 0 @padding-size @padding-size;
-        overflow: hidden;
-        .head-box {
-          display: block;
-          position: relative;
-          transition: @default-animate-time;
-          border-radius: 50%;
-          img {
-            border-radius: 50%;
-            width: @img-size;
-          }
-        }
         .user-info-box {
-          width: calc(100% - @img-size);
-          padding: 0 20px;
-          transition: @default-animate-time;
-
-          .nickname {
-            .ellipsis()
-          }
-          .introduction {
-            font-size: @smallest-font-size;
-            margin-top: 10px;
-            .ellipsis()
-          }
-        }
-        .user-info-box-empty {
-          .user-info-box();
-          user-select: none;
-          .nickname {
-            &:before {
-              padding:0 40px;
-              background-color: @font-color-dark-line;
-              content: "\20";
-            }
-          }
-          .introduction {
-            &:before {
-              padding:0 60px;
-              background-color: @font-color-dark-line;
-              content: "\20";
-            }
-          }
-        }
-        .follow-box {
-          position: absolute;
-          height: @info-box-height;
-          bottom: 0;
-          width: calc(100% - @img-size - @padding-size);
-          right: 0;
-          padding: 15px;
-          transition: @default-animate-time;
           opacity: 0;
           transform: translateY(10px);
         }
+        .follow-box {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    }
+    .img-box {
+      width: @size;
+      height: @size;
+    }
+    .tool {
+      margin: 10px;
+      user-select: none;
+      padding: 0 10px;
+      text-align: right;
+      .like {
+        vertical-align: middle;
+        margin-left: 10px;
+      }
+    }
+    .info-box {
+      @img-size: 50px;
+      @padding-size: 15px;
+      padding: 0 @padding-size @padding-size;
+      overflow: hidden;
+      .head-box {
+        display: block;
+        position: relative;
+        transition: @default-animate-time;
+        border-radius: 50%;
+        img {
+          border-radius: 50%;
+          width: @img-size;
+        }
+      }
+      .user-info-box {
+        width: calc(100% - @img-size);
+        padding: 0 20px;
+        transition: @default-animate-time;
+
+        .nickname {
+          .ellipsis();
+        }
+        .introduction {
+          font-size: @smallest-font-size;
+          margin-top: 10px;
+          .ellipsis();
+        }
+      }
+      .user-info-box-empty {
+        .user-info-box();
+        user-select: none;
+        .nickname {
+          &:before {
+            padding: 0 40px;
+            background-color: @font-color-dark-line;
+            content: "\20";
+          }
+        }
+        .introduction {
+          &:before {
+            padding: 0 60px;
+            background-color: @font-color-dark-line;
+            content: "\20";
+          }
+        }
+      }
+      .follow-box {
+        position: absolute;
+        height: @info-box-height;
+        bottom: 0;
+        width: calc(100% - @img-size - @padding-size);
+        right: 0;
+        padding: 15px;
+        transition: @default-animate-time;
+        opacity: 0;
+        transform: translateY(10px);
       }
     }
   }
+}
 </style>

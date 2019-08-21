@@ -10,7 +10,7 @@ export default {
   watch: {
     closed(newVal) {
       if (newVal) {
-        this.visible = false;
+        this.visible = false
       }
     }
   },
@@ -20,24 +20,24 @@ export default {
       leaveActiveClass: "",
       visible: false,
       closed: false,
-      date:new Date(),
-    };
+      date: new Date()
+    }
   },
   methods: {
     destroyElement() {
-      this.$destroy(true);
-      this.$el.parentNode.removeChild(this.$el);
+      this.$destroy(true)
+      this.$el.parentNode.removeChild(this.$el)
     },
     nextClose() {
-      this.leaveActiveClass = "fadeOutLeft";
-      this.closed = true;
+      this.leaveActiveClass = "fadeOutLeft"
+      this.closed = true
     },
     prevClose() {
-      this.leaveActiveClass = "fadeOutRight";
-      this.closed = true;
+      this.leaveActiveClass = "fadeOutRight"
+      this.closed = true
     },
     close() {
-      this.closed = true;
+      this.closed = true
     }
   }
 }

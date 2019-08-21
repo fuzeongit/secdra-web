@@ -1,29 +1,30 @@
 export default {
-  _CHARS: '0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ',
+  _CHARS: "0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ",
   string10to62(number) {
-    let chars = this._CHARS.split('');
-    let radix = chars.length;
-    let qutient = +number;
-    let arr = [];
-    let pointer;
+    const chars = this._CHARS.split("")
+    const radix = chars.length
+    let qutient = +number
+    const arr = []
+    let pointer
     do {
-      pointer = qutient % radix;
-      qutient = (qutient - pointer) / radix;
-      arr.unshift(chars[pointer]);
-    } while (qutient);
-    return arr.join('');
+      pointer = qutient % radix
+      qutient = (qutient - pointer) / radix
+      arr.unshift(chars[pointer])
+    } while (qutient)
+    return arr.join("")
   },
 
-  string62to10(number_code) {
-    let chars = this._CHARS;
-    let radix = chars.length;
-    let length = number_code.length;
-    let i = 0;
-    let origin_number = 0;
-    number_code = String(number_code);
+  string62to10(numberCode) {
+    const chars = this._CHARS
+    const radix = chars.length
+    const length = numberCode.length
+    let i = 0
+    let originNumber = 0
+    numberCode = String(numberCode)
     while (i < length) {
-      origin_number += Math.pow(radix, i++) * chars.indexOf(number_code.charAt(length - i) || 0);
+      originNumber +=
+        radix ** i++ * chars.indexOf(numberCode.charAt(length - i) || 0)
     }
-    return origin_number;
+    return originNumber
   }
 }

@@ -1,9 +1,9 @@
 export default {
   enumProxy(object) {
-    let o = {};
-    for (let key of Object.keys(object)) {
-      o[key] = {key: key, value: object[key]}
-    }
+    const o = {}
+    Object.keys(object).forEach((key) => {
+      o[key] = { key, value: object[key] }
+    })
     return o
   }
 }

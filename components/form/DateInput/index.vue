@@ -1,78 +1,94 @@
 <template>
-  <Popper trigger="click" placement="bottom-start" ref="popper">
-    <DatePicker v-model="normalizedDate" v-if="!disabled" :type="type" :format="format"></DatePicker>
-    <Field v-model="normalizedDate" slot="reference" :color="color" :small="small" :big="big" :block="block"
-           :disabled="disabled" :placeholder="placeholder" readonly></Field>
+  <Popper ref="popper" trigger="click" placement="bottom-start">
+    <DatePicker
+      v-if="!disabled"
+      v-model="normalizedDate"
+      :type="type"
+      :format="format"
+    ></DatePicker>
+    <Field
+      slot="reference"
+      v-model="normalizedDate"
+      :color="color"
+      :small="small"
+      :big="big"
+      :block="block"
+      :disabled="disabled"
+      :placeholder="placeholder"
+      readonly
+    ></Field>
   </Popper>
 </template>
 
 <script>
-  export default {
-    props: {
-      date: {
-        default: () => new Date()
-      },
-      format: {
-        type: String,
-        default: "YYYY-MM-DD",
-      },
-      type: {
-        type: String,
-        default: 'day',
-        validator: value => ['year', 'month', 'day'].indexOf(value) > -1
-      },
-      color: {
-        type: String,
-        default: 'default'
-      },
-      small: {
-        type: Boolean,
-        default: false
-      },
-      big: {
-        type: Boolean,
-        default: false
-      },
-      block: {
-        type: Boolean,
-        default: false
-      },
-      disabled: {
-        type: Boolean,
-        default: false
-      },
-      placeholder: {
-        default: ""
-      },
+export default {
+  model: {
+    prop: "date",
+    event: "change"
+  },
+  props: {
+    date: {
+      type: String | Number | Object,
+      default: () => new Date()
     },
-    model: {
-      prop: "date",
-      event: "change"
+    format: {
+      type: String,
+      default: "YYYY-MM-DD"
     },
-    computed: {
-      normalizedDate: {
-        get() {
-          return this.format ? this.$filter.date(new Date(this.date), this.format) : new Date(this.date)
-        },
-        set(val) {
-          this.$refs['popper'].doClose();
-          this.$emit("change", val);
-          return val
-        }
+    type: {
+      type: String,
+      default: "day",
+      validator: (value) => ["year", "month", "day"].includes(value)
+    },
+    color: {
+      type: String,
+      default: "default"
+    },
+    small: {
+      type: Boolean,
+      default: false
+    },
+    big: {
+      type: Boolean,
+      default: false
+    },
+    block: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    placeholder: {
+      type: String | Number,
+      default: ""
+    }
+  },
+  computed: {
+    normalizedDate: {
+      get() {
+        return this.format
+          ? this.$filter.date(new Date(this.date), this.format)
+          : new Date(this.date)
       },
-      classObject() {
-        let classObject = {};
-        classObject[this.color + "-color"] = true;
-        classObject["small"] = this.small;
-        classObject["big"] = this.big;
-        classObject["block"] = this.block;
-        classObject["disabled"] = this.disabled;
-        return classObject
+      set(val) {
+        this.$refs.popper.doClose()
+        this.$emit("change", val)
+        return val
       }
+    },
+    classObject() {
+      const classObject = {}
+      classObject[this.color + "-color"] = true
+      classObject.small = this.small
+      classObject.big = this.big
+      classObject.block = this.block
+      classObject.disabled = this.disabled
+      return classObject
     }
   }
+}
 </script>
 
-<style type="text/less" lang="less" scoped>
-
-</style>
+<style type="text/less" lang="less" scoped></style>
