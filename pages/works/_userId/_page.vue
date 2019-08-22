@@ -183,7 +183,7 @@ export default {
     const { data: result } = await $axios.get(`/draw/paging`, {
       params: Object.assign(
         {
-          targetId: route.params.userId
+          targetId: route.params.userId || store.state.user.user.id
         },
         pageable
       )

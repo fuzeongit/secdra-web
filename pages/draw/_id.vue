@@ -240,8 +240,15 @@ export default {
       commentForm
     }
   },
+  mounted() {
+    // 写入足迹
+    if (this.status === 200) {
+      this.ASaveFootprint({ drawId: this.draw.id })
+    }
+  },
   methods: {
     ...mapActions("draw", ["ACollection", "AUpdate"]),
+    ...mapActions("footprint", { ASaveFootprint: "ASave" }),
     ...mapActions("user", ["AFollow"]),
     showTagPopper(refId) {
       let ref = this.$refs[refId]

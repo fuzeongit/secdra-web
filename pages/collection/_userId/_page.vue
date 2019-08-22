@@ -4,8 +4,8 @@
       <div v-for="(draw, index) in list" :key="index" class="card ">
         <template
           v-if="
-            draw.state === $enum.CollectDrawState.NORMAL.key &&
-              draw.privacyState === $enum.PrivacyState.PUBLIC.key
+            draw.life === $enum.DrawLifeState.EXIST.key &&
+              draw.privacy === $enum.PrivacyState.PUBLIC.key
           "
         >
           <nuxt-link v-ripple :to="`/draw/${draw.id}`" class="img-box flex-box">
@@ -172,7 +172,7 @@ export default {
     const { data: result } = await $axios.get(`/collection/paging`, {
       params: Object.assign(
         {
-          id: route.params.userId
+          targetId: route.params.userId || store.state.user.user.id
         },
         pageable
       )
