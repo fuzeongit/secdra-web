@@ -137,11 +137,11 @@
             <Btn
               v-for="(tag, index) in tagList"
               :key="index"
-              :to="`/draw/search/${encodeURIComponent(tag.key)}`"
+              :to="`/draw/search/${encodeURIComponent(tag)}`"
               color="primary"
               outline
               small
-              >{{ tag.key }}
+              >{{ tag }}
             </Btn>
           </div>
         </div>
@@ -173,7 +173,7 @@ export default {
     ...mapState("user", ["user"])
   },
   // 在这里不能使用httpUtil
-  async asyncData({ store, req, redirect, route, $axios }) {
+  async asyncData({ store, $axios }) {
     store.commit("menu/MChangeName", "home")
     const taskList = []
     taskList.push($axios.get(`/tag/listTagTop30`))
@@ -187,7 +187,7 @@ export default {
     )
     const resultList = (await Promise.all(taskList)).map((item) => item.data)
     return {
-      tagList: resultList[0].data.buckets,
+      tagList: resultList[0].data,
       likeList: resultList[1].data.content,
       newList: resultList[2].data.content
     }

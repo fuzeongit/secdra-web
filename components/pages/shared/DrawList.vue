@@ -38,7 +38,7 @@
           :class="{
             'ali-icon-likefill':
               draw.focus === $enum.CollectState.CONCERNED.key,
-            'ali-icon-like': !draw.focus !== $enum.CollectState.CONCERNED.key
+            'ali-icon-like': draw.focus !== $enum.CollectState.CONCERNED.key
           }"
         ></i>
       </Btn>

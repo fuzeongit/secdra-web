@@ -30,7 +30,7 @@ export default {
   },
   // 在这里不能使用httpUtil
   // 并且嵌套层数超过不知道多少会报错-->坑死我了
-  async asyncData({ store, req, redirect, route, $axios }) {
+  async asyncData({ store, route, $axios }) {
     store.commit("menu/MChangeName", "find")
     const pageable = new Pageable()
     pageable.size = 16
@@ -47,9 +47,6 @@ export default {
       list: result.data.content,
       pageable
     }
-  },
-  mounted() {
-    this.$notify({ message: `现在暂时先随机出`, waitTime: 4000 })
   },
   methods: {
     ...mapActions("draw", [
