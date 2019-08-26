@@ -30,7 +30,7 @@
                   <nuxt-link
                     slot="reference"
                     v-ripple
-                    :to="`/draw/${draw.id}`"
+                    :to="`/user/${draw.user.id}`"
                     class="head-image"
                     :title="draw.user.name"
                   >
@@ -89,7 +89,7 @@
                   <nuxt-link
                     slot="reference"
                     v-ripple
-                    :to="`/draw/${draw.id}`"
+                    :to="`/user/${draw.user.id}`"
                     class="head-image"
                     :title="draw.user.name"
                   >
