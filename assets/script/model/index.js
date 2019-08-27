@@ -22,7 +22,7 @@ export class Pageable {
    * @param {String}sort
    */
   constructor(page = 0, size = 20, sort = "") {
-    this.page = page
+    this.page = !page ? 0 : page - 1
     this.size = size
     this.sort = sort
   }

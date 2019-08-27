@@ -30,11 +30,9 @@ export default {
   },
   // 在这里不能使用httpUtil
   // 并且嵌套层数超过不知道多少会报错-->坑死我了
-  async asyncData({ store, req, redirect, route, $axios }) {
+  async asyncData({ store, $axios }) {
     store.commit("menu/MChangeName", "new")
-    const pageable = new Pageable()
-    pageable.size = 16
-    pageable.sort = "createDate,desc"
+    const pageable = new Pageable(0, 16, "createDate,desc")
     const { data: result } = await $axios.get(`/draw/paging`, {
       params: Object.assign({}, pageable)
     })

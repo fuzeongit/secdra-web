@@ -309,16 +309,6 @@ export default {
         }
       }
     }
-    .more {
-      background-color: @theme-background-color;
-      border-color: @theme-background-color;
-      color: @font-color-dark-fade;
-      transition: @short-animate-time all;
-      &:hover {
-        background-color: darken(@theme-background-color, 4%);
-        border-color: darken(@theme-background-color, 4%);
-      }
-    }
     .is-not {
       line-height: 130px;
       font-size: @small-font-size;

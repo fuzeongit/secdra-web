@@ -32,8 +32,7 @@ export default {
   // 并且嵌套层数超过不知道多少会报错-->坑死我了
   async asyncData({ store, route, $axios }) {
     store.commit("menu/MChangeName", "find")
-    const pageable = new Pageable()
-    pageable.size = 16
+    const pageable = new Pageable(0, 16)
     const { data: result } = await $axios.get(`/draw/pagingByRecommend`, {
       params: Object.assign(
         {

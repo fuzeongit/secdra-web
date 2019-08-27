@@ -93,7 +93,7 @@ export default {
       if (page - 1 === this.currPage) {
         return
       }
-      this.$emit("go", page - 1)
+      this.$emit("go", page)
     }
   }
 }

@@ -174,12 +174,13 @@ export default {
       }
     }
   },
-  async asyncData({ store, req, redirect, route, $axios }) {
+  async asyncData({ store, route, $axios }) {
     store.commit("menu/MChangeName", "works")
-    const pageable = new Pageable()
-    pageable.size = 16
-    pageable.page = route.params.page * 1 || 0
-    pageable.sort = "createDate,desc"
+    const pageable = new Pageable(
+      route.params.page * 1 || 0,
+      16,
+      "createDate,desc"
+    )
     const { data: result } = await $axios.get(`/draw/paging`, {
       params: Object.assign(
         {
@@ -214,7 +215,7 @@ export default {
     paging(page) {
       this.$router.push(`/works/${this.$route.params.userId}/${page}`)
     },
-    async collection(draw, index) {
+    async collection(draw) {
       const result = await this.ACollection({
         drawId: draw.id
       })

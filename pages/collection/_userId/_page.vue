@@ -162,7 +162,7 @@ export default {
       return this.$store.state.user.user.id === this.$route.params.userId
     }
   },
-  async asyncData({ store, req, redirect, route, $axios }) {
+  async asyncData({ store, route, $axios }) {
     store.commit("menu/MChangeName", "collection")
     const pageable = new Pageable(
       route.params.page * 1 || 0,
