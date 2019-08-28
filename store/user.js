@@ -8,16 +8,12 @@ import httpUtil from "../assets/script/util/httpUtil"
 
 export const state = () => ({
   user: null,
-  token: null,
   uploadToken: null
 })
 
 export const mutations = {
   MSetUserInfo(state, user) {
     state.user = user
-  },
-  MSetToken(state, token) {
-    state.token = token
   },
   MSetUserInfoAttr(state, { attr, value }) {
     try {
