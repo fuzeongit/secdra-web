@@ -4,12 +4,7 @@
     enter-active-class="fadeIn mask-duration"
     leave-active-class="fadeOut mask-duration"
   >
-    <div
-      v-show="visible"
-      class="mask"
-      @click="onPersistent"
-      @mousedown="onPersistent"
-    >
+    <div v-show="visible" class="mask" @click="onPersistent">
       <transition
         :enter-active-class="enterActiveClass"
         :leave-active-class="leaveActiveClass"

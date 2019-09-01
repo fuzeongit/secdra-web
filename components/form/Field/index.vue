@@ -20,6 +20,7 @@
       :disabled="disabled"
       :placeholder="placeholder"
       :readonly="readonly"
+      autocomplete="on"
       @change="_change"
     />
   </label>
