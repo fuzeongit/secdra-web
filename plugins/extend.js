@@ -1,7 +1,7 @@
 /**
  * 合并数组，支持链式调用
  * @param {Array} array
- * @returns {Array  }
+ * @returns {Array}
  */
 Array.prototype.merge = function(array = []) {
   if (array && Array.isArray(array) && array.length) {
