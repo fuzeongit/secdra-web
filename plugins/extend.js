@@ -12,14 +12,14 @@ Array.prototype.merge = function(array = []) {
 
 /**
  * 删除数组指定下标
- * @param from
- * @param to
+ * @param index
  * @returns {number}
  */
-Array.prototype.removeIndex = function(from, to) {
-  const rest = this.slice((to || from) + 1 || this.length)
-  this.length = from < 0 ? this.length + from : from
-  return this.push.apply(this, rest)
+Array.prototype.removeIndex = function(index) {
+  if (index >= 0) {
+    this.splice(index, 1)
+  }
+  return this
 }
 
 /**
@@ -71,6 +71,7 @@ Array.prototype.minIndex = function() {
 
 /**
  * 清空数组
+ * @returns {Array}
  */
 Array.prototype.clear = function() {
   if (this.length > 0) {

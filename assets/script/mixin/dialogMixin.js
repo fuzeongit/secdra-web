@@ -18,8 +18,7 @@ export default {
   },
   data() {
     return {
-      persistentAnimate: false,
-      maskFlag: false
+      persistentAnimate: false
     }
   },
   methods: {
@@ -41,14 +40,6 @@ export default {
       if (event && !event.target.className.includes("mask")) {
         return
       }
-      if (event.type === "mousedown") {
-        this.maskFlag = true
-        return
-      }
-      if (!this.maskFlag) {
-        return
-      }
-      this.maskFlag = false
       if (this.persistent) {
         this.persistentAnimate = true
         return
