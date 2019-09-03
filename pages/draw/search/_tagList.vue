@@ -115,7 +115,7 @@ export default {
         return
       }
       this.page = data
-      this.list.merge(data.content)
+      this.list.push(...data.content)
     },
     async collection(draw) {
       const result = await this.ACollection({
