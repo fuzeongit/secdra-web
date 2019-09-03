@@ -75,6 +75,10 @@ export default {
       type: String | Number,
       default: ""
     },
+    shadow: {
+      type: Boolean,
+      default: false
+    },
     readonly: {
       type: Boolean,
       default: false
@@ -97,6 +101,7 @@ export default {
       classObject.big = this.big
       classObject.block = this.block
       classObject.disabled = this.disabled
+      classObject.shadow = this.shadow
       classObject.textarea = this.type === "textarea"
       return classObject
     }

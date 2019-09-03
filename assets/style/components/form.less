@@ -209,6 +209,13 @@
         border-color: @color
       }
     }
+    &.shadow{
+      .input-inner{
+        &:focus {
+          box-shadow: 0 3px 1px -2px fade(@font-color,20%), 0px 2px 2px 0px fade(@font-color,14%), 0px 1px 5px 0px fade(@font-color,12%);
+        }
+      }
+    }
   }
   &.block {
     display: block;
@@ -247,6 +254,12 @@
     &.small {
       line-height: @small-input-line-height;
     }
+  }
+  &.shadow {
+    .input-inner {
+      border-width: 0;
+    }
+    .card-box-shadow()
   }
 }
 
