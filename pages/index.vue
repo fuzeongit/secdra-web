@@ -37,33 +37,35 @@
                     <img :src="$img.head(draw.user.head, 'small50')" />
                   </nuxt-link>
                 </Popper>
-                <Btn flat icon small title="浏览">
-                  <i class="icon ali-icon-attention"></i>
-                </Btn>
-                <span>{{ draw.viewAmount }}</span>
-                <Btn
-                  flat
-                  icon
-                  :color="
-                    draw.focus === $enum.CollectState.CONCERNED.key
-                      ? `primary`
-                      : `default`
-                  "
-                  small
-                  title="收藏"
-                  @click.stop="collection(draw)"
-                >
-                  <i
-                    class="icon"
-                    :class="{
-                      'ali-icon-likefill':
-                        draw.focus === $enum.CollectState.CONCERNED.key,
-                      'ali-icon-like':
-                        draw.focus !== $enum.CollectState.CONCERNED.key
-                    }"
-                  ></i>
-                </Btn>
-                <span>{{ draw.likeAmount }}</span>
+                <div class="tool-btn-group">
+                  <Btn flat icon small title="浏览">
+                    <i class="icon ali-icon-attention"></i>
+                  </Btn>
+                  <span>{{ draw.viewAmount }}</span>
+                  <Btn
+                    flat
+                    icon
+                    :color="
+                      draw.focus === $enum.CollectState.CONCERNED.key
+                        ? `primary`
+                        : `default`
+                    "
+                    small
+                    title="收藏"
+                    @click.stop="collection(draw)"
+                  >
+                    <i
+                      class="icon"
+                      :class="{
+                        'ali-icon-likefill':
+                          draw.focus === $enum.CollectState.CONCERNED.key,
+                        'ali-icon-like':
+                          draw.focus !== $enum.CollectState.CONCERNED.key
+                      }"
+                    ></i>
+                  </Btn>
+                  <span>{{ draw.likeAmount }}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -96,33 +98,35 @@
                     <img :src="$img.head(draw.user.head, 'small50')" />
                   </nuxt-link>
                 </Popper>
-                <Btn flat icon small title="浏览">
-                  <i class="icon ali-icon-attention"></i>
-                </Btn>
-                <span>{{ draw.viewAmount }}</span>
-                <Btn
-                  flat
-                  icon
-                  :color="
-                    draw.focus === $enum.CollectState.CONCERNED.key
-                      ? `primary`
-                      : `default`
-                  "
-                  small
-                  title="收藏"
-                  @click.stop="collection(draw)"
-                >
-                  <i
-                    class="icon"
-                    :class="{
-                      'ali-icon-likefill':
-                        draw.focus === $enum.CollectState.CONCERNED.key,
-                      'ali-icon-like':
-                        draw.focus !== $enum.CollectState.CONCERNED.key
-                    }"
-                  ></i>
-                </Btn>
-                <span>{{ draw.likeAmount }}</span>
+                <div class="tool-btn-group">
+                  <Btn flat icon small title="浏览">
+                    <i class="icon ali-icon-attention"></i>
+                  </Btn>
+                  <span>{{ draw.viewAmount }}</span>
+                  <Btn
+                    flat
+                    icon
+                    :color="
+                      draw.focus === $enum.CollectState.CONCERNED.key
+                        ? `primary`
+                        : `default`
+                    "
+                    small
+                    title="收藏"
+                    @click.stop="collection(draw)"
+                  >
+                    <i
+                      class="icon"
+                      :class="{
+                        'ali-icon-likefill':
+                          draw.focus === $enum.CollectState.CONCERNED.key,
+                        'ali-icon-like':
+                          draw.focus !== $enum.CollectState.CONCERNED.key
+                      }"
+                    ></i>
+                  </Btn>
+                  <span>{{ draw.likeAmount }}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -283,19 +287,30 @@ export default {
       }
       .tool {
         margin: 10px 0;
-        text-align: right;
+        display: flex;
+        align-items: center;
         .head-image {
-          @head-size: 28px;
+          @head-size: @small-input-line-height;
           width: @head-size;
           height: @head-size;
           border-radius: 50%;
           overflow: hidden;
           display: inline-block;
-          float: left;
+          vertical-align: middle;
           img {
             width: 100%;
             height: 100%;
             border-radius: 50%;
+          }
+        }
+        .tool-btn-group {
+          flex: 1;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          span {
+            margin-left: 3px;
+            margin-right: 6px;
           }
         }
       }

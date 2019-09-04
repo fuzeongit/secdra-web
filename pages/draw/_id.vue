@@ -73,13 +73,13 @@
             </h3>
             <p class="introduction">{{ draw.introduction }}</p>
             <div class="row" style="margin-top: 5px;">
-              <div class="col-15">
+              <div class="col-15 flex-text">
                 <Btn flat icon small title="浏览">
                   <i class="icon ali-icon-attention"></i>
                 </Btn>
                 <span>{{ draw.viewAmount }}</span>
               </div>
-              <div class="col-15">
+              <div class="col-15 flex-text">
                 <Btn
                   flat
                   icon

@@ -5,10 +5,16 @@
       v-popover:history
       color="primary"
       placeholder="请输入标签搜索"
-    ></Field>
-    <Btn color="primary" class="btn" type="submit"
-      >搜&nbsp;&nbsp;&nbsp;&nbsp;索</Btn
+      shadow
+      big
     >
+      <Btn slot="right" flat icon type="submit" @click.stop="() => {}">
+        <i class="icon ali-icon-attention"></i>
+      </Btn>
+    </Field>
+    <!--    <Btn color="primary" class="btn" type="submit"-->
+    <!--      >搜&nbsp;&nbsp;&nbsp;&nbsp;索</Btn-->
+    <!--    >-->
     <Popper
       ref="history"
       trigger="click"
@@ -107,15 +113,6 @@ export default {
   font-size: 0;
   .input {
     width: @input-size;
-    font-size: @small-font-size;
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-    border-right: 0;
-  }
-  .btn {
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-    font-size: @small-font-size;
   }
 }
 

@@ -117,7 +117,6 @@
       width: @small-input-line-height;
       height: @small-input-line-height;
     }
-
   }
   &.outline {
     border-width: @input-border-size;
@@ -173,66 +172,61 @@
 .input {
   width: 200px;
   position: relative;
-  display: inline-block;
+  display: inline-flex;
   white-space: nowrap;
   outline: none;
   transition: .1s;
   font-weight: 500;
   user-select: none;
   border-radius: @smallest-border-radius;
+  border: @input-border-size solid @font-color-dark-line;
   font-size: @small-font-size;
   margin: 0;
   height: @input-line-height;
+  background-color: white;
   vertical-align: top;
   .input-inner {
-    transition: .1s;
+    flex:1;
     height: 100%;
-    width: 100%;
-    display: block;
-    padding: 0 1em;
-    border: @input-border-size solid @font-color-dark-line;
-    background-color: white;
+    display: flex;
+    padding: 0;
+  }
+  .placeholder{
+    padding:0 .4em;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content:center;
   }
   &.disabled {
-    .input-inner {
-      background-color: @font-color-dark-line;
-      color: @font-color-dark-disabled;
-      border-width: 0;
-      cursor: not-allowed;
-    }
+    border-width: 0;
+    color: @font-color-dark-disabled;
+    background-color: @font-color-dark-line;
+    cursor: not-allowed;
   }
   .color(@color,@font-color) {
-    .input-inner {
-      border-color: @font-color-dark-line;
-      color: @font-color;
-      &:focus {
-        border-color: @color
-      }
-    }
-    &.shadow{
-      .input-inner{
-        &:focus {
-          box-shadow: 0 3px 1px -2px fade(@font-color,20%), 0px 2px 2px 0px fade(@font-color,14%), 0px 1px 5px 0px fade(@font-color,12%);
-        }
-      }
+    border-color: @font-color-dark-line;
+    color: @font-color;
+    &.input-focus{
+      border-color:@color
     }
   }
   &.block {
-    display: block;
+    display: flex;
     width: 100%;
   }
   &.big {
     height: @big-input-line-height;
     font-size: @default-font-size;
-    .input-inner {
-      padding: 0 1.2em;
+    .placeholder{
+      padding: 0 .5em;
     }
   }
   &.small {
     height: @small-input-line-height;
     font-size: @smallest-font-size;
-    .input-inner {
-      padding: 0 .8em;
+    .placeholder{
+      padding: 0 .3em;
     }
   }
   &.default-color {
@@ -246,7 +240,7 @@
     height: auto;
     .input-inner {
       line-height: @input-line-height;
-      resize: vertical;
+      resize : none;
     }
     &.big {
       line-height: @big-input-line-height;
@@ -256,9 +250,7 @@
     }
   }
   &.shadow {
-    .input-inner {
-      border-width: 0;
-    }
+    border-width: 0;
     .card-box-shadow()
   }
 }

@@ -1,5 +1,8 @@
 <template>
-  <label class="input" :class="classObject">
+  <div class="input" :class="classObject">
+    <div class="placeholder">
+      <slot name="left"></slot>
+    </div>
     <textarea
       v-if="type === `textarea`"
       v-model="normalizedInput"
@@ -10,6 +13,8 @@
       :placeholder="placeholder"
       :readonly="readonly"
       @change="_change"
+      @focus="focus = true"
+      @blur="focus = false"
     ></textarea>
     <input
       v-else
@@ -22,8 +27,13 @@
       :readonly="readonly"
       autocomplete="on"
       @change="_change"
+      @focus="focus = true"
+      @blur="focus = false"
     />
-  </label>
+    <div class="placeholder">
+      <slot name="right"></slot>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -84,6 +94,11 @@ export default {
       default: false
     }
   },
+  data() {
+    return {
+      focus: false
+    }
+  },
   computed: {
     normalizedInput: {
       get() {
@@ -103,6 +118,7 @@ export default {
       classObject.disabled = this.disabled
       classObject.shadow = this.shadow
       classObject.textarea = this.type === "textarea"
+      classObject["input-focus"] = this.focus
       return classObject
     }
   },
