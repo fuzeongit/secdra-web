@@ -30,24 +30,24 @@ export const mutations = {
 
 export const actions = {
   // 登录
-  async ALogin(context, params) {
-    const result = await httpUtil.post("/user/login", params)
+  async ASignIn(context, params) {
+    const result = await httpUtil.post("/account/signIn", params)
     if (result.status === 200) {
       context.commit("MSetUserInfo", result.data)
     }
     return result
   },
   // 注册
-  async ARegister(context, params) {
-    const result = await httpUtil.post("/user/register", params)
+  async ASignUp(context, params) {
+    const result = await httpUtil.post("/account/signUp", params)
     if (result.status === 200) {
-      context.commit("MSetUserInfo", result.data)
+      context.commit("MSetUserInfo", (await this.AGet()).data)
     }
     return result
   },
   // 获取用户信息
-  AGetInfo(context, params) {
-    return httpUtil.get("/user/getInfo", params)
+  AGet(context, params) {
+    return httpUtil.get("/user/get", params)
   },
   // 修改用户信息
   AUpdate(context, params) {

@@ -34,7 +34,6 @@
   </section>
 </template>
 <script>
-import Cookies from "js-cookie"
 import { mapActions } from "vuex"
 
 const layout = "login"
@@ -62,14 +61,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions("user", ["ALogin", "ARegister", "AGetInfo"]),
+    ...mapActions("user", ["ASignIn", "ASignUp", "AGet"]),
     async login() {
       const phone = this.form.phone
       const password = this.form.password || "123456"
       this.loginLoading = true
-      const result = await this.ALogin({ phone, password })
+      const result = await this.ASignIn({ phone, password })
       if (result.status === 200) {
-        Cookies.set("user", JSON.stringify(result.data), { expires: 30 })
+        // Cookies.set("user", JSON.stringify(result.data), { expires: 30 })
         this.$router.replace("/")
       } else {
         this.loginLoading = false
@@ -77,7 +76,7 @@ export default {
       }
     }
     // async register() {
-    //   let result = await this.ARegister({phone: "13760029486", password: "123456"});
+    //   let result = await this.ASignUp({phone: "13760029486", password: "123456"});
     //   if (result.status === 200) {
     //     this.$router.replace("/");
     //   } else {
@@ -85,7 +84,7 @@ export default {
     //   }
     // },
     // async getInfo() {
-    //   let result = await this.AGetInfo({phone: "13760029486", password: "123456"});
+    //   let result = await this.AGet({phone: "13760029486", password: "123456"});
     // },
   }
 }

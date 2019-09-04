@@ -25,12 +25,10 @@ export default {
   },
   // 在这里不能使用httpUtil
   // 并且嵌套层数超过不知道多少会报错-->坑死我了
-  async asyncData({ store, req, redirect, route, $axios }) {
+  async asyncData({ store, redirect, route, $axios }) {
     const selfUser = store.state.user.user
     const taskList = []
-    taskList.push(
-      $axios.get(`/user/getInfo`, { params: { id: route.params.id } })
-    )
+    taskList.push($axios.get(`/user/get`, { params: { id: route.params.id } }))
     if (selfUser.id === route.params.id) {
       taskList.push($axios.get(`/qiniu/getUploadToken`))
     }

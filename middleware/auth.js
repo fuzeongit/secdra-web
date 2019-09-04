@@ -1,15 +1,15 @@
 import { Result } from "../assets/script/model"
 
 // 严谨，通过验证接口
-export default async ({ store, req, redirect, route, $axios }) => {
+export default async ({ store, redirect, route, $axios }) => {
   let result = {}
   const user = store.state.user.user || {}
   try {
     let responses = {}
     if (user.id) {
-      responses = await $axios.post(`user/checkLogin`)
+      responses = await $axios.post(`/account/checkLogin`)
     } else {
-      responses = await $axios.get(`/user/getInfo`)
+      responses = await $axios.get(`/user/get`)
     }
     result = responses.data
   } catch (e) {
