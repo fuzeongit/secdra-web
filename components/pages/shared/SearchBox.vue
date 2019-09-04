@@ -9,12 +9,9 @@
       big
     >
       <Btn slot="right" flat icon type="submit" @click.stop="() => {}">
-        <i class="icon ali-icon-attention"></i>
+        <i class="icon ali-icon-search"></i>
       </Btn>
     </Field>
-    <!--    <Btn color="primary" class="btn" type="submit"-->
-    <!--      >搜&nbsp;&nbsp;&nbsp;&nbsp;索</Btn-->
-    <!--    >-->
     <Popper
       ref="history"
       trigger="click"
@@ -107,7 +104,7 @@ export default {
 @import "../../../assets/style/config";
 @import "../../../assets/style/mixin";
 
-@input-size: 350px;
+@input-size: 550px;
 
 .search-box {
   font-size: 0;
