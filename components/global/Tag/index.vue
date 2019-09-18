@@ -55,17 +55,17 @@ export default {
 @import "../../../assets/style/mixin";
 
 .tag {
+  @padding: 0.4em;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   border-radius: @smallest-border-radius;
-  line-height: @input-line-height - @input-border-size - @input-border-size;
-  border: @input-border-size solid @font-color-dark-line;
-  padding: 0 1em;
+  line-height: @tag-line-height;
+  padding: 0 @padding;
   font-size: @small-font-size;
 
   .close {
-    margin-left: 0.5em;
+    margin-left: @padding / 2;
     height: @tag-close-size;
     width: @tag-close-size;
     line-height: @tag-close-size;
@@ -75,19 +75,21 @@ export default {
   }
 
   .color(@color,@font-color) {
-    background-color: white;
-    border-color: @color;
+    background-color: @color;
     color: @font-color;
+    i {
+      color: @font-color;
+    }
   }
 
   &.big {
-    line-height: @big-input-line-height - @input-border-size -
-      @input-border-size;
+    @padding: 0.5em;
+    line-height: @big-tag-line-height;
     font-size: @default-font-size;
-    padding: 0 1em;
+    padding: 0 @padding;
 
-    &.close {
-      margin-left: 0.7em;
+    .close {
+      margin-left: @padding / 2;
       height: @big-tag-close-size;
       width: @big-tag-close-size;
       line-height: @big-tag-close-size;
@@ -97,12 +99,12 @@ export default {
     }
   }
   &.small {
-    line-height: @small-input-line-height - @input-border-size -
-      @input-border-size;
+    @padding: 0.3em;
+    line-height: @small-tag-line-height;
     font-size: @smallest-font-size;
-    padding: 0 0.5em;
-    &.close {
-      margin-left: 0.3em;
+    padding: 0 @padding;
+    .close {
+      margin-left: @padding / 2;
       height: @small-tag-close-size;
       width: @small-tag-close-size;
       line-height: @small-tag-close-size;
@@ -111,12 +113,11 @@ export default {
       }
     }
   }
-
   &.default-color {
     .color(@font-color-dark-line, @font-color-dark);
   }
   &.primary-color {
-    .color(@theme-color, @theme-color);
+    .color(fade(@theme-color, 56), @font-color-light);
   }
 }
 </style>

@@ -71,7 +71,6 @@
   &:hover:before {
     background-color: currentColor;
   }
-
   &.block {
     display: block;
     width: 100%;
@@ -127,26 +126,8 @@
   &.shadow {
     .card-box-shadow()
   }
-
   &:hover {
     text-decoration: none;
-  }
-
-  &.default-color {
-    .color(@light, @font-color-dark);
-    &.flat {
-      color: @font-color-dark
-    }
-  }
-  &.primary-color {
-    .color(@theme-color, white)
-  }
-
-  &.white-color {
-    .color(white, @theme-color);
-    &.flat {
-      color: @theme-color
-    }
   }
 
   .content {
@@ -160,13 +141,31 @@
     position: relative;
     transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
     white-space: nowrap;
-    width: inherit;
-    height: inherit;
+    width: 100%;
+    height: 100%;
     .ellipsis();
     [type=file] {
       display: none;
     }
   }
+
+  &.default-color {
+    .color(@light, @font-color-dark);
+    &.flat {
+      color: @font-color-dark
+    }
+  }
+  &.primary-color {
+    .color(@theme-color, white)
+  }
+  &.white-color {
+    .color(white, @theme-color);
+    &.flat {
+      color: @theme-color
+    }
+  }
+
+
 }
 
 .input {

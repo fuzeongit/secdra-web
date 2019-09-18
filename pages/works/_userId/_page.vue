@@ -99,15 +99,17 @@
       persistent
     >
       <ScrollBox class="edit-dialog-content">
-        <div style="margin-bottom: 10px">
-          <Tag
-            v-for="(draw, index) in selectList"
-            :key="draw.id"
-            :content="draw.name"
-            color="primary"
-            :value="index"
-            @close="removeSelectDraw"
-          ></Tag>
+        <div class="input-group">
+          <template v-for="(draw, index) in selectList">
+            <Tag
+              :key="draw.id"
+              :content="draw.name"
+              color="primary"
+              :value="index"
+              @close="removeSelectDraw"
+            ></Tag
+            >{{ " " }}
+          </template>
         </div>
         <div>
           <div class="input-group">
