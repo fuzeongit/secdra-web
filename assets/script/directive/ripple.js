@@ -1,6 +1,5 @@
 function transform(el, value) {
   el.style.transform = value
-  el.style.webkitTransform = value
 }
 
 function opacity(el, value) {
@@ -189,23 +188,8 @@ function removeListeners(el) {
   el.removeEventListener("dragstart", rippleHide)
 }
 
-function directive(el, binding, node) {
+function directive(el, binding) {
   updateRipple(el, binding, false)
-
-  // warn if an inline element is used, waiting for el to be in the DOM first
-  // node.context &&
-  //   //   node.context.$nextTick(() => {
-  //   //     const computed = window.getComputedStyle(el)
-  //   //     if (computed && computed.display === "inline") {
-  //   //       const context = node.fnOptions
-  //   //         ? [node.fnOptions, node.context]
-  //   //         : [node.componentInstance]
-  //   //       console.warn(
-  //   //         "v-ripple can only be used on block-level elements",
-  //   //         ...context
-  //   //       )
-  //   //     }
-  //   //   })
 }
 
 function unbind(el) {
