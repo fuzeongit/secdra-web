@@ -65,7 +65,7 @@
                   }"
                 ></div>
                 <p class="name">{{ user.name }}</p>
-                <p class="introduction" :title="user.introduction">
+                <p class="introduction">
                   {{ user.introduction }}
                 </p>
                 <ul class="head-menu">
@@ -111,7 +111,7 @@
                   </li>
                 </ul>
                 <div class="footer">
-                  <Btn flat icon small title="退出登录" @click="logout">
+                  <Btn flat icon small @click="logout">
                     <i class="icon ali-icon-logout"></i>
                   </Btn>
                 </div>

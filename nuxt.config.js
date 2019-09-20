@@ -61,7 +61,7 @@ module.exports = {
       {
         rel: "stylesheet",
         type: "text/css",
-        href: "//at.alicdn.com/t/font_1360203_15do73u7eqd.css"
+        href: "//at.alicdn.com/t/font_1360203_d889uw6t39t.css"
       }
     ]
   },

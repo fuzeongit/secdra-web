@@ -65,12 +65,12 @@ export const actions = {
   AFollow(context, params) {
     return httpUtil.post("/following/focus", params)
   },
-  // 分页获取关注用户
-  APagingFollowing(context, params) {
+  // 按id分页获取id的关注用户列表
+  APagingByFollowerId(context, params) {
     return httpUtil.get("/following/paging", params)
   },
-  // 分页获取粉丝
-  APagingFollower(context, params) {
+  // 按id分页获取id的粉丝列表
+  APagingByFollowingId(context, params) {
     return httpUtil.get("/follower/paging", params)
   }
 }

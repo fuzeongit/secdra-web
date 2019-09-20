@@ -171,7 +171,7 @@
                 <p class="nickname">
                   {{ item.name }}
                 </p>
-                <p class="introduction" :title="item.introduction">
+                <p class="introduction">
                   {{ item.introduction }}
                 </p>
               </div>
@@ -222,7 +222,7 @@ export default {
     this.pagingFollower()
   },
   methods: {
-    ...mapActions("user", ["APagingFollowing"]),
+    ...mapActions("user", ["APagingByFollowerId"]),
     ...mapActions("draw", ["APagingCollection", "APaging"]),
     getProportion(draw) {
       return draw.height / draw.width
@@ -257,7 +257,7 @@ export default {
     },
     async pagingFollower() {
       this.followingLoading = true
-      const result = await this.APagingFollowing(
+      const result = await this.APagingByFollowerId(
         Object.assign(new Pageable(0, 8, "createDate,desc"), {
           id: this.user.id
         })

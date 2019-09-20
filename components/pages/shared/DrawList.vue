@@ -29,7 +29,6 @@
             ? `primary`
             : `default`
         "
-        title="收藏"
         class="like"
         @click.stop="$emit(`collection`, draw, index)"
       >
@@ -51,16 +50,13 @@
         }"
       >
         <nuxt-link v-ripple :to="`/user/${draw.user.id}`" class="head-box">
-          <img
-            :src="$img.head(draw.user.head, 'small50')"
-            :title="draw.user.name"
-          />
+          <img :src="$img.head(draw.user.head, 'small50')" />
         </nuxt-link>
         <div class="user-info-box">
           <p class="nickname">
             {{ draw.user.name }}
           </p>
-          <p class="introduction" :title="draw.user.introduction">
+          <p class="introduction">
             {{ draw.user.introduction }}
           </p>
         </div>
@@ -210,7 +206,7 @@ export default {
   width: @visual-width;
   margin: 0 auto;
   position: relative;
-  height: 999px;
+  height: calc(100vh - @herder-height);
   .item {
     @info-box-height: 80px;
     position: absolute;

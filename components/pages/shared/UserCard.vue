@@ -16,7 +16,7 @@
             user.name
           }}</nuxt-link>
         </p>
-        <p class="introduction" :title="user.introduction">
+        <p class="introduction">
           {{ user.introduction }}
         </p>
       </div>

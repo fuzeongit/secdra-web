@@ -275,7 +275,7 @@ export default {
     ...mapActions("user", [
       "AUpdateBack",
       "AUpdateHead",
-      "APagingFollowing",
+      "APagingByFollowerId",
       "AUpdate"
     ]),
     ...mapActions("draw", ["APagingCollection", "APaging"]),

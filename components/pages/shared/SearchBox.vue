@@ -26,7 +26,10 @@
             :key="index"
             :class="{ active: index === searchHistoryIndex }"
           >
-            <nuxt-link :to="`/draw/search/${encodeURIComponent(item)}`">
+            <nuxt-link
+              v-ripple
+              :to="`/draw/search/${encodeURIComponent(item)}`"
+            >
               {{ item }}
             </nuxt-link>
           </li>
@@ -116,13 +119,13 @@ export default {
 .history-box {
   width: @input-size;
   li {
-    line-height: 35px;
-    padding: 0 15px;
     &.active,
     &:hover {
       background-color: @font-color-dark-line;
     }
     a {
+      line-height: 40px;
+      padding: 0 15px;
       display: block;
     }
   }

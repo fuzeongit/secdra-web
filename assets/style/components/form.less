@@ -182,6 +182,7 @@
   height: @input-line-height;
   background-color: white;
   vertical-align: top;
+  overflow: hidden;
   .input-inner {
     flex:1;
     height: 100%;
@@ -403,6 +404,9 @@
       .switch-box(@small-input-line-height);
     }
   }
+  &.not-line {
+    border-width: 0;
+  }
 
   &.default-color {
     .color(@font-color-dark);
@@ -500,7 +504,7 @@
   @padding: 0.6em;
   display: inline-flex;
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
   border-radius: @smallest-border-radius;
   line-height: @tag-line-height;
   padding: 0 @padding;

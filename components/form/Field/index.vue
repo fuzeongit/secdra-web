@@ -67,7 +67,8 @@ export default {
     type: {
       type: String,
       default: "text",
-      validator: (value) => ["text", "password", "textarea"].includes(value)
+      validator: (value) =>
+        ["text", "password", "search", "textarea"].includes(value)
     },
     rows: {
       type: Number,
@@ -86,6 +87,10 @@ export default {
       default: ""
     },
     shadow: {
+      type: Boolean,
+      default: false
+    },
+    notLine: {
       type: Boolean,
       default: false
     },
@@ -117,6 +122,7 @@ export default {
       classObject.block = this.block
       classObject.disabled = this.disabled
       classObject.shadow = this.shadow
+      classObject["not-line"] = this.notLine
       classObject.textarea = this.type === "textarea"
       classObject["input-focus"] = this.focus
       return classObject
