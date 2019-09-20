@@ -26,12 +26,12 @@
             flat
             round
             color="primary"
-            @click="item.isShowReplyInput = !item.isShowReplyInput"
+            @click="item.replyInputShow = !item.replyInputShow"
             ><i class="icon ali-icon-edit"></i
-            >{{ item.isShowReplyInput ? "收起" : "回复" }}
+            >{{ item.replyInputShow ? "收起" : "回复" }}
           </Btn>
         </p>
-        <div v-if="item.isShowReplyInput" class="row send-reply-box">
+        <div v-if="item.replyInputShow" class="row send-reply-box">
           <div class="col-23">
             <Field
               v-model="replyForm[item.id].content"
@@ -113,7 +113,7 @@ export default {
           item.id,
           new ReplyForm(this.commentId, this.drawId, this.authorId)
         )
-        return Object.assign(item, { isShowReplyInput: false })
+        return Object.assign(item, { replyInputShow: false })
       })
       this.loading = false
     },
@@ -124,7 +124,7 @@ export default {
         this.$notify({ message: result.message })
         return
       }
-      item.isShowReplyInput = false
+      item.replyInputShow = false
       this.listAll()
     }
   }

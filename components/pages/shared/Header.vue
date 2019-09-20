@@ -1,7 +1,7 @@
 <template>
   <header
     class="animated duration"
-    :class="{ fadeInDown: isShow && hid, fadeOutUp: !isShow }"
+    :class="{ fadeInDown: show && hid, fadeOutUp: !show }"
   >
     <nav>
       <nuxt-link v-ripple to="/" :class="{ active: activeName === `home` }">
@@ -142,7 +142,7 @@ export default {
     return {
       hid: false,
       tag: "",
-      isShow: true
+      show: true
     }
   },
   computed: {
@@ -164,12 +164,12 @@ export default {
     scrollTop(newVal, oldVal) {
       const line = newVal < this.offset
       if (line) {
-        this.isShow = true
+        this.show = true
       } else {
         if (!this.hid) {
           this.hid = true
         }
-        this.isShow = newVal <= oldVal
+        this.show = newVal <= oldVal
       }
     }
   },

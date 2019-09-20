@@ -9,7 +9,7 @@
           <Btn icon big type="file" @change="uploadBack">
             <i class="icon ali-icon-upload"></i>
           </Btn>
-          <Btn icon big style="margin-left: 15px;" @click="isShowEdit = true">
+          <Btn icon big style="margin-left: 15px;" @click="editShow = true">
             <i class="icon ali-icon-edit"></i>
           </Btn>
         </div>
@@ -130,7 +130,7 @@
       </div>
     </div>
     <Dialog
-      v-model="isShowTailoringHead"
+      v-model="tailoringHeadShow"
       v-loading="uploadHeadLoading"
       title="剪切"
       persistent
@@ -141,7 +141,7 @@
       <Btn block color="primary" @click="saveHead">保存</Btn>
     </Dialog>
     <Dialog
-      v-model="isShowTailoringBack"
+      v-model="tailoringBackShow"
       v-loading="uploadBackLoading"
       title="剪切"
       persistent
@@ -151,12 +151,7 @@
       </div>
       <Btn block color="primary" @click="saveBack">保存</Btn>
     </Dialog>
-    <Dialog
-      v-model="isShowEdit"
-      v-loading="editLoading"
-      title="编辑"
-      persistent
-    >
+    <Dialog v-model="editShow" v-loading="editLoading" title="编辑" persistent>
       <ScrollBox
         class="edit-dialog-content"
         style="width: 500px;height: 450px;"
@@ -210,8 +205,8 @@ import { Pageable, Result } from "../../../assets/script/model"
 export default {
   data() {
     return {
-      isShowTailoringHead: false,
-      isShowTailoringBack: false,
+      tailoringHeadShow: false,
+      tailoringBackShow: false,
       tailoringHeadImage: "",
       tailoringBackImage: "",
       headCropper: {},
@@ -224,7 +219,7 @@ export default {
       collectionLoading: true,
       collectionList: [],
 
-      isShowEdit: false,
+      editShow: false,
       userForm: Object.assign({}, this.$store.state.user.user), // 需要脱离vuex
       editLoading: false
     }
@@ -319,7 +314,7 @@ export default {
       }
       this.tailoringHeadImage = URL.createObjectURL(file)
       this.headCropper.replace(this.tailoringHeadImage)
-      this.isShowTailoringHead = true
+      this.tailoringHeadShow = true
       $event.target.value = ""
     },
     async saveHead() {
@@ -336,7 +331,7 @@ export default {
         this.$notify({ message: result.message })
         return
       }
-      this.isShowTailoringHead = false
+      this.tailoringHeadShow = false
     },
     uploadBack($event) {
       const file = $event.target.files[0]
@@ -349,7 +344,7 @@ export default {
       }
       this.tailoringBackImage = URL.createObjectURL(file)
       this.backCropper.replace(this.tailoringBackImage)
-      this.isShowTailoringBack = true
+      this.tailoringBackShow = true
       $event.target.value = ""
     },
     async saveBack() {
@@ -367,7 +362,7 @@ export default {
         this.$notify({ message: result.message })
         return
       }
-      this.isShowTailoringBack = false
+      this.tailoringBackShow = false
     },
     async upload(file, type) {
       const form = new FormData()
@@ -404,7 +399,7 @@ export default {
         this.$notify({ message: result.message })
         return
       }
-      this.isShowEdit = false
+      this.editShow = false
       this.$notify({ message: `修改成功` })
       this.MSetUserInfo(result.data)
       this.userForm = Object.assign({}, this.user)

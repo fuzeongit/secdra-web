@@ -17,7 +17,7 @@
           <div class="image-grid-row">
             <div v-for="(draw, index) in likeList" :key="index" class="item">
               <div class="img-box">
-                <nuxt-link v-ripple :to="`/draw/${draw.id}`" :title="draw.name">
+                <nuxt-link v-ripple :to="`/draw/${draw.id}`">
                   <img
                     :src="$img.secdra(draw.url, 'specifiedWidth')"
                     class="cover"
@@ -32,13 +32,12 @@
                     v-ripple
                     :to="`/user/${draw.user.id}`"
                     class="head-image"
-                    :title="draw.user.name"
                   >
                     <img :src="$img.head(draw.user.head, 'small50')" />
                   </nuxt-link>
                 </Popper>
                 <div class="tool-btn-group">
-                  <Btn flat icon small title="浏览">
+                  <Btn flat icon small>
                     <i class="icon ali-icon-attention"></i>
                   </Btn>
                   <span>{{ draw.viewAmount }}</span>
@@ -51,7 +50,6 @@
                         : `default`
                     "
                     small
-                    title="收藏"
                     @click.stop="collection(draw)"
                   >
                     <i
@@ -78,7 +76,7 @@
           <div class="image-grid-row">
             <div v-for="(draw, index) in newList" :key="index" class="item">
               <div class="img-box">
-                <nuxt-link v-ripple :to="`/draw/${draw.id}`" :title="draw.name">
+                <nuxt-link v-ripple :to="`/draw/${draw.id}`">
                   <img
                     :src="$img.secdra(draw.url, 'specifiedWidth')"
                     class="cover"
@@ -93,13 +91,12 @@
                     v-ripple
                     :to="`/user/${draw.user.id}`"
                     class="head-image"
-                    :title="draw.user.name"
                   >
                     <img :src="$img.head(draw.user.head, 'small50')" />
                   </nuxt-link>
                 </Popper>
                 <div class="tool-btn-group">
-                  <Btn flat icon small title="浏览">
+                  <Btn flat icon small>
                     <i class="icon ali-icon-attention"></i>
                   </Btn>
                   <span>{{ draw.viewAmount }}</span>
@@ -112,7 +109,6 @@
                         : `default`
                     "
                     small
-                    title="收藏"
                     @click.stop="collection(draw)"
                   >
                     <i

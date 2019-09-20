@@ -17,7 +17,7 @@
           <p class="nickname">
             {{ item.name }}
           </p>
-          <p class="introduction" :title="item.introduction">
+          <p class="introduction">
             {{ item.introduction }}
           </p>
         </div>

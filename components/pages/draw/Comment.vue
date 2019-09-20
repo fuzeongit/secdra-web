@@ -64,21 +64,21 @@
                 flat
                 round
                 color="primary"
-                @click="item.isShowReply = !item.isShowReply"
+                @click="item.replyShow = !item.replyShow"
                 ><i class="icon ali-icon-message"></i
-                >{{ item.isShowReply ? "收起" : "查看回复" }}
+                >{{ item.replyShow ? "收起" : "查看回复" }}
               </Btn>
               <Btn
                 small
                 flat
                 round
                 color="primary"
-                @click="item.isShowReplyInput = !item.isShowReplyInput"
+                @click="item.replyInputShow = !item.replyInputShow"
                 ><i class="icon ali-icon-edit"></i
-                >{{ item.isShowReplyInput ? "收起" : "回复" }}
+                >{{ item.replyInputShow ? "收起" : "回复" }}
               </Btn>
             </p>
-            <div v-if="item.isShowReplyInput" class="row send-reply-box">
+            <div v-if="item.replyInputShow" class="row send-reply-box">
               <div class="col-23">
                 <Field
                   v-model="replyForm[item.id].content"
@@ -103,7 +103,7 @@
               </div>
             </div>
             <Reply
-              v-if="item.isShowReply"
+              v-if="item.replyShow"
               :ref="item.id"
               :key="index"
               :comment-id="item.id"
@@ -189,8 +189,8 @@ export default {
           new ReplyForm("", this.drawId, this.userId)
         )
         return Object.assign(item, {
-          isShowReplyInput: false,
-          isShowReply: false
+          replyInputShow: false,
+          replyShow: false
         })
       })
       this.loading = false
@@ -211,8 +211,8 @@ export default {
           new ReplyForm("", this.drawId, this.userId)
         )
         return Object.assign(item, {
-          isShowReplyInput: false,
-          isShowReply: false
+          replyInputShow: false,
+          replyShow: false
         })
       })
       this.loading = false
@@ -225,7 +225,7 @@ export default {
         this.$notify({ message: result.message })
         return
       }
-      if (item.isShowReply) {
+      if (item.replyShow) {
         let ref = this.$refs[item.id]
         if (!ref) {
           return
@@ -235,9 +235,9 @@ export default {
         }
         ref.listAll()
       } else {
-        item.isShowReply = true
+        item.replyShow = true
       }
-      item.isShowReplyInput = false
+      item.replyInputShow = false
       this.$set(
         this.replyForm,
         item.id,

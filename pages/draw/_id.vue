@@ -43,7 +43,7 @@
                       >{{ draw.user.name }}</nuxt-link
                     >
                   </p>
-                  <p class="introduction" :title="draw.user.introduction">
+                  <p class="introduction">
                     {{ draw.user.introduction }}
                   </p>
                 </div>
@@ -53,7 +53,7 @@
                   v-if="draw.user.focus === $enum.FollowState.SElF.key"
                   block
                   color="primary"
-                  @click="isShowEdit = true"
+                  @click="editShow = true"
                   >编辑</Btn
                 >
                 <Btn v-else block color="primary" @click="follow(draw.user.id)">
@@ -74,7 +74,7 @@
             <p class="introduction">{{ draw.introduction }}</p>
             <div class="row" style="margin-top: 5px;">
               <div class="col-15 flex-text">
-                <Btn flat icon small title="浏览">
+                <Btn flat icon small>
                   <i class="icon ali-icon-attention"></i>
                 </Btn>
                 <span>{{ draw.viewAmount }}</span>
@@ -89,7 +89,6 @@
                       ? `primary`
                       : `default`
                   "
-                  title="收藏"
                   @click="collection(draw)"
                 >
                   <i
@@ -137,7 +136,7 @@
         </div>
       </div>
       <Dialog
-        v-model="isShowEdit"
+        v-model="editShow"
         v-loading="editLoading"
         title="编辑"
         persistent
@@ -207,7 +206,7 @@ export default {
   },
   data() {
     return {
-      isShowEdit: false,
+      editShow: false,
       editLoading: false
     }
   },
@@ -293,7 +292,7 @@ export default {
         return
       }
       this.$notify({ message: `修改成功` })
-      this.isShowEdit = false
+      this.editShow = false
       this.draw = result.data
       this.reset()
     },

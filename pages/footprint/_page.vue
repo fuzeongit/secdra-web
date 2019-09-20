@@ -27,7 +27,6 @@
                   : `default`
               "
               small
-              title="收藏"
               @click.stop="collection(draw)"
             >
               <i
@@ -43,16 +42,13 @@
           </div>
           <div v-if="draw.user.id" class="flex-box info-box">
             <nuxt-link v-ripple :to="`/user/${draw.user.id}`" class="head-box">
-              <img
-                :src="$img.head(draw.user.head, 'small50')"
-                :title="draw.user.name"
-              />
+              <img :src="$img.head(draw.user.head, 'small50')" />
             </nuxt-link>
             <div class="user-info-box">
               <p class="nickname">
                 {{ draw.user.name }}
               </p>
-              <p class="introduction" :title="draw.user.introduction">
+              <p class="introduction">
                 {{ draw.user.introduction }}
               </p>
             </div>
@@ -90,7 +86,6 @@
                   : `default`
               "
               small
-              title="收藏"
               @click.stop="collection(draw)"
             >
               <i

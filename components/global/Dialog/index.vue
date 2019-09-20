@@ -53,11 +53,11 @@ export default {
   componentName: "Dialog",
   mixins: [dialogMixin],
   model: {
-    prop: "isShow",
+    prop: "show",
     event: "change"
   },
   props: {
-    isShow: {
+    show: {
       type: Boolean,
       default: false
     },
@@ -90,7 +90,7 @@ export default {
     }
   },
   watch: {
-    isShow(newVal) {
+    show(newVal) {
       this.visible = newVal
       if (newVal) {
         this.closed = !newVal

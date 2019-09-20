@@ -13,7 +13,7 @@
         </nuxt-link>
         <div class="tool">
           <Checkbox
-            v-if="isSelf"
+            v-if="self"
             :value="draw"
             value-key="id"
             small
@@ -28,7 +28,6 @@
                 : `default`
             "
             small
-            title="收藏"
             @click.stop="collection(draw)"
           >
             <i
@@ -41,18 +40,15 @@
             ></i>
           </Btn>
         </div>
-        <div v-if="!isSelf" class="flex-box info-box">
+        <div v-if="!self" class="flex-box info-box">
           <nuxt-link v-ripple :to="`/user/${draw.user.id}`" class="head-box">
-            <img
-              :src="$img.head(draw.user.head, 'small50')"
-              :title="draw.user.name"
-            />
+            <img :src="$img.head(draw.user.head, 'small50')" />
           </nuxt-link>
           <div class="user-info-box">
             <p class="nickname">
               {{ draw.user.name }}
             </p>
-            <p class="introduction" :title="draw.user.introduction">
+            <p class="introduction">
               {{ draw.user.introduction }}
             </p>
           </div>
@@ -80,20 +76,20 @@
       @go="paging"
     ></Pageable>
     <Btn
-      v-if="isSelf"
+      v-if="self"
       icon
       big
       shadow
       color="white"
       class="edit-btn"
       :disabled="selectList.isEmpty()"
-      @click="isShowEdit = true"
+      @click="editShow = true"
     >
       <i class="icon ali-icon-edit"></i>
     </Btn>
     <Dialog
-      v-if="isSelf"
-      v-model="isShowEdit"
+      v-if="self"
+      v-model="editShow"
       v-loading="editLoading"
       title="批量操作"
       persistent
@@ -165,14 +161,14 @@ import { DrawForm, Pageable } from "../../../assets/script/model"
 
 export default {
   computed: {
-    isSelf() {
+    self() {
       return this.$store.state.user.user.id === this.$route.params.userId
     }
   },
   watch: {
     selectList(newVal) {
       if (newVal.isEmpty()) {
-        this.isShowEdit = false
+        this.editShow = false
       }
     }
   },
@@ -196,7 +192,7 @@ export default {
       page: result.data,
       list: result.data.content,
       selectList: [],
-      isShowEdit: false,
+      editShow: false,
       editLoading: false,
       inputTag: "",
       drawForm: new DrawForm()
