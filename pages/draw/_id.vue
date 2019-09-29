@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <template v-if="status === 200">
-      <div class="content row">
+      <div class="content-grid">
         <div class="left-box">
           <div class="card img-card flex-box">
             <img
@@ -12,7 +12,6 @@
               }"
             />
           </div>
-          <br />
           <Comment :user-id="draw.user.id" :draw-id="draw.id"></Comment>
         </div>
         <div class="right-box">
@@ -66,7 +65,6 @@
               </div>
             </div>
           </div>
-          <br />
           <div class="card info-card">
             <h3 class="name">
               <strong>{{ draw.name }}</strong>
@@ -106,7 +104,6 @@
               <div class="col-30">创建于：{{ draw.createDate | date }}</div>
             </div>
           </div>
-          <br />
           <div class="card tag-card">
             <div class="tag-list">
               <Popper
@@ -198,7 +195,6 @@ import { mapActions, mapState } from "vuex"
 import TagCard from "../../components/pages/shared/TagCard"
 import Comment from "../../components/pages/draw/Comment"
 import { CommentForm } from "../../assets/script/model"
-
 export default {
   components: {
     TagCard,
@@ -207,7 +203,8 @@ export default {
   data() {
     return {
       editShow: false,
-      editLoading: false
+      editLoading: false,
+      vibrant: {}
     }
   },
   computed: {
@@ -312,15 +309,22 @@ export default {
   padding: 24px 0;
 }
 
-.content {
+.content-grid {
+  @lift-box-width: 850px;
+  @right-box-width: 250px;
+  @gap-size: @visual-width - @lift-box-width - @right-box-width;
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: @lift-box-width @right-box-width;
   width: @visual-width;
   margin: 0 auto;
   .left-box {
-    width: 850px;
-    float: left;
+    display: grid;
+    grid-template-columns: repeat(1, 100%);
+    grid-template-rows: @lift-box-width auto;
+    grid-row-gap: @gap-size;
     .img-card {
       position: relative;
-      height: 850px;
       .like {
         position: absolute;
         top: 10px;
@@ -330,12 +334,12 @@ export default {
     }
   }
   .right-box {
-    @width: 250px;
-    width: @width;
-    float: right;
+    > .card {
+      margin-bottom: @gap-size;
+    }
     .user-card {
       .user-bk {
-        height: @width / 2;
+        height: @right-box-width / 2;
         background-color: @font-color-dark-line;
       }
       @head-img-height: 80px;

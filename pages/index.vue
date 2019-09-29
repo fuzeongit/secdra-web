@@ -9,7 +9,7 @@
     <br />
     <div class="content-grid">
       <div class="left-box">
-        <div class="card image-card ">
+        <div class="card image-card">
           <h3 class="title">
             发现
             <Btn round flat small color="primary" to="/find"> 更多>></Btn>
@@ -68,7 +68,7 @@
             </div>
           </div>
         </div>
-        <div class="card image-card " style="margin-top: 20px;">
+        <div class="card image-card">
           <h3 class="title">
             最新
             <Btn round flat small color="primary" to="/new"> 更多>></Btn>
@@ -232,6 +232,9 @@ export default {
 }
 
 .content-grid {
+  @lift-box-width: 850px;
+  @right-box-width: 250px;
+  @gap-size: @visual-width - @lift-box-width - @right-box-width;
   display: grid;
   justify-content: space-between;
   grid-template-columns: 850px 250px;
@@ -247,6 +250,12 @@ export default {
       }
     }
   }
+  .left-box {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-row-gap: @gap-size;
+  }
+
   .image-card {
     padding: 10px;
     .image-grid-row {

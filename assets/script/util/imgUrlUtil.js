@@ -1,6 +1,6 @@
 export default {
   SECDRA_TYPE: [null, undefined, "specifiedWidth"],
-  HEAD_TYPE: [null, undefined, "small50", "small200"],
+  HEAD_TYPE: [null, undefined, "small50", "small100", "small200"],
   BACK_TYPE: [null, undefined, "backCard"],
   secdra(url, type) {
     if (!this.SECDRA_TYPE.includes(type))
