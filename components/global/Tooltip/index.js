@@ -13,6 +13,5 @@ export const Tooltip = function(el, label) {
   })
   instance.vm = instance.$mount()
   document.body.appendChild(instance.vm.$el)
-  instance.vm.showPopper = true
   return instance.vm
 }

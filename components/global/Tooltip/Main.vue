@@ -3,8 +3,9 @@
     name="fade"
     enter-active-class="fadeIn short-duration"
     leave-active-class="fadeOut short-duration"
+    @after-leave="destroyElement"
   >
-    <div v-show="showPopper" ref="popper" class="card popper" role="tooltip">
+    <div v-show="showPopper" ref="popper" class="card tooltip" role="tooltip">
       {{ label }}
     </div>
   </transition>
@@ -18,6 +19,11 @@ export default {
   data() {
     return {
       label: ""
+    }
+  },
+  methods: {
+    destroyElement() {
+      this.$destroy(true)
     }
   }
 }
