@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <CheckboxGroup v-model="selectList" class="content row">
+    <CheckboxGroup v-model="selectList" class="content">
       <div v-for="(draw, index) in list" :key="index" class="card ">
         <template
           v-if="
@@ -246,22 +246,19 @@ export default {
 
 @info-box-height: 80px;
 .content {
+  @column-number: 4;
+  @size: 250px;
+  @gap: (@visual-width - @size * @column-number) / (@column-number + 1);
   width: @visual-width;
   margin: 0 auto;
-
+  padding: @gap;
+  display: grid;
+  grid-template-columns: repeat(@column-number, @size);
+  grid-gap: @gap;
   .card {
-    @size: 250px;
-    float: left;
-    margin-top: 24px;
-    margin-right: 24px;
     overflow: hidden;
     transition: @default-animate-time;
     position: relative;
-    width: @size;
-
-    &:nth-child(4n + 1) {
-      margin-left: 24px;
-    }
 
     &:hover {
       transform: translateY(-1px);

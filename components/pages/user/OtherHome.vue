@@ -51,27 +51,22 @@
               }}的作品</span
             >
           </h3>
-          <div class="draw-list row">
-            <div
+          <div v-if="worksList.length" class="draw-list">
+            <nuxt-link
               v-for="(draw, index) in worksList"
               :key="index"
-              class="draw-item"
+              v-ripple
+              class="draw-item flex-box"
+              :to="`/draw/${draw.id}`"
             >
-              <nuxt-link
-                v-ripple
-                style="width: 100%;height: 230px;"
-                class="flex-box"
-                :to="`/draw/${draw.id}`"
-              >
-                <img
-                  :src="$img.secdra(draw.url, `specifiedWidth`)"
-                  :style="{
-                    height: getProportion(draw) >= 1 ? `100%` : `auto`,
-                    width: getProportion(draw) <= 1 ? `100%` : `auto`
-                  }"
-                />
-              </nuxt-link>
-            </div>
+              <img
+                :src="$img.secdra(draw.url, `specifiedWidth`)"
+                :style="{
+                  height: getProportion(draw) >= 1 ? `100%` : `auto`,
+                  width: getProportion(draw) <= 1 ? `100%` : `auto`
+                }"
+              />
+            </nuxt-link>
           </div>
           <p v-if="worksList.length === 8" class="move">
             <Btn
@@ -80,8 +75,8 @@
               small
               color="primary"
               :to="`/works/${user.id || ''}`"
-              >查看更多>></Btn
-            >
+              >查看更多>>
+            </Btn>
           </p>
           <img
             v-if="!worksLoading && !worksList.length"
@@ -97,27 +92,22 @@
               }}的收藏</span
             >
           </h3>
-          <div class="draw-list row">
-            <div
+          <div v-if="collectionList.length" class="draw-list">
+            <nuxt-link
               v-for="(draw, index) in collectionList"
               :key="index"
-              class="draw-item"
+              v-ripple
+              class="draw-item flex-box"
+              :to="`/draw/${draw.id}`"
             >
-              <nuxt-link
-                v-ripple
-                style="width: 100%;height: 230px;"
-                class="flex-box"
-                :to="`/draw/${draw.id}`"
-              >
-                <img
-                  :src="$img.secdra(draw.url, `specifiedWidth`)"
-                  :style="{
-                    height: getProportion(draw) >= 1 ? `100%` : `auto`,
-                    width: getProportion(draw) <= 1 ? `100%` : `auto`
-                  }"
-                />
-              </nuxt-link>
-            </div>
+              <img
+                :src="$img.secdra(draw.url, `specifiedWidth`)"
+                :style="{
+                  height: getProportion(draw) >= 1 ? `100%` : `auto`,
+                  width: getProportion(draw) <= 1 ? `100%` : `auto`
+                }"
+              />
+            </nuxt-link>
           </div>
           <p v-if="collectionList.length === 8" class="move">
             <Btn
@@ -126,8 +116,8 @@
               small
               color="primary"
               :to="`/collection/${user.id || ''}`"
-              >查看更多>></Btn
-            >
+              >查看更多>>
+            </Btn>
           </p>
           <img
             v-if="!collectionLoading && !collectionList.length"
@@ -143,7 +133,7 @@
               }}的关注</span
             >
           </h3>
-          <div class="following-list row">
+          <div v-if="followingList.length" class="following-list">
             <div
               v-for="(item, index) in followingList"
               :key="index"
@@ -184,8 +174,8 @@
               small
               color="primary"
               :to="`/following/${user.id || ''}`"
-              >查看更多>></Btn
-            >
+              >查看更多>>
+            </Btn>
           </p>
           <img
             v-if="!followingLoading && !followingList.length"
@@ -282,18 +272,22 @@ export default {
   width: 100%;
   margin-top: -@herder-height;
   height: @window-min-width / 2;
+
   .user-bk-content {
     padding-top: @herder-height;
     width: @visual-width;
     height: 100%;
     margin: 0 auto;
     position: relative;
+
     .tool {
       position: absolute;
       bottom: 125px;
       right: 100px;
+
       .btn {
         background-color: rgba(0, 0, 0, 0.3);
+
         span {
           color: white;
           opacity: 0.7;
@@ -333,6 +327,7 @@ export default {
 
   .head-box {
     padding: 0 100px;
+
     img {
       margin-top: -(@head-img-height+ @head-img-border)/2;
       display: inline-block;
@@ -342,22 +337,28 @@ export default {
       border: @head-img-border solid white;
       border-radius: 50%;
     }
+
     .info-box {
       margin-left: @head-img-height;
       padding: 20px;
+
       .name {
         line-height: 30px;
+
         .icon {
           margin-left: 10px;
           vertical-align: baseline;
+
           &.ali-icon-female {
             color: @female-color;
           }
+
           &.ali-icon-male {
             color: @male-color;
           }
         }
       }
+
       .introduction {
         font-size: @smallest-font-size;
       }
@@ -365,12 +366,14 @@ export default {
   }
 
   .draw-box {
-    margin-top: 30px;
-    padding: 0 50px;
+    @draw-box-padding: 50px;
+    padding: 30px @draw-box-padding;
+
     .line {
       width: 100%;
       border-bottom: 1px dashed @font-color-dark-line;
       margin-bottom: 18px;
+
       span {
         background-color: white;
         margin-bottom: -15px;
@@ -381,72 +384,82 @@ export default {
     }
 
     .works-box {
-      padding-bottom: 24px;
       min-height: 250px;
+
       .is-not {
         display: block;
         margin: 0 auto;
       }
     }
+
     .collection-box {
       margin-top: 30px;
-      padding-bottom: 24px;
       min-height: 250px;
+
       .is-not {
         display: block;
         margin: 0 auto;
       }
     }
+
     .following-box {
       margin-top: 30px;
-      padding-bottom: 24px;
       min-height: 250px;
+
       .is-not {
         display: block;
         margin: 0 auto;
       }
     }
+
     .move {
-      margin-top: 24px;
       text-align: right;
+
       a {
         color: @theme-color;
       }
     }
+
     .draw-list {
+      @column-number: 4;
+      @gap: 20px;
+      @size: (
+          @visual-width - @draw-box-padding * 2 - (@column-number - 1) * @gap
+        ) / @column-number;
+      display: grid;
+      grid-gap: @gap;
+      grid-template-columns: repeat(@column-number, @size);
+      padding: @gap 0;
+
       .draw-item {
-        @size: 230px;
-        float: left;
-        margin-top: 20px;
-        margin-right: 20px;
         overflow: hidden;
         transition: @default-animate-time;
         position: relative;
-        width: @size;
-        &:nth-child(4n + 1) {
-          margin-left: 20px;
-        }
+        height: @size;
       }
     }
+
     .following-list {
+      @column-number: 4;
+      @gap: 20px;
+      @size: (
+          @visual-width - @draw-box-padding * 2 - (@column-number - 1) * @gap
+        ) / @column-number;
+      display: grid;
+      grid-gap: @gap;
+      grid-template-columns: repeat(@column-number, @size);
+      padding: @gap 0;
+
       .following-item {
-        @size: 230px;
-        @margin: 20px;
-        float: left;
-        margin-top: @margin;
-        margin-right: @margin;
         transition: @default-animate-time;
         overflow: hidden;
-        width: @size;
-        box-shadow: 0 0 20px rgba(150, 150, 150, 0.55);
-        &:nth-child(4n + 1) {
-          margin-left: @margin;
-        }
+
         .cover {
           height: @size / 2;
           width: @size;
           transition: @default-animate-time;
         }
+
         .following-head-box {
           @size: 82px;
           width: @size;
@@ -455,37 +468,44 @@ export default {
           display: inline-block;
           border-radius: 50%;
           transition: @default-animate-time;
+
           img {
             border-radius: 50%;
             width: 100%;
             height: 100%;
           }
         }
+
         .user-info-box {
           padding: 0 20px 20px 20px;
           transition: @default-animate-time;
+
           .nickname {
             .ellipsis();
           }
+
           .introduction {
             font-size: @smallest-font-size;
             margin-top: 10px;
             .ellipsis();
           }
         }
+
         &:hover {
           .cover {
             filter: blur(60px);
           }
+
           .following-head-box {
             transform: translateY(-25px) scale(2);
           }
+
           .user-info-box {
             opacity: 0;
             transform: translateY(25px);
           }
+
           transform: translateY(-1px);
-          box-shadow: 0 0 50px rgba(150, 150, 150, 0.55);
         }
       }
     }

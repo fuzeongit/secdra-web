@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="content row">
+    <div class="content">
       <div v-for="(item, index) in list" :key="index" class="card">
         <div
           class="cover"
@@ -38,7 +38,7 @@ import { Pageable } from "../../../assets/script/model"
 export default {
   // 在这里不能使用httpUtil
   // 并且嵌套层数超过不知道多少会报错-->坑死我了
-  async asyncData({ store, req, redirect, route, $axios }) {
+  async asyncData({ store, route, $axios }) {
     store.commit("menu/MChangeName", "following")
     const pageable = new Pageable(
       route.params.page * 1 || 0,
@@ -76,19 +76,19 @@ export default {
 @import "../../../assets/style/mixin";
 
 .content {
+  @column-number: 4;
+  @size: 250px;
+  @gap: (@visual-width - @size * @column-number) / (@column-number + 1);
   width: @visual-width;
   margin: 0 auto;
+  padding: @gap;
+  display: grid;
+  grid-template-columns: repeat(@column-number, @size);
+  grid-gap: @gap;
   .card {
-    @size: 250px;
-    float: left;
-    margin-top: 24px;
-    margin-right: 24px;
-    transition: @default-animate-time;
     overflow: hidden;
-    width: @size;
-    &:nth-child(4n + 1) {
-      margin-left: 24px;
-    }
+    transition: @default-animate-time;
+    position: relative;
     .cover {
       height: @size / 2;
       width: @size;

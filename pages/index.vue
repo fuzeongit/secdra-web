@@ -6,7 +6,6 @@
     >
       <SearchBox></SearchBox>
     </div>
-    <br />
     <div class="content-grid">
       <div class="left-box">
         <div class="card image-card">
@@ -147,12 +146,6 @@
         </div>
       </div>
     </div>
-    <p class="center" style="margin: 30px;">
-      <span> © 2018-2019</span>
-      <a href="http://www.miitbeian.gov.cn/" target="_blank"
-        >粤ICP备18144953号-1</a
-      >
-    </p>
   </div>
 </template>
 
@@ -240,6 +233,7 @@ export default {
   grid-template-columns: 850px 250px;
   width: @visual-width;
   margin: 0 auto;
+  padding: 24px 0;
   .card {
     .title {
       font-size: 16px;

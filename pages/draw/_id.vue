@@ -70,7 +70,7 @@
               <strong>{{ draw.name }}</strong>
             </h3>
             <p class="introduction">{{ draw.introduction }}</p>
-            <div class="row" style="margin-top: 5px;">
+            <div class="row tool-btn-group" style="margin-top: 5px;">
               <div class="col-15 flex-text">
                 <Btn flat icon small>
                   <i class="icon ali-icon-attention"></i>
@@ -378,6 +378,12 @@ export default {
         margin-top: 10px;
         font-size: @smallest-font-size;
         color: @font-color-dark-fade;
+      }
+      .tool-btn-group {
+        span {
+          margin-left: 3px;
+          margin-right: 6px;
+        }
       }
     }
     .tag-card {

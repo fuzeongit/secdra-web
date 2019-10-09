@@ -1,5 +1,6 @@
 const env = (function() {
   return {
+    domain: "http://www.secdra.com",
     baseUrl:
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000/api"
@@ -27,7 +28,6 @@ const env = (function() {
     qiniuSeparator: process.env.NODE_ENV === "development" ? "-" : "-"
   }
 })()
-
 // eslint-disable-next-line nuxt/no-cjs-in-config
 module.exports = {
   mode: "universal",

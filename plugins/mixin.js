@@ -48,6 +48,7 @@ Vue.component("Btn", Btn)
 Vue.component("Field", Field)
 Vue.component("DateInput", DateInput)
 
+Vue.prototype.$domain = process.env.domain
 Vue.prototype.$http = Http
 Vue.prototype.$img = Img
 

@@ -10,6 +10,7 @@
       >
         <nuxt />
       </transition>
+      <Footer></Footer>
     </section>
   </div>
 </template>
@@ -19,10 +20,12 @@ import Header from "../components/pages/shared/Header"
 import ScrollBar from "../components/global/ScrollBar"
 import stompMixin from "../assets/script/mixin/stompMixin"
 import { StompSubscribe } from "../assets/script/model"
+import Footer from "../components/pages/shared/Footer"
 
 export default {
   middleware: ["auth", "messageRedirect"],
   components: {
+    Footer,
     Header,
     ScrollBar
   },

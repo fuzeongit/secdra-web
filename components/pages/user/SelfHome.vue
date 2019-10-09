@@ -47,27 +47,22 @@
           <h3 class="line center">
             <span>我的作品</span>
           </h3>
-          <div class="draw-list row">
-            <div
+          <div v-if="worksList.length" class="draw-list">
+            <nuxt-link
               v-for="(draw, index) in worksList"
               :key="index"
-              class="draw-item"
+              v-ripple
+              class="flex-box"
+              :to="`/draw/${draw.id}`"
             >
-              <nuxt-link
-                v-ripple
-                style="width: 100%;height: 230px;"
-                class="flex-box"
-                :to="`/draw/${draw.id}`"
-              >
-                <img
-                  :src="$img.secdra(draw.url, `specifiedWidth`)"
-                  :style="{
-                    height: getProportion(draw) >= 1 ? `100%` : `auto`,
-                    width: getProportion(draw) <= 1 ? `100%` : `auto`
-                  }"
-                />
-              </nuxt-link>
-            </div>
+              <img
+                :src="$img.secdra(draw.url, `specifiedWidth`)"
+                :style="{
+                  height: getProportion(draw) >= 1 ? `100%` : `auto`,
+                  width: getProportion(draw) <= 1 ? `100%` : `auto`
+                }"
+              />
+            </nuxt-link>
           </div>
           <p v-if="worksList.length === 8" class="move">
             <Btn
@@ -89,27 +84,22 @@
           <h3 class="line center">
             <span>我的收藏</span>
           </h3>
-          <div class="draw-list row">
-            <div
+          <div v-if="collectionList.length" class="draw-list">
+            <nuxt-link
               v-for="(draw, index) in collectionList"
               :key="index"
-              class="draw-item"
+              v-ripple
+              class="draw-item flex-box"
+              :to="`/draw/${draw.id}`"
             >
-              <nuxt-link
-                v-ripple
-                style="width: 100%;height: 230px;"
-                class="flex-box"
-                :to="`/draw/${draw.id}`"
-              >
-                <img
-                  :src="$img.secdra(draw.url, `specifiedWidth`)"
-                  :style="{
-                    height: getProportion(draw) >= 1 ? `100%` : `auto`,
-                    width: getProportion(draw) <= 1 ? `100%` : `auto`
-                  }"
-                />
-              </nuxt-link>
-            </div>
+              <img
+                :src="$img.secdra(draw.url, `specifiedWidth`)"
+                :style="{
+                  height: getProportion(draw) >= 1 ? `100%` : `auto`,
+                  width: getProportion(draw) <= 1 ? `100%` : `auto`
+                }"
+              />
+            </nuxt-link>
           </div>
           <p v-if="collectionList.length === 8" class="move">
             <Btn
@@ -504,8 +494,9 @@ export default {
   }
 
   .draw-box {
-    margin-top: 30px;
-    padding: 0 50px;
+    @draw-box-padding: 50px;
+    padding: 30px @draw-box-padding;
+
     .line {
       width: 100%;
       border-bottom: 1px dashed @font-color-dark-line;
@@ -520,7 +511,6 @@ export default {
     }
 
     .works-box {
-      padding-bottom: 24px;
       min-height: 250px;
       .is-not {
         display: block;
@@ -529,7 +519,6 @@ export default {
     }
     .collection-box {
       margin-top: 30px;
-      padding-bottom: 24px;
       min-height: 250px;
       .is-not {
         display: block;
@@ -538,25 +527,27 @@ export default {
     }
 
     .move {
-      margin-top: 24px;
       text-align: right;
       a {
         color: @theme-color;
       }
     }
     .draw-list {
+      @column-number: 4;
+      @gap: 20px;
+      @size: (
+          @visual-width - @draw-box-padding * 2 - (@column-number - 1) * @gap
+        ) / @column-number;
+      display: grid;
+      grid-gap: @gap;
+      grid-template-columns: repeat(@column-number, @size);
+      padding: @gap 0;
+
       .draw-item {
-        @size: 230px;
-        float: left;
-        margin-top: 20px;
-        margin-right: 20px;
         overflow: hidden;
         transition: @default-animate-time;
         position: relative;
-        width: @size;
-        &:nth-child(4n + 1) {
-          margin-left: 20px;
-        }
+        height: @size;
       }
     }
   }

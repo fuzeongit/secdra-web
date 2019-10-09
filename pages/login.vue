@@ -25,12 +25,6 @@
         !loginLoading ? `登录` : `登录中...`
       }}</Btn>
     </form>
-    <p class="center" style="position: fixed;bottom: 30px">
-      <span> © 2018-2019</span>
-      <a href="http://www.miitbeian.gov.cn/" target="_blank"
-        >粤ICP备18144953号-1</a
-      >
-    </p>
   </section>
 </template>
 <script>
@@ -53,7 +47,7 @@ export default {
     if (this.$root.layoutName === layout) {
       this.$confirm({
         message: `暂时不开放注册，是否随机账号登录`,
-        okCallback: (_) => {
+        okCallback: () => {
           this.form.phone = Math.floor(Math.random() * 50).toString()
           this.login()
         }
