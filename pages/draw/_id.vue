@@ -306,7 +306,7 @@ export default {
 @import "../../assets/style/mixin";
 
 .page {
-  padding: 24px 0;
+  padding: @page-gap 0;
 }
 
 .content-grid {

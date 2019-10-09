@@ -105,7 +105,6 @@ export default {
 
 .pageable-content {
   user-select: none;
-  margin-bottom: 10px;
   font-weight: 500;
   .page-btn {
     margin: 0 5px;

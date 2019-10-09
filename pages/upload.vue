@@ -3,7 +3,7 @@
     <div class="card upload-content">
       <div
         class="card upload-card"
-        @dragover.prevent="(_) => {}"
+        @dragover.prevent="() => {}"
         @drop.prevent="upload($event, 'drop')"
       >
         <div class="image-box flex-box">
@@ -109,7 +109,7 @@ export default {
       }
     }
   },
-  async asyncData({ store, req, redirect, route, $axios }) {
+  async asyncData({ store, $axios }) {
     store.commit("menu/MChangeName", "upload")
     const res = await $axios.get(`/qiniu/getUploadToken`)
     const result = res.data || {}
@@ -199,11 +199,11 @@ export default {
 @import "../assets/style/mixin";
 
 .page {
-  padding: 24px 0;
+  padding: @page-gap 0;
   .upload-content {
     @size: 500px;
     width: @visual-width;
-    padding: 24px;
+    padding: @page-gap;
     margin: 0 auto;
     .upload-card {
       background-color: #f6f6f6;
@@ -233,8 +233,8 @@ export default {
   }
   .form-content {
     width: @visual-width;
-    padding: 24px;
-    margin: 24px auto 0;
+    padding: @page-gap;
+    margin: @page-gap auto 0;
   }
 }
 </style>

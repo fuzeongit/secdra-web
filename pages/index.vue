@@ -233,15 +233,13 @@ export default {
   grid-template-columns: 850px 250px;
   width: @visual-width;
   margin: 0 auto;
-  padding: 24px 0;
-  .card {
-    .title {
-      font-size: 16px;
-      line-height: 28px;
-      margin-bottom: 10px;
-      a {
-        float: right;
-      }
+  padding: @page-gap 0;
+  .title {
+    font-size: 16px;
+    line-height: 28px;
+    margin-bottom: 10px;
+    a {
+      float: right;
     }
   }
   .left-box {

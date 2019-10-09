@@ -69,7 +69,6 @@
         </div>
       </div>
     </CheckboxGroup>
-    <br />
     <Pageable
       :total-page="page.totalPages"
       :curr-page="pageable.page"
@@ -271,13 +270,18 @@ export default {
 @import "../../../assets/style/mixin";
 
 @info-box-height: 80px;
+
+.page {
+  padding: @page-gap 0;
+}
+
 .content {
   @column-number: 4;
-  @size: 250px;
-  @gap: (@visual-width - @size * @column-number) / (@column-number + 1);
+  @gap: @page-gap;
+  @size: (@visual-width - @gap * (@column-number + 1)) / @column-number;
   width: @visual-width;
   margin: 0 auto;
-  padding: @gap;
+  padding: 0 @gap @gap;
   display: grid;
   grid-template-columns: repeat(@column-number, @size);
   grid-gap: @gap;

@@ -320,7 +320,7 @@ export default {
 
 .content {
   width: @visual-width;
-  margin: -100px auto 24px;
+  margin: -100px auto @page-gap;
   @head-img-height: 150px;
   @head-img-border: 2px;
   transform: translateY(0);
