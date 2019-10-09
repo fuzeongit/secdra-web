@@ -1,5 +1,5 @@
 import moment from "moment"
-
+import dateUtil from "../util/dateUtil"
 export default {
   date(date, formatString = "YYYY-MM-DD hh:mm:ss") {
     return moment(date).format(formatString)
@@ -20,5 +20,8 @@ export default {
       return threshold - 1
     }
     return number
+  },
+  ago(date) {
+    return dateUtil.ago(date)
   }
 }

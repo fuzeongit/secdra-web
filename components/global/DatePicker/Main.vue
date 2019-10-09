@@ -98,6 +98,14 @@ export default {
       type: String,
       default: "day",
       validator: (value) => ["year", "month", "day"].includes(value)
+    },
+    min: {
+      type: String | Number | Object | null,
+      default: null
+    },
+    max: {
+      type: String | Number | Object | null,
+      default: () => null
     }
   },
   data() {
@@ -154,6 +162,7 @@ export default {
         this.$refs["calendar-box"],
         this.calendar,
         this.normalizedDate,
+        { min: this.min, max: this.max },
         type,
         this.changeDate
       )

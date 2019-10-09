@@ -61,7 +61,7 @@ export default {
   // 在这里不能使用httpUtil
   // 并且嵌套层数超过不知道多少会报错-->坑死我了
   async asyncData({ store, route, $axios }) {
-    store.commit("menu/MChangeName", "tag")
+    store.commit("menu/MChangeName", "search")
     const pageable = new Pageable(0, 16, "likeAmount,desc")
     const filterForm = new FliterForm(
       !!route.query.precise,

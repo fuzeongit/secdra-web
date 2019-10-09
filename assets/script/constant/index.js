@@ -1,13 +1,17 @@
 import proxyUtil from "../util/proxyUtil"
 
-export class ListConstant {
-  constructor() {
-    this.colNumber = 4
-    this.colWidth = 250
-    this.infoHeight = 80
-    this.widthOffset = 24
-    this.heightOffset = 24
+export function listConstant() {
+  return {
+    colNumber: 4,
+    colWidth: 250,
+    infoHeight: 80,
+    widthOffset: 24,
+    heightOffset: 24
   }
+}
+
+export function hideFooterMenuConstant() {
+  return ["search", "find", "new", "message"]
 }
 
 export const enumObjectList = {

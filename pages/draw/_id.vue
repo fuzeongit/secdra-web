@@ -124,10 +124,6 @@
                   {{ tag }}
                 </Btn>
               </Popper>
-              <!--&lt;!&ndash;TODO&ndash;&gt;-->
-              <!--<Btn outline small color="primary" :to="`/draw/search/${encodeURIComponent(tag)}`" v-for="(tag,index) in draw.tagList" :key="index">-->
-              <!--{{tag}}-->
-              <!--</Btn>-->
             </div>
           </div>
         </div>

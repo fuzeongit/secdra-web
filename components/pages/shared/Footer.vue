@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer v-show="show">
     <nav>
       <ul>
         <li>
@@ -35,8 +35,16 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+import { hideFooterMenuConstant } from "../../../assets/script/constant"
 export default {
-  componentName: "Footer"
+  componentName: "Footer",
+  computed: {
+    ...mapState("menu", { activeName: "name" }),
+    show() {
+      return !hideFooterMenuConstant().includes(this.activeName)
+    }
+  }
 }
 </script>
 

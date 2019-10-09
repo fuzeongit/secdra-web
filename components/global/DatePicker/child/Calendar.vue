@@ -26,6 +26,7 @@
           class="date"
           :flat="!item.active"
           :color="item.active ? `primary` : `default`"
+          :disabled="disabled(item.day)"
           @click="changeDate(item.day)"
         >
           {{ item.day }}
@@ -51,6 +52,16 @@ class Calendar {
 
 export default {
   mixins: [datePickerMixin],
+  props: {
+    min: {
+      type: String | Number | Object | null,
+      default: null
+    },
+    max: {
+      type: String | Number | Object | null,
+      default: null
+    }
+  },
   data() {
     return {
       weekDescList: ["日", "一", "二", "三", "四", "五", "六"]
@@ -98,6 +109,20 @@ export default {
         day
       )
       this.clickFunction && this.clickFunction(this.date, `day`)
+    },
+    disabled(day) {
+      if (this.min || this.max) {
+        const date = new Date(
+          this.calendar.getFullYear(),
+          this.calendar.getMonth(),
+          day
+        ).getTime()
+        const min = this.min ? new Date(this.min).getTime() : null
+        const max = this.max ? new Date(this.max).getTime() : null
+        return min > date || max < date
+      } else {
+        return false
+      }
     }
   }
 }

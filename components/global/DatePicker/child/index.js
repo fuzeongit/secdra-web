@@ -48,7 +48,7 @@ export default {
     instance.visible = true
     return instance
   },
-  mountCalendar(dom, calendar, date, type, clickFunction) {
+  mountCalendar(dom, calendar, date, thresholdOptions, type, clickFunction) {
     const data = {}
     if (type === "prev") {
       data.enterActiveClass = "fadeInLeft"
@@ -59,6 +59,8 @@ export default {
     const instance = new CalendarConstructor({
       propsData: {
         calendar,
+        min: thresholdOptions.min,
+        max: thresholdOptions.max,
         clickFunction
       },
       data

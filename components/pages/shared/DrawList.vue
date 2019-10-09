@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { ListConstant } from "../../../assets/script/constant"
+import { listConstant } from "../../../assets/script/constant"
 import windowMixin from "../../../assets/script/mixin/windowMixin"
 
 export default {
@@ -113,7 +113,7 @@ export default {
   },
   data() {
     return {
-      listConstant: new ListConstant()
+      listConstant: listConstant()
     }
   },
   computed: {

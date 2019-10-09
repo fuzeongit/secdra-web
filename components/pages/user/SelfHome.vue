@@ -178,6 +178,7 @@
             v-model="userForm.birthday"
             block
             color="primary"
+            :max="new Date()"
           ></DateInput>
         </div>
       </ScrollBox>

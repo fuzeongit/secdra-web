@@ -5,6 +5,8 @@
       v-model="normalizedDate"
       :type="type"
       :format="format"
+      :max="max"
+      :min="min"
     ></DatePicker>
     <Field
       slot="reference"
@@ -39,6 +41,14 @@ export default {
       type: String,
       default: "day",
       validator: (value) => ["year", "month", "day"].includes(value)
+    },
+    min: {
+      type: String | Number | Object | null,
+      default: null
+    },
+    max: {
+      type: String | Number | Object | null,
+      default: null
     },
     color: {
       type: String,

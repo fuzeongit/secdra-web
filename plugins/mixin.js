@@ -60,6 +60,7 @@ Object.keys(filters).forEach((key) => {
 })
 
 Vue.directive("popover", directive.popover)
+Vue.directive("tooltip", directive.tooltip)
 Vue.directive("loading", directive.loading)
 Vue.directive("ripple", directive.ripple)
 Vue.directive("scrollbar", directive.scrollbar)
