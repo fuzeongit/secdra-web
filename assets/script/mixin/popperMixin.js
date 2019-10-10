@@ -55,7 +55,8 @@ export default {
   data() {
     return {
       showPopper: false,
-      currentPlacement: ""
+      currentPlacement: "",
+      popperElm: undefined
     }
   },
 
@@ -100,7 +101,6 @@ export default {
       if (!reference && this.$slots.reference && this.$slots.reference[0]) {
         reference = this.referenceElm = this.$slots.reference[0].elm
       }
-
       if (!popper || !reference) return
       if (this.visibleArrow) this.appendArrow(popper)
       if (this.appendToBody) document.body.appendChild(this.popperElm)

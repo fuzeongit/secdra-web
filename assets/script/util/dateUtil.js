@@ -34,6 +34,7 @@ export default {
     }
     return date
   },
+
   differTo(date = new Date(), defaultDate = new Date()) {
     date = new Date(date)
     defaultDate = new Date(defaultDate)
@@ -46,6 +47,7 @@ export default {
       ss: defaultDate.getSeconds() - date.getSeconds()
     }
   },
+
   ago(date = new Date()) {
     const differ = this.differTo(date)
     const keys = Object.keys(differ)

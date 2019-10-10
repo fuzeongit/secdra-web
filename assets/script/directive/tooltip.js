@@ -1,33 +1,23 @@
 import { Tooltip } from "../../../components/global/Tooltip"
-import { on } from "../util/domUtil"
 const tooltipMap = new Map()
-function inserted(el, { value }) {
-  on(el, "mouseenter", () => {
-    const tooltip = tooltipMap.get(el) || Tooltip(el, value)
+function inserted(el, { value, arg }) {
+  if (el) {
+    const tooltip = tooltipMap.get(el) || Tooltip(el, value, { maxWidth: arg })
     tooltipMap.set(el, tooltip)
-    tooltip.showPopper = true
-  })
-  on(el, "mouseleave", () => {
-    const tooltip = tooltipMap.get(el)
-    tooltip.showPopper = false
-    tooltipMap.delete(el)
-  })
-}
-
-function update(el, { value }) {
-  const tooltip = tooltipMap.get(el)
-  tooltip.label = value
-  tooltipMap.set(el, tooltip)
+  }
 }
 
 export default {
   bind(el, binding, vnode) {
     inserted(el, binding, vnode)
   },
-  inserted(el, binding, vnode) {
-    inserted(el, binding, vnode)
+  update(el, { value }) {
+    const tooltip = tooltipMap.get(el)
+    tooltip.label = value
   },
-  update(el, binding, vnode) {
-    update(el, binding, vnode)
+  unbind(el) {
+    const tooltip = tooltipMap.get(el)
+    tooltip.$destroy()
+    tooltipMap.delete(el)
   }
 }
