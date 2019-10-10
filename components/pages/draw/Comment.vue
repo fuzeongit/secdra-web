@@ -10,7 +10,7 @@
         ></Field>
       </div>
       <div class="col-3 center">
-        <Btn icon color="white">
+        <Btn v-tooltip="`表情`" icon color="white">
           <i class="icon ali-icon-emoji"></i>
         </Btn>
       </div>

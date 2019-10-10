@@ -6,18 +6,18 @@
           <nuxt-link :to="`/`" class="primary-hover">Secdra</nuxt-link>
         </li>
         <li>
-          <nuxt-link :to="`/about`" class="primary-hover">关于我</nuxt-link>
+          <nuxt-link :to="`/about`" class="primary-hover">关于Secdra</nuxt-link>
         </li>
         <li>
-          <nuxt-link :to="`/call`" class="primary-hover">联系我</nuxt-link>
+          <nuxt-link :to="`/contact`" class="primary-hover">联系作者</nuxt-link>
         </li>
         <li>
-          <nuxt-link :to="`agreement`" class="primary-hover"
-            >用户协议</nuxt-link
-          >
+          <nuxt-link :to="`/agreement`" class="primary-hover">
+            用户协议
+          </nuxt-link>
         </li>
         <li>
-          <nuxt-link :to="`feedback`" class="primary-hover">反馈</nuxt-link>
+          <nuxt-link :to="`/feedback`" class="primary-hover">反馈</nuxt-link>
         </li>
       </ul>
       <p>

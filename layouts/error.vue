@@ -1,10 +1,9 @@
 <template>
   <div class="page flex-box" style="padding: 30px;">
-    {{ error }}
-    <!--    <img v-if="error.statusCode === 404" src="../assets/image/error/404.jpg" />-->
-    <!--    <div v-else>-->
-    <!--      {{ error }}-->
-    <!--    </div>-->
+    <img v-if="error.statusCode === 404" src="../assets/image/error/404.jpg" />
+    <div v-else>
+      {{ error }}
+    </div>
   </div>
 </template>
 
