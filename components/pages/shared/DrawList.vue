@@ -28,9 +28,7 @@
         flat
         icon
         :color="
-          draw.focus === $enum.CollectState.CONCERNED.key
-            ? `primary`
-            : `default`
+          draw.focus === $enum.CollectState.CONCERNED.key ? `red` : `default`
         "
         class="like"
         @click.stop="$emit(`collection`, draw, index)"

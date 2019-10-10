@@ -28,7 +28,7 @@
               icon
               :color="
                 draw.focus === $enum.CollectState.CONCERNED.key
-                  ? `primary`
+                  ? `red`
                   : `default`
               "
               small
@@ -92,7 +92,7 @@
               icon
               :color="
                 draw.focus === $enum.CollectState.CONCERNED.key
-                  ? `primary`
+                  ? `red`
                   : `default`
               "
               small

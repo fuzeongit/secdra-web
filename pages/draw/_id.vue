@@ -82,13 +82,17 @@
               </div>
               <div class="col-15 flex-text">
                 <Btn
-                  v-tooltip="`收藏`"
+                  v-tooltip="
+                    draw.focus === $enum.CollectState.CONCERNED.key
+                      ? `取消收藏`
+                      : `收藏`
+                  "
                   flat
                   icon
                   small
                   :color="
                     draw.focus === $enum.CollectState.CONCERNED.key
-                      ? `primary`
+                      ? `red`
                       : `default`
                   "
                   @click="collection(draw)"
