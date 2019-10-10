@@ -42,7 +42,10 @@
                       >{{ draw.user.name }}</nuxt-link
                     >
                   </p>
-                  <p class="introduction">
+                  <p
+                    v-tooltip:150="draw.user.introduction"
+                    class="introduction"
+                  >
                     {{ draw.user.introduction }}
                   </p>
                 </div>
@@ -72,13 +75,14 @@
             <p class="introduction">{{ draw.introduction }}</p>
             <div class="row tool-btn-group" style="margin-top: 5px;">
               <div class="col-15 flex-text">
-                <Btn flat icon small>
+                <Btn v-tooltip="`浏览`" flat icon small>
                   <i class="icon ali-icon-attention"></i>
                 </Btn>
                 <span>{{ draw.viewAmount }}</span>
               </div>
               <div class="col-15 flex-text">
                 <Btn
+                  v-tooltip="`收藏`"
                   flat
                   icon
                   small

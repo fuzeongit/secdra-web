@@ -8,11 +8,12 @@ function inserted(el, { value, arg }) {
 }
 
 export default {
-  bind(el, binding, vnode) {
-    inserted(el, binding, vnode)
+  bind(el, binding) {
+    inserted(el, binding)
   },
   update(el, { value }) {
     const tooltip = tooltipMap.get(el)
+    tooltip.updatePopper()
     tooltip.label = value
   },
   unbind(el) {

@@ -8,7 +8,14 @@
       shadow
       big
     >
-      <Btn slot="right" flat icon type="submit" @click.stop="() => {}">
+      <Btn
+        slot="right"
+        v-tooltip="`搜索`"
+        flat
+        icon
+        type="submit"
+        @click.stop="() => {}"
+      >
         <i class="icon ali-icon-search"></i>
       </Btn>
     </Field>

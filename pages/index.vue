@@ -36,11 +36,16 @@
                   </nuxt-link>
                 </Popper>
                 <div class="tool-btn-group">
-                  <Btn flat icon small>
+                  <Btn v-tooltip="`浏览`" flat icon small>
                     <i class="icon ali-icon-attention"></i>
                   </Btn>
                   <span>{{ draw.viewAmount }}</span>
                   <Btn
+                    v-tooltip="
+                      draw.focus === $enum.CollectState.CONCERNED.key
+                        ? `取消收藏`
+                        : `收藏`
+                    "
                     flat
                     icon
                     :color="
@@ -95,11 +100,16 @@
                   </nuxt-link>
                 </Popper>
                 <div class="tool-btn-group">
-                  <Btn flat icon small>
+                  <Btn v-tooltip="`浏览`" flat icon small>
                     <i class="icon ali-icon-attention"></i>
                   </Btn>
                   <span>{{ draw.viewAmount }}</span>
                   <Btn
+                    v-tooltip="
+                      draw.focus === $enum.CollectState.CONCERNED.key
+                        ? `取消收藏`
+                        : `收藏`
+                    "
                     flat
                     icon
                     :color="

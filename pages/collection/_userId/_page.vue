@@ -18,14 +18,12 @@
             />
           </nuxt-link>
           <div class="tool">
-            <Checkbox
-              v-if="isSelf"
-              :value="draw"
-              value-key="id"
-              small
-              color="primary"
-            ></Checkbox>
             <Btn
+              v-tooltip="
+                draw.focus === $enum.CollectState.CONCERNED.key
+                  ? `取消收藏`
+                  : `收藏`
+              "
               flat
               icon
               :color="
@@ -84,14 +82,12 @@
             />
           </div>
           <div class="tool">
-            <Checkbox
-              v-if="isSelf"
-              :value="draw"
-              value-key="id"
-              small
-              color="primary"
-            ></Checkbox>
             <Btn
+              v-tooltip="
+                draw.focus === $enum.CollectState.CONCERNED.key
+                  ? `取消收藏`
+                  : `收藏`
+              "
               flat
               icon
               :color="
@@ -130,18 +126,6 @@
       :curr-page="pageable.page"
       @go="paging"
     ></Pageable>
-    <Btn
-      v-if="isSelf"
-      icon
-      big
-      shadow
-      color="white"
-      style="position: fixed;right: 50px;bottom: 50px;"
-      :disabled="!selectList.length"
-      @click="unCollection"
-    >
-      <i class="icon ali-icon-likefill" :class="$style['primary-color']"></i>
-    </Btn>
   </div>
 </template>
 

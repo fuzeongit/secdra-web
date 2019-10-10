@@ -14,12 +14,18 @@
         <div class="tool">
           <Checkbox
             v-if="self"
+            v-tooltip="`选择`"
             :value="draw"
             value-key="id"
             small
             color="primary"
           ></Checkbox>
           <Btn
+            v-tooltip="
+              draw.focus === $enum.CollectState.CONCERNED.key
+                ? `取消收藏`
+                : `收藏`
+            "
             flat
             icon
             :color="
@@ -74,18 +80,19 @@
       :curr-page="pageable.page"
       @go="paging"
     ></Pageable>
-    <Btn
-      v-if="self"
-      icon
-      big
-      shadow
-      color="white"
-      class="edit-btn"
-      :disabled="selectList.isEmpty()"
-      @click="editShow = true"
-    >
-      <i class="icon ali-icon-edit"></i>
-    </Btn>
+    <CornerButtons :show-go-top="false">
+      <Btn
+        v-if="self"
+        icon
+        big
+        shadow
+        color="white"
+        :disabled="selectList.isEmpty()"
+        @click="editShow = true"
+      >
+        <i class="icon ali-icon-edit"></i>
+      </Btn>
+    </CornerButtons>
     <Dialog
       v-if="self"
       v-model="editShow"
@@ -157,8 +164,12 @@
 <script>
 import { mapActions } from "vuex"
 import { DrawForm, Pageable } from "../../../assets/script/model"
+import CornerButtons from "../../../components/pages/shared/CornerButtons"
 
 export default {
+  components: {
+    CornerButtons
+  },
   computed: {
     self() {
       return this.$store.state.user.user.id === this.$route.params.userId

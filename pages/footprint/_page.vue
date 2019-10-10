@@ -19,6 +19,11 @@
           </nuxt-link>
           <div class="tool">
             <Btn
+              v-tooltip="
+                draw.focus === $enum.CollectState.CONCERNED.key
+                  ? `取消收藏`
+                  : `收藏`
+              "
               flat
               icon
               :color="

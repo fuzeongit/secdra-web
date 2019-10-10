@@ -6,10 +6,16 @@
     >
       <div class="user-bk-content">
         <div class="tool">
-          <Btn icon big type="file" @change="uploadBack">
+          <Btn v-tooltip="`上传背景`" icon big type="file" @change="uploadBack">
             <i class="icon ali-icon-upload"></i>
           </Btn>
-          <Btn icon big style="margin-left: 15px;" @click="editShow = true">
+          <Btn
+            v-tooltip="`编辑`"
+            icon
+            big
+            style="margin-left: 15px;"
+            @click="editShow = true"
+          >
             <i class="icon ali-icon-edit"></i>
           </Btn>
         </div>

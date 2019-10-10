@@ -31,6 +31,7 @@
       <template>
         <div class="right-box">
           <nuxt-link
+            v-tooltip="`通知信息`"
             v-ripple
             to="/message/comment"
             class="link icon ali-icon-community"

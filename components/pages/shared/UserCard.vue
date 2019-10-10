@@ -16,7 +16,7 @@
             user.name
           }}</nuxt-link>
         </p>
-        <p class="introduction">
+        <p v-tooltip:150="user.introduction" class="introduction">
           {{ user.introduction }}
         </p>
       </div>
