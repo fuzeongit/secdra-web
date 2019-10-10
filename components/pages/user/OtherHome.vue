@@ -235,7 +235,7 @@ export default {
       this.collectionLoading = true
       const result = await this.APagingCollection(
         Object.assign(new Pageable(0, 8, "createDate,desc"), {
-          id: this.user.id
+          targetId: this.user.id
         })
       )
       if (result.status !== 200) {

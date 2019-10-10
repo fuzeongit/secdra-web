@@ -112,7 +112,7 @@
                   </li>
                 </ul>
                 <div class="footer">
-                  <Btn flat icon small @click="logout">
+                  <Btn v-tooltip="`注销`" flat icon small @click="logout">
                     <i class="icon ali-icon-logout"></i>
                   </Btn>
                 </div>

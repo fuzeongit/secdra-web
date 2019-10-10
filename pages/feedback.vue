@@ -10,11 +10,17 @@
             block
             color="primary"
             type="textarea"
+            placeholder="必填"
           ></Field>
         </div>
         <div class="input-group">
           <h5 class="sub-name">联系邮箱：</h5>
-          <Field v-model="form.email" block color="primary"></Field>
+          <Field
+            v-model="form.email"
+            block
+            color="primary"
+            placeholder="选填"
+          ></Field>
         </div>
         <div class="input-group" style="margin-top: 60px">
           <Btn color="primary" @click="save">发送</Btn>
