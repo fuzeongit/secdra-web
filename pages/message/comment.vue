@@ -1,6 +1,11 @@
 <template>
   <div class="list">
-    <div v-for="item in list" :key="item.id" class="item card">
+    <Delay
+      v-for="(item, index) in list"
+      :key="item.id"
+      :animation-delay="index * 0.05"
+      class="item card"
+    >
       <div class="row">
         <div class="col-3">
           <nuxt-link v-ripple :to="`/user/${item.critic.id}`" class="head-box">
@@ -23,7 +28,7 @@
           </p>
         </div>
       </div>
-    </div>
+    </Delay>
     <div v-if="!list.length" class="not card">
       <img src="../../assets/image/default/not.png" />
     </div>
@@ -32,7 +37,7 @@
 
 <script>
 export default {
-  async asyncData({ store, req, redirect, route, $axios }) {
+  async asyncData({ store, $axios }) {
     const type = "comment"
     store.commit("message/MChangeType", { type, reset: true })
     const { data: result } = await $axios.get(`/message/list`, {

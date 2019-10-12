@@ -20,7 +20,7 @@
           transform: `translateY(${coordinate}%)`
         }"
         @mousedown.stop="scrollStart"
-        @click.stop="(_) => {}"
+        @click.stop="() => {}"
       ></div>
     </transition>
   </div>
@@ -42,6 +42,7 @@ export default {
       mutationObserverFrameTick: false,
       scrollIngFrameTick: false,
       mutationObserver: null,
+      resizeObserver: null,
       scrollBarStatusTimeout: null,
       scrollBarStatus: false,
       scrollBarActive: false
@@ -64,7 +65,7 @@ export default {
   },
   mounted() {
     this.getHeight()
-    this.mutationObserver = new MutationObserver((mutations, _observer) => {
+    const handle = () => {
       if (!this.mutationObserverFrameTick) {
         requestAnimationFrame(() => {
           this.getHeight()
@@ -72,13 +73,25 @@ export default {
         })
         this.mutationObserverFrameTick = true
       }
+    }
+    this.resizeObserver = new ResizeObserver((entries) => {
+      handle()
     })
-    this.mutationObserver.observe(document.documentElement, {
-      attributes: true,
-      characterData: true,
-      childList: true,
-      subtree: true
+    this.mutationObserver = new MutationObserver((mutations, _observer) => {
+      handle()
     })
+    if (this.scrollElement) {
+      this.resizeObserver.observe(this.scrollElement)
+      this.mutationObserver.observe(this.scrollElement, {
+        attributes: true,
+        characterData: true,
+        childList: true,
+        subtree: true
+      })
+    } else {
+      this.resizeObserver.observe(document.documentElement)
+    }
+
     on(document, "mouseup", this.scrollEnd)
     // if(this.scrollElement){
     //   on(this.scrollElement,"mouseenter",()=>{
@@ -90,7 +103,11 @@ export default {
     // }
   },
   beforeDestroy() {
-    this.mutationObserver.disconnect()
+    try {
+      this.mutationObserver.disconnect()
+      this.resizeObserver.disconnect()
+    } catch (e) {}
+
     off(document, "mouseup", this.scrollEnd)
     off(document, "mousemove", this.scrollIng)
   },

@@ -1,7 +1,9 @@
 <template>
   <div
     class="list-content"
-    :style="{ height: `${listContentOffset.height}px` }"
+    :style="{
+      height: `${listContentOffset.height}px`
+    }"
   >
     <div
       v-for="(draw, index) in list"
@@ -128,7 +130,10 @@ export default {
         const left =
           (1 + minTopIndex) * this.listConstant.widthOffset +
           this.listConstant.colWidth * minTopIndex
-        const top = colNumberHeight[minTopIndex]
+        const top =
+          colNumberHeight[minTopIndex] +
+          this.listConstant.pageGap -
+          this.listConstant.gap
         colNumberHeight[minTopIndex] +=
           (draw.height / draw.width) * this.listConstant.colWidth +
           this.listConstant.heightOffset +

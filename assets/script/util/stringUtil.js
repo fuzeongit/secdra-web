@@ -26,5 +26,19 @@ export default {
         radix ** i++ * chars.indexOf(numberCode.charAt(length - i) || 0)
     }
     return originNumber
+  },
+  /**
+   * 驼峰转横线
+   * @param str {String}
+   * @returns {String}
+   */
+  toLowerLine(str) {
+    let temp = str.replace(/[A-Z]/g, function(match) {
+      return "-" + match.toLowerCase()
+    })
+    if (temp.slice(0, 1) === "-") {
+      temp = temp.slice(1)
+    }
+    return temp
   }
 }

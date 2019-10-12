@@ -1,13 +1,39 @@
 import proxyUtil from "../util/proxyUtil"
 
 export function listConstant() {
-  return {
-    colNumber: 4,
-    colWidth: 250,
-    infoHeight: 80,
-    widthOffset: 24,
-    heightOffset: 24
-  }
+  const visualWidth = 1120
+  const pageGap = 24
+  const gap = 24
+  const colNumber = 4
+  return new Proxy(
+    {
+      pageGap,
+      gap,
+      visualWidth,
+      colNumber,
+      colWidth: null,
+      infoHeight: 80,
+      widthOffset: gap,
+      heightOffset: gap,
+      update(colNumber, gap) {
+        this.colNumber = colNumber
+        this.gap = gap
+      }
+    },
+    {
+      get(target, key) {
+        if (key === "colWidth") {
+          return (
+            (target.visualWidth - (target.colNumber + 1) * target.gap) /
+            target.colNumber
+          )
+        } else if (key === "widthOffset" || key === "heightOffset") {
+          return target.gap
+        }
+        return target[key]
+      }
+    }
+  )
 }
 
 export function hideFooterMenuConstant() {

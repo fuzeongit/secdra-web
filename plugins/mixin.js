@@ -14,6 +14,7 @@ import DatePicker from "../components/global/DatePicker/Main"
 import Tag from "../components/global/Tag"
 import Pageable from "../components/global/Pageable"
 import ScrollBox from "../components/global/ScrollBox"
+import Delay from "../components/global/Delay"
 import CheckboxGroup from "../components/form/CheckboxGroup"
 import Checkbox from "../components/form/Checkbox"
 import RadioGroup from "../components/form/RadioGroup"
@@ -47,6 +48,7 @@ Vue.component("Radio", Radio)
 Vue.component("Btn", Btn)
 Vue.component("Field", Field)
 Vue.component("DateInput", DateInput)
+Vue.component("Delay", Delay)
 
 Vue.prototype.$domain = process.env.domain
 Vue.prototype.$http = Http
