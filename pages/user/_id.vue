@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <SelfHome v-if="isSelf"></SelfHome>
+    <SelfHome v-if="self"></SelfHome>
     <OtherHome v-else :user="user" @follow="follow"></OtherHome>
     <CornerButtons></CornerButtons>
   </div>
@@ -19,7 +19,7 @@ export default {
     CornerButtons
   },
   computed: {
-    isSelf() {
+    self() {
       return this.$store.state.user.user.id === this.$route.params.id
     }
   },
@@ -28,20 +28,27 @@ export default {
   async asyncData({ store, redirect, route, $axios }) {
     const selfUser = store.state.user.user
     const taskList = []
-    taskList.push($axios.get(`/user/get`, { params: { id: route.params.id } }))
-    if (selfUser.id === route.params.id) {
+    taskList.push(
+      $axios.get(`/user/get`, {
+        params: { id: route.params.id || selfUser.id }
+      })
+    )
+    if (selfUser.id && selfUser.id === route.params.id) {
       taskList.push($axios.get(`/qiniu/getUploadToken`))
     }
     const resultList = (await Promise.all(taskList)).map((item) => item.data)
-
-    if (resultList[0].status !== 200) {
-      redirect(`/user/${selfUser.id}`)
+    if (resultList[0].status === 401) {
+      redirect(`/login?r=${route.fullPath}`)
+      return
     }
     const user = resultList[0].data
     if (selfUser.id === user.id) {
       store.commit("menu/MChangeName", "user")
       store.commit("user/MSetUserInfo", user)
-      store.commit("user/MSetUploadToken", resultList[1].data)
+      store.commit(
+        "user/MSetUploadToken",
+        resultList[1] ? resultList[1].data : null
+      )
     } else {
       store.commit("menu/MChangeName", "")
     }

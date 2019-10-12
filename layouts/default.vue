@@ -15,7 +15,7 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapActions } from "vuex"
+import { mapMutations, mapActions, mapState } from "vuex"
 import Header from "../components/pages/shared/Header"
 import ScrollBar from "../components/global/ScrollBar"
 import stompMixin from "../assets/script/mixin/stompMixin"
@@ -23,15 +23,21 @@ import { StompSubscribe } from "../assets/script/model"
 import Footer from "../components/pages/shared/Footer"
 
 export default {
-  middleware: ["auth", "messageRedirect"],
+  middleware: ["messageRedirect"],
   components: {
     Footer,
     Header,
     ScrollBar
   },
   mixins: [stompMixin],
+  computed: {
+    ...mapState("user", ["user"]),
+    signedIn() {
+      return this.user && this.user.id
+    }
+  },
   async mounted() {
-    this.countUnread()
+    this.signedIn && this.countUnread()
     await this.AStompConnect()
   },
   methods: {

@@ -46,6 +46,7 @@
 import { mapState } from "vuex"
 
 export default {
+  middleware: "auth",
   data() {
     return {
       menuList: {

@@ -182,7 +182,7 @@ export default {
       }
     }
   },
-  async asyncData({ store, route, $axios }) {
+  async asyncData({ store, redirect, route, $axios }) {
     store.commit("menu/MChangeName", "works")
     const pageable = new Pageable(
       route.params.page * 1 || 0,
@@ -197,6 +197,10 @@ export default {
         pageable
       )
     })
+    if (result.status === 401) {
+      redirect(`/login?r=${route.fullPath}`)
+      return
+    }
     return {
       pageable,
       page: result.data,

@@ -16,14 +16,14 @@
       </nuxt-link>
       <nuxt-link
         v-ripple
-        :to="`/collection/${user.id || ''}`"
+        :to="`/collection`"
         :class="{ active: activeName === `collection` }"
       >
         收藏
       </nuxt-link>
       <nuxt-link
         v-ripple
-        :to="`/works/${user.id || ''}`"
+        :to="`/works`"
         :class="{ active: activeName === `works` }"
       >
         作品
@@ -31,6 +31,7 @@
       <template>
         <div class="right-box">
           <nuxt-link
+            v-if="signedIn"
             v-tooltip="`通知信息`"
             v-ripple
             to="/message/comment"
@@ -42,8 +43,9 @@
             }}</span>
           </nuxt-link>
           <template>
-            <nuxt-link v-ripple :to="`/user/${user.id || ''}`" class="head-box">
+            <nuxt-link v-ripple :to="`/user`" class="head-box">
               <img
+                v-tooltip="signedIn ? `` : `登录`"
                 v-popover:popover
                 :src="$img.head(user.head, 'small50')"
                 width="30"
@@ -54,7 +56,12 @@
                 style="border-radius: 50%"
               />
             </nuxt-link>
-            <Popper ref="popover" trigger="hover" :visible-arrow="false">
+            <Popper
+              v-if="signedIn"
+              ref="popover"
+              trigger="hover"
+              :visible-arrow="false"
+            >
               <div class="head-popover">
                 <div
                   class="bk cover"
@@ -73,7 +80,7 @@
                   <li>
                     <nuxt-link
                       v-ripple
-                      :to="`/follower/${user.id || ''}`"
+                      :to="`/follower`"
                       :class="{ active: activeName === `follower` }"
                     >
                       <i class="icon ali-icon-friendfavor"></i>
@@ -83,7 +90,7 @@
                   <li>
                     <nuxt-link
                       v-ripple
-                      :to="`/following/${user.id || ''}`"
+                      :to="`/following`"
                       :class="{ active: activeName === `following` }"
                     >
                       <i class="icon ali-icon-friendadd"></i>
@@ -127,7 +134,7 @@
 
 <script>
 import Cookie from "js-cookie"
-import { mapActions, mapState } from "vuex"
+import { mapActions, mapMutations, mapState } from "vuex"
 import windowMixin from "../../../assets/script/mixin/windowMixin"
 
 export default {
@@ -149,6 +156,9 @@ export default {
   computed: {
     ...mapState("menu", { activeName: "name" }),
     ...mapState("user", ["user"]),
+    signedIn() {
+      return this.user && this.user.id
+    },
     messageCount() {
       return (
         this.$store.state.message.commentCount +
@@ -175,6 +185,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations("user", ["MSetUserInfo"]),
     ...mapActions("stomp", ["AStompDisconnect"]),
     search() {
       this.$router.push(`/draw/search/${this.tag}`)
@@ -184,8 +195,9 @@ export default {
         message: `你确定要退出登录吗？`,
         okCallback: async () => {
           await this.AStompDisconnect()
+          this.MSetUserInfo({})
           Cookie.remove("token")
-          this.$router.replace("/login")
+          this.$router.replace(`/login?r=${this.$route.fullPath}`)
         }
       })
     }

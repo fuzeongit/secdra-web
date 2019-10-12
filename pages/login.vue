@@ -1,7 +1,9 @@
 <template>
   <section class="container bk cover">
     <form class="card" @submit.prevent="login">
-      <img src="../assets/image/svg/logo.svg" />
+      <nuxt-link to="/" replace>
+        <img src="../assets/image/svg/logo.svg" />
+      </nuxt-link>
       <p class="sub-logo">想你所想</p>
       <div class="row input-group">
         <Field
@@ -40,7 +42,8 @@ export default {
       form: {
         phone: "",
         password: ""
-      }
+      },
+      r: this.$route.query.r || "/"
     }
   },
   mounted() {
@@ -63,7 +66,7 @@ export default {
       const result = await this.ASignIn({ phone, password })
       if (result.status === 200) {
         // Cookies.set("user", JSON.stringify(result.data), { expires: 30 })
-        this.$router.replace("/")
+        this.$router.replace(this.r)
       } else {
         this.loginLoading = false
         this.$notify({ message: result.message })

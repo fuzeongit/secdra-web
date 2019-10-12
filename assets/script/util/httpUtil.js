@@ -77,9 +77,11 @@ export default {
     if (response.data.status === 401) {
       Cookies.remove("token")
       try {
-        window.$nuxt.$router.replace("/login")
+        window.$nuxt.$router.replace(`/login?r=${window.$nuxt.$route.fullPath}`)
       } catch (e) {
-        window.location.href = "/login"
+        window.location.href = `/login?r=${
+          document.location.toString().split(window.location.host)[1]
+        }`
       }
     }
   }

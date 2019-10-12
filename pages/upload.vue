@@ -79,7 +79,7 @@ import ioUtil from "../assets/script/util/ioUtil"
 import { enumObjectList } from "../assets/script/constant"
 
 export default {
-  name: "Upload",
+  middleware: "auth",
   data() {
     return {
       drawUrl: "",

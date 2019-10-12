@@ -129,6 +129,7 @@ import { mapActions } from "vuex"
 import { Pageable } from "../../assets/script/model"
 
 export default {
+  middleware: "auth",
   async asyncData({ store, route, $axios }) {
     store.commit("menu/MChangeName", "footprint")
     const pageable = new Pageable(

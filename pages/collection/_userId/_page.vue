@@ -135,11 +135,11 @@ import { Pageable } from "../../../assets/script/model"
 
 export default {
   computed: {
-    isSelf() {
+    self() {
       return this.$store.state.user.user.id === this.$route.params.userId
     }
   },
-  async asyncData({ store, route, $axios }) {
+  async asyncData({ store, redirect, route, $axios }) {
     store.commit("menu/MChangeName", "collection")
     const pageable = new Pageable(
       route.params.page * 1 || 0,
@@ -154,6 +154,10 @@ export default {
         pageable
       )
     })
+    if (result.status === 401) {
+      redirect(`/login?r=${route.fullPath}`)
+      return
+    }
     return {
       pageable,
       page: result.data,

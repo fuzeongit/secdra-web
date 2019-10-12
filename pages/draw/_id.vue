@@ -213,6 +213,9 @@ export default {
   },
   computed: {
     ...mapState("user", ["user"]),
+    signedIn() {
+      return this.user && this.user.id
+    },
     proportion() {
       return this.draw.height / this.draw.width
     }
@@ -242,9 +245,9 @@ export default {
   },
   mounted() {
     // 写入足迹
-    if (this.status === 200) {
+    this.status === 200 &&
+      this.signedIn &&
       this.ASaveFootprint({ drawId: this.draw.id })
-    }
   },
   methods: {
     ...mapActions("draw", ["ACollection", "AUpdate"]),

@@ -12,6 +12,8 @@ export default {
       } else {
         return `${process.env.qiniuImg}/${url}`
       }
+    } else {
+      return require("../../../assets/image/svg/default-draw.svg")
     }
   },
   head(url, type) {
@@ -24,6 +26,8 @@ export default {
       } else {
         return `${process.env.qiniuHead}/${url}`
       }
+    } else {
+      return require("../../../assets/image/svg/default-head.svg")
     }
   },
   back(url, type, is) {
@@ -40,6 +44,8 @@ export default {
       } else {
         return `${process.env.qiniuBack}/${url}`
       }
+    } else {
+      return require("../../../assets/image/svg/default-draw.svg")
     }
   }
 }

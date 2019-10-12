@@ -37,7 +37,7 @@ import { Pageable } from "../../../assets/script/model"
 export default {
   // 在这里不能使用httpUtil
   // 并且嵌套层数超过不知道多少会报错-->坑死我了
-  async asyncData({ store, route, $axios }) {
+  async asyncData({ store, redirect, route, $axios }) {
     store.commit("menu/MChangeName", "following")
     const pageable = new Pageable(
       route.params.page * 1 || 0,
@@ -52,8 +52,9 @@ export default {
         pageable
       )
     })
-    if (result.status !== 200) {
-      throw new Error(result.message)
+    if (result.status === 401) {
+      redirect(`/login?r=${route.fullPath}`)
+      return
     }
     return {
       pageable,
