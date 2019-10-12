@@ -2,24 +2,24 @@
   <div
     class="list-content"
     :style="{
-      height: `${listContentOffset.height}px`
+      height: `${normalizedData.height}px`
     }"
   >
     <div
-      v-for="(draw, index) in list"
+      v-for="(draw, index) in normalizedData.list"
       :key="index"
       class="item card"
       :style="{
-        left: `${offset[index].left}px`,
-        top: `${offset[index].top}px`
+        left: `${draw.left}px`,
+        top: `${draw.top}px`
       }"
     >
       <nuxt-link v-ripple :to="`/draw/${draw.id}`" class="img-box">
         <img
           :src="$img.secdra(draw.url, `specifiedWidth`)"
           :style="{
-            width: listConstant.colWidth + `px`,
-            height: getHeight(draw) + `px`
+            width: listConstant.columnWidth + `px`,
+            height: draw.visualHeight + `px`
           }"
         />
       </nuxt-link>
@@ -48,7 +48,7 @@
       <div
         class="flex-box info-box"
         :style="{
-          width: listConstant.colWidth + `px`,
+          width: listConstant.columnWidth + `px`,
           height: listConstant.infoHeight + `px`
         }"
       >
@@ -83,9 +83,10 @@
       v-if="page.last"
       class="item last-card"
       :style="{
-        left: `${listContentOffset.lastCardLeft}px`,
-        top: `${listContentOffset.lastCardTop}px`,
-        width: listConstant.colWidth + `px`
+        left: `${normalizedData.lastLeft}px`,
+        top: `${normalizedData.lastTop}px`,
+        width: listConstant.columnWidth + `px`,
+        height: listConstant.lastCardHeight + `px`
       }"
     >
       <img src="../../../assets/image/error/404.jpg" />
@@ -120,59 +121,41 @@ export default {
     }
   },
   computed: {
-    // 计算偏移
-    offset() {
-      const o = []
-      const colNumberHeight = this.initColNumberHeight(this.listConstant)
-      // eslint-disable-next-line no-unused-vars
-      for (const draw of this.list) {
-        const minTopIndex = colNumberHeight.minIndex()
+    normalizedData() {
+      const list = []
+      const columnHeightList = new Array(this.listConstant.columnNumber).fill(0)
+      for (let i = 0; i < this.list.length; i++) {
+        const draw = this.list[i]
+        const minColumnHeight = columnHeightList.min()
+        const minColumnIndex = columnHeightList.minIndex()
         const left =
-          (1 + minTopIndex) * this.listConstant.widthOffset +
-          this.listConstant.colWidth * minTopIndex
-        const top =
-          colNumberHeight[minTopIndex] +
-          this.listConstant.pageGap -
-          this.listConstant.gap
-        colNumberHeight[minTopIndex] +=
-          (draw.height / draw.width) * this.listConstant.colWidth +
-          this.listConstant.heightOffset +
-          this.listConstant.infoHeight
-        o.push({ left, top })
+          this.listConstant.gap * (minColumnIndex + 1) +
+          this.listConstant.columnWidth * minColumnIndex
+        const top = minColumnHeight + this.listConstant.gap
+        const visualHeight =
+          (draw.height / draw.width) * this.listConstant.columnWidth
+        columnHeightList[minColumnIndex] =
+          visualHeight + this.listConstant.infoHeight + top
+        list.push(Object.assign(draw, { left, top, visualHeight }))
       }
-      return o
-    },
-    // 计算盒子属性
-    listContentOffset() {
-      const colNumberHeight = this.initColNumberHeight(this.listConstant)
-      let minIndex = 0
-      // eslint-disable-next-line no-unused-vars
-      for (const draw of this.list) {
-        colNumberHeight[minIndex] +=
-          (draw.height / draw.width) * this.listConstant.colWidth +
-          this.listConstant.heightOffset +
-          this.listConstant.infoHeight
-        minIndex = colNumberHeight.minIndex()
-      }
-      const offset = {
-        height: colNumberHeight.max()
-      }
+      let lastLeft = 0
+      let lastTop = 0
       if (this.page.last) {
-        const lastCardHeight = 300
-        offset.lastCardLeft =
-          (1 + minIndex) * this.listConstant.widthOffset +
-          this.listConstant.colWidth * minIndex
-        offset.lastCardTop = colNumberHeight.min()
-        const h =
-          colNumberHeight.min() +
-          lastCardHeight +
-          this.listConstant.heightOffset
-        if (h > offset.height) {
-          offset.height = h
-        }
-        return offset
-      } else {
-        return offset
+        const minColumnHeight = columnHeightList.min()
+        const minColumnIndex = columnHeightList.minIndex()
+        lastLeft =
+          this.listConstant.gap * (minColumnIndex + 1) +
+          this.listConstant.columnWidth * minColumnIndex
+        lastTop = minColumnHeight + this.listConstant.gap
+        columnHeightList[minColumnIndex] =
+          lastTop + this.listConstant.lastCardHeight
+      }
+      const height = columnHeightList.max() + this.listConstant.pageGap
+      return {
+        list,
+        height,
+        lastLeft,
+        lastTop
       }
     }
   },
@@ -185,19 +168,6 @@ export default {
         return
       }
       this.$emit("paging")
-    }
-  },
-  methods: {
-    // 初始化高度数组
-    initColNumberHeight(listConstant) {
-      const t = []
-      for (let i = 0; i < listConstant.colNumber; i++) {
-        t[i] = listConstant.heightOffset
-      }
-      return t
-    },
-    getHeight(draw) {
-      return (draw.height / draw.width) * this.listConstant.colWidth
     }
   }
 }
@@ -287,9 +257,10 @@ export default {
     }
   }
   .last-card {
-    height: 300px;
     img {
       width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 }

@@ -4,31 +4,35 @@ export function listConstant() {
   const visualWidth = 1120
   const pageGap = 24
   const gap = 24
-  const colNumber = 4
+  const columnNumber = 4
   return new Proxy(
     {
       pageGap,
       gap,
       visualWidth,
-      colNumber,
-      colWidth: null,
+      columnNumber,
+      columnWidth: null,
       infoHeight: 80,
-      widthOffset: gap,
-      heightOffset: gap,
-      update(colNumber, gap) {
-        this.colNumber = colNumber
+      lastCardHeightProportion: 1.2,
+      lastCardHeight: null,
+      update(columnNumber, gap) {
+        this.columnNumber = columnNumber
         this.gap = gap
       }
     },
     {
       get(target, key) {
-        if (key === "colWidth") {
+        if (key === "columnWidth") {
           return (
-            (target.visualWidth - (target.colNumber + 1) * target.gap) /
-            target.colNumber
+            (target.visualWidth - (target.columnNumber + 1) * target.gap) /
+            target.columnNumber
           )
-        } else if (key === "widthOffset" || key === "heightOffset") {
-          return target.gap
+        } else if (key === "lastCardHeight") {
+          return (
+            ((target.visualWidth - (target.columnNumber + 1) * target.gap) /
+              target.columnNumber) *
+            target.lastCardHeightProportion
+          )
         }
         return target[key]
       }
