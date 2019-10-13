@@ -15,6 +15,8 @@ import Tag from "../components/global/Tag"
 import Pageable from "../components/global/Pageable"
 import ScrollBox from "../components/global/ScrollBox"
 import Delay from "../components/global/Delay"
+import Carousel from "../components/global/Carousel"
+import CarouselItem from "../components/global/Carousel/item"
 import CheckboxGroup from "../components/form/CheckboxGroup"
 import Checkbox from "../components/form/Checkbox"
 import RadioGroup from "../components/form/RadioGroup"
@@ -41,6 +43,8 @@ Vue.component("DatePicker", DatePicker)
 Vue.component("Tag", Tag)
 Vue.component("Pageable", Pageable)
 Vue.component("ScrollBox", ScrollBox)
+Vue.component("Carousel", Carousel)
+Vue.component("CarouselItem", CarouselItem)
 Vue.component("CheckboxGroup", CheckboxGroup)
 Vue.component("Checkbox", Checkbox)
 Vue.component("RadioGroup", RadioGroup)

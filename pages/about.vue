@@ -14,12 +14,28 @@
         目前，网站已经具备正常网站的使用，注册功能已经实现，但是由于作者的资金和时间短缺，对于开放注册后的管理和维护未能够有效的管理，
         因此并不开放注册（同样的功能还有涉及上传等功能）。
       </p>
+
+      <Carousel v-model="m" height="100px">
+        <CarouselItem style="background: bisque"></CarouselItem>
+        <CarouselItem style="background: aliceblue"></CarouselItem>
+        <CarouselItem style="background: darkblue"></CarouselItem>
+        <CarouselItem style="background: gainsboro"></CarouselItem>
+        <CarouselItem style="background: brown"></CarouselItem>
+        <CarouselItem style="background: gold"></CarouselItem>
+        <CarouselItem style="background: orangered"></CarouselItem>
+      </Carousel>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      m: 2
+    }
+  }
+}
 </script>
 
 <style type="text/less" lang="less" scoped>
