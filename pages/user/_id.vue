@@ -59,6 +59,10 @@ export default {
       user
     }
   },
+  head() {
+    const title = this.self ? "我的个人中心" : this.user.name + "的个人中心"
+    return { title: title + " - Secdra" }
+  },
   methods: {
     ...mapActions("user", ["AFollow"]),
     async follow() {

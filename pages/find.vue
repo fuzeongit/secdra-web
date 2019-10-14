@@ -47,6 +47,9 @@ export default {
       pageable
     }
   },
+  head() {
+    return { title: "发现你喜欢的插画 - Secdra" }
+  },
   methods: {
     ...mapActions("draw", [
       "APagingByRecommend",

@@ -36,6 +36,9 @@ const layout = "login"
 export default {
   name: "Login",
   layout,
+  head() {
+    return { title: "登录 - Secdra" }
+  },
   data() {
     return {
       loginLoading: false,

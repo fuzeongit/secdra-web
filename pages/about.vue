@@ -19,7 +19,11 @@
 </template>
 
 <script>
-export default {}
+export default {
+  head() {
+    return { title: "关于本站 - Secdra" }
+  }
+}
 </script>
 
 <style type="text/less" lang="less" scoped>

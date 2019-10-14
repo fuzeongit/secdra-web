@@ -165,6 +165,12 @@ export default {
       selectList: []
     }
   },
+  head() {
+    // TODO
+    // const title = this.self ? "我收藏的插画" : this.user.name + "收藏的插画"
+    const title = "收藏的插画"
+    return { title: title + " - Secdra" }
+  },
   methods: {
     ...mapActions("draw", ["ACollection", "AUnCollection"]),
     ...mapActions("user", ["AFollow"]),

@@ -43,6 +43,9 @@ export default {
       }
     }
   },
+  head() {
+    return { title: "反馈 - Secdra" }
+  },
   methods: {
     ...mapActions("feedback", ["ASave"]),
     async save() {

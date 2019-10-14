@@ -212,6 +212,12 @@ export default {
       drawForm: new DrawForm()
     }
   },
+  head() {
+    // TODO
+    // const title = this.self ? "我的作品" : this.user.name + "的作品"
+    const title = "作品"
+    return { title: title + " - Secdra" }
+  },
   mounted() {
     this.$notify({
       message: `说是作品，其实都是从p站下载的，侵删`,

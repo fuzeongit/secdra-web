@@ -96,6 +96,9 @@ export default {
       }
     }
   },
+  head() {
+    return { title: "上传你的作品 - Secdra" }
+  },
   computed: {
     ...mapState("user", ["user", "uploadToken"]),
     proportion() {

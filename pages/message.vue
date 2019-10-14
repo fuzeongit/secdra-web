@@ -63,6 +63,9 @@ export default {
   },
   asyncData({ store }) {
     store.commit("menu/MChangeName", "message")
+  },
+  head() {
+    return { title: "信息中心 - Secdra" }
   }
 }
 </script>

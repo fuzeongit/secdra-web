@@ -62,6 +62,12 @@ export default {
       list: result.data.content
     }
   },
+  head() {
+    // TODO
+    // const title = this.self ? "我的粉丝" : this.user.name + "的粉丝"
+    const title = "粉丝"
+    return { title: title + " - Secdra" }
+  },
   methods: {
     paging(page) {
       this.$router.push(`/follower/${this.$route.params.userId}/${page}`)

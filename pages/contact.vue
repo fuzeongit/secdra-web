@@ -18,7 +18,11 @@
 </template>
 
 <script>
-export default {}
+export default {
+  head() {
+    return { title: "联系作者 - Secdra" }
+  }
+}
 </script>
 
 <style type="text/less" lang="less" scoped>

@@ -85,6 +85,9 @@ export default {
       filterForm
     }
   },
+  head() {
+    return { title: this.$route.params.tagList + "的搜索结果 - Secdra" }
+  },
   methods: {
     ...mapActions("draw", ["APaging", "ACollection"]),
     ...mapActions("user", ["AFollow"]),

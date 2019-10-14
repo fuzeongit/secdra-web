@@ -151,6 +151,9 @@ export default {
       list: result.data.content
     }
   },
+  head() {
+    return { title: "我的足迹 - Secdra" }
+  },
   methods: {
     ...mapActions("draw", ["ACollection"]),
     ...mapActions("user", ["AFollow"]),
