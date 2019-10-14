@@ -20,7 +20,10 @@ export default {
   },
   computed: {
     self() {
-      return this.$store.state.user.user.id === this.$route.params.id
+      return (
+        !this.$route.params.id ||
+        this.$store.state.user.user.id === this.$route.params.id
+      )
     }
   },
   // 在这里不能使用httpUtil

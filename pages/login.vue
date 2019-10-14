@@ -30,7 +30,7 @@
   </section>
 </template>
 <script>
-import { mapActions } from "vuex"
+import { mapMutations, mapActions } from "vuex"
 
 const layout = "login"
 export default {
@@ -48,6 +48,7 @@ export default {
   },
   mounted() {
     if (this.$root.layoutName === layout) {
+      this.MSetUserInfo({})
       this.$confirm({
         message: `暂时不开放注册，是否随机账号登录`,
         okCallback: () => {
@@ -58,6 +59,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations("user", ["MSetUserInfo"]),
     ...mapActions("user", ["ASignIn", "ASignUp", "AGet"]),
     async login() {
       const phone = this.form.phone

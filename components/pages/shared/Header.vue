@@ -134,7 +134,7 @@
 
 <script>
 import Cookie from "js-cookie"
-import { mapActions, mapMutations, mapState } from "vuex"
+import { mapActions, mapState } from "vuex"
 import windowMixin from "../../../assets/script/mixin/windowMixin"
 
 export default {
@@ -185,7 +185,6 @@ export default {
     }
   },
   methods: {
-    ...mapMutations("user", ["MSetUserInfo"]),
     ...mapActions("stomp", ["AStompDisconnect"]),
     search() {
       this.$router.push(`/draw/search/${this.tag}`)
@@ -195,7 +194,6 @@ export default {
         message: `你确定要退出登录吗？`,
         okCallback: async () => {
           await this.AStompDisconnect()
-          this.MSetUserInfo({})
           Cookie.remove("token")
           this.$router.replace(`/login?r=${this.$route.fullPath}`)
         }

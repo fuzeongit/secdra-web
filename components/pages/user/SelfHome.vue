@@ -427,8 +427,7 @@ export default {
       .btn {
         background-color: rgba(0, 0, 0, 0.3);
         i {
-          color: white;
-          opacity: 0.7;
+          color: @font-color-light-fade;
         }
       }
     }

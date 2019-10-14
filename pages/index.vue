@@ -142,6 +142,19 @@
           <h3 class="title">
             热门推荐
           </h3>
+          <Carousel class="tag-draw-carousel" height="200px">
+            <CarouselItem
+              v-for="(tagDraw, index) in tagDrawList"
+              :key="index"
+              v-tooltip="tagDraw.tag"
+            >
+              <nuxt-link
+                :to="`/draw/search/${encodeURIComponent(tagDraw.tag)}`"
+              >
+                <img :src="$img.secdra(tagDraw.url, 'specifiedWidth')" />
+              </nuxt-link>
+            </CarouselItem>
+          </Carousel>
           <div class="tag-list">
             <Btn
               v-for="(tag, index) in tagList"
@@ -179,7 +192,7 @@ export default {
   async asyncData({ store, $axios }) {
     store.commit("menu/MChangeName", "home")
     const taskList = []
-    taskList.push($axios.get(`/tag/listTagTop30`))
+    taskList.push($axios.get(`/tag/listTagAndDrawTop30`))
     taskList.push(
       $axios.get(`/draw/pagingByRecommend`, { params: new Pageable(0, 12) })
     )
@@ -189,8 +202,14 @@ export default {
       })
     )
     const resultList = (await Promise.all(taskList)).map((item) => item.data)
+    let tagDrawList = resultList[0].data
+    const tagList = tagDrawList
+      .filter((_, index) => index >= 4)
+      .map((item) => item.tag)
+    tagDrawList = tagDrawList.filter((_, index) => index < 4)
     return {
-      tagList: resultList[0].data,
+      tagList,
+      tagDrawList,
       likeList: resultList[1].data.content,
       newList: resultList[2].data.content
     }
@@ -326,6 +345,14 @@ export default {
   .tag-card {
     @spacing: 10px;
     padding: @spacing;
+    .tag-draw-carousel {
+      margin-bottom: 15px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
     .tag-list {
       margin-bottom: -@spacing;
       .btn {

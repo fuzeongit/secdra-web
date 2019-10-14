@@ -289,8 +289,7 @@ export default {
         background-color: rgba(0, 0, 0, 0.3);
 
         span {
-          color: white;
-          opacity: 0.7;
+          color: @font-color-light-fade;
         }
       }
     }
