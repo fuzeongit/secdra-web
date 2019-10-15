@@ -172,7 +172,10 @@ export default {
   },
   computed: {
     self() {
-      return this.$store.state.user.user.id === this.$route.params.userId
+      return (
+        !this.$route.params.userId ||
+        this.$store.state.user.user.id === this.$route.params.userId
+      )
     }
   },
   watch: {
@@ -184,27 +187,45 @@ export default {
   },
   async asyncData({ store, redirect, route, $axios }) {
     store.commit("menu/MChangeName", "works")
+    const myself = store.state.user.user
+    const taskList = []
     const pageable = new Pageable(
       route.params.page * 1 || 0,
       16,
       "createDate,desc"
     )
-    const { data: result } = await $axios.get(`/draw/paging`, {
-      params: Object.assign(
-        {
-          targetId: route.params.userId || store.state.user.user.id
-        },
-        pageable
-      )
-    })
-    if (result.status === 401) {
+    taskList.push(
+      $axios.get(`/user/get`, {
+        params: { id: route.params.userId || myself.id }
+      })
+    )
+    taskList.push(
+      $axios.get(`/draw/paging`, {
+        params: Object.assign(
+          {
+            targetId: route.params.userId || store.state.user.user.id
+          },
+          pageable
+        )
+      })
+    )
+    const resultList = (await Promise.all(taskList)).map((item) => item.data)
+    if (resultList[0].status === 401) {
       redirect(`/login?r=${route.fullPath}`)
       return
     }
+    const user = resultList[0].data
+    const page = resultList[1].data
+    if (myself.id === user.id) {
+      store.commit("menu/MChangeName", "following")
+    } else {
+      store.commit("menu/MChangeName", "")
+    }
     return {
+      user,
       pageable,
-      page: result.data,
-      list: result.data.content,
+      page,
+      list: page.content,
       selectList: [],
       editShow: false,
       editLoading: false,
@@ -213,9 +234,7 @@ export default {
     }
   },
   head() {
-    // TODO
-    // const title = this.self ? "我的作品" : this.user.name + "的作品"
-    const title = "作品"
+    const title = this.self ? "我的作品" : this.user.name + "的作品"
     return { title: title + " - Secdra" }
   },
   mounted() {

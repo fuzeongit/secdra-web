@@ -35,37 +35,60 @@
 import { Pageable } from "../../../assets/script/model"
 
 export default {
+  computed: {
+    self() {
+      return (
+        !this.$route.params.userId ||
+        this.$store.state.user.user.id === this.$route.params.userId
+      )
+    }
+  },
   // 在这里不能使用httpUtil
   // 并且嵌套层数超过不知道多少会报错-->坑死我了
   async asyncData({ store, redirect, route, $axios }) {
-    store.commit("menu/MChangeName", "follower")
+    const myself = store.state.user.user
+    const taskList = []
     const pageable = new Pageable(
       route.params.page * 1 || 0,
       16,
       "createDate,desc"
     )
-    const { data: result } = await $axios.get(`/follower/paging`, {
-      params: Object.assign(
-        {
-          id: route.params.userId
-        },
-        pageable
-      )
-    })
-    if (result.status === 401) {
+    taskList.push(
+      $axios.get(`/user/get`, {
+        params: { id: route.params.userId || myself.id }
+      })
+    )
+    taskList.push(
+      $axios.get(`/follower/paging`, {
+        params: Object.assign(
+          {
+            id: route.params.userId
+          },
+          pageable
+        )
+      })
+    )
+    const resultList = (await Promise.all(taskList)).map((item) => item.data)
+    if (resultList[0].status === 401) {
       redirect(`/login?r=${route.fullPath}`)
       return
     }
+    const user = resultList[0].data
+    const page = resultList[1].data
+    if (myself.id === user.id) {
+      store.commit("menu/MChangeName", "follower")
+    } else {
+      store.commit("menu/MChangeName", "")
+    }
     return {
+      user,
       pageable,
-      page: result.data,
-      list: result.data.content
+      page,
+      list: page.content
     }
   },
   head() {
-    // TODO
-    // const title = this.self ? "我的粉丝" : this.user.name + "的粉丝"
-    const title = "粉丝"
+    const title = this.self ? "我的粉丝" : this.user.name + "的粉丝"
     return { title: title + " - Secdra" }
   },
   methods: {

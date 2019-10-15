@@ -19,7 +19,6 @@ export const mutations = {
     try {
       state.user[attr] = value
     } catch (e) {
-      // TODO
       throw e
     }
   },

@@ -12,6 +12,15 @@
           <nuxt-link :to="`/contact`" class="primary-hover">联系作者</nuxt-link>
         </li>
         <li>
+          <a
+            href="https://github.com/JunJieFu"
+            target="_blank"
+            class="primary-hover"
+            rel="nofollow"
+            >Github</a
+          >
+        </li>
+        <li>
           <nuxt-link :to="`/agreement`" class="primary-hover">
             用户协议
           </nuxt-link>

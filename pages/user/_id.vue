@@ -27,16 +27,15 @@ export default {
     }
   },
   // 在这里不能使用httpUtil
-  // 并且嵌套层数超过不知道多少会报错-->坑死我了
   async asyncData({ store, redirect, route, $axios }) {
-    const selfUser = store.state.user.user
+    const myself = store.state.user.user
     const taskList = []
     taskList.push(
       $axios.get(`/user/get`, {
-        params: { id: route.params.id || selfUser.id }
+        params: { id: route.params.id || myself.id }
       })
     )
-    if (selfUser.id && selfUser.id === route.params.id) {
+    if (myself.id && myself.id === route.params.id) {
       taskList.push($axios.get(`/qiniu/getUploadToken`))
     }
     const resultList = (await Promise.all(taskList)).map((item) => item.data)
@@ -45,7 +44,7 @@ export default {
       return
     }
     const user = resultList[0].data
-    if (selfUser.id === user.id) {
+    if (myself.id === user.id) {
       store.commit("menu/MChangeName", "user")
       store.commit("user/MSetUserInfo", user)
       store.commit(
