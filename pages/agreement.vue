@@ -2,9 +2,9 @@
   <div class="page">
     <div class="content card">
       <h1 class="center">用户协议</h1>
-      <p style="text-align: center">富强、民主、文明、和谐，</p>
-      <p style="text-align: center">自由、平等、公正、法治，</p>
-      <p style="text-align: center">爱国、敬业、诚信、友善。</p>
+      <p class="center">富强、民主、文明、和谐，</p>
+      <p class="center">自由、平等、公正、法治，</p>
+      <p class="center">爱国、敬业、诚信、友善。</p>
     </div>
   </div>
 </template>
