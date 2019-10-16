@@ -7,7 +7,7 @@
     @mouseleave="hover = false"
   >
     <slot></slot>
-    <nav>
+    <nav v-if="indicator">
       <button
         v-for="index in count"
         :key="index - 1"
@@ -16,7 +16,7 @@
         @click.stop="change(index - 1 - normalizedIndex)"
       ></button>
     </nav>
-    <div class="tool">
+    <div v-if="arrow" class="tool">
       <transition
         name="fade"
         enter-active-class="fadeInDown duration"
@@ -104,6 +104,14 @@ export default {
     automaticTime: {
       type: Number,
       default: 5000
+    },
+    indicator: {
+      type: Boolean,
+      default: true
+    },
+    arrow: {
+      type: Boolean,
+      default: true
     }
   },
   data() {

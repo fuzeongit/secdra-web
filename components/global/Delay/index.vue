@@ -1,7 +1,7 @@
 <template>
   <component
     :is="tag"
-    :style="{ visibility: ready ? 'unset' : 'hidden' }"
+    :style="{ visibility: ready ? '' : 'hidden' }"
     :class="{ duration: operation, [animation]: operation }"
   >
     <slot></slot>
