@@ -26,14 +26,15 @@
               <div class="tool">
                 <Popper placement="top" trigger="hover">
                   <UserCard :user="draw.user" @follow="follow"></UserCard>
-                  <nuxt-link
-                    slot="reference"
-                    v-ripple
-                    :to="`/user/${draw.user.id}`"
-                    class="head-image"
-                  >
-                    <img :src="$img.head(draw.user.head, 'small50')" />
-                  </nuxt-link>
+                  <template #reference>
+                    <nuxt-link
+                      v-ripple
+                      :to="`/user/${draw.user.id}`"
+                      class="head-image"
+                    >
+                      <img :src="$img.head(draw.user.head, 'small50')" />
+                    </nuxt-link>
+                  </template>
                 </Popper>
                 <div class="tool-btn-group">
                   <Btn v-tooltip="`浏览`" flat icon small>
@@ -90,14 +91,15 @@
               <div class="tool">
                 <Popper placement="top" trigger="hover">
                   <UserCard :user="draw.user" @follow="follow"></UserCard>
-                  <nuxt-link
-                    slot="reference"
-                    v-ripple
-                    :to="`/user/${draw.user.id}`"
-                    class="head-image"
-                  >
-                    <img :src="$img.head(draw.user.head, 'small50')" />
-                  </nuxt-link>
+                  <template #reference>
+                    <nuxt-link
+                      v-ripple
+                      :to="`/user/${draw.user.id}`"
+                      class="head-image"
+                    >
+                      <img :src="$img.head(draw.user.head, 'small50')" />
+                    </nuxt-link>
+                  </template>
                 </Popper>
                 <div class="tool-btn-group">
                   <Btn v-tooltip="`浏览`" flat icon small>

@@ -33,9 +33,11 @@
             <Btn color="primary" @click="reset">重置</Btn>
           </div>
         </div>
-        <Btn slot="reference" icon big shadow color="white">
-          <i class="icon ali-icon-filter"></i>
-        </Btn>
+        <template #reference>
+          <Btn icon big shadow color="white">
+            <i class="icon ali-icon-filter"></i>
+          </Btn>
+        </template>
       </Popper>
     </CornerButtons>
   </div>

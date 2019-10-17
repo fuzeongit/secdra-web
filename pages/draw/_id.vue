@@ -122,15 +122,16 @@
                 @show="showTagPopper(`tag-ref-${index}`)"
               >
                 <TagCard :ref="`tag-ref-${index}`" :tag="tag"></TagCard>
-                <Btn
-                  slot="reference"
-                  outline
-                  small
-                  color="primary"
-                  :to="`/draw/search/${encodeURIComponent(tag)}`"
-                >
-                  {{ tag }}
-                </Btn>
+                <template #reference>
+                  <Btn
+                    outline
+                    small
+                    color="primary"
+                    :to="`/draw/search/${encodeURIComponent(tag)}`"
+                  >
+                    {{ tag }}
+                  </Btn>
+                </template>
               </Popper>
             </div>
           </div>

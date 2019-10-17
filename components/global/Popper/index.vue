@@ -11,13 +11,15 @@
         v-show="showPopper"
         ref="popper"
         class="card popper"
-        :style="{ width: width + 'px' }"
+        :style="{ width: width ? `${width}px` : `` }"
         role="tooltip"
       >
         <slot></slot>
       </div>
     </transition>
-    <slot name="reference"></slot>
+    <span ref="reference">
+      <slot name="reference"></slot>
+    </span>
   </span>
 </template>
 <script>
@@ -75,7 +77,6 @@ export default {
   mounted() {
     let reference = (this.referenceElm = this.reference || this.$refs.reference)
     const popper = this.popper || this.$refs.popper
-
     if (!reference && this.$slots.reference && this.$slots.reference[0]) {
       reference = this.referenceElm = this.$slots.reference[0].elm
     }

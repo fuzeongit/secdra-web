@@ -8,17 +8,18 @@
       :max="max"
       :min="min"
     ></DatePicker>
-    <Field
-      slot="reference"
-      v-model="normalizedDate"
-      :color="color"
-      :small="small"
-      :big="big"
-      :block="block"
-      :disabled="disabled"
-      :placeholder="placeholder"
-      readonly
-    ></Field>
+    <template #reference>
+      <Field
+        v-model="normalizedDate"
+        :color="color"
+        :small="small"
+        :big="big"
+        :block="block"
+        :disabled="disabled"
+        :placeholder="placeholder"
+        readonly
+      ></Field>
+    </template>
   </Popper>
 </template>
 

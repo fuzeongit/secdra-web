@@ -8,16 +8,11 @@
       shadow
       big
     >
-      <Btn
-        slot="right"
-        v-tooltip="`搜索`"
-        flat
-        icon
-        type="submit"
-        @click.stop="() => {}"
-      >
-        <i class="icon ali-icon-search"></i>
-      </Btn>
+      <template #right>
+        <Btn v-tooltip="`搜索`" flat icon type="submit" @click.stop="() => {}">
+          <i class="icon ali-icon-search"></i>
+        </Btn>
+      </template>
     </Field>
     <Popper
       ref="history"
