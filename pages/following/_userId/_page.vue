@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     paging(page) {
-      this.$router.push(`/following/${this.$route.params.userId}/${page}`)
+      this.$router.push(`/following/${this.user.id}/${page}`)
     }
   }
 }

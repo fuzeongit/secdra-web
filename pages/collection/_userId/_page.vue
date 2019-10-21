@@ -196,7 +196,7 @@ export default {
       return draw.height / draw.width
     },
     paging(page) {
-      this.$router.push(`/collection/${this.$route.params.userId}/${page}`)
+      this.$router.push(`/collection/${this.user.id}/${page}`)
     },
     async collection(draw) {
       const result = await this.ACollection({
