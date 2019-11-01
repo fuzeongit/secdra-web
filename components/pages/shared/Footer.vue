@@ -21,12 +21,13 @@
         </li>
         <li>
           <a
-            href="https://github.com/JunJieFu"
+            href="http://blog.secdra.com"
             target="_blank"
             class="primary-hover"
             rel="nofollow"
-            >Github</a
           >
+            Blog
+          </a>
         </li>
         <li>
           <a
@@ -34,8 +35,9 @@
             target="_blank"
             class="primary-hover"
             rel="nofollow"
-            >Github</a
           >
+            Github
+          </a>
         </li>
       </ul>
       <p>
