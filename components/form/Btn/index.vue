@@ -8,9 +8,9 @@
     :target="target"
     @click="_click"
   >
-    <div class="content">
+    <span class="content">
       <slot></slot>
-    </div>
+    </span>
   </nuxt-link>
   <label
     v-else-if="!to && type === `file`"
@@ -19,10 +19,10 @@
     :class="classObject"
     @click="_click"
   >
-    <div class="content">
+    <span class="content">
       <input type="file" @change="_change" />
       <slot></slot>
-    </div>
+    </span>
   </label>
   <button
     v-else
@@ -33,9 +33,9 @@
     :type="type"
     @click="_click"
   >
-    <div class="content">
+    <span class="content">
       <slot></slot>
-    </div>
+    </span>
   </button>
 </template>
 <script>
