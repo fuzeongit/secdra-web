@@ -35,7 +35,7 @@ export default {
         params: { id: route.params.id || myself.id }
       })
     )
-    if (myself.id && myself.id === route.params.id) {
+    if (!route.params.id || (myself.id && myself.id === route.params.id)) {
       taskList.push($axios.get(`/qiniu/getUploadToken`))
     }
     const resultList = (await Promise.all(taskList)).map((item) => item.data)
