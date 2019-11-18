@@ -58,7 +58,7 @@
               v-for="(draw, index) in worksList"
               :key="index"
               v-ripple
-              class="flex-box"
+              class="draw-item flex-box"
               :to="`/draw/${draw.id}`"
             >
               <img
