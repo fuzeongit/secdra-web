@@ -23,7 +23,7 @@
             </nuxt-link>
             <span>关注了我</span>
           </p>
-          <p class="time">{{ item.createDate }}</p>
+          <p class="time">{{ item.createDate | ago }}</p>
         </div>
       </div>
     </Delay>
@@ -73,9 +73,12 @@ export default {
       margin-top: 0;
     }
     .head-box {
-      border-radius: 50%;
       display: inline-block;
+      border-radius: 50%;
       img {
+        @size: 50px;
+        width: @size;
+        height: @size;
         border-radius: 50%;
       }
     }

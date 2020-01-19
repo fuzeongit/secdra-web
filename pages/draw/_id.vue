@@ -109,7 +109,9 @@
                 </Btn>
                 <span>{{ draw.likeAmount }}</span>
               </div>
-              <div class="col-30">创建于：{{ draw.createDate | date }}</div>
+              <div class="col-30">
+                创建于：{{ draw.createDate | date("YYYY-MM-DD hh:mm") }}
+              </div>
             </div>
           </div>
           <div class="card tag-card">

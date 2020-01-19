@@ -22,7 +22,7 @@
               作品
             </nuxt-link>
           </p>
-          <p class="time">{{ item.createDate }}</p>
+          <p class="time">{{ item.createDate | ago }}</p>
           <p class="content">
             {{ item.content }}
           </p>
@@ -72,9 +72,12 @@ export default {
       margin-top: 0;
     }
     .head-box {
-      border-radius: 50%;
       display: inline-block;
+      border-radius: 50%;
       img {
+        @size: 50px;
+        width: @size;
+        height: @size;
         border-radius: 50%;
       }
     }

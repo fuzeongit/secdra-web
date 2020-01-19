@@ -21,6 +21,7 @@
             color="primary"
           ></Checkbox>
           <Btn
+            v-if="!self"
             v-tooltip="
               draw.focus === $enum.CollectState.CONCERNED.key
                 ? `取消收藏`

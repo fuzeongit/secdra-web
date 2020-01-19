@@ -54,7 +54,7 @@
                 }"
               ></i>
             </p>
-            <p class="time">{{ item.createDate }}</p>
+            <p class="time">{{ item.createDate | ago }}</p>
             <p class="content">
               {{ item.content }}
             </p>
@@ -268,9 +268,12 @@ export default {
         border-top: 0;
       }
       .head-box {
-        border-radius: 50%;
         display: inline-block;
+        border-radius: 50%;
         img {
+          @size: 50px;
+          width: @size;
+          height: @size;
           border-radius: 50%;
         }
       }
@@ -293,18 +296,10 @@ export default {
         }
         .tool {
           user-select: none;
-          a {
-            user-select: none;
-            width: 100px;
+          i {
             display: inline-block;
             color: @theme-color;
-            font-size: @small-font-size;
-            margin-right: 15px;
-            i {
-              display: inline-block;
-              color: @theme-color;
-              margin-right: 3px;
-            }
+            margin-right: 3px;
           }
         }
       }

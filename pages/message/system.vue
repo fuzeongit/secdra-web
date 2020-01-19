@@ -11,7 +11,7 @@
           <p class="name">
             <span>{{ item.title }}</span>
           </p>
-          <p class="time">{{ item.createDate }}</p>
+          <p class="time">{{ item.createDate | ago }}</p>
           <div class="content" v-html="item.content"></div>
         </div>
       </div>

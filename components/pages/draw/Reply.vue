@@ -16,7 +16,7 @@
             {{ item.critic.name }}
           </nuxt-link>
         </p>
-        <p class="time">{{ item.createDate }}</p>
+        <p class="time">{{ item.createDate | ago }}</p>
         <p class="content">
           {{ item.content }}
         </p>
@@ -147,9 +147,12 @@ export default {
     padding: 10px 0 0;
     border-top: 1px solid @font-color-dark-line;
     .head-box {
-      border-radius: 50%;
       display: inline-block;
+      border-radius: 50%;
       img {
+        @size: 50px;
+        width: @size;
+        height: @size;
         border-radius: 50%;
       }
     }
