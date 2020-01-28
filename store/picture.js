@@ -14,15 +14,15 @@ export const mutations = {
 export const actions = {
   // 分页获取数据
   APaging(context, params) {
-    return httpUtil.get("/draw/paging", params)
+    return httpUtil.get("/picture/paging", params)
   },
   // 获取推荐列表
   AListByRecommend(context, params) {
-    return httpUtil.get("/draw/listByRecommend", params)
+    return httpUtil.get("/picture/listByRecommend", params)
   },
   // 分页获取推荐
   APagingByRecommend(context, params) {
-    return httpUtil.get("/draw/pagingByRecommend", params)
+    return httpUtil.get("/picture/pagingByRecommend", params)
   },
   // 获取分页收藏
   APagingCollection(context, params) {
@@ -38,22 +38,22 @@ export const actions = {
   },
   // 按标签获取第一张图片
   AGetFirstByTag(context, params) {
-    return httpUtil.get("/draw/getFirstByTag", params)
+    return httpUtil.get("/picture/getFirstByTag", params)
   },
   // 统计标签
   ACountByTag(context, params) {
-    return httpUtil.get("/draw/countByTag", params)
+    return httpUtil.get("/picture/countByTag", params)
   },
   // 保存图片
   ASave(context, params) {
-    return httpUtil.post("/draw/save", params)
+    return httpUtil.post("/picture/save", params)
   },
   // 保存图片
   AUpdate(context, params) {
-    return httpUtil.post("/draw/update", params)
+    return httpUtil.post("/picture/update", params)
   },
   // 批量更新图片
   ABatchUpdate(context, params) {
-    return httpUtil.post("/draw/batchUpdate", params)
+    return httpUtil.post("/picture/batchUpdate", params)
   }
 }

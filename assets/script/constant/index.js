@@ -63,7 +63,7 @@ export const enumObjectList = {
     PUBLIC: "公开",
     PRIVATE: "隐藏"
   }),
-  DrawLifeState: proxyUtil.enumProxy({
+  PictureLifeState: proxyUtil.enumProxy({
     DISAPPEAR: "不存在",
     EXIST: "正常"
   })

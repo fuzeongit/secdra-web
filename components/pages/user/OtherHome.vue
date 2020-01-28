@@ -42,7 +42,7 @@
           </p>
         </div>
       </div>
-      <div class="draw-box">
+      <div class="picture-box">
         <div v-loading="worksLoading" class="works-box">
           <h3 class="line center">
             <span
@@ -51,19 +51,19 @@
               }}的作品</span
             >
           </h3>
-          <div v-if="worksList.length" class="draw-list">
+          <div v-if="worksList.length" class="picture-list">
             <nuxt-link
-              v-for="(draw, index) in worksList"
+              v-for="(picture, index) in worksList"
               :key="index"
               v-ripple
-              class="draw-item flex-box"
-              :to="`/draw/${draw.id}`"
+              class="picture-item flex-box"
+              :to="`/picture/${picture.id}`"
             >
               <img
-                :src="$img.secdra(draw.url, `specifiedWidth`)"
+                :src="$img.secdra(picture.url, `specifiedWidth`)"
                 :style="{
-                  height: getProportion(draw) >= 1 ? `100%` : `auto`,
-                  width: getProportion(draw) <= 1 ? `100%` : `auto`
+                  height: getProportion(picture) >= 1 ? `100%` : `auto`,
+                  width: getProportion(picture) <= 1 ? `100%` : `auto`
                 }"
               />
             </nuxt-link>
@@ -92,19 +92,19 @@
               }}的收藏</span
             >
           </h3>
-          <div v-if="collectionList.length" class="draw-list">
+          <div v-if="collectionList.length" class="picture-list">
             <nuxt-link
-              v-for="(draw, index) in collectionList"
+              v-for="(picture, index) in collectionList"
               :key="index"
               v-ripple
-              class="draw-item flex-box"
-              :to="`/draw/${draw.id}`"
+              class="picture-item flex-box"
+              :to="`/picture/${picture.id}`"
             >
               <img
-                :src="$img.secdra(draw.url, `specifiedWidth`)"
+                :src="$img.secdra(picture.url, `specifiedWidth`)"
                 :style="{
-                  height: getProportion(draw) >= 1 ? `100%` : `auto`,
-                  width: getProportion(draw) <= 1 ? `100%` : `auto`
+                  height: getProportion(picture) >= 1 ? `100%` : `auto`,
+                  width: getProportion(picture) <= 1 ? `100%` : `auto`
                 }"
               />
             </nuxt-link>
@@ -213,9 +213,9 @@ export default {
   },
   methods: {
     ...mapActions("user", ["APagingByFollowerId"]),
-    ...mapActions("draw", ["APagingCollection", "APaging"]),
-    getProportion(draw) {
-      return draw.height / draw.width
+    ...mapActions("picture", ["APagingCollection", "APaging"]),
+    getProportion(picture) {
+      return picture.height / picture.width
     },
     async pagingWorks() {
       this.worksLoading = true
@@ -364,9 +364,9 @@ export default {
     }
   }
 
-  .draw-box {
-    @draw-box-padding: 50px;
-    padding: 30px @draw-box-padding;
+  .picture-box {
+    @picture-box-padding: 50px;
+    padding: 30px @picture-box-padding;
 
     .line {
       width: 100%;
@@ -419,18 +419,18 @@ export default {
       }
     }
 
-    .draw-list {
+    .picture-list {
       @column-number: 4;
       @gap: 20px;
       @size: (
-          @visual-width - @draw-box-padding * 2 - (@column-number - 1) * @gap
+          @visual-width - @picture-box-padding * 2 - (@column-number - 1) * @gap
         ) / @column-number;
       display: grid;
       grid-gap: @gap;
       grid-template-columns: repeat(@column-number, @size);
       padding: @gap 0;
 
-      .draw-item {
+      .picture-item {
         overflow: hidden;
         transition: @default-animate-time;
         position: relative;
@@ -442,7 +442,7 @@ export default {
       @column-number: 4;
       @gap: 20px;
       @size: (
-          @visual-width - @draw-box-padding * 2 - (@column-number - 1) * @gap
+          @visual-width - @picture-box-padding * 2 - (@column-number - 1) * @gap
         ) / @column-number;
       display: grid;
       grid-gap: @gap;

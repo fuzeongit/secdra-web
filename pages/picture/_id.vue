@@ -5,14 +5,17 @@
         <div class="left-box">
           <div class="card img-card flex-box">
             <img
-              :src="$img.secdra(draw.url)"
+              :src="$img.secdra(picture.url)"
               :style="{
                 height: proportion >= 1 ? `100%` : `auto`,
                 width: proportion <= 1 ? `100%` : `auto`
               }"
             />
           </div>
-          <Comment :user-id="draw.user.id" :draw-id="draw.id"></Comment>
+          <Comment
+            :user-id="picture.user.id"
+            :picture-id="picture.id"
+          ></Comment>
         </div>
         <div class="right-box">
           <div class="card user-card ">
@@ -20,7 +23,7 @@
               class="user-bk cover"
               :style="{
                 backgroundImage: `url(${$img.back(
-                  draw.user.background,
+                  picture.user.background,
                   `backCard`
                 )})`
               }"
@@ -29,38 +32,43 @@
               <div class="flex-box">
                 <nuxt-link
                   v-ripple
-                  :to="`/user/${draw.user.id}`"
+                  :to="`/user/${picture.user.id}`"
                   class="head-box center"
                 >
-                  <img :src="$img.head(draw.user.head, 'small100')" />
+                  <img :src="$img.head(picture.user.head, 'small100')" />
                 </nuxt-link>
                 <div class="user-info-box">
                   <p class="nickname">
                     <nuxt-link
-                      :to="`/user/${draw.user.id}`"
+                      :to="`/user/${picture.user.id}`"
                       class="primary-hover"
-                      >{{ draw.user.name }}</nuxt-link
+                      >{{ picture.user.name }}</nuxt-link
                     >
                   </p>
                   <p
-                    v-tooltip:150="draw.user.introduction"
+                    v-tooltip:150="picture.user.introduction"
                     class="introduction"
                   >
-                    {{ draw.user.introduction }}
+                    {{ picture.user.introduction }}
                   </p>
                 </div>
               </div>
               <div style="margin-top: 20px;">
                 <Btn
-                  v-if="draw.user.focus === $enum.FollowState.SElF.key"
+                  v-if="picture.user.focus === $enum.FollowState.SElF.key"
                   block
                   color="primary"
                   @click="editShow = true"
                   >编辑</Btn
                 >
-                <Btn v-else block color="primary" @click="follow(draw.user.id)">
+                <Btn
+                  v-else
+                  block
+                  color="primary"
+                  @click="follow(picture.user.id)"
+                >
                   {{
-                    draw.user.focus === $enum.FollowState.CONCERNED.key
+                    picture.user.focus === $enum.FollowState.CONCERNED.key
                       ? `已关注`
                       : `关注`
                   }}
@@ -70,20 +78,20 @@
           </div>
           <div class="card info-card">
             <h3 class="name">
-              <strong>{{ draw.name }}</strong>
+              <strong>{{ picture.name }}</strong>
             </h3>
-            <p class="introduction">{{ draw.introduction }}</p>
+            <p class="introduction">{{ picture.introduction }}</p>
             <div class="row tool-btn-group" style="margin-top: 5px;">
               <div class="col-15 flex-text">
                 <Btn v-tooltip="`浏览`" flat icon small>
                   <i class="icon ali-icon-attention"></i>
                 </Btn>
-                <span>{{ draw.viewAmount }}</span>
+                <span>{{ picture.viewAmount }}</span>
               </div>
               <div class="col-15 flex-text">
                 <Btn
                   v-tooltip="
-                    draw.focus === $enum.CollectState.CONCERNED.key
+                    picture.focus === $enum.CollectState.CONCERNED.key
                       ? `取消收藏`
                       : `收藏`
                   "
@@ -91,33 +99,33 @@
                   icon
                   small
                   :color="
-                    draw.focus === $enum.CollectState.CONCERNED.key
+                    picture.focus === $enum.CollectState.CONCERNED.key
                       ? `red`
                       : `default`
                   "
-                  @click="collection(draw)"
+                  @click="collection(picture)"
                 >
                   <i
                     class="icon"
                     :class="{
                       'ali-icon-likefill':
-                        draw.focus === $enum.CollectState.CONCERNED.key,
+                        picture.focus === $enum.CollectState.CONCERNED.key,
                       'ali-icon-like':
-                        draw.focus !== $enum.CollectState.CONCERNED.key
+                        picture.focus !== $enum.CollectState.CONCERNED.key
                     }"
                   ></i>
                 </Btn>
-                <span>{{ draw.likeAmount }}</span>
+                <span>{{ picture.likeAmount }}</span>
               </div>
               <div class="col-30">
-                创建于：{{ draw.createDate | date("YYYY-MM-DD hh:mm") }}
+                创建于：{{ picture.createDate | date("YYYY-MM-DD hh:mm") }}
               </div>
             </div>
           </div>
           <div class="card tag-card">
             <div class="tag-list">
               <Popper
-                v-for="(tag, index) in draw.tagList"
+                v-for="(tag, index) in picture.tagList"
                 :key="index"
                 trigger="hover"
                 placement="top"
@@ -129,7 +137,7 @@
                     outline
                     small
                     color="primary"
-                    :to="`/draw/search/${encodeURIComponent(tag)}`"
+                    :to="`/picture/search/${encodeURIComponent(tag)}`"
                   >
                     {{ tag }}
                   </Btn>
@@ -148,12 +156,12 @@
         <ScrollBox class="edit-dialog-content">
           <div class="input-group">
             <h5 class="sub-name">名称：</h5>
-            <Field v-model="drawForm.name" block color="primary"></Field>
+            <Field v-model="pictureForm.name" block color="primary"></Field>
           </div>
           <div class="input-group">
             <h5 class="sub-name">简介：</h5>
             <Field
-              v-model="drawForm.introduction"
+              v-model="pictureForm.introduction"
               block
               color="primary"
               type="textarea"
@@ -161,7 +169,7 @@
           </div>
           <div class="input-group">
             <h5 class="sub-name">私密：</h5>
-            <RadioGroup v-model="drawForm.privacy">
+            <RadioGroup v-model="pictureForm.privacy">
               <Radio
                 v-for="item in $enum.PrivacyState"
                 :key="item.key"
@@ -186,12 +194,12 @@
     </template>
     <template v-else-if="status === 403">
       <div class="card empty">
-        <img src="../../assets/image/svg/default-draw.svg" />
+        <img src="../../assets/image/svg/default-picture.svg" />
       </div>
     </template>
     <template v-else-if="status === 404">
       <div class="card empty">
-        <img src="../../assets/image/svg/default-draw.svg" />
+        <img src="../../assets/image/svg/default-picture.svg" />
       </div>
     </template>
   </div>
@@ -200,7 +208,7 @@
 <script>
 import { mapActions, mapState } from "vuex"
 import TagCard from "../../components/pages/shared/TagCard"
-import Comment from "../../components/pages/draw/Comment"
+import Comment from "../../components/pages/picture/Comment"
 import { CommentForm } from "../../assets/script/model"
 export default {
   components: {
@@ -220,28 +228,28 @@ export default {
       return this.user && this.user.id
     },
     proportion() {
-      return this.draw.height / this.draw.width
+      return this.picture.height / this.picture.width
     }
   },
   async asyncData({ store, route, $axios }) {
     store.commit("menu/MChangeName", "")
     const id = route.params.id
-    const res = await $axios.get(`/draw/get`, {
+    const res = await $axios.get(`/picture/get`, {
       params: { id }
     })
     const result = res.data
-    let drawForm
+    let pictureForm
     let inputTag
     let commentForm
     if (result.status === 200) {
-      drawForm = Object.assign({}, result.data)
-      inputTag = drawForm.tagList.join(" ")
+      pictureForm = Object.assign({}, result.data)
+      inputTag = pictureForm.tagList.join(" ")
       commentForm = new CommentForm(result.data.user.id, result.data.id)
     }
     return {
       status: result.status,
-      draw: result.data,
-      drawForm,
+      picture: result.data,
+      pictureForm,
       inputTag,
       commentForm
     }
@@ -249,7 +257,7 @@ export default {
   head() {
     let title = "想你所想 - Secdra"
     if (this.status === 200) {
-      title = this.draw.name + " - Secdra"
+      title = this.picture.name + " - Secdra"
     } else if (this.status === 403) {
       title = "无权查看该图片"
     } else if (this.status === 404) {
@@ -261,10 +269,10 @@ export default {
     // 写入足迹
     this.status === 200 &&
       this.signedIn &&
-      this.ASaveFootprint({ drawId: this.draw.id })
+      this.ASaveFootprint({ pictureId: this.picture.id })
   },
   methods: {
-    ...mapActions("draw", ["ACollection", "AUpdate"]),
+    ...mapActions("picture", ["ACollection", "AUpdate"]),
     ...mapActions("footprint", { ASaveFootprint: "ASave" }),
     ...mapActions("user", ["AFollow"]),
     showTagPopper(refId) {
@@ -275,19 +283,19 @@ export default {
       if (Array.isArray(ref)) {
         ref = ref[0]
       }
-      if (ref && ref.draw === null) {
+      if (ref && ref.picture === null) {
         ref.load()
       }
     },
-    async collection(draw) {
+    async collection(picture) {
       const result = await this.ACollection({
-        drawId: draw.id
+        pictureId: picture.id
       })
       if (result.status !== 200) {
         this.$notify({ message: result.message })
         return
       }
-      draw.focus = result.data
+      picture.focus = result.data
     },
     async follow(id) {
       const result = await this.AFollow({
@@ -297,13 +305,13 @@ export default {
         this.$notify({ message: result.message })
         return
       }
-      this.draw.user.focus = result.data
+      this.picture.user.focus = result.data
     },
     async save() {
       this.editLoading = true
       const tagList = this.inputTag.split(" ").filter((item) => item !== "")
-      this.drawForm.tagList = [...new Set(tagList)]
-      const result = await this.AUpdate(this.drawForm)
+      this.pictureForm.tagList = [...new Set(tagList)]
+      const result = await this.AUpdate(this.pictureForm)
       this.editLoading = false
       if (result.status !== 200) {
         this.$notify({ message: result.message })
@@ -311,11 +319,11 @@ export default {
       }
       this.$notify({ message: `修改成功` })
       this.editShow = false
-      this.draw = result.data
+      this.picture = result.data
       this.reset()
     },
     reset() {
-      this.drawForm = Object.assign({}, this.draw)
+      this.pictureForm = Object.assign({}, this.picture)
     }
   }
 }

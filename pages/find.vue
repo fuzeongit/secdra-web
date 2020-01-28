@@ -1,13 +1,13 @@
 <template>
   <div class="page">
-    <DrawList
+    <PictureList
       :page="page"
       :list="list"
       :page-loading="pageLoading"
       @paging="paging"
       @collection="collection"
       @follow="follow"
-    ></DrawList>
+    ></PictureList>
     <CornerButtons> </CornerButtons>
   </div>
 </template>
@@ -15,12 +15,12 @@
 <script>
 import { mapActions } from "vuex"
 import { Pageable } from "../assets/script/model"
-import DrawList from "../components/pages/shared/DrawList"
+import PictureList from "../components/pages/shared/PictureList"
 import CornerButtons from "../components/pages/shared/CornerButtons"
 
 export default {
   components: {
-    DrawList,
+    PictureList,
     CornerButtons
   },
   data() {
@@ -33,7 +33,7 @@ export default {
   async asyncData({ store, route, $axios }) {
     store.commit("menu/MChangeName", "find")
     const pageable = new Pageable(0, 16)
-    const { data: result } = await $axios.get(`/draw/pagingByRecommend`, {
+    const { data: result } = await $axios.get(`/picture/pagingByRecommend`, {
       params: Object.assign(
         {
           tag: route.params.tag
@@ -51,7 +51,7 @@ export default {
     return { title: "发现你喜欢的插画 - Secdra" }
   },
   methods: {
-    ...mapActions("draw", [
+    ...mapActions("picture", [
       "APagingByRecommend",
       "AListByRecommend",
       "ACollection"
@@ -85,15 +85,15 @@ export default {
       this.page = data
       this.list.push(...data.content)
     },
-    async collection(draw) {
+    async collection(picture) {
       const result = await this.ACollection({
-        drawId: draw.id
+        pictureId: picture.id
       })
       if (result.status !== 200) {
         this.$notify({ message: result.message })
         return
       }
-      draw.focus = result.data
+      picture.focus = result.data
     },
     async follow(id) {
       const result = await this.AFollow({

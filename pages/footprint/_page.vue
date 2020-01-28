@@ -1,71 +1,79 @@
 <template>
   <div class="page">
     <div class="content">
-      <div v-for="(draw, index) in list" :key="index" class="card ">
+      <div v-for="(picture, index) in list" :key="index" class="card ">
         <template
           v-if="
-            draw.life === $enum.DrawLifeState.EXIST.key &&
-              draw.privacy === $enum.PrivacyState.PUBLIC.key
+            picture.life === $enum.PictureLifeState.EXIST.key &&
+              picture.privacy === $enum.PrivacyState.PUBLIC.key
           "
         >
-          <nuxt-link v-ripple :to="`/draw/${draw.id}`" class="img-box flex-box">
+          <nuxt-link
+            v-ripple
+            :to="`/picture/${picture.id}`"
+            class="img-box flex-box"
+          >
             <img
-              :src="$img.secdra(draw.url, `specifiedWidth`)"
+              :src="$img.secdra(picture.url, `specifiedWidth`)"
               :style="{
-                height: getProportion(draw) >= 1 ? `100%` : `auto`,
-                width: getProportion(draw) <= 1 ? `100%` : `auto`
+                height: getProportion(picture) >= 1 ? `100%` : `auto`,
+                width: getProportion(picture) <= 1 ? `100%` : `auto`
               }"
             />
           </nuxt-link>
           <div class="tool">
             <Btn
               v-tooltip="
-                draw.focus === $enum.CollectState.CONCERNED.key
+                picture.focus === $enum.CollectState.CONCERNED.key
                   ? `取消收藏`
                   : `收藏`
               "
               flat
               icon
               :color="
-                draw.focus === $enum.CollectState.CONCERNED.key
+                picture.focus === $enum.CollectState.CONCERNED.key
                   ? `red`
                   : `default`
               "
               small
-              @click.stop="collection(draw)"
+              @click.stop="collection(picture)"
             >
               <i
                 class="icon"
                 :class="{
                   'ali-icon-likefill':
-                    draw.focus === $enum.CollectState.CONCERNED.key,
+                    picture.focus === $enum.CollectState.CONCERNED.key,
                   'ali-icon-like':
-                    draw.focus !== $enum.CollectState.CONCERNED.key
+                    picture.focus !== $enum.CollectState.CONCERNED.key
                 }"
               ></i>
             </Btn>
           </div>
-          <div v-if="draw.user.id" class="flex-box info-box">
-            <nuxt-link v-ripple :to="`/user/${draw.user.id}`" class="head-box">
-              <img :src="$img.head(draw.user.head, 'small50')" />
+          <div v-if="picture.user.id" class="flex-box info-box">
+            <nuxt-link
+              v-ripple
+              :to="`/user/${picture.user.id}`"
+              class="head-box"
+            >
+              <img :src="$img.head(picture.user.head, 'small50')" />
             </nuxt-link>
             <div class="user-info-box">
               <p class="nickname">
-                {{ draw.user.name }}
+                {{ picture.user.name }}
               </p>
               <p class="introduction">
-                {{ draw.user.introduction }}
+                {{ picture.user.introduction }}
               </p>
             </div>
             <div class="follow-box flex-box">
               <Btn
                 block
                 color="primary"
-                :disabled="draw.user.focus === $enum.FollowState.SElF.key"
-                @click="follow(draw.user.id)"
+                :disabled="picture.user.focus === $enum.FollowState.SElF.key"
+                @click="follow(picture.user.id)"
               >
                 {{
-                  draw.user.focus === $enum.FollowState.CONCERNED.key
+                  picture.user.focus === $enum.FollowState.CONCERNED.key
                     ? `已关注`
                     : `关注`
                 }}
@@ -76,7 +84,7 @@
         <template v-else>
           <div class="img-box flex-box">
             <img
-              src="../../assets/image/svg/default-draw.svg"
+              src="../../assets/image/svg/default-picture.svg"
               class="cover"
               style="width: 100%;height: 100%"
             />
@@ -86,20 +94,20 @@
               flat
               icon
               :color="
-                draw.focus === $enum.CollectState.CONCERNED.key
+                picture.focus === $enum.CollectState.CONCERNED.key
                   ? `primary`
                   : `default`
               "
               small
-              @click.stop="collection(draw)"
+              @click.stop="collection(picture)"
             >
               <i
                 class="icon"
                 :class="{
                   'ali-icon-likefill':
-                    draw.focus === $enum.CollectState.CONCERNED.key,
+                    picture.focus === $enum.CollectState.CONCERNED.key,
                   'ali-icon-like':
-                    draw.focus !== $enum.CollectState.CONCERNED.key
+                    picture.focus !== $enum.CollectState.CONCERNED.key
                 }"
               ></i>
             </Btn>
@@ -155,23 +163,23 @@ export default {
     return { title: "我的足迹 - Secdra" }
   },
   methods: {
-    ...mapActions("draw", ["ACollection"]),
+    ...mapActions("picture", ["ACollection"]),
     ...mapActions("user", ["AFollow"]),
-    getProportion(draw) {
-      return draw.height / draw.width
+    getProportion(picture) {
+      return picture.height / picture.width
     },
     paging(page) {
       this.$router.push(`/footprint/${page}`)
     },
-    async collection(draw) {
+    async collection(picture) {
       const result = await this.ACollection({
-        drawId: draw.id
+        pictureId: picture.id
       })
       if (result.status !== 200) {
         this.$notify({ message: result.message })
         return
       }
-      draw.focus = result.data
+      picture.focus = result.data
     },
     async follow(id) {
       const result = await this.AFollow({

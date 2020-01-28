@@ -107,7 +107,7 @@
               :ref="item.id"
               :key="index"
               :comment-id="item.id"
-              :draw-id="drawId"
+              :picture-id="pictureId"
               :author-id="userId"
               :critic-id="item.criticId"
             ></Reply>
@@ -143,14 +143,14 @@ export default {
       type: String,
       default: null
     },
-    drawId: {
+    pictureId: {
       type: String,
       default: null
     }
   },
   data() {
     return {
-      commentForm: new CommentForm(this.userId, this.drawId),
+      commentForm: new CommentForm(this.userId, this.pictureId),
       replyForm: {},
       loading: true,
       loadingMore: false,
@@ -176,7 +176,7 @@ export default {
     },
     async listTop4() {
       this.loading = true
-      const result = await this.AListTop4({ drawId: this.drawId })
+      const result = await this.AListTop4({ pictureId: this.pictureId })
       if (result.status !== 200) {
         this.$notify({ message: result.message })
         return
@@ -186,7 +186,7 @@ export default {
         this.$set(
           this.replyForm,
           item.id,
-          new ReplyForm("", this.drawId, this.userId)
+          new ReplyForm("", this.pictureId, this.userId)
         )
         return Object.assign(item, {
           replyInputShow: false,
@@ -197,7 +197,7 @@ export default {
     },
     async listAll() {
       this.loading = true
-      const result = await this.AList({ drawId: this.drawId })
+      const result = await this.AList({ pictureId: this.pictureId })
       if (result.status !== 200) {
         this.$notify({ message: result.message })
         return
@@ -208,7 +208,7 @@ export default {
         this.$set(
           this.replyForm,
           item.id,
-          new ReplyForm("", this.drawId, this.userId)
+          new ReplyForm("", this.pictureId, this.userId)
         )
         return Object.assign(item, {
           replyInputShow: false,
@@ -241,7 +241,7 @@ export default {
       this.$set(
         this.replyForm,
         item.id,
-        new ReplyForm("", this.drawId, this.userId)
+        new ReplyForm("", this.pictureId, this.userId)
       )
     }
   }

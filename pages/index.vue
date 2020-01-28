@@ -14,25 +14,25 @@
             <Btn round flat small color="primary" to="/find"> 更多>></Btn>
           </h3>
           <div class="image-grid-row">
-            <div v-for="(draw, index) in likeList" :key="index" class="item">
+            <div v-for="(picture, index) in likeList" :key="index" class="item">
               <div class="img-box">
-                <nuxt-link v-ripple :to="`/draw/${draw.id}`">
+                <nuxt-link v-ripple :to="`/picture/${picture.id}`">
                   <img
-                    :src="$img.secdra(draw.url, 'specifiedWidth')"
+                    :src="$img.secdra(picture.url, 'specifiedWidth')"
                     class="cover"
                   />
                 </nuxt-link>
               </div>
               <div class="tool">
                 <Popper placement="top" trigger="hover">
-                  <UserCard :user="draw.user" @follow="follow"></UserCard>
+                  <UserCard :user="picture.user" @follow="follow"></UserCard>
                   <template #reference>
                     <nuxt-link
                       v-ripple
-                      :to="`/user/${draw.user.id}`"
+                      :to="`/user/${picture.user.id}`"
                       class="head-image"
                     >
-                      <img :src="$img.head(draw.user.head, 'small50')" />
+                      <img :src="$img.head(picture.user.head, 'small50')" />
                     </nuxt-link>
                   </template>
                 </Popper>
@@ -40,34 +40,34 @@
                   <Btn v-tooltip="`浏览`" flat icon small>
                     <i class="icon ali-icon-attention"></i>
                   </Btn>
-                  <span>{{ draw.viewAmount }}</span>
+                  <span>{{ picture.viewAmount }}</span>
                   <Btn
                     v-tooltip="
-                      draw.focus === $enum.CollectState.CONCERNED.key
+                      picture.focus === $enum.CollectState.CONCERNED.key
                         ? `取消收藏`
                         : `收藏`
                     "
                     flat
                     icon
                     :color="
-                      draw.focus === $enum.CollectState.CONCERNED.key
+                      picture.focus === $enum.CollectState.CONCERNED.key
                         ? `red`
                         : `default`
                     "
                     small
-                    @click.stop="collection(draw)"
+                    @click.stop="collection(picture)"
                   >
                     <i
                       class="icon"
                       :class="{
                         'ali-icon-likefill':
-                          draw.focus === $enum.CollectState.CONCERNED.key,
+                          picture.focus === $enum.CollectState.CONCERNED.key,
                         'ali-icon-like':
-                          draw.focus !== $enum.CollectState.CONCERNED.key
+                          picture.focus !== $enum.CollectState.CONCERNED.key
                       }"
                     ></i>
                   </Btn>
-                  <span>{{ draw.likeAmount }}</span>
+                  <span>{{ picture.likeAmount }}</span>
                 </div>
               </div>
             </div>
@@ -79,25 +79,25 @@
             <Btn round flat small color="primary" to="/new"> 更多>></Btn>
           </h3>
           <div class="image-grid-row">
-            <div v-for="(draw, index) in newList" :key="index" class="item">
+            <div v-for="(picture, index) in newList" :key="index" class="item">
               <div class="img-box">
-                <nuxt-link v-ripple :to="`/draw/${draw.id}`">
+                <nuxt-link v-ripple :to="`/picture/${picture.id}`">
                   <img
-                    :src="$img.secdra(draw.url, 'specifiedWidth')"
+                    :src="$img.secdra(picture.url, 'specifiedWidth')"
                     class="cover"
                   />
                 </nuxt-link>
               </div>
               <div class="tool">
                 <Popper placement="top" trigger="hover">
-                  <UserCard :user="draw.user" @follow="follow"></UserCard>
+                  <UserCard :user="picture.user" @follow="follow"></UserCard>
                   <template #reference>
                     <nuxt-link
                       v-ripple
-                      :to="`/user/${draw.user.id}`"
+                      :to="`/user/${picture.user.id}`"
                       class="head-image"
                     >
-                      <img :src="$img.head(draw.user.head, 'small50')" />
+                      <img :src="$img.head(picture.user.head, 'small50')" />
                     </nuxt-link>
                   </template>
                 </Popper>
@@ -105,34 +105,34 @@
                   <Btn v-tooltip="`浏览`" flat icon small>
                     <i class="icon ali-icon-attention"></i>
                   </Btn>
-                  <span>{{ draw.viewAmount }}</span>
+                  <span>{{ picture.viewAmount }}</span>
                   <Btn
                     v-tooltip="
-                      draw.focus === $enum.CollectState.CONCERNED.key
+                      picture.focus === $enum.CollectState.CONCERNED.key
                         ? `取消收藏`
                         : `收藏`
                     "
                     flat
                     icon
                     :color="
-                      draw.focus === $enum.CollectState.CONCERNED.key
+                      picture.focus === $enum.CollectState.CONCERNED.key
                         ? `red`
                         : `default`
                     "
                     small
-                    @click.stop="collection(draw)"
+                    @click.stop="collection(picture)"
                   >
                     <i
                       class="icon"
                       :class="{
                         'ali-icon-likefill':
-                          draw.focus === $enum.CollectState.CONCERNED.key,
+                          picture.focus === $enum.CollectState.CONCERNED.key,
                         'ali-icon-like':
-                          draw.focus !== $enum.CollectState.CONCERNED.key
+                          picture.focus !== $enum.CollectState.CONCERNED.key
                       }"
                     ></i>
                   </Btn>
-                  <span>{{ draw.likeAmount }}</span>
+                  <span>{{ picture.likeAmount }}</span>
                 </div>
               </div>
             </div>
@@ -144,16 +144,16 @@
           <h3 class="title">
             热门推荐
           </h3>
-          <Carousel class="tag-draw-carousel" height="200px">
+          <Carousel class="tag-picture-carousel" height="200px">
             <CarouselItem
-              v-for="(tagDraw, index) in tagDrawList"
+              v-for="(tagPicture, index) in tagPictureList"
               :key="index"
-              v-tooltip="tagDraw.tag"
+              v-tooltip="tagPicture.tag"
             >
               <nuxt-link
-                :to="`/draw/search/${encodeURIComponent(tagDraw.tag)}`"
+                :to="`/picture/search/${encodeURIComponent(tagPicture.tag)}`"
               >
-                <img :src="$img.secdra(tagDraw.url, 'specifiedWidth')" />
+                <img :src="$img.secdra(tagPicture.url, 'specifiedWidth')" />
               </nuxt-link>
             </CarouselItem>
           </Carousel>
@@ -161,7 +161,7 @@
             <Btn
               v-for="(tag, index) in tagList"
               :key="index"
-              :to="`/draw/search/${encodeURIComponent(tag)}`"
+              :to="`/picture/search/${encodeURIComponent(tag)}`"
               color="primary"
               outline
               small
@@ -194,39 +194,39 @@ export default {
   async asyncData({ store, $axios }) {
     store.commit("menu/MChangeName", "home")
     const taskList = []
-    taskList.push($axios.get(`/tag/listTagAndDrawTop30`))
+    taskList.push($axios.get(`/tag/listTagAndPictureTop30`))
     taskList.push(
-      $axios.get(`/draw/pagingByRecommend`, { params: new Pageable(0, 12) })
+      $axios.get(`/picture/pagingByRecommend`, { params: new Pageable(0, 12) })
     )
     taskList.push(
-      $axios.get(`/draw/paging`, {
+      $axios.get(`/picture/paging`, {
         params: new Pageable(0, 12, "createDate,desc")
       })
     )
     const resultList = (await Promise.all(taskList)).map((item) => item.data)
-    let tagDrawList = resultList[0].data
-    const tagList = tagDrawList
+    let tagPictureList = resultList[0].data
+    const tagList = tagPictureList
       .filter((_, index) => index >= 4)
       .map((item) => item.tag)
-    tagDrawList = tagDrawList.filter((_, index) => index < 4)
+    tagPictureList = tagPictureList.filter((_, index) => index < 4)
     return {
       tagList,
-      tagDrawList,
+      tagPictureList,
       likeList: resultList[1].data.content,
       newList: resultList[2].data.content
     }
   },
   methods: {
-    ...mapActions("draw", ["ACollection"]),
-    async collection(draw) {
+    ...mapActions("picture", ["ACollection"]),
+    async collection(picture) {
       const result = await this.ACollection({
-        drawId: draw.id
+        pictureId: picture.id
       })
       if (result.status !== 200) {
         this.$notify({ message: result.message })
         return
       }
-      draw.focus = result.data
+      picture.focus = result.data
     },
     follow({ userId, focus }) {
       this.likeList.forEach((item) => {
@@ -303,7 +303,7 @@ export default {
           height: 100%;
         }
       }
-      .draw-name {
+      .picture-name {
         text-align: center;
         font-size: @small-font-size;
         font-weight: 600;
@@ -347,7 +347,7 @@ export default {
   .tag-card {
     @spacing: 10px;
     padding: @spacing;
-    .tag-draw-carousel {
+    .tag-picture-carousel {
       margin-bottom: 15px;
       img {
         width: 100%;

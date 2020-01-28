@@ -1,13 +1,13 @@
 <template>
   <div class="page">
-    <DrawList
+    <PictureList
       :page="page"
       :list="list"
       :page-loading="pageLoading"
       @paging="paging"
       @collection="collection"
       @follow="follow"
-    ></DrawList>
+    ></PictureList>
     <CornerButtons>
       <Popper
         placement="top-end"
@@ -46,12 +46,12 @@
 <script>
 import { mapActions } from "vuex"
 import { FliterForm, Pageable } from "../../../assets/script/model"
-import DrawList from "../../../components/pages/shared/DrawList"
+import PictureList from "../../../components/pages/shared/PictureList"
 import CornerButtons from "../../../components/pages/shared/CornerButtons"
 
 export default {
   components: {
-    DrawList,
+    PictureList,
     CornerButtons
   },
   watchQuery: true,
@@ -71,7 +71,7 @@ export default {
       route.query.startDate,
       route.query.endDate
     )
-    const { data: result } = await $axios.get(`/draw/paging`, {
+    const { data: result } = await $axios.get(`/picture/paging`, {
       params: Object.assign(
         {
           tagList: route.params.tagList
@@ -91,7 +91,7 @@ export default {
     return { title: this.$route.params.tagList + "的搜索结果 - Secdra" }
   },
   methods: {
-    ...mapActions("draw", ["APaging", "ACollection"]),
+    ...mapActions("picture", ["APaging", "ACollection"]),
     ...mapActions("user", ["AFollow"]),
     /**
      * 获取分页数据
@@ -122,15 +122,15 @@ export default {
       this.page = data
       this.list.push(...data.content)
     },
-    async collection(draw) {
+    async collection(picture) {
       const result = await this.ACollection({
-        drawId: draw.id
+        pictureId: picture.id
       })
       if (result.status !== 200) {
         this.$notify({ message: result.message })
         return
       }
-      draw.focus = result.data
+      picture.focus = result.data
     },
     async follow(id) {
       const result = await this.AFollow({
@@ -148,7 +148,9 @@ export default {
     },
     filter() {
       this.$router.replace({
-        path: `/draw/search/${encodeURIComponent(this.$route.params.tagList)}`,
+        path: `/picture/search/${encodeURIComponent(
+          this.$route.params.tagList
+        )}`,
         query: {
           precise: this.filterForm.precise ? 1 : undefined,
           name: this.filterForm.name,
@@ -159,7 +161,7 @@ export default {
     },
     reset() {
       this.$router.replace(
-        `/draw/search/${encodeURIComponent(this.$route.params.tagList)}`
+        `/picture/search/${encodeURIComponent(this.$route.params.tagList)}`
       )
     }
   }

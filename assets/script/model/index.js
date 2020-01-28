@@ -28,7 +28,7 @@ export class Pageable {
   }
 }
 
-export class DrawForm {
+export class PictureForm {
   constructor() {
     this.name = ""
     this.introduction = ""
@@ -38,17 +38,17 @@ export class DrawForm {
 }
 
 export class CommentForm {
-  constructor(authorId = "", drawId = "") {
+  constructor(authorId = "", pictureId = "") {
     this.authorId = authorId
-    this.drawId = drawId
+    this.pictureId = pictureId
     this.content = ""
   }
 }
 
 export class ReplyForm {
-  constructor(commentId = "", drawId = "", authorId = "", criticId = "") {
+  constructor(commentId = "", pictureId = "", authorId = "", criticId = "") {
     this.commentId = commentId
-    this.drawId = drawId
+    this.pictureId = pictureId
     this.authorId = authorId
     this.criticId = criticId
     this.content = ""

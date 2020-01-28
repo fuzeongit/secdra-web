@@ -1,13 +1,17 @@
 <template>
   <div class="page">
     <CheckboxGroup v-model="selectList" class="content">
-      <div v-for="(draw, index) in list" :key="index" class="card ">
-        <nuxt-link v-ripple :to="`/draw/${draw.id}`" class="img-box flex-box">
+      <div v-for="(picture, index) in list" :key="index" class="card ">
+        <nuxt-link
+          v-ripple
+          :to="`/picture/${picture.id}`"
+          class="img-box flex-box"
+        >
           <img
-            :src="$img.secdra(draw.url, `specifiedWidth`)"
+            :src="$img.secdra(picture.url, `specifiedWidth`)"
             :style="{
-              height: getProportion(draw) >= 1 ? `100%` : `auto`,
-              width: getProportion(draw) <= 1 ? `100%` : `auto`
+              height: getProportion(picture) >= 1 ? `100%` : `auto`,
+              width: getProportion(picture) <= 1 ? `100%` : `auto`
             }"
           />
         </nuxt-link>
@@ -15,7 +19,7 @@
           <Checkbox
             v-if="self"
             v-tooltip="`选择`"
-            :value="draw"
+            :value="picture"
             value-key="id"
             small
             color="primary"
@@ -23,51 +27,52 @@
           <Btn
             v-if="!self"
             v-tooltip="
-              draw.focus === $enum.CollectState.CONCERNED.key
+              picture.focus === $enum.CollectState.CONCERNED.key
                 ? `取消收藏`
                 : `收藏`
             "
             flat
             icon
             :color="
-              draw.focus === $enum.CollectState.CONCERNED.key
+              picture.focus === $enum.CollectState.CONCERNED.key
                 ? `red`
                 : `default`
             "
             small
-            @click.stop="collection(draw)"
+            @click.stop="collection(picture)"
           >
             <i
               class="icon"
               :class="{
                 'ali-icon-likefill':
-                  draw.focus === $enum.CollectState.CONCERNED.key,
-                'ali-icon-like': draw.focus !== $enum.CollectState.CONCERNED.key
+                  picture.focus === $enum.CollectState.CONCERNED.key,
+                'ali-icon-like':
+                  picture.focus !== $enum.CollectState.CONCERNED.key
               }"
             ></i>
           </Btn>
         </div>
         <div v-if="!self" class="flex-box info-box">
-          <nuxt-link v-ripple :to="`/user/${draw.user.id}`" class="head-box">
-            <img :src="$img.head(draw.user.head, 'small50')" />
+          <nuxt-link v-ripple :to="`/user/${picture.user.id}`" class="head-box">
+            <img :src="$img.head(picture.user.head, 'small50')" />
           </nuxt-link>
           <div class="user-info-box">
             <p class="nickname">
-              {{ draw.user.name }}
+              {{ picture.user.name }}
             </p>
             <p class="introduction">
-              {{ draw.user.introduction }}
+              {{ picture.user.introduction }}
             </p>
           </div>
           <div class="follow-box flex-box">
             <Btn
               block
               color="primary"
-              :disabled="draw.user.focus === $enum.FollowState.SElF.key"
-              @click="follow(draw.user.id)"
+              :disabled="picture.user.focus === $enum.FollowState.SElF.key"
+              @click="follow(picture.user.id)"
             >
               {{
-                draw.user.focus === $enum.FollowState.CONCERNED.key
+                picture.user.focus === $enum.FollowState.CONCERNED.key
                   ? `已关注`
                   : `关注`
               }}
@@ -103,13 +108,13 @@
     >
       <ScrollBox class="edit-dialog-content">
         <div class="input-group">
-          <template v-for="(draw, index) in selectList">
+          <template v-for="(picture, index) in selectList">
             <Tag
-              :key="draw.id"
-              :content="draw.name"
+              :key="picture.id"
+              :content="picture.name"
               color="primary"
               :value="index"
-              @close="removeSelectDraw"
+              @close="removeSelectPicture"
             ></Tag
             >{{ " " }}
           </template>
@@ -117,12 +122,12 @@
         <div>
           <div class="input-group">
             <h5 class="sub-name">名称：</h5>
-            <Field v-model="drawForm.name" block color="primary"></Field>
+            <Field v-model="pictureForm.name" block color="primary"></Field>
           </div>
           <div class="input-group">
             <h5 class="sub-name">简介：</h5>
             <Field
-              v-model="drawForm.introduction"
+              v-model="pictureForm.introduction"
               block
               color="primary"
               type="textarea"
@@ -130,7 +135,7 @@
           </div>
           <div class="input-group">
             <h5 class="sub-name">私密：</h5>
-            <RadioGroup v-model="drawForm.privacy">
+            <RadioGroup v-model="pictureForm.privacy">
               <Radio
                 v-for="item in $enum.PrivacyState"
                 :key="item.key"
@@ -164,7 +169,7 @@
 
 <script>
 import { mapActions } from "vuex"
-import { DrawForm, Pageable } from "../../../assets/script/model"
+import { PictureForm, Pageable } from "../../../assets/script/model"
 import CornerButtons from "../../../components/pages/shared/CornerButtons"
 
 export default {
@@ -201,7 +206,7 @@ export default {
       })
     )
     taskList.push(
-      $axios.get(`/draw/paging`, {
+      $axios.get(`/picture/paging`, {
         params: Object.assign(
           {
             targetId: route.params.userId || store.state.user.user.id
@@ -231,7 +236,7 @@ export default {
       editShow: false,
       editLoading: false,
       inputTag: "",
-      drawForm: new DrawForm()
+      pictureForm: new PictureForm()
     }
   },
   head() {
@@ -245,23 +250,23 @@ export default {
     })
   },
   methods: {
-    ...mapActions("draw", ["ACollection", "ABatchUpdate"]),
+    ...mapActions("picture", ["ACollection", "ABatchUpdate"]),
     ...mapActions("user", ["AFollow"]),
-    getProportion(draw) {
-      return draw.height / draw.width
+    getProportion(picture) {
+      return picture.height / picture.width
     },
     paging(page) {
       this.$router.push(`/works/${this.user.id}/${page}`)
     },
-    async collection(draw) {
+    async collection(picture) {
       const result = await this.ACollection({
-        drawId: draw.id
+        pictureId: picture.id
       })
       if (result.status !== 200) {
         this.$notify({ message: result.message })
         return
       }
-      draw.focus = result.data
+      picture.focus = result.data
     },
     async follow(id) {
       const result = await this.AFollow({
@@ -277,15 +282,15 @@ export default {
         }
       })
     },
-    removeSelectDraw({ value }) {
+    removeSelectPicture({ value }) {
       this.selectList.removeIndex(value)
     },
     reset() {
       this.inputTag = ""
-      this.drawForm = new DrawForm()
+      this.pictureForm = new PictureForm()
     },
     async save() {
-      const form = this.drawForm
+      const form = this.pictureForm
       form.idList = this.selectList.map((item) => item.id)
       const tagList = this.inputTag.split(" ").filter((item) => item !== "")
       form.tagList = [...new Set(tagList)]
@@ -298,7 +303,7 @@ export default {
       }
       this.inputTag = ""
       this.selectList.clear()
-      this.drawForm = new DrawForm()
+      this.pictureForm = new PictureForm()
       this.$notify({ message: "批量更新完毕" })
     }
   }

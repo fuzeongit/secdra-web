@@ -6,41 +6,43 @@
     }"
   >
     <div
-      v-for="(draw, index) in normalizedData.list"
+      v-for="(picture, index) in normalizedData.list"
       :key="index"
       class="item card"
       :style="{
-        left: `${draw.left}px`,
-        top: `${draw.top}px`
+        left: `${picture.left}px`,
+        top: `${picture.top}px`
       }"
     >
-      <nuxt-link v-ripple :to="`/draw/${draw.id}`" class="img-box">
+      <nuxt-link v-ripple :to="`/picture/${picture.id}`" class="img-box">
         <img
-          :src="$img.secdra(draw.url, `specifiedWidth`)"
+          :src="$img.secdra(picture.url, `specifiedWidth`)"
           :style="{
             width: listConstant.columnWidth + `px`,
-            height: draw.visualHeight + `px`
+            height: picture.visualHeight + `px`
           }"
         />
       </nuxt-link>
       <Btn
         v-tooltip="
-          draw.focus === $enum.CollectState.CONCERNED.key ? `取消收藏` : `收藏`
+          picture.focus === $enum.CollectState.CONCERNED.key
+            ? `取消收藏`
+            : `收藏`
         "
         flat
         icon
         :color="
-          draw.focus === $enum.CollectState.CONCERNED.key ? `red` : `default`
+          picture.focus === $enum.CollectState.CONCERNED.key ? `red` : `default`
         "
         class="like"
-        @click.stop="$emit(`collection`, draw, index)"
+        @click.stop="$emit(`collection`, picture, index)"
       >
         <i
           class="icon"
           :class="{
             'ali-icon-likefill':
-              draw.focus === $enum.CollectState.CONCERNED.key,
-            'ali-icon-like': draw.focus !== $enum.CollectState.CONCERNED.key
+              picture.focus === $enum.CollectState.CONCERNED.key,
+            'ali-icon-like': picture.focus !== $enum.CollectState.CONCERNED.key
           }"
         ></i>
       </Btn>
@@ -52,26 +54,26 @@
           height: listConstant.infoHeight + `px`
         }"
       >
-        <nuxt-link v-ripple :to="`/user/${draw.user.id}`" class="head-box">
-          <img :src="$img.head(draw.user.head, 'small50')" />
+        <nuxt-link v-ripple :to="`/user/${picture.user.id}`" class="head-box">
+          <img :src="$img.head(picture.user.head, 'small50')" />
         </nuxt-link>
         <div class="user-info-box">
           <p class="nickname">
-            {{ draw.user.name }}
+            {{ picture.user.name }}
           </p>
           <p class="introduction">
-            {{ draw.user.introduction }}
+            {{ picture.user.introduction }}
           </p>
         </div>
         <div class="follow-box flex-box">
           <Btn
             block
             color="primary"
-            :disabled="draw.user.focus === $enum.FollowState.SElF.key"
-            @click="$emit(`follow`, draw.user.id)"
+            :disabled="picture.user.focus === $enum.FollowState.SElF.key"
+            @click="$emit(`follow`, picture.user.id)"
           >
             {{
-              draw.user.focus === $enum.FollowState.CONCERNED.key
+              picture.user.focus === $enum.FollowState.CONCERNED.key
                 ? `已关注`
                 : `关注`
             }}
@@ -99,7 +101,7 @@ import { listConstant } from "../../../assets/script/constant"
 import windowMixin from "../../../assets/script/mixin/windowMixin"
 
 export default {
-  componentName: "DrawList",
+  componentName: "PictureList",
   mixins: [windowMixin],
   props: {
     page: {
@@ -125,7 +127,7 @@ export default {
       const list = []
       const columnHeightList = new Array(this.listConstant.columnNumber).fill(0)
       for (let i = 0; i < this.list.length; i++) {
-        const draw = this.list[i]
+        const picture = this.list[i]
         const minColumnHeight = columnHeightList.min()
         const minColumnIndex = columnHeightList.minIndex()
         const left =
@@ -133,10 +135,10 @@ export default {
           this.listConstant.columnWidth * minColumnIndex
         const top = minColumnHeight + this.listConstant.gap
         const visualHeight =
-          (draw.height / draw.width) * this.listConstant.columnWidth
+          (picture.height / picture.width) * this.listConstant.columnWidth
         columnHeightList[minColumnIndex] =
           visualHeight + this.listConstant.infoHeight + top
-        list.push(Object.assign(draw, { left, top, visualHeight }))
+        list.push(Object.assign(picture, { left, top, visualHeight }))
       }
       let lastLeft = 0
       let lastTop = 0

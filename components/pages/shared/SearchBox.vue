@@ -30,7 +30,7 @@
           >
             <nuxt-link
               v-ripple
-              :to="`/draw/search/${encodeURIComponent(item)}`"
+              :to="`/picture/search/${encodeURIComponent(item)}`"
             >
               {{ item }}
             </nuxt-link>
@@ -79,7 +79,7 @@ export default {
           ...searchHistorySet
         ])
       }
-      this.$router.push(`/draw/search/${encodeURIComponent(this.tag)}`)
+      this.$router.push(`/picture/search/${encodeURIComponent(this.tag)}`)
     },
     onKey(event) {
       if (event.key !== "ArrowUp" && event.key !== "ArrowDown") return

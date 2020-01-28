@@ -7,17 +7,17 @@
         @drop.prevent="upload($event, 'drop')"
       >
         <div class="image-box flex-box">
-          <div v-if="!drawUrl" class="upload-box">
+          <div v-if="!pictureUrl" class="upload-box">
             <Btn type="file" color="primary" @change="upload($event, 'button')"
               >上传图片</Btn
             >
             <h3>拖拽一个图片到这里上传</h3>
             <p>支持jpg、png、jpeg格式</p>
           </div>
-          <div v-if="drawUrl" class="view-box">
+          <div v-if="pictureUrl" class="view-box">
             <label class="flex-box">
               <img
-                :src="drawUrl"
+                :src="pictureUrl"
                 :style="{
                   height: proportion >= 1 ? `100%` : `auto`,
                   width: proportion <= 1 ? `100%` : `auto`
@@ -67,7 +67,7 @@
         <h5 class="sub-name">*标签以空格分隔为一个</h5>
       </div>
       <div style="margin-bottom: 10px;text-align: right">
-        <Btn color="primary" :disabled="!drawUrl" @click="send">发送</Btn>
+        <Btn color="primary" :disabled="!pictureUrl" @click="send">发送</Btn>
       </div>
     </div>
   </div>
@@ -82,7 +82,7 @@ export default {
   middleware: "auth",
   data() {
     return {
-      drawUrl: "",
+      pictureUrl: "",
       height: 0,
       width: 0,
       file: null,
@@ -106,7 +106,7 @@ export default {
     }
   },
   watch: {
-    drawUrl(newVal, oldVal) {
+    pictureUrl(newVal, oldVal) {
       if (oldVal) {
         URL.revokeObjectURL(oldVal)
       }
@@ -119,7 +119,7 @@ export default {
     store.commit("user/MSetUploadToken", result.data)
   },
   methods: {
-    ...mapActions("draw", ["ASave"]),
+    ...mapActions("picture", ["ASave"]),
     async upload($event, type) {
       let file
       if (type === "button") {
@@ -139,7 +139,7 @@ export default {
       this.file = file
       this.width = width
       this.height = height
-      this.drawUrl = url
+      this.pictureUrl = url
     },
     async send() {
       const form = new FormData()
@@ -188,7 +188,7 @@ export default {
           this.form.name = ""
           this.form.introduction = ""
           this.form.tagList.clear()
-          this.drawUrl = ""
+          this.pictureUrl = ""
         }
       })
     }

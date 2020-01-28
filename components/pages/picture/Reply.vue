@@ -74,7 +74,7 @@ export default {
       type: String,
       default: null
     },
-    drawId: {
+    pictureId: {
       type: String,
       default: null
     },
@@ -111,7 +111,7 @@ export default {
         this.$set(
           this.replyForm,
           item.id,
-          new ReplyForm(this.commentId, this.drawId, this.authorId)
+          new ReplyForm(this.commentId, this.pictureId, this.authorId)
         )
         return Object.assign(item, { replyInputShow: false })
       })

@@ -187,7 +187,7 @@ export default {
   methods: {
     ...mapActions("stomp", ["AStompDisconnect"]),
     search() {
-      this.$router.push(`/draw/search/${this.tag}`)
+      this.$router.push(`/picture/search/${this.tag}`)
     },
     logout() {
       this.$confirm({

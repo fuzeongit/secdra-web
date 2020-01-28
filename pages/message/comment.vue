@@ -18,7 +18,7 @@
               {{ item.critic.name }}
             </nuxt-link>
             <span>评论了我的</span>
-            <nuxt-link :to="`/draw/${item.drawId}`" class="primary-hover">
+            <nuxt-link :to="`/picture/${item.pictureId}`" class="primary-hover">
               作品
             </nuxt-link>
           </p>

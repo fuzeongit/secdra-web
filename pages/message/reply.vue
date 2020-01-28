@@ -22,7 +22,7 @@
               {{ item.answerer.name }}
             </nuxt-link>
             <span>回复了我的</span>
-            <nuxt-link :to="`/draw/${item.drawId}`" class="primary-hover">
+            <nuxt-link :to="`/picture/${item.pictureId}`" class="primary-hover">
               评论
             </nuxt-link>
           </p>

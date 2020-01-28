@@ -2,18 +2,18 @@
   <div>
     <div class="size">
       <nuxt-link
-        v-if="draw"
+        v-if="picture"
         v-ripple
-        :to="`/draw/search/${tag}`"
+        :to="`/picture/search/${tag}`"
         class="cover"
         :style="{
-          backgroundImage: `url(${$img.secdra(draw.url, `specifiedWidth`)})`
+          backgroundImage: `url(${$img.secdra(picture.url, `specifiedWidth`)})`
         }"
       >
       </nuxt-link>
     </div>
     <p class="tag-name">
-      <Btn outline small round color="primary" :to="`/draw/search/${tag}`">
+      <Btn outline small round color="primary" :to="`/picture/search/${tag}`">
         {{ tag }}&nbsp;&nbsp;({{ amount }})
       </Btn>
     </p>
@@ -33,14 +33,14 @@ export default {
   },
   data() {
     return {
-      draw: null,
+      picture: null,
       loading: false,
       amount: "--"
     }
   },
   mounted() {},
   methods: {
-    ...mapActions("draw", ["AGetFirstByTag", "ACountByTag"]),
+    ...mapActions("picture", ["AGetFirstByTag", "ACountByTag"]),
     async load() {
       if (this.loading) {
         return
@@ -51,7 +51,7 @@ export default {
       if (result.status !== 200) {
         throw new Error(result.message)
       }
-      this.draw = result.data
+      this.picture = result.data
 
       result = await this.ACountByTag({ tag: this.tag })
       if (result.status === 200) {
