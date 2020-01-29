@@ -122,7 +122,7 @@
               </div>
             </div>
           </div>
-          <div class="card tag-card">
+          <div v-if="picture.tagList.length" class="card tag-card">
             <div class="tag-list">
               <Popper
                 v-for="(tag, index) in picture.tagList"

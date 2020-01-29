@@ -8,7 +8,7 @@ export default {
     }
     return value
   },
-  localGet(key, defaultValue) {
+  localGet(key, defaultValue = null) {
     if (!isServer) {
       const stringValue = localStorage.getItem(key)
       return stringValue ? JSON.parse(stringValue) : defaultValue

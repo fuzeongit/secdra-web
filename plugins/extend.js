@@ -95,3 +95,9 @@ Array.prototype.isEmpty = function() {
 Array.prototype.clone = function() {
   return [].concat(this)
 }
+
+Array.prototype.filterNullOrEmpty = function() {
+  return this.filter(
+    (item) => item !== null && item !== "" && item !== undefined
+  )
+}
