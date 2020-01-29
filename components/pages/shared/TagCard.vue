@@ -80,6 +80,7 @@ export default {
 }
 
 .tag-name {
+  width: @size;
   text-align: center;
   .ellipsis();
   font-size: @small-font-size;
