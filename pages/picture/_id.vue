@@ -54,13 +54,28 @@
                 </div>
               </div>
               <div style="margin-top: 20px;">
-                <Btn
+                <div
                   v-if="picture.user.focus === $enum.FollowState.SElF.key"
-                  block
-                  color="primary"
-                  @click="editShow = true"
-                  >编辑</Btn
+                  style="text-align: right"
                 >
+                  <Btn
+                    v-tooltip="'编辑'"
+                    color="primary"
+                    icon
+                    @click="editShow = true"
+                  >
+                    <i class="icon ali-icon-edit"></i>
+                  </Btn>
+                  <Btn
+                    v-tooltip="'删除'"
+                    outline
+                    color="primary"
+                    icon
+                    @click="remove"
+                  >
+                    <i class="icon ali-icon-delete"></i>
+                  </Btn>
+                </div>
                 <Btn
                   v-else
                   block
@@ -182,8 +197,7 @@
           </div>
           <div class="input-group">
             <h5 class="sub-name">标签：</h5>
-            <Field v-model="inputTag" block color="primary"></Field>
-            <h5 class="sub-name">*标签以空格分隔为一个</h5>
+            <TagInput v-model="inputTag" block color="primary"></TagInput>
           </div>
         </ScrollBox>
         <div class="input-group" style="text-align: center;">
@@ -243,7 +257,7 @@ export default {
     let commentForm
     if (result.status === 200) {
       pictureForm = Object.assign({}, result.data)
-      inputTag = pictureForm.tagList.join(" ")
+      inputTag = pictureForm.tagList
       commentForm = new CommentForm(result.data.user.id, result.data.id)
     }
     return {
@@ -272,7 +286,7 @@ export default {
       this.ASaveFootprint({ pictureId: this.picture.id })
   },
   methods: {
-    ...mapActions("picture", ["ACollection", "AUpdate"]),
+    ...mapActions("picture", ["ACollection", "AUpdate", "ARemove"]),
     ...mapActions("footprint", { ASaveFootprint: "ASave" }),
     ...mapActions("user", ["AFollow"]),
     showTagPopper(refId) {
@@ -307,9 +321,23 @@ export default {
       }
       this.picture.user.focus = result.data
     },
+    remove() {
+      this.$confirm({
+        message: `你确定删除该图片吗？`,
+        okCallback: async () => {
+          const result = await this.ARemove({ id: this.picture.id })
+          if (result.status === 200) {
+            this.$notify({ message: "删除成功" })
+            this.$router.back()
+            return
+          }
+          this.$notify({ message: "删除失败" })
+        }
+      })
+    },
     async save() {
       this.editLoading = true
-      const tagList = this.inputTag.split(" ").filter((item) => item !== "")
+      const tagList = this.inputTag.filterNullOrEmpty()
       this.pictureForm.tagList = [...new Set(tagList)]
       const result = await this.AUpdate(this.pictureForm)
       this.editLoading = false

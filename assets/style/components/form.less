@@ -191,9 +191,13 @@
     height: 100%;
     display: flex;
     padding: 0;
+    &:disabled{
+      background-color: transparent;
+      cursor: not-allowed;
+    }
   }
   .placeholder{
-    padding:0 .4em;
+    padding:0 @input-padding / 2;
     height: 100%;
     display: flex;
     align-items: center;
@@ -220,14 +224,14 @@
     height: @big-input-line-height;
     font-size: @default-font-size;
     .placeholder{
-      padding: 0 .5em;
+      padding: 0 @big-input-padding / 2;
     }
   }
   &.small {
     height: @small-input-line-height;
     font-size: @smallest-font-size;
     .placeholder{
-      padding: 0 .3em;
+      padding: 0 @small-input-padding / 2;
     }
   }
   &.textarea {
@@ -256,7 +260,6 @@
     .color(@theme-color, @font-color-dark)
   }
 }
-
 .checkbox {
   display: inline-block;
   vertical-align: top;

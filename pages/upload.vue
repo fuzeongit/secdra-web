@@ -63,8 +63,7 @@
       </div>
       <div class="input-group">
         <h5 class="sub-name">添加标签：</h5>
-        <Field v-model="inputTag" block color="primary"></Field>
-        <h5 class="sub-name">*标签以空格分隔为一个</h5>
+        <TagInput v-model="inputTag" block color="primary"></TagInput>
       </div>
       <div style="margin-bottom: 10px;text-align: right">
         <Btn color="primary" :disabled="!pictureUrl" @click="send">发送</Btn>
@@ -86,7 +85,7 @@ export default {
       height: 0,
       width: 0,
       file: null,
-      inputTag: "",
+      inputTag: [],
       form: {
         url: "",
         name: "",
@@ -168,7 +167,7 @@ export default {
         return
       }
       this.form.url = qiniuResult.hash
-      const tagList = this.inputTag.split(" ").filter((item) => item !== "")
+      const tagList = this.inputTag.filter((item) => item !== "")
       this.form.tagList = [...new Set(tagList)]
       const result = await this.ASave(this.form)
       loading.close()

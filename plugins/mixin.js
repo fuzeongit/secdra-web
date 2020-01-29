@@ -12,6 +12,7 @@ import Popper from "../components/global/Popper"
 import Dialog from "../components/global/Dialog"
 import DatePicker from "../components/global/DatePicker/Main"
 import Tag from "../components/global/Tag"
+import TagInput from "../components/global/TagInput"
 import Pageable from "../components/global/Pageable"
 import ScrollBox from "../components/global/ScrollBox"
 import Delay from "../components/global/Delay"
@@ -41,6 +42,7 @@ Vue.component("Popper", Popper)
 Vue.component("Dialog", Dialog)
 Vue.component("DatePicker", DatePicker)
 Vue.component("Tag", Tag)
+Vue.component("TagInput", TagInput)
 Vue.component("Pageable", Pageable)
 Vue.component("ScrollBox", ScrollBox)
 Vue.component("Carousel", Carousel)

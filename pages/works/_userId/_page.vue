@@ -154,8 +154,7 @@
           </div>
           <div class="input-group">
             <h5 class="sub-name">添加标签：</h5>
-            <Field v-model="inputTag" block color="primary"></Field>
-            <h5 class="sub-name">*标签以空格分隔为一个</h5>
+            <TagInput v-model="inputTag" block color="primary"></TagInput>
           </div>
         </div>
       </ScrollBox>
@@ -235,7 +234,7 @@ export default {
       selectList: [],
       editShow: false,
       editLoading: false,
-      inputTag: "",
+      inputTag: [],
       pictureForm: new PictureForm()
     }
   },
@@ -286,13 +285,13 @@ export default {
       this.selectList.removeIndex(value)
     },
     reset() {
-      this.inputTag = ""
+      this.inputTag = []
       this.pictureForm = new PictureForm()
     },
     async save() {
       const form = this.pictureForm
       form.idList = this.selectList.map((item) => item.id)
-      const tagList = this.inputTag.split(" ").filter((item) => item !== "")
+      const tagList = this.inputTag.filter((item) => item !== "")
       form.tagList = [...new Set(tagList)]
       this.editLoading = true
       const result = await this.ABatchUpdate(form)
@@ -301,7 +300,7 @@ export default {
         this.$notify({ message: result.message })
         return
       }
-      this.inputTag = ""
+      this.inputTag = []
       this.selectList.clear()
       this.pictureForm = new PictureForm()
       this.$notify({ message: "批量更新完毕" })

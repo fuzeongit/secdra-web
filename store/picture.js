@@ -55,5 +55,9 @@ export const actions = {
   // 批量更新图片
   ABatchUpdate(context, params) {
     return httpUtil.post("/picture/batchUpdate", params)
+  },
+  // 删除图片
+  ARemove(context, params) {
+    return httpUtil.post("/picture/remove", params)
   }
 }
