@@ -1,14 +1,12 @@
 <template>
   <div class="size">
     <div
+      v-lazy:background-image="$img.backLazy(user.background, `backCard`)"
       class="cover"
-      :style="{
-        backgroundImage: `url(${$img.back(user.background, `backCard`)})`
-      }"
     ></div>
     <div class="flex-box" style="padding:10px">
       <nuxt-link v-ripple :to="`/user/${user.id}`" class="head-box">
-        <img :src="$img.head(user.head, 'small50')" />
+        <img v-lazy="$img.headLazy(user.head, 'small50')" />
       </nuxt-link>
       <div class="user-info-box">
         <p class="nickname">

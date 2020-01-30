@@ -3,7 +3,7 @@
     <div v-for="(item, index) in list" :key="index" class="reply-item row">
       <div class="col-3">
         <nuxt-link v-ripple :to="`/user/${item.answerer.id}`" class="head-box">
-          <img :src="$img.head(item.answerer.head, 'small50')" />
+          <img v-lazy="$img.headLazy(item.answerer.head, 'small50')" />
         </nuxt-link>
       </div>
       <div class="col-27 desc">

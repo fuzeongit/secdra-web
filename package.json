@@ -36,6 +36,7 @@
     "qs": "^6.7.0",
     "sockjs-client": "^1.3.0",
     "stompjs": "^2.3.3",
+    "vue-lazyload": "^1.3.3",
     "vue2-animate": "^2.1.0"
   },
   "devDependencies": {

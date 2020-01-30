@@ -14,7 +14,7 @@
             class="img-box flex-box"
           >
             <img
-              :src="$img.secdra(picture.url, `specifiedWidth`)"
+              v-lazy="$img.secdraLazy(picture.url, `specifiedWidth`)"
               :style="{
                 height: getProportion(picture) >= 1 ? `100%` : `auto`,
                 width: getProportion(picture) <= 1 ? `100%` : `auto`
@@ -55,7 +55,7 @@
               :to="`/user/${picture.user.id}`"
               class="head-box"
             >
-              <img :src="$img.head(picture.user.head, 'small50')" />
+              <img v-lazy="$img.headLazy(picture.user.head, 'small50')" />
             </nuxt-link>
             <div class="user-info-box">
               <p class="nickname">

@@ -1,4 +1,5 @@
 import Vue from "vue"
+import VueLazyload from "vue-lazyload"
 
 import {
   Alert,
@@ -31,6 +32,11 @@ import Img from "../assets/script/util/imgUrlUtil"
 import filters from "../assets/script/filter"
 import directive from "../assets/script/directive"
 import { enumObjectList } from "../assets/script/constant"
+
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  attempt: 1
+})
 
 Vue.prototype.$alert = Alert
 Vue.prototype.$confirm = Confirm

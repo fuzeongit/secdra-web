@@ -13,7 +13,7 @@
             :to="`/user/${item.follower.id}`"
             class="head-box"
           >
-            <img :src="$img.head(item.follower.head, 'small50')" />
+            <img v-lazy="$img.headLazy(item.follower.head, 'small50')" />
           </nuxt-link>
         </div>
         <div class="col-27 desc">

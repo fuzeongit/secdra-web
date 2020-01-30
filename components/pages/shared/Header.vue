@@ -47,7 +47,7 @@
               <img
                 v-tooltip="signedIn ? `` : `登录`"
                 v-popover:popover
-                :src="$img.head(user.head, 'small50')"
+                v-lazy="$img.headLazy(user.head, 'small50')"
                 width="30"
                 height="30"
                 :onerror="
@@ -64,13 +64,10 @@
             >
               <div class="head-popover">
                 <div
+                  v-lazy:background-image="
+                    $img.backLazy(user.background, `backCard`)
+                  "
                   class="bk cover"
-                  :style="{
-                    backgroundImage: `url(${$img.back(
-                      user.background,
-                      `backCard`
-                    )})`
-                  }"
                 ></div>
                 <p class="name">{{ user.name }}</p>
                 <p class="introduction">

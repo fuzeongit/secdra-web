@@ -203,7 +203,6 @@ export default {
   height: 100%;
   position: relative;
   overflow: hidden;
-  background-color: @font-color-dark-line;
   nav {
     @nav-size: 6px;
     position: absolute;

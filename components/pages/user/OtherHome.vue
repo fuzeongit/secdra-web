@@ -1,8 +1,8 @@
 <template>
   <div>
     <div
+      v-lazy:background-image="$img.backLazy(user.background)"
       class="user-bk cover"
-      :style="{ backgroundImage: `url(${$img.back(user.background)})` }"
     >
       <div class="user-bk-content">
         <div class="tool">
@@ -21,7 +21,7 @@
     <div class="content card">
       <div class="head-box">
         <img
-          :src="$img.head(user.head)"
+          v-lazy="$img.headLazy(user.head)"
           :onerror="
             `this.src='${require('../../../assets/image/svg/default-head.svg')}'`
           "
@@ -60,7 +60,7 @@
               :to="`/picture/${picture.id}`"
             >
               <img
-                :src="$img.secdra(picture.url, `specifiedWidth`)"
+                v-lazy="$img.secdraLazy(picture.url, `specifiedWidth`)"
                 :style="{
                   height: getProportion(picture) >= 1 ? `100%` : `auto`,
                   width: getProportion(picture) <= 1 ? `100%` : `auto`
@@ -101,7 +101,7 @@
               :to="`/picture/${picture.id}`"
             >
               <img
-                :src="$img.secdra(picture.url, `specifiedWidth`)"
+                v-lazy="$img.secdraLazy(picture.url, `specifiedWidth`)"
                 :style="{
                   height: getProportion(picture) >= 1 ? `100%` : `auto`,
                   width: getProportion(picture) <= 1 ? `100%` : `auto`
@@ -140,13 +140,10 @@
               class="card following-item"
             >
               <div
+                v-lazy:background-image="
+                  $img.backLazy(item.background, `backCard`)
+                "
                 class="cover"
-                :style="{
-                  backgroundImage: `url(${$img.back(
-                    item.background,
-                    `backCard`
-                  )})`
-                }"
               ></div>
               <div class="center" style="padding: 10px;">
                 <nuxt-link
@@ -154,7 +151,7 @@
                   :to="`/user/${item.id}`"
                   class="following-head-box"
                 >
-                  <img :src="$img.head(item.head, 'small200')" />
+                  <img v-lazy="$img.headLazy(item.head, 'small200')" />
                 </nuxt-link>
               </div>
               <div class="user-info-box center ">

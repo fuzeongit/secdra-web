@@ -1,8 +1,8 @@
 <template>
   <div class="page">
     <div
+      v-lazy:background-image="$img.backLazy(user.background)"
       class="user-bk cover flex-box"
-      :style="{ backgroundImage: `url(${$img.back(user.background)})` }"
     >
       <SearchBox></SearchBox>
     </div>
@@ -18,7 +18,7 @@
               <div class="img-box">
                 <nuxt-link v-ripple :to="`/picture/${picture.id}`">
                   <img
-                    :src="$img.secdra(picture.url, 'specifiedWidth')"
+                    v-lazy="$img.secdraLazy(picture.url, 'specifiedWidth')"
                     class="cover"
                   />
                 </nuxt-link>
@@ -32,7 +32,9 @@
                       :to="`/user/${picture.user.id}`"
                       class="head-image"
                     >
-                      <img :src="$img.head(picture.user.head, 'small50')" />
+                      <img
+                        v-lazy="$img.headLazy(picture.user.head, 'small50')"
+                      />
                     </nuxt-link>
                   </template>
                 </Popper>
@@ -83,7 +85,7 @@
               <div class="img-box">
                 <nuxt-link v-ripple :to="`/picture/${picture.id}`">
                   <img
-                    :src="$img.secdra(picture.url, 'specifiedWidth')"
+                    v-lazy="$img.secdraLazy(picture.url, 'specifiedWidth')"
                     class="cover"
                   />
                 </nuxt-link>
@@ -97,7 +99,9 @@
                       :to="`/user/${picture.user.id}`"
                       class="head-image"
                     >
-                      <img :src="$img.head(picture.user.head, 'small50')" />
+                      <img
+                        v-lazy="$img.headLazy(picture.user.head, 'small50')"
+                      />
                     </nuxt-link>
                   </template>
                 </Popper>
@@ -153,7 +157,9 @@
               <nuxt-link
                 :to="`/picture/search/${encodeURIComponent(tagPicture.tag)}`"
               >
-                <img :src="$img.secdra(tagPicture.url, 'specifiedWidth')" />
+                <img
+                  v-lazy="$img.secdraLazy(tagPicture.url, 'specifiedWidth')"
+                />
               </nuxt-link>
             </CarouselItem>
           </Carousel>

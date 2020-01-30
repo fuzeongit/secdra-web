@@ -5,10 +5,10 @@
         <div class="left-box">
           <div class="card img-card flex-box">
             <img
-              :src="$img.secdra(picture.url)"
+              v-lazy="$img.secdraLazy(picture.url)"
               :style="{
-                height: proportion >= 1 ? `100%` : `auto`,
-                width: proportion <= 1 ? `100%` : `auto`
+                height: proportion >= 1 ? `100%` : ``,
+                width: proportion <= 1 ? `100%` : ``
               }"
             />
           </div>
@@ -20,13 +20,10 @@
         <div class="right-box">
           <div class="card user-card ">
             <div
+              v-lazy:background-image="
+                $img.backLazy(picture.user.background, `backCard`)
+              "
               class="user-bk cover"
-              :style="{
-                backgroundImage: `url(${$img.back(
-                  picture.user.background,
-                  `backCard`
-                )})`
-              }"
             ></div>
             <div style="padding: 15px">
               <div class="flex-box">
@@ -35,7 +32,7 @@
                   :to="`/user/${picture.user.id}`"
                   class="head-box center"
                 >
-                  <img :src="$img.head(picture.user.head, 'small100')" />
+                  <img v-lazy="$img.headLazy(picture.user.head, 'small100')" />
                 </nuxt-link>
                 <div class="user-info-box">
                   <p class="nickname">
@@ -382,6 +379,7 @@ export default {
     grid-row-gap: @gap-size;
     .img-card {
       position: relative;
+      overflow: hidden;
       .like {
         position: absolute;
         top: 10px;
@@ -397,7 +395,6 @@ export default {
     .user-card {
       .user-bk {
         height: @right-box-width / 2;
-        background-color: @font-color-dark-line;
       }
       @head-img-height: 80px;
       @head-img-border: 2px;

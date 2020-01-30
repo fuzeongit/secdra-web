@@ -1,8 +1,8 @@
 <template>
   <div>
     <div
+      v-lazy:background-image="$img.backLazy(user.background)"
       class="user-bk cover"
-      :style="{ backgroundImage: `url(${$img.back(user.background)})` }"
     >
       <div class="user-bk-content">
         <div class="tool">
@@ -26,7 +26,7 @@
         <label v-ripple class="upload-head">
           <input type="file" style="display: none" @change="uploadHead" />
           <img
-            :src="$img.head(user.head)"
+            v-lazy="$img.headLazy(user.head)"
             :onerror="
               `this.src='${require('../../../assets/image/svg/default-head.svg')}'`
             "
@@ -62,7 +62,7 @@
               :to="`/picture/${picture.id}`"
             >
               <img
-                :src="$img.secdra(picture.url, `specifiedWidth`)"
+                v-lazy="$img.secdraLazy(picture.url, `specifiedWidth`)"
                 :style="{
                   height: getProportion(picture) >= 1 ? `100%` : `auto`,
                   width: getProportion(picture) <= 1 ? `100%` : `auto`
@@ -99,7 +99,7 @@
               :to="`/picture/${picture.id}`"
             >
               <img
-                :src="$img.secdra(picture.url, `specifiedWidth`)"
+                v-lazy="$img.secdraLazy(picture.url, `specifiedWidth`)"
                 :style="{
                   height: getProportion(picture) >= 1 ? `100%` : `auto`,
                   width: getProportion(picture) <= 1 ? `100%` : `auto`

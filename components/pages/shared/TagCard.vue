@@ -5,11 +5,12 @@
         v-if="picture"
         v-ripple
         :to="`/picture/search/${tag}`"
-        class="cover"
-        :style="{
-          backgroundImage: `url(${$img.secdra(picture.url, `specifiedWidth`)})`
-        }"
+        class="size"
       >
+        <img
+          v-lazy="$img.secdraLazy(picture.url, `specifiedWidth`)"
+          class="cover"
+        />
       </nuxt-link>
     </div>
     <p class="tag-name">
@@ -71,9 +72,8 @@ export default {
 .size {
   width: @size;
   height: @size / 1.5;
-  background-color: @theme-background-color;
+  display: block;
   .cover {
-    display: block;
     width: 100%;
     height: 100%;
   }

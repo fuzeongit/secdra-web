@@ -47,5 +47,26 @@ export default {
     } else {
       return require("../../image/svg/default-picture.svg")
     }
+  },
+  secdraLazy(url, type) {
+    return {
+      src: this.secdra(url, type),
+      error: require("../../image/svg/default-picture.svg"),
+      loading: require("../../image/svg/default-picture.svg")
+    }
+  },
+  headLazy(url, type) {
+    return {
+      src: this.head(url, type),
+      error: require("../../../assets/image/svg/default-head.svg"),
+      loading: require("../../../assets/image/svg/default-head.svg")
+    }
+  },
+  backLazy(url, type, is) {
+    return {
+      src: this.back(url, type, is),
+      error: require("../../image/svg/default-picture.svg"),
+      loading: require("../../image/svg/default-picture.svg")
+    }
   }
 }
