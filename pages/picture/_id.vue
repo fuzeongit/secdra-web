@@ -328,7 +328,7 @@ export default {
             this.$router.back()
             return
           }
-          this.$notify({ message: "删除失败" })
+          this.$notify({ message: result.message })
         }
       })
     },
