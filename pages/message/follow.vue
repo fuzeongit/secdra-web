@@ -49,9 +49,6 @@ export default {
     return {
       list: result.data
     }
-  },
-  mounted() {
-    console.log(1)
   }
 }
 </script>
