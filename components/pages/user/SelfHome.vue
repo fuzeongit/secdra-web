@@ -64,8 +64,8 @@
               <img
                 v-lazy="$img.secdraLazy(picture.url, `specifiedWidth`)"
                 :style="{
-                  height: getProportion(picture) >= 1 ? `100%` : `auto`,
-                  width: getProportion(picture) <= 1 ? `100%` : `auto`
+                  height: getProportion(picture) >= 1 ? `100%` : ``,
+                  width: getProportion(picture) <= 1 ? `100%` : ``
                 }"
               />
             </nuxt-link>
@@ -101,8 +101,8 @@
               <img
                 v-lazy="$img.secdraLazy(picture.url, `specifiedWidth`)"
                 :style="{
-                  height: getProportion(picture) >= 1 ? `100%` : `auto`,
-                  width: getProportion(picture) <= 1 ? `100%` : `auto`
+                  height: getProportion(picture) >= 1 ? `100%` : ``,
+                  width: getProportion(picture) <= 1 ? `100%` : ``
                 }"
               />
             </nuxt-link>
@@ -298,7 +298,7 @@ export default {
       this.collectionList = result.data.content
     },
     getProportion(picture) {
-      return picture.height / picture.width
+      return picture.height / picture.width || 1
     },
     uploadHead($event) {
       const file = $event.target.files[0]
@@ -554,6 +554,9 @@ export default {
         transition: @default-animate-time;
         position: relative;
         height: @size;
+        img {
+          object-fit: cover;
+        }
       }
     }
   }

@@ -62,8 +62,8 @@
               <img
                 v-lazy="$img.secdraLazy(picture.url, `specifiedWidth`)"
                 :style="{
-                  height: getProportion(picture) >= 1 ? `100%` : `auto`,
-                  width: getProportion(picture) <= 1 ? `100%` : `auto`
+                  height: getProportion(picture) >= 1 ? `100%` : ``,
+                  width: getProportion(picture) <= 1 ? `100%` : ``
                 }"
               />
             </nuxt-link>
@@ -103,8 +103,8 @@
               <img
                 v-lazy="$img.secdraLazy(picture.url, `specifiedWidth`)"
                 :style="{
-                  height: getProportion(picture) >= 1 ? `100%` : `auto`,
-                  width: getProportion(picture) <= 1 ? `100%` : `auto`
+                  height: getProportion(picture) >= 1 ? `100%` : ``,
+                  width: getProportion(picture) <= 1 ? `100%` : ``
                 }"
               />
             </nuxt-link>
@@ -212,7 +212,7 @@ export default {
     ...mapActions("user", ["APagingByFollowerId"]),
     ...mapActions("picture", ["APagingCollection", "APaging"]),
     getProportion(picture) {
-      return picture.height / picture.width
+      return picture.height / picture.width || 1
     },
     async pagingWorks() {
       this.worksLoading = true
@@ -432,6 +432,9 @@ export default {
         transition: @default-animate-time;
         position: relative;
         height: @size;
+        img {
+          object-fit: cover;
+        }
       }
     }
 
