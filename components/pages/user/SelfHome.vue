@@ -320,7 +320,6 @@ export default {
           .getRoundedCanvas(this.headCropper.getCroppedCanvas(), 400, 400)
           .toDataURL()
       )
-      this.MSetUserInfoAttr({ attr: "head", value: URL.createObjectURL(file) })
       this.uploadHeadLoading = true
       const result = await this.upload(file, "head")
       this.uploadHeadLoading = false
@@ -328,6 +327,7 @@ export default {
         this.$notify({ message: result.message })
         return
       }
+      this.MSetUserInfoAttr({ attr: "head", value: URL.createObjectURL(file) })
       this.tailoringHeadShow = false
     },
     uploadBack($event) {
@@ -348,10 +348,6 @@ export default {
       const file = ioUtil.dataURLtoFile(
         this.backCropper.getCroppedCanvas().toDataURL()
       )
-      this.MSetUserInfoAttr({
-        attr: "background",
-        value: URL.createObjectURL(file)
-      })
       this.uploadBackLoading = true
       const result = await this.upload(file, "back")
       this.uploadBackLoading = false
@@ -359,6 +355,10 @@ export default {
         this.$notify({ message: result.message })
         return
       }
+      this.MSetUserInfoAttr({
+        attr: "background",
+        value: URL.createObjectURL(file)
+      })
       this.tailoringBackShow = false
     },
     async upload(file, type) {

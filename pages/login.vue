@@ -22,6 +22,14 @@
           type="password"
         ></Field>
       </div>
+      <div class="row input-group">
+        <Field
+          v-model="authorizeCode"
+          block
+          color="primary"
+          placeholder="操作授权码（可为空）"
+        ></Field>
+      </div>
       <br />
       <Btn block color="primary" :disabled="loginLoading" type="submit">{{
         !loginLoading ? `登录` : `登录中...`
@@ -31,6 +39,7 @@
 </template>
 <script>
 import { mapMutations, mapActions } from "vuex"
+import Cookies from "js-cookie"
 
 const layout = "login"
 export default {
@@ -46,10 +55,12 @@ export default {
         phone: "",
         password: ""
       },
+      authorizeCode: "",
       r: this.$route.query.r || "/"
     }
   },
   mounted() {
+    Cookies.remove("authorizeCode")
     if (this.$root.layoutName === layout) {
       this.MSetUserInfo({})
       this.$confirm({
@@ -70,7 +81,7 @@ export default {
       this.loginLoading = true
       const result = await this.ASignIn({ phone, password })
       if (result.status === 200) {
-        // Cookies.set("user", JSON.stringify(result.data), { expires: 30 })
+        Cookies.set("authorizeCode", this.authorizeCode, { expires: 30 })
         this.$router.replace(this.r)
       } else {
         this.loginLoading = false
