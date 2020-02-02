@@ -7,12 +7,12 @@ export default {
   toFixed(number, fractionDigits = 2, showNaN) {
     let _number = number * 1
     if (typeof _number === "number") {
-      return _number.toFixed(2)
+      return _number.toFixed(fractionDigits)
     } else if (showNaN) {
       return "NaN"
     } else {
       _number = 0
-      return _number.toFixed(2)
+      return _number.toFixed(fractionDigits)
     }
   },
   toMore(number, threshold = 100) {
