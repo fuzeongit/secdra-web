@@ -14,5 +14,18 @@ export default {
       return stringValue ? JSON.parse(stringValue) : defaultValue
     }
     return defaultValue
+  },
+  sessionSet(key, value) {
+    if (!isServer) {
+      sessionStorage.setItem(key, JSON.stringify(value))
+    }
+    return value
+  },
+  sessionGet(key, defaultValue = null) {
+    if (!isServer) {
+      const stringValue = sessionStorage.getItem(key)
+      return stringValue ? JSON.parse(stringValue) : defaultValue
+    }
+    return defaultValue
   }
 }
