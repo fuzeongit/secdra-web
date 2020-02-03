@@ -5,7 +5,7 @@
         <div class="left-box">
           <div class="card img-card flex-box">
             <img
-              v-lazy="$img.secdraLazy(picture.url)"
+              v-lazy="$img.secdraLazy(picture, 1200)"
               :style="{
                 height: proportion >= 1 ? `100%` : ``,
                 width: proportion <= 1 ? `100%` : ``

@@ -8,10 +8,10 @@
           class="img-box flex-box"
         >
           <img
-            v-lazy="$img.secdraLazy(picture.url, `specifiedWidth`)"
+            v-lazy="$img.secdraLazy(picture, 240)"
             :style="{
-              height: getProportion(picture) >= 1 ? `100%` : `auto`,
-              width: getProportion(picture) <= 1 ? `100%` : `auto`
+              height: getProportion(picture) >= 1 ? `100%` : ``,
+              width: getProportion(picture) <= 1 ? `100%` : ``
             }"
           />
         </nuxt-link>

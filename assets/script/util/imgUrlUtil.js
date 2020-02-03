@@ -1,5 +1,15 @@
 export default {
-  SECDRA_TYPE: [null, undefined, "specifiedWidth"],
+  SECDRA_TYPE: [
+    null,
+    undefined,
+    "specifiedWidth",
+    "specifiedHeight",
+    "specifiedWidth300",
+    "specifiedWidth500",
+    "specifiedWidth1200",
+    "specifiedHeight1200"
+  ],
+  SECDRA_SIZE: [null, undefined, 240, 300, 500, 1200],
   HEAD_TYPE: [null, undefined, "small50", "small100", "small200"],
   BACK_TYPE: [null, undefined, "backCard"],
   secdra(url, type) {
@@ -9,6 +19,25 @@ export default {
       if (url.indexOf("blob") === 0 || url.indexOf("http") === 0) return url
       if (type) {
         return `${process.env.qiniuImg}/${url}${process.env.qiniuSeparator}${type}`
+      } else {
+        return `${process.env.qiniuImg}/${url}`
+      }
+    } else {
+      return require("../../image/svg/default-picture.svg")
+    }
+  },
+  secdraByObject({ url, height, width }, size, opposite = false) {
+    if (!this.SECDRA_SIZE.includes(size))
+      throw new Error(`图片尺寸${size}不符合规则`)
+    if (url && height && width) {
+      if (url.indexOf("blob") === 0 || url.indexOf("http") === 0) return url
+      if (size) {
+        const proportion = opposite ? width / height : height / width
+        const prefix = proportion >= 1 ? "specifiedHeight" : "specifiedWidth"
+        if (size === 240) size = ""
+        return `${process.env.qiniuImg}/${url}${
+          process.env.qiniuSeparator
+        }${prefix + size}`
       } else {
         return `${process.env.qiniuImg}/${url}`
       }
@@ -48,9 +77,17 @@ export default {
       return require("../../image/svg/default-picture.svg")
     }
   },
-  secdraLazy(url, type) {
+  secdraLazy(unknown, type, opposite = false) {
+    let src = require("../../image/svg/default-picture.svg")
+    if (typeof unknown === "string") {
+      src = this.secdra(unknown, type)
+    } else if (typeof unknown === "object") {
+      src = this.secdraByObject(unknown, type, opposite)
+    } else {
+      throw new TypeError("传递数据不符合规则")
+    }
     return {
-      src: this.secdra(url, type),
+      src,
       error: require("../../image/svg/default-picture.svg"),
       loading: require("../../image/svg/default-picture.svg")
     }

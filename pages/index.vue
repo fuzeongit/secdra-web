@@ -18,7 +18,7 @@
               <div class="img-box">
                 <nuxt-link v-ripple :to="`/picture/${picture.id}`">
                   <img
-                    v-lazy="$img.secdraLazy(picture.url, 'specifiedWidth')"
+                    v-lazy="$img.secdraLazy(picture, 240, true)"
                     class="cover"
                   />
                 </nuxt-link>
@@ -85,7 +85,7 @@
               <div class="img-box">
                 <nuxt-link v-ripple :to="`/picture/${picture.id}`">
                   <img
-                    v-lazy="$img.secdraLazy(picture.url, 'specifiedWidth')"
+                    v-lazy="$img.secdraLazy(picture, 240, true)"
                     class="cover"
                   />
                 </nuxt-link>
@@ -158,7 +158,7 @@
                 :to="`/picture/search/${encodeURIComponent(tagPicture.tag)}`"
               >
                 <img
-                  v-lazy="$img.secdraLazy(tagPicture.url, 'specifiedWidth')"
+                  v-lazy="$img.secdraLazy(tagPicture.url, `specifiedWidth`)"
                 />
               </nuxt-link>
             </CarouselItem>

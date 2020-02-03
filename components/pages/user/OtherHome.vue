@@ -60,7 +60,7 @@
               :to="`/picture/${picture.id}`"
             >
               <img
-                v-lazy="$img.secdraLazy(picture.url, `specifiedWidth`)"
+                v-lazy="$img.secdraLazy(picture, 240)"
                 :style="{
                   height: getProportion(picture) >= 1 ? `100%` : ``,
                   width: getProportion(picture) <= 1 ? `100%` : ``
@@ -101,7 +101,7 @@
               :to="`/picture/${picture.id}`"
             >
               <img
-                v-lazy="$img.secdraLazy(picture.url, `specifiedWidth`)"
+                v-lazy="$img.secdraLazy(picture, 240)"
                 :style="{
                   height: getProportion(picture) >= 1 ? `100%` : ``,
                   width: getProportion(picture) <= 1 ? `100%` : ``
