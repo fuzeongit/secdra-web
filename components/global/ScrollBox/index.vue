@@ -1,5 +1,5 @@
 <template>
-  <div v-scrollbar:scrollBox class="scroll-box">
+  <div class="scroll-box">
     <div ref="scrollBox">
       <slot></slot>
     </div>

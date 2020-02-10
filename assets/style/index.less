@@ -20,19 +20,18 @@
 }
 
 *::-webkit-scrollbar {
-  display: none;
-  width: 10px;
-  height: 1px;
+  display: block;
+  width: 6px;
+  height: 6px;
 }
 
 *::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #BBB;
+  background-color: @font-color-dark-fade;
+  border-radius: 6px;
 }
 
 *::-webkit-scrollbar-track {
-  border-radius: 10px;
-  background-color: #EDEDED;
+  background-color: @theme-background-color;
 }
 
 input::-webkit-search-cancel-button {display: none;}

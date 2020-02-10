@@ -74,7 +74,7 @@ export default {
         this.mutationObserverFrameTick = true
       }
     }
-    this.resizeObserver = new ResizeObserver((entries) => {
+    this.resizeObserver = new ResizeObserver(() => {
       handle()
     })
     this.mutationObserver = new MutationObserver((mutations, _observer) => {
@@ -91,16 +91,7 @@ export default {
     } else {
       this.resizeObserver.observe(document.documentElement)
     }
-
     on(document, "mouseup", this.scrollEnd)
-    // if(this.scrollElement){
-    //   on(this.scrollElement,"mouseenter",()=>{
-    //     this.scrollBarStatus = true;
-    //   });
-    //   on(this.scrollElement,"mouseleave",()=>{
-    //     this.scrollBarStatus = false;
-    //   })
-    // }
   },
   beforeDestroy() {
     try {
@@ -118,7 +109,7 @@ export default {
       this.scrollBarActive = true
       on(document, "mousemove", this.scrollIng)
     },
-    scrollEnd(event) {
+    scrollEnd() {
       off(document, "mousemove", this.scrollIng)
       // 必须等待一帧后再重置
       requestAnimationFrame(() => {
@@ -160,11 +151,9 @@ export default {
       })
     },
     showScrollBar() {
-      // if (this.scrollElement) return;
       this.scrollBarStatus = true
     },
     hideScrollBar() {
-      // if (this.scrollElement) return;
       this.scrollBarStatus = false
     }
   }

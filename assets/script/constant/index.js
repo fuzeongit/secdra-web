@@ -1,5 +1,7 @@
 import proxyUtil from "../util/proxyUtil"
 
+export const FRAMES_SECOND = 16
+
 export function listConstant() {
   const visualWidth = 1120
   const pageGap = 24
