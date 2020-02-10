@@ -221,6 +221,7 @@ import { mapActions, mapState } from "vuex"
 import TagCard from "../../components/pages/shared/TagCard"
 import Comment from "../../components/pages/picture/Comment"
 import { CommentForm } from "../../assets/script/model"
+
 export default {
   components: {
     TagCard,

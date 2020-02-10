@@ -45,7 +45,7 @@
 
 <script>
 import { mapActions } from "vuex"
-import { FliterForm, Pageable } from "../../../assets/script/model"
+import { FilterForm, Pageable } from "../../../assets/script/model"
 import PictureList from "../../../components/pages/shared/PictureList"
 import CornerButtons from "../../../components/pages/shared/CornerButtons"
 
@@ -65,7 +65,7 @@ export default {
   async asyncData({ store, route, $axios }) {
     store.commit("menu/MChangeName", "search")
     const pageable = new Pageable(0, 16, "likeAmount,desc")
-    const filterForm = new FliterForm(
+    const filterForm = new FilterForm(
       !!route.query.precise,
       route.query.name,
       route.query.startDate,

@@ -84,7 +84,7 @@ export class StompSubscribe {
   }
 }
 
-export class FliterForm {
+export class FilterForm {
   constructor(precise, name, startDate, endDate) {
     this.precise = precise
     this.name = name
