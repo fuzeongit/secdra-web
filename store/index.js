@@ -1,6 +1,6 @@
 import Vue from "vue"
 import vuex from "vuex"
-import { Result } from "../assets/script/model"
+import { createResult } from "../assets/script/model"
 
 /**
  * vuex仓库入口
@@ -21,10 +21,7 @@ export const actions = {
         commit("user/MSetUserInfo", result.data)
       }
     } catch (e) {
-      result = new Result(401, e, "请登录")
+      result = createResult(401, e, "请登录")
     }
   }
-  // nuxtServerInit({ commit }) {
-  //   commit("user/MSetUserInfo", null)
-  // }
 }

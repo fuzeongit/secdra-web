@@ -220,7 +220,7 @@
 import { mapActions, mapState } from "vuex"
 import TagCard from "../../components/pages/shared/TagCard"
 import Comment from "../../components/pages/picture/Comment"
-import { CommentForm } from "../../assets/script/model"
+import { createCommentForm } from "../../assets/script/model"
 
 export default {
   components: {
@@ -256,7 +256,7 @@ export default {
     if (result.status === 200) {
       pictureForm = Object.assign({}, result.data)
       inputTag = pictureForm.tagList
-      commentForm = new CommentForm(result.data.user.id, result.data.id)
+      commentForm = createCommentForm(result.data.user.id, result.data.id)
     }
     return {
       status: result.status,

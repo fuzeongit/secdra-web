@@ -17,7 +17,7 @@
 import { mapMutations, mapActions, mapState } from "vuex"
 import Header from "../components/pages/shared/Header"
 import stompMixin from "../assets/script/mixin/stompMixin"
-import { StompSubscribe } from "../assets/script/model"
+import { createStompSubscribe } from "../assets/script/model"
 import Footer from "../components/pages/shared/Footer"
 
 export default {
@@ -43,15 +43,15 @@ export default {
     ...mapActions("stomp", ["AStompConnect"]),
     stompSubscribeList() {
       return [
-        new StompSubscribe("/user/comment/send", (result) => {
+        createStompSubscribe("/user/comment/send", (result) => {
           if (result.message) this.$notify({ message: result.message })
           this.MChangeCount({ type: "comment", count: result.data })
         }),
-        new StompSubscribe("/user/reply/send", (result) => {
+        createStompSubscribe("/user/reply/send", (result) => {
           if (result.message) this.$notify({ message: result.message })
           this.MChangeCount({ type: "reply", count: result.data })
         }),
-        new StompSubscribe("/user/following/focus", (result) => {
+        createStompSubscribe("/user/following/focus", (result) => {
           if (result.message) this.$notify({ message: result.message })
           this.MChangeCount({ type: "follow", count: result.data })
         })

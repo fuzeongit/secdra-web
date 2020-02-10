@@ -65,7 +65,7 @@
 
 <script>
 import { mapActions } from "vuex"
-import { ReplyForm } from "../../../assets/script/model"
+import { createReplyForm } from "../../../assets/script/model"
 
 export default {
   componentName: "Reply",
@@ -111,7 +111,7 @@ export default {
         this.$set(
           this.replyForm,
           item.id,
-          new ReplyForm(this.commentId, this.pictureId, this.authorId)
+          createReplyForm(this.commentId, this.pictureId, this.authorId)
         )
         return Object.assign(item, { replyInputShow: false })
       })

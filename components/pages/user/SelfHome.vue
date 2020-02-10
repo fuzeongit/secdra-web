@@ -197,7 +197,7 @@
 import Cropper from "cropperjs"
 import { mapActions, mapMutations, mapState } from "vuex"
 import ioUtil from "../../../assets/script/util/ioUtil"
-import { Pageable, Result } from "../../../assets/script/model"
+import { createPageable, createResult } from "../../../assets/script/model"
 
 export default {
   data() {
@@ -274,7 +274,7 @@ export default {
     async pagingWorks() {
       this.worksLoading = true
       const result = await this.APaging(
-        Object.assign(new Pageable(0, 8, "createDate,desc"), {
+        Object.assign(createPageable(0, 8, "createDate,desc"), {
           targetId: this.user.id
         })
       )
@@ -288,7 +288,7 @@ export default {
     async pagingCollection() {
       this.collectionLoading = true
       const result = await this.APagingCollection(
-        new Pageable(0, 8, "createDate,desc")
+        createPageable(0, 8, "createDate,desc")
       )
       if (result.status !== 200) {
         this.$notify({ message: result.message })
@@ -377,10 +377,10 @@ export default {
           }
         )).data
       } catch (e) {
-        return new Result(500, null, "上传失败")
+        return createResult(500, null, "上传失败")
       }
       if (!qiniuResult.hash) {
-        return new Result(500, null, "上传失败")
+        return createResult(500, null, "上传失败")
       }
       if (type === "back") {
         return this.AUpdateBack({ url: qiniuResult.hash })

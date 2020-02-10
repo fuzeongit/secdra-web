@@ -182,7 +182,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex"
-import { Pageable } from "../assets/script/model"
+import { createPageable } from "../assets/script/model"
 import UserCard from "../components/pages/shared/UserCard"
 import SearchBox from "../components/pages/shared/SearchBox"
 import stompMixin from "../assets/script/mixin/stompMixin"
@@ -202,11 +202,13 @@ export default {
     const taskList = []
     taskList.push($axios.get(`/tag/listTagAndPictureTop30`))
     taskList.push(
-      $axios.get(`/picture/pagingByRecommend`, { params: new Pageable(0, 12) })
+      $axios.get(`/picture/pagingByRecommend`, {
+        params: createPageable(0, 12)
+      })
     )
     taskList.push(
       $axios.get(`/picture/paging`, {
-        params: new Pageable(0, 12, "createDate,desc")
+        params: createPageable(0, 12, "createDate,desc")
       })
     )
     const resultList = (await Promise.all(taskList)).map((item) => item.data)

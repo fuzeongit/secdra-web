@@ -6,7 +6,7 @@
 import Cookies from "js-cookie"
 import axios from "axios"
 import qs from "qs"
-import { Result } from "../model"
+import { createResult } from "../model"
 axios.defaults.baseURL = process.env.baseUrl
 export default {
   /**
@@ -24,7 +24,7 @@ export default {
       this._handleToken(response)
       result = response.data
     } catch (e) {
-      result = await new Result(500, e, "服务器错误")
+      result = await createResult(500, e, "服务器错误")
     } finally {
     }
     return result
@@ -52,7 +52,7 @@ export default {
       this._handleToken(response)
       result = response.data
     } catch (e) {
-      result = await new Result(500, e, "服务器错误")
+      result = await createResult(500, e, "服务器错误")
     } finally {
     }
     return result

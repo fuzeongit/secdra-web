@@ -14,7 +14,7 @@
 
 <script>
 import { mapActions } from "vuex"
-import { Pageable } from "../assets/script/model"
+import { createPageable } from "../assets/script/model"
 import PictureList from "../components/pages/shared/PictureList"
 import CornerButtons from "../components/pages/shared/CornerButtons"
 
@@ -32,7 +32,7 @@ export default {
   // 并且嵌套层数超过不知道多少会报错-->坑死我了
   async asyncData({ store, route, $axios }) {
     store.commit("menu/MChangeName", "find")
-    const pageable = new Pageable(0, 16)
+    const pageable = createPageable(0, 16)
     const { data: result } = await $axios.get(`/picture/pagingByRecommend`, {
       params: Object.assign(
         {

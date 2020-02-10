@@ -187,7 +187,7 @@
 
 <script>
 import { mapActions } from "vuex"
-import { Pageable } from "../../../assets/script/model"
+import { createPageable } from "../../../assets/script/model"
 
 export default {
   props: {
@@ -217,7 +217,7 @@ export default {
     async pagingWorks() {
       this.worksLoading = true
       const result = await this.APaging(
-        Object.assign(new Pageable(0, 8, "createDate,desc"), {
+        Object.assign(createPageable(0, 8, "createDate,desc"), {
           targetId: this.user.id
         })
       )
@@ -231,7 +231,7 @@ export default {
     async pagingCollection() {
       this.collectionLoading = true
       const result = await this.APagingCollection(
-        Object.assign(new Pageable(0, 8, "createDate,desc"), {
+        Object.assign(createPageable(0, 8, "createDate,desc"), {
           targetId: this.user.id
         })
       )
@@ -245,7 +245,7 @@ export default {
     async pagingFollower() {
       this.followingLoading = true
       const result = await this.APagingByFollowerId(
-        Object.assign(new Pageable(0, 8, "createDate,desc"), {
+        Object.assign(createPageable(0, 8, "createDate,desc"), {
           id: this.user.id
         })
       )

@@ -45,7 +45,7 @@
 
 <script>
 import { mapActions } from "vuex"
-import { FilterForm, Pageable } from "../../../assets/script/model"
+import { createFilterForm, createPageable } from "../../../assets/script/model"
 import PictureList from "../../../components/pages/shared/PictureList"
 import CornerButtons from "../../../components/pages/shared/CornerButtons"
 
@@ -64,8 +64,8 @@ export default {
   // 并且嵌套层数超过不知道多少会报错-->坑死我了
   async asyncData({ store, route, $axios }) {
     store.commit("menu/MChangeName", "search")
-    const pageable = new Pageable(0, 16, "likeAmount,desc")
-    const filterForm = new FilterForm(
+    const pageable = createPageable(0, 16, "likeAmount,desc")
+    const filterForm = createFilterForm(
       !!route.query.precise,
       route.query.name,
       route.query.startDate,

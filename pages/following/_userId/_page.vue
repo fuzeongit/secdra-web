@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { Pageable } from "../../../assets/script/model"
+import { createPageable } from "../../../assets/script/model"
 
 export default {
   computed: {
@@ -46,7 +46,7 @@ export default {
   async asyncData({ store, redirect, route, $axios }) {
     const myself = store.state.user.user
     const taskList = []
-    const pageable = new Pageable(
+    const pageable = createPageable(
       route.params.page * 1 || 0,
       16,
       "createDate,desc"

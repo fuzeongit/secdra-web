@@ -1,8 +1,8 @@
 import httpUtil from "../assets/script/util/httpUtil"
-import { FilterForm } from "../assets/script/model"
+import { createFilterForm } from "../assets/script/model"
 
 export const state = () => ({
-  filterForm: new FilterForm()
+  filterForm: createFilterForm()
 })
 
 export const mutations = {

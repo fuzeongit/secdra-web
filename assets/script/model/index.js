@@ -1,5 +1,10 @@
 import { enumObjectList } from "../constant"
 
+/**
+ * @author
+ * @description 这里有个坑，就是在asyncDate传递数据的时候会报一个警告，所以不再使用class这种方式直接使用create方法返回
+ */
+
 export class Result {
   /**
    * 统一返回
@@ -93,9 +98,57 @@ export class FilterForm {
   }
 }
 
-export class EnumObject {
-  constructor(eventName, callback) {
-    this._eventName = eventName
-    this._callback = callback
+export function createResult(status, data, message) {
+  return {
+    status,
+    data,
+    message
+  }
+}
+export function createPageable(page = 0, size = 20, sort = "") {
+  return {
+    page: !page ? 0 : page - 1,
+    size,
+    sort
+  }
+}
+export function createPictureForm() {
+  return {
+    name: "",
+    introduction: "",
+    privacy: enumObjectList.PrivacyState.PUBLIC.key,
+    tagList: []
+  }
+}
+export function createCommentForm(authorId = "", pictureId = "") {
+  return {
+    authorId,
+    pictureId,
+    content: ""
+  }
+}
+export function createReplyForm(
+  commentId = "",
+  pictureId = "",
+  authorId = "",
+  criticId = ""
+) {
+  return {
+    commentId,
+    pictureId,
+    authorId,
+    criticId,
+    content: ""
+  }
+}
+export function createStompSubscribe(eventName, callback) {
+  return new StompSubscribe(eventName, callback)
+}
+export function createFilterForm(precise, name, startDate, endDate) {
+  return {
+    precise,
+    name,
+    startDate,
+    endDate
   }
 }

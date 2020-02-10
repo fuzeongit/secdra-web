@@ -130,7 +130,10 @@
 
 <script>
 import { mapActions } from "vuex"
-import { CommentForm, ReplyForm } from "../../../assets/script/model"
+import {
+  createCommentForm,
+  createReplyForm
+} from "../../../assets/script/model"
 import Reply from "./Reply"
 
 export default {
@@ -150,7 +153,7 @@ export default {
   },
   data() {
     return {
-      commentForm: new CommentForm(this.userId, this.pictureId),
+      commentForm: createCommentForm(this.userId, this.pictureId),
       replyForm: {},
       loading: true,
       loadingMore: false,
@@ -186,7 +189,7 @@ export default {
         this.$set(
           this.replyForm,
           item.id,
-          new ReplyForm("", this.pictureId, this.userId)
+          createReplyForm("", this.pictureId, this.userId)
         )
         return Object.assign(item, {
           replyInputShow: false,
@@ -208,7 +211,7 @@ export default {
         this.$set(
           this.replyForm,
           item.id,
-          new ReplyForm("", this.pictureId, this.userId)
+          createReplyForm("", this.pictureId, this.userId)
         )
         return Object.assign(item, {
           replyInputShow: false,
@@ -241,7 +244,7 @@ export default {
       this.$set(
         this.replyForm,
         item.id,
-        new ReplyForm("", this.pictureId, this.userId)
+        createReplyForm("", this.pictureId, this.userId)
       )
     }
   }

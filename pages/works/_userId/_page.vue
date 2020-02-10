@@ -168,7 +168,7 @@
 
 <script>
 import { mapActions } from "vuex"
-import { PictureForm, Pageable } from "../../../assets/script/model"
+import { createPictureForm, createPageable } from "../../../assets/script/model"
 import CornerButtons from "../../../components/pages/shared/CornerButtons"
 
 export default {
@@ -194,7 +194,7 @@ export default {
     store.commit("menu/MChangeName", "works")
     const myself = store.state.user.user
     const taskList = []
-    const pageable = new Pageable(
+    const pageable = createPageable(
       route.params.page * 1 || 0,
       16,
       "createDate,desc"
@@ -235,7 +235,7 @@ export default {
       editShow: false,
       editLoading: false,
       inputTag: [],
-      pictureForm: new PictureForm()
+      pictureForm: createPictureForm()
     }
   },
   head() {
@@ -286,7 +286,7 @@ export default {
     },
     reset() {
       this.inputTag = []
-      this.pictureForm = new PictureForm()
+      this.pictureForm = createPictureForm()
     },
     async save() {
       const form = this.pictureForm
@@ -302,7 +302,7 @@ export default {
       }
       this.inputTag = []
       this.selectList.clear()
-      this.pictureForm = new PictureForm()
+      this.pictureForm = createPictureForm()
       this.$notify({ message: "批量更新完毕" })
     }
   }
