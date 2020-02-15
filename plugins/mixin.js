@@ -1,6 +1,5 @@
 import Vue from "vue"
 import VueLazyload from "vue-lazyload"
-import "reflect-metadata"
 import {
   Alert,
   Confirm,
