@@ -109,7 +109,7 @@
               :comment-id="item.id"
               :picture-id="pictureId"
               :author-id="userId"
-              :critic-id="item.criticId"
+              :critic-id="item.critic.id"
             ></Reply>
           </div>
         </div>
@@ -222,7 +222,7 @@ export default {
     },
     async sendReply(item) {
       this.replyForm[item.id].commentId = item.id
-      this.replyForm[item.id].criticId = item.criticId
+      this.replyForm[item.id].criticId = item.critic.id
       const result = await this.ASaveReply(this.replyForm[item.id])
       if (result.status !== 200) {
         this.$notify({ message: result.message })
