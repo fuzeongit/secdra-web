@@ -1,5 +1,3 @@
-import proxyUtil from "../util/proxyUtil"
-
 export const FRAMES_SECOND = 16
 
 export function listConstant() {
@@ -47,26 +45,34 @@ export function hideFooterMenuConstant() {
 }
 
 export const enumObjectList = {
-  CollectState: proxyUtil.enumProxy({
+  CollectState: enumProxy({
     CONCERNED: "已关注",
     STRANGE: "未关注",
     SElF: "自己"
   }),
-  FollowState: proxyUtil.enumProxy({
+  FollowState: enumProxy({
     CONCERNED: "已关注",
     STRANGE: "未关注",
     SElF: "自己"
   }),
-  Gender: proxyUtil.enumProxy({
+  Gender: enumProxy({
     MALE: "男",
     FEMALE: "女"
   }),
-  PrivacyState: proxyUtil.enumProxy({
+  PrivacyState: enumProxy({
     PUBLIC: "公开",
     PRIVATE: "隐藏"
   }),
-  PictureLifeState: proxyUtil.enumProxy({
+  PictureLifeState: enumProxy({
     DISAPPEAR: "不存在",
     EXIST: "正常"
   })
+}
+
+function enumProxy(object) {
+  const o = {}
+  Object.keys(object).forEach((key) => {
+    o[key] = { key, value: object[key] }
+  })
+  return o
 }
