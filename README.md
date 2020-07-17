@@ -107,3 +107,9 @@ $ pm2 start npm --name web -- run start
   
 #### 开源协议  
 [MIT](https://opensource.org/licenses/MIT)
+
+#### 后语
+由于想统一风格，该项目已经不作更新，新项目请移步
+[zeongit-beauty-web](https://github.com/JunJieFu/zeongit-beauty-web)
+官网如下
+[beauty.secdra.com](http://beauty.secdra.com)
