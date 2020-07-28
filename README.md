@@ -109,7 +109,7 @@ $ pm2 start npm --name web -- run start
 [MIT](https://opensource.org/licenses/MIT)
 
 #### 后语
-由于想统一风格并使用响应式设计，现已启用了vuetify为框架的项目，该项目已经不作更新，新项目请移步
+由于想实现多应用登录，该项目已经不作更新，新项目请移步
 
 [zeongit-beauty-web](https://github.com/JunJieFu/zeongit-beauty-web)
 
